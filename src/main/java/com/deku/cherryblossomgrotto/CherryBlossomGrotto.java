@@ -1,13 +1,25 @@
 package com.deku.cherryblossomgrotto;
 
+import com.deku.cherryblossomgrotto.common.blocks.*;
 import com.deku.cherryblossomgrotto.utils.LogTweaker;
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.RotatedPillarBlock;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.particles.ParticleType;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -23,6 +35,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Map;
 import java.util.stream.Collectors;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -73,7 +86,6 @@ public class CherryBlossomGrotto
     {
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT");
-        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
@@ -101,6 +113,9 @@ public class CherryBlossomGrotto
         LOGGER.info("HELLO from server starting");
     }
 
+    /**
+     * Inner class for different event registers used by the mod
+     */
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
         /**
@@ -111,6 +126,12 @@ public class CherryBlossomGrotto
         @SubscribeEvent
         public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
             LOGGER.info("HELLO from Register Block");
+
+            blockRegistryEvent.getRegistry().register(new CherryBlossomLog());
+            blockRegistryEvent.getRegistry().register(new StrippedCherryBlossomLog());
+            blockRegistryEvent.getRegistry().register(new CherryBlossomWood());
+            blockRegistryEvent.getRegistry().register(new StrippedCherryBlossomWood());
+            blockRegistryEvent.getRegistry().register(new CherryBlossomPlanks());
         }
 
         /**
@@ -121,6 +142,12 @@ public class CherryBlossomGrotto
         @SubscribeEvent
         public static void onItemsRegistry(final RegistryEvent.Register<Item> itemRegistryEvent) {
             LOGGER.info("HELLO from Register Item");
+
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_LOG, new Item.Properties()).setRegistryName("cherry_blossom_log"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.STRIPPED_CHERRY_LOG, new Item.Properties()).setRegistryName("stripped_cherry_blossom_log"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_WOOD, new Item.Properties()).setRegistryName("cherry_blossom_wood"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.STRIPPED_CHERRY_WOOD, new Item.Properties()).setRegistryName("stripped_cherry_blossom_wood"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PLANKS, new Item.Properties()).setRegistryName("cherry_blossom_planks"));
         }
 
         /**
@@ -131,6 +158,37 @@ public class CherryBlossomGrotto
         @SubscribeEvent
         public static void onParticleTypeRegistry(final RegistryEvent.Register<ParticleType<?>> particleTypeRegistryEvent) {
             LOGGER.info("HELLO from Register Particle Type");
+        }
+    }
+
+    /**
+     * Inner class for different event handlers overriding handlers from vanilla Minecraft
+     */
+    @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.FORGE)
+    public static class EventHandler {
+        /**
+         * Used to handle events that occur when a block is right-clicked by a player.
+         * Currently this handles the stripping that occurs with new wood-based blocks that are right-clicked with an axe
+         *
+         * @param event The event object that is built when a block is right-clicked by a player
+         */
+        @SubscribeEvent
+        public static void onBlockClicked(PlayerInteractEvent.RightClickBlock event) {
+            final Map<Block, Block> BLOCK_STRIPPING_MAP = (new ImmutableMap.Builder<Block, Block>().put(ModBlocks.CHERRY_LOG, ModBlocks.STRIPPED_CHERRY_LOG).put(ModBlocks.CHERRY_WOOD, ModBlocks.STRIPPED_CHERRY_WOOD)).build();
+
+            if (event.getItemStack().getItem() instanceof AxeItem) {
+                World world = event.getWorld();
+                BlockPos position = event.getPos();
+                BlockState state = world.getBlockState(position);
+                Block block = BLOCK_STRIPPING_MAP.get(state.getBlock());
+                if (block != null) {
+                    LOGGER.info("STRIP EVENT occurred due to right-click");
+                    PlayerEntity player = event.getPlayer();
+                    world.playSound(player, position, SoundEvents.AXE_STRIP, SoundCategory.BLOCKS, 1.0f, 1.0f);
+                    world.setBlock(position, block.defaultBlockState().setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS)), 11);
+                    event.getItemStack().hurtAndBreak(1, player, (p_220036_0_) -> p_220036_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
+                }
+            }
         }
     }
 }
