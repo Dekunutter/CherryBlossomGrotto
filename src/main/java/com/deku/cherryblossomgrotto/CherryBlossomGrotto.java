@@ -3,9 +3,14 @@ package com.deku.cherryblossomgrotto;
 import com.deku.cherryblossomgrotto.utils.LogTweaker;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.particles.ParticleType;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -39,22 +44,29 @@ public class CherryBlossomGrotto
      *      - Log filtering.
      *      - Event Bus listeners
      *      - Registries
+     *      - Ensuring client-only registrars only execute on a client
      */
     public CherryBlossomGrotto() {
         if (HIDE_CONSOLE_NOISE) {
             LogTweaker.applyLogFilterLevel(Level.WARN);
         }
+        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
         // Register the setup method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        eventBus.addListener(this::setup);
         // Register the enqueueIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
+        eventBus.addListener(this::enqueueIMC);
         // Register the processIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
+        eventBus.addListener(this::processIMC);
         // Register the doClientStuff method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+        eventBus.addListener(this::doClientStuff);
+
+        ClientOnlyRegistrar clientOnlyRegistrar = new ClientOnlyRegistrar(eventBus);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+
+        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> clientOnlyRegistrar::registerClientOnlyEvents);
     }
 
     private void setup(final FMLCommonSetupEvent event)
@@ -89,14 +101,36 @@ public class CherryBlossomGrotto
         LOGGER.info("HELLO from server starting");
     }
 
-    // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
-    // Event bus for receiving Registry Events)
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
+        /**
+         * Used to register blocks into the game using the mod event bus
+         *
+         * @param blockRegistryEvent The registry event with which blocks will be registered
+         */
         @SubscribeEvent
         public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
-            // register a new block here
             LOGGER.info("HELLO from Register Block");
+        }
+
+        /**
+         * Used to register items into the game using the mod event bus
+         *
+         * @param itemRegistryEvent The registry event with which items will be registered
+         */
+        @SubscribeEvent
+        public static void onItemsRegistry(final RegistryEvent.Register<Item> itemRegistryEvent) {
+            LOGGER.info("HELLO from Register Item");
+        }
+
+        /**
+         * Used to register particle types into the game using the mod event bus
+         *
+         * @param particleTypeRegistryEvent The registry event with which particle types will be registered
+         */
+        @SubscribeEvent
+        public static void onParticleTypeRegistry(final RegistryEvent.Register<ParticleType<?>> particleTypeRegistryEvent) {
+            LOGGER.info("HELLO from Register Particle Type");
         }
     }
 }
