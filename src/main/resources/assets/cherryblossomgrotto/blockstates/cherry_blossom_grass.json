@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "cherry_blossom_petal_covered=false,snowy=false": [
+      {
+        "model": "minecraft:block/grass_block"
+      },
+      {
+        "model": "minecraft:block/grass_block",
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/grass_block",
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/grass_block",
+        "y": 270
+      }
+    ],
+    "snowy=true,cherry_blossom_petal_covered=false": {
+      "model": "minecraft:block/grass_block_snow"
+    },
+    "cherry_blossom_petal_covered=true,snowy=false": {
+      "model":  "cherryblossomgrotto:block/cherry_blossom_grass"
+    },
+    "snowy=true,cherry_blossom_petal_covered=true": {
+      "model": "minecraft:block/grass_block_snow"
+    }
+  }
+}

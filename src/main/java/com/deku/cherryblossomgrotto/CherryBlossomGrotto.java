@@ -1,14 +1,17 @@
 package com.deku.cherryblossomgrotto;
 
 import com.deku.cherryblossomgrotto.common.blocks.*;
+import com.deku.cherryblossomgrotto.common.blocks.blockcolors.GrassBlockColor;
 import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalFactory;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
 import com.deku.cherryblossomgrotto.utils.LogTweaker;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.AxeItem;
@@ -19,11 +22,17 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.IChunk;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.ChunkEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -138,6 +147,8 @@ public class CherryBlossomGrotto
             blockRegistryEvent.getRegistry().register(new CherryBlossomPlanks());
 
             blockRegistryEvent.getRegistry().register(new CherryBlossomLeaves());
+
+            blockRegistryEvent.getRegistry().register(new NewGrassBlock());
         }
 
         /**
@@ -156,6 +167,8 @@ public class CherryBlossomGrotto
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PLANKS, new Item.Properties()).setRegistryName("cherry_blossom_planks"));
 
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_LEAVES, new Item.Properties()).setRegistryName("cherry_blossom_leaves"));
+
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.GRASS, new Item.Properties()).setRegistryName("grass_block"));
         }
 
         /**
@@ -171,7 +184,7 @@ public class CherryBlossomGrotto
         }
 
         /**
-         * used to register particle factories into the game using the mod event bus
+         * Used to register particle factories into the game using the mod event bus
          *
          * @param particleFactoryRegistryEvent The registry event with which particle factories will be registered
          */
@@ -181,6 +194,19 @@ public class CherryBlossomGrotto
 
             Minecraft.getInstance().particleEngine.register(ModParticles.CHERRY_PETAL, FallingCherryBlossomPetalFactory::new);
         }
+
+        /**
+         * Used to register block color handlers into the game using the mod event bus
+         *
+         * @param event The registry event with which block color handlers will be registered
+         */
+        @SubscribeEvent
+        public static void onBlockColorHandlerRegistration(ColorHandlerEvent.Block event) {
+            LOGGER.info("HELLO from Register Block Color Handler");
+
+            BlockColors blockColors = event.getBlockColors();
+            blockColors.register(GrassBlockColor.instance, ModBlocks.GRASS);
+        }
     }
 
     /**
@@ -188,6 +214,57 @@ public class CherryBlossomGrotto
      */
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.FORGE)
     public static class EventHandler {
+        /**
+         * Used to handle events that occur when a chunk is loaded.
+         * Currently this replaces any base game grass blocks with the mod's overridden grass block.
+         *
+         * @param event The event object that is built when a chunk is loaded
+         */
+        @SubscribeEvent(priority= EventPriority.NORMAL, receiveCanceled = true)
+        public static void onChunkEvent(ChunkEvent.Load event) {
+            IChunk chunk = event.getChunk();
+
+            if (chunk instanceof Chunk) {
+                int chunkSize = chunk.getSections().length;
+                if (event.getWorld().isClientSide()) {
+                    for (int x = 0; x < chunkSize; ++x) {
+                        for (int z = 0; z < chunkSize; ++z) {
+                            for (int y = 0; y < chunk.getMaxBuildHeight(); ++y) {
+                                if (chunk.getBlockState(new BlockPos(x, y, z)).getBlock() == Blocks.GRASS_BLOCK) {
+                                    chunk.setBlockState(new BlockPos(x, y, z), ModBlocks.GRASS.defaultBlockState(), true);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /**
+         * Used to handle events that occur when a block is placed into the world.
+         * Currently this handles the replacement of base game grass blocks with our modded variant.
+         * The flag passed in at the end of world.setBlock() should cause the block to update.
+         *
+         * @param event The event object that is build when a block is placed
+         */
+        @SubscribeEvent
+        public static void onPlace(BlockEvent.EntityPlaceEvent event) {
+            ModBlocks.GRASS.replaceVanillaGrassBlock(event.getPos(),  (World) event.getWorld());
+        }
+
+        /**
+         * Used to handle events that notify neighbouring blocks of changes.
+         * Currently this handles the replacement of base game grass blocks with our modded variant
+         * whenever a grass propegation occurs since the random ticker in the new block does not seem to be
+         * sufficient alone.
+         *
+         * @param event The event object that is built when a block is updated
+         */
+        @SubscribeEvent
+        public static void onNeighbourNotified(BlockEvent.NeighborNotifyEvent event) {
+            ModBlocks.GRASS.replaceVanillaGrassBlock(event.getPos(), (World) event.getWorld());
+        }
+
         /**
          * Used to handle events that occur when a block is right-clicked by a player.
          * Currently this handles the stripping that occurs with new wood-based blocks that are right-clicked with an axe
