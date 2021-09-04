@@ -11,6 +11,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -101,9 +103,19 @@ public class CherryBlossomGrotto
         LOGGER.info("HELLO FROM PREINIT");
     }
 
+    /**
+     * Sets up client specific logic, such as rendering types.
+     *
+     * In this case we are adding the cut-out render type to our custom grass block so
+     * that overlays display properly on that block.
+     *
+     * @param event The client setup event
+     */
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
         LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
+
+        RenderTypeLookup.setRenderLayer(ModBlocks.GRASS, RenderType.cutout());
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
@@ -243,13 +255,15 @@ public class CherryBlossomGrotto
         /**
          * Used to handle events that occur when a block is placed into the world.
          * Currently this handles the replacement of base game grass blocks with our modded variant.
-         * The flag passed in at the end of world.setBlock() should cause the block to update.
+         * We also check to see if we should replace the block below the current so that we stop issues
+         * with blocks placed on top of grass reverting the block back to the vanilla variant.
          *
          * @param event The event object that is build when a block is placed
          */
         @SubscribeEvent
         public static void onPlace(BlockEvent.EntityPlaceEvent event) {
             ModBlocks.GRASS.replaceVanillaGrassBlock(event.getPos(),  (World) event.getWorld());
+            ModBlocks.GRASS.replaceVanillaGrassBlock(event.getPos().below(),  (World) event.getWorld());
         }
 
         /**
@@ -262,7 +276,7 @@ public class CherryBlossomGrotto
          */
         @SubscribeEvent
         public static void onNeighbourNotified(BlockEvent.NeighborNotifyEvent event) {
-            ModBlocks.GRASS.replaceVanillaGrassBlock(event.getPos(), (World) event.getWorld());
+            ModBlocks.GRASS.replaceVanillaGrassBlock(event.getPos(), (World) event.getWorld(), false);
         }
 
         /**

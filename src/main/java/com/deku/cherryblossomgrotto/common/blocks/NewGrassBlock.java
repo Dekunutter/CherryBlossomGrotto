@@ -11,6 +11,9 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
+//NOTE: THIS OVERRIDE CLASS IS NEEDED AT A DIFFERENT REGISTRY THAN THE VANILLA GRASS BLOCK BECAUSE IT CHANGES BLOCK STATES
+// FORGE DOES NOT ALLOW THE OVERRIDE OF VANILLA BLOCKS WITH BLOCKSTATE CHANGES SO SADLY I NEED A MORE MANUAL APPROACH THAT
+// REPLACES ALL GRASS BLOCKS AFTER LOADING WITH MY OWN
 public class NewGrassBlock extends net.minecraft.block.GrassBlock {
     public NewGrassBlock() {
         super(AbstractBlock.Properties.of(Material.GRASS).randomTicks().strength(0.6F).sound(SoundType.GRASS));
@@ -72,12 +75,28 @@ public class NewGrassBlock extends net.minecraft.block.GrassBlock {
      * @param world The world that the block is updating in
      */
     public final void replaceVanillaGrassBlock(BlockPos position, World world) {
+        replaceVanillaGrassBlock(position, world, true);
+    }
+
+    /**
+     * Overloaded version of replaceVanillaGrassBlock which will take in a boolean value to determine
+     * if the block should be updated after replacement or not
+     *
+     * @param position the position in the world of the block being replaced
+     * @param world The world that the block is updating in
+     * @param shouldUpdate Whether the block should update after being set or not
+     */
+    public final void replaceVanillaGrassBlock(BlockPos position, World world, boolean shouldUpdate) {
         BlockState state = world.getBlockState(position);
-        if (state.is(Blocks.GRASS_BLOCK)) {
+        if (state.getBlock().is(Blocks.GRASS_BLOCK)) {
             BlockState replacementState = ModBlocks.GRASS.defaultBlockState();
             replacementState.setValue(SNOWY, world.getBlockState(position.above()).is(Blocks.SNOW));
             replacementState.setValue(ModBlockStateProperties.CHERRY_BLOSSOM_PETAL_COVERED, false);
-            world.setBlockAndUpdate(position, replacementState);
+            if (shouldUpdate) {
+                world.setBlockAndUpdate(position, replacementState);
+            } else {
+                world.setBlock(position, replacementState, 0);
+            }
         }
     }
 }
