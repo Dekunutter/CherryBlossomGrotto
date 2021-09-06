@@ -277,7 +277,7 @@ public class CherryBlossomGrotto
          */
         @SubscribeEvent
         public static void onPlace(BlockEvent.EntityPlaceEvent event) {
-            ModBlocks.GRASS.replaceVanillaGrassBlock(event.getPos(),  (World) event.getWorld());
+            //ModBlocks.GRASS.replaceVanillaGrassBlock(event.getPos(),  (World) event.getWorld());
 
             // NOTE: This fix to the grass being placed on makes the ground incompatible with tools for some reason. Like the game still thinks its covered ground maybe??
             //ModBlocks.GRASS.replaceVanillaGrassBlock(event.getPos().below(),  (World) event.getWorld());
