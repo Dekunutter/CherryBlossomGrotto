@@ -117,7 +117,7 @@ public class CherryBlossomGrotto
         // do something that can only be done on the client
         LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
 
-        RenderTypeLookup.setRenderLayer(ModBlocks.GRASS, RenderType.cutout());
+        //RenderTypeLookup.setRenderLayer(ModBlocks.GRASS, RenderType.cutout());
         RenderTypeLookup.setRenderLayer(ModBlocks.CHERRY_PETALS, RenderType.cutoutMipped());
     }
 
