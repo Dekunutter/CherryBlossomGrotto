@@ -1,13 +1,9 @@
 package com.deku.cherryblossomgrotto.common.particles;
 
-import com.deku.cherryblossomgrotto.common.blocks.ModBlocks;
-import com.deku.cherryblossomgrotto.common.blocks.NewGrassBlock;
-import net.minecraft.block.BlockState;
 import net.minecraft.client.particle.IAnimatedSprite;
 import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.SpriteTexturedParticle;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.math.BlockPos;
 
 import java.awt.*;
 
@@ -64,14 +60,6 @@ public class FallingCherryBlossomPetal extends SpriteTexturedParticle {
         }
 
         if (despawnTimer == 5) {
-            BlockPos landingPosition = new BlockPos(x, y, z).below();
-            BlockState landingState = level.getBlockState(landingPosition);
-
-            if (landingState.getBlock() == ModBlocks.GRASS) {
-                NewGrassBlock grass = (NewGrassBlock) landingState.getBlock();
-                grass.coverWithCherryBlossomPetals(level, landingPosition, landingState);
-            }
-
             remove();
         }
 

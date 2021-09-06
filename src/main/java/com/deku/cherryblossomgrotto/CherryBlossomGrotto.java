@@ -4,6 +4,7 @@ import com.deku.cherryblossomgrotto.common.blocks.*;
 import com.deku.cherryblossomgrotto.common.blocks.blockcolors.GrassBlockColor;
 import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalFactory;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
+import com.deku.cherryblossomgrotto.common.tileEntities.CherryLeavesTileEntity;
 import com.deku.cherryblossomgrotto.utils.LogTweaker;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
@@ -20,6 +21,7 @@ import net.minecraft.item.AxeItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.particles.ParticleType;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -116,6 +118,7 @@ public class CherryBlossomGrotto
         LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
 
         RenderTypeLookup.setRenderLayer(ModBlocks.GRASS, RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(ModBlocks.CHERRY_PETALS, RenderType.cutoutMipped());
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
@@ -160,7 +163,18 @@ public class CherryBlossomGrotto
 
             blockRegistryEvent.getRegistry().register(new CherryBlossomLeaves());
 
-            blockRegistryEvent.getRegistry().register(new NewGrassBlock());
+            // TODO: Commented out overridden grass block for possible removal in the future. Find all instances and remove if block goes unused
+            //blockRegistryEvent.getRegistry().register(new NewGrassBlock());
+            blockRegistryEvent.getRegistry().register(new CherryBlossomPetals());
+        }
+
+        public static TileEntityType<CherryLeavesTileEntity> cherryLeavesDataType;
+
+        @SubscribeEvent
+        public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> tileEntityRegistryEvent) {
+            cherryLeavesDataType = TileEntityType.Builder.of(CherryLeavesTileEntity::new, ModBlocks.CHERRY_LEAVES.getBlock()).build(null);
+            cherryLeavesDataType.setRegistryName("cherryblossomgrotto:cherry_leaves_tile_entity");
+            tileEntityRegistryEvent.getRegistry().register(cherryLeavesDataType);
         }
 
         /**
@@ -180,7 +194,8 @@ public class CherryBlossomGrotto
 
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_LEAVES, new Item.Properties()).setRegistryName("cherry_blossom_leaves"));
 
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.GRASS, new Item.Properties()).setRegistryName("grass_block"));
+            //itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.GRASS, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("grass_block"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PETALS, new Item.Properties()).setRegistryName("cherry_blossom_petals"));
         }
 
         /**
@@ -217,7 +232,7 @@ public class CherryBlossomGrotto
             LOGGER.info("HELLO from Register Block Color Handler");
 
             BlockColors blockColors = event.getBlockColors();
-            blockColors.register(GrassBlockColor.instance, ModBlocks.GRASS);
+            //blockColors.register(GrassBlockColor.instance, ModBlocks.GRASS);
         }
     }
 
@@ -243,7 +258,7 @@ public class CherryBlossomGrotto
                         for (int z = 0; z < chunkSize; ++z) {
                             for (int y = 0; y < chunk.getMaxBuildHeight(); ++y) {
                                 if (chunk.getBlockState(new BlockPos(x, y, z)).getBlock() == Blocks.GRASS_BLOCK) {
-                                    chunk.setBlockState(new BlockPos(x, y, z), ModBlocks.GRASS.defaultBlockState(), true);
+                                    //chunk.setBlockState(new BlockPos(x, y, z), ModBlocks.GRASS.defaultBlockState(), true);
                                 }
                             }
                         }
@@ -263,7 +278,9 @@ public class CherryBlossomGrotto
         @SubscribeEvent
         public static void onPlace(BlockEvent.EntityPlaceEvent event) {
             ModBlocks.GRASS.replaceVanillaGrassBlock(event.getPos(),  (World) event.getWorld());
-            ModBlocks.GRASS.replaceVanillaGrassBlock(event.getPos().below(),  (World) event.getWorld());
+
+            // NOTE: This fix to the grass being placed on makes the ground incompatible with tools for some reason. Like the game still thinks its covered ground maybe??
+            //ModBlocks.GRASS.replaceVanillaGrassBlock(event.getPos().below(),  (World) event.getWorld());
         }
 
         /**
@@ -276,7 +293,7 @@ public class CherryBlossomGrotto
          */
         @SubscribeEvent
         public static void onNeighbourNotified(BlockEvent.NeighborNotifyEvent event) {
-            ModBlocks.GRASS.replaceVanillaGrassBlock(event.getPos(), (World) event.getWorld(), false);
+            //ModBlocks.GRASS.replaceVanillaGrassBlock(event.getPos(), (World) event.getWorld());
         }
 
         /**

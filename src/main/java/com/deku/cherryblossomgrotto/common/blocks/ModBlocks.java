@@ -24,4 +24,7 @@ public class ModBlocks {
 
     @ObjectHolder("cherry_blossom_grass")
     public static NewGrassBlock GRASS;
+
+    @ObjectHolder("cherry_blossom_petals")
+    public static CherryBlossomPetals CHERRY_PETALS;
 }
