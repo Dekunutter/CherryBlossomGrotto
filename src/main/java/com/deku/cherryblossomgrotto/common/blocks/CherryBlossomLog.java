@@ -1,11 +1,11 @@
 package com.deku.cherryblossomgrotto.common.blocks;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.RotatedPillarBlock;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 
 public class CherryBlossomLog extends RotatedPillarBlock {
 
@@ -15,5 +15,17 @@ public class CherryBlossomLog extends RotatedPillarBlock {
             ).strength(2.0f).sound(SoundType.WOOD)
         );
         setRegistryName("cherry_blossom_log");
+    }
+
+    @Override
+    public int getFlammability(BlockState state, IBlockReader world, BlockPos pos, Direction face)
+    {
+        return 5;
+    }
+
+    @Override
+    public int getFireSpreadSpeed(BlockState state, IBlockReader world, BlockPos pos, Direction face)
+    {
+        return 5;
     }
 }
