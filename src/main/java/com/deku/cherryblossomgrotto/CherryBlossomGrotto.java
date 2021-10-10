@@ -1,7 +1,6 @@
 package com.deku.cherryblossomgrotto;
 
 import com.deku.cherryblossomgrotto.common.blocks.*;
-import com.deku.cherryblossomgrotto.common.blocks.blockcolors.GrassBlockColor;
 import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalFactory;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
 import com.deku.cherryblossomgrotto.common.tileEntities.CherryLeavesTileEntity;
@@ -119,6 +118,7 @@ public class CherryBlossomGrotto
 
         //RenderTypeLookup.setRenderLayer(ModBlocks.GRASS, RenderType.cutout());
         RenderTypeLookup.setRenderLayer(ModBlocks.CHERRY_PETALS, RenderType.cutoutMipped());
+        RenderTypeLookup.setRenderLayer(ModBlocks.CHERRY_SAPLING, RenderType.cutoutMipped());
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
@@ -166,6 +166,8 @@ public class CherryBlossomGrotto
             // TODO: Commented out overridden grass block for possible removal in the future. Find all instances and remove if block goes unused
             //blockRegistryEvent.getRegistry().register(new NewGrassBlock());
             blockRegistryEvent.getRegistry().register(new CherryBlossomPetals());
+
+            blockRegistryEvent.getRegistry().register(new CherryBlossomSapling());
         }
 
         public static TileEntityType<CherryLeavesTileEntity> cherryLeavesDataType;
@@ -196,6 +198,7 @@ public class CherryBlossomGrotto
 
             //itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.GRASS, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("grass_block"));
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PETALS, new Item.Properties()).setRegistryName("cherry_blossom_petals"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_SAPLING, new Item.Properties()).setRegistryName("cherry_blossom_sapling"));
         }
 
         /**

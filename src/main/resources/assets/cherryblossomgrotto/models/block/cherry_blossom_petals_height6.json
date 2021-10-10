@@ -1,7 +1,7 @@
 {
   "parent": "block/thin_block",
   "textures": {
-    "particle": "minecraft:block/snow",
+    "particle": "cherryblossomgrotto:particle/cherry_blossom_petal",
     "texture": "cherryblossomgrotto:block/cherry_blossom_petal_covered_grass_top"
   },
   "elements": [

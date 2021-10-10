@@ -27,4 +27,7 @@ public class ModBlocks {
 
     @ObjectHolder("cherry_blossom_petals")
     public static CherryBlossomPetals CHERRY_PETALS;
+
+    @ObjectHolder("cherry_blossom_sapling")
+    public static CherryBlossomSapling CHERRY_SAPLING;
 }

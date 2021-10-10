@@ -1,0 +1,6 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "cherryblossomgrotto:block/cherry_blossom_sapling"
+  }
+}
