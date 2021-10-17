@@ -1,9 +1,16 @@
 package com.deku.cherryblossomgrotto;
 
 import com.deku.cherryblossomgrotto.common.blocks.*;
+import com.deku.cherryblossomgrotto.common.features.CherryBlossomTreeFeature;
+import com.deku.cherryblossomgrotto.common.features.LargeCherryBlossomTreeFeature;
+import com.deku.cherryblossomgrotto.common.features.ModFeatures;
 import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalFactory;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
 import com.deku.cherryblossomgrotto.common.tileEntities.CherryLeavesTileEntity;
+import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.CherryBlossomFoliagePlacer;
+import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.CherryBlossomFoliagePlacerType;
+import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.CherryBlossomTrunkPlaceType;
+import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.CherryBlossomTrunkPlacer;
 import com.deku.cherryblossomgrotto.utils.LogTweaker;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
@@ -24,9 +31,15 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunk;
+import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
+import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.foliageplacer.FoliagePlacerType;
+import net.minecraft.world.gen.trunkplacer.TrunkPlacerType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -51,6 +64,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -205,6 +219,31 @@ public class CherryBlossomGrotto
         }
 
         /**
+         * Used to register features into the game using the mod event bus
+         *
+         * @param featureRegistryEvent The registry event with which features will be registered
+         */
+        @SubscribeEvent
+        public static void onFeaturesRegistry(final RegistryEvent.Register<Feature<?>> featureRegistryEvent) {
+            LOGGER.info("HELLO from Register Feature");
+
+            featureRegistryEvent.getRegistry().register(new CherryBlossomTreeFeature(false));
+            featureRegistryEvent.getRegistry().register(new LargeCherryBlossomTreeFeature(false));
+        }
+
+        /**
+         * Used to register foliage placers into the game using the mod event bus
+         *
+         * @param foliagePlacerRegistryEvent The registry event with which foliage placers will be registered
+         */
+        @SubscribeEvent
+        public static void onFoliagePlacerRegistry(final RegistryEvent.Register<FoliagePlacerType<?>> foliagePlacerRegistryEvent) {
+            LOGGER.info("HELLO from Register Foliage Placer");
+
+            foliagePlacerRegistryEvent.getRegistry().register(new CherryBlossomFoliagePlacerType());
+        }
+
+        /**
          * Used to register particle types into the game using the mod event bus
          *
          * @param particleTypeRegistryEvent The registry event with which particle types will be registered
@@ -239,6 +278,43 @@ public class CherryBlossomGrotto
 
             BlockColors blockColors = event.getBlockColors();
             //blockColors.register(GrassBlockColor.instance, ModBlocks.GRASS);
+        }
+    }
+
+    /**
+     * Inner class for world generation feature event registers.
+     * Foliage placers take parameters for adding additional offsets to the foliage's height and specifying the desired radius.
+     * Trunk placers take in a base height and two additional randomizers which will add to the overall height for extra randomness.
+     * TwoLayerFeature generates a loose "boundary" around other generated features to ensure that trees don't form too close to others
+     */
+    @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
+    public static class WorldGenRegistryEventHandler {
+        public static ConfiguredFeature<BaseTreeFeatureConfig, ?> CHERRY_TREE;
+
+        @SubscribeEvent
+        public static void setup(FMLCommonSetupEvent event) {
+            BaseTreeFeatureConfig cherryBlossomConfig = (new BaseTreeFeatureConfig.Builder(
+                    new SimpleBlockStateProvider(ModBlocks.CHERRY_LOG.defaultBlockState()),
+                    new SimpleBlockStateProvider(ModBlocks.CHERRY_LEAVES.defaultBlockState()),
+                    new CherryBlossomFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(0)),
+                    new CherryBlossomTrunkPlacer(4, 2, 2),
+                    new TwoLayerFeature(1, 0, 2))
+            ).ignoreVines().build();
+            CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree_config", Feature.TREE.configured(cherryBlossomConfig));
+        }
+    }
+
+    /**
+     * Inner class for different event registers used by the mod for world generation
+     */
+    @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
+    public static class TrunkPlacerRegistryEventHandler {
+        public static TrunkPlacerType<CherryBlossomTrunkPlacer> CHERRY_TREE_TRUNK_PLACER;
+
+        @SubscribeEvent
+        public static void setup(FMLCommonSetupEvent event) throws InvocationTargetException, InstantiationException, IllegalAccessException {
+            TrunkPlacerType<CherryBlossomTrunkPlacer> trunkPlacerType = CherryBlossomTrunkPlaceType.createTrunkPlacerType(CherryBlossomTrunkPlacer.CODEC);
+            CHERRY_TREE_TRUNK_PLACER = Registry.register(Registry.TRUNK_PLACER_TYPES, MOD_ID + ":cherry_blossom_tree_trunk_placer", trunkPlacerType);
         }
     }
 

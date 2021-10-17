@@ -14,7 +14,6 @@ import java.util.Random;
 public class CherryLeavesTileEntity extends TileEntity implements ITickableTileEntity {
     public CherryLeavesTileEntity() {
         super(ModTileEntityData.CHERRY_LEAVES_TILE_DATA);
-        System.out.println(CherryBlossomGrotto.RegistryEvents.cherryLeavesDataType);
     }
 
     /**
