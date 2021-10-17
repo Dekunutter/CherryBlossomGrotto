@@ -168,6 +168,9 @@ public class CherryBlossomGrotto
             blockRegistryEvent.getRegistry().register(new CherryBlossomPetals());
 
             blockRegistryEvent.getRegistry().register(new CherryBlossomSapling());
+
+            //NOTE: Just a test on overriding base game blocks directly in the registry
+            //blockRegistryEvent.getRegistry().register(new DirtTest());
         }
 
         public static TileEntityType<CherryLeavesTileEntity> cherryLeavesDataType;
@@ -196,8 +199,8 @@ public class CherryBlossomGrotto
 
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_LEAVES, new Item.Properties()).setRegistryName("cherry_blossom_leaves"));
 
-            //itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.GRASS, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("grass_block"));
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PETALS, new Item.Properties()).setRegistryName("cherry_blossom_petals"));
+            //itemRegistryEvent.getRegistry().register(new BlockItem(OverriddenBlocks.DIRT, new Item.Properties()).setRegistryName("dirt"));
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_SAPLING, new Item.Properties()).setRegistryName("cherry_blossom_sapling"));
         }
 
