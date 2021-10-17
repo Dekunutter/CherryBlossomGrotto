@@ -1,9 +1,6 @@
 package com.deku.cherryblossomgrotto;
 
 import com.deku.cherryblossomgrotto.common.blocks.*;
-import com.deku.cherryblossomgrotto.common.features.CherryBlossomTreeFeature;
-import com.deku.cherryblossomgrotto.common.features.LargeCherryBlossomTreeFeature;
-import com.deku.cherryblossomgrotto.common.features.ModFeatures;
 import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalFactory;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
 import com.deku.cherryblossomgrotto.common.tileEntities.CherryLeavesTileEntity;
@@ -216,19 +213,6 @@ public class CherryBlossomGrotto
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PETALS, new Item.Properties()).setRegistryName("cherry_blossom_petals"));
             //itemRegistryEvent.getRegistry().register(new BlockItem(OverriddenBlocks.DIRT, new Item.Properties()).setRegistryName("dirt"));
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_SAPLING, new Item.Properties()).setRegistryName("cherry_blossom_sapling"));
-        }
-
-        /**
-         * Used to register features into the game using the mod event bus
-         *
-         * @param featureRegistryEvent The registry event with which features will be registered
-         */
-        @SubscribeEvent
-        public static void onFeaturesRegistry(final RegistryEvent.Register<Feature<?>> featureRegistryEvent) {
-            LOGGER.info("HELLO from Register Feature");
-
-            featureRegistryEvent.getRegistry().register(new CherryBlossomTreeFeature(false));
-            featureRegistryEvent.getRegistry().register(new LargeCherryBlossomTreeFeature(false));
         }
 
         /**
