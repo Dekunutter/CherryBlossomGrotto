@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "cherryblossomgrotto:block/cherry_blossom_leaves"
+      },
+      {
+        "model": "cherryblossomgrotto:block/cherry_blossom_leaves",
+        "y": 90
+      },
+      {
+        "model": "cherryblossomgrotto:block/cherry_blossom_leaves",
+        "y": 180
+      },
+      {
+        "model": "cherryblossomgrotto:block/cherry_blossom_leaves",
+        "y": 270
+      }
+    ]
+  }
+}
