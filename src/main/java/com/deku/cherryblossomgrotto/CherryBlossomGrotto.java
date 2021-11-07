@@ -4,9 +4,13 @@ import com.deku.cherryblossomgrotto.common.blocks.*;
 import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalFactory;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
 import com.deku.cherryblossomgrotto.common.tileEntities.CherryLeavesTileEntity;
+import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.BigCherryBlossomFoliagePlacer;
+import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.BigCherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.CherryBlossomFoliagePlacer;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.CherryBlossomFoliagePlacerType;
-import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.CherryBlossomTrunkPlaceType;
+import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.BigCherryBlossomTrunkPlacer;
+import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.BigCherryBlossomTrunkPlacerType;
+import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.CherryBlossomTrunkPlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.CherryBlossomTrunkPlacer;
 import com.deku.cherryblossomgrotto.utils.LogTweaker;
 import com.google.common.collect.ImmutableMap;
@@ -225,6 +229,7 @@ public class CherryBlossomGrotto
             LOGGER.info("HELLO from Register Foliage Placer");
 
             foliagePlacerRegistryEvent.getRegistry().register(new CherryBlossomFoliagePlacerType());
+            foliagePlacerRegistryEvent.getRegistry().register(new BigCherryBlossomFoliagePlacerType());
         }
 
         /**
@@ -274,6 +279,7 @@ public class CherryBlossomGrotto
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
     public static class WorldGenRegistryEventHandler {
         public static ConfiguredFeature<BaseTreeFeatureConfig, ?> CHERRY_TREE;
+        public static ConfiguredFeature<BaseTreeFeatureConfig, ?> BIG_CHERRY_TREE;
 
         @SubscribeEvent
         public static void setup(FMLCommonSetupEvent event) {
@@ -285,6 +291,16 @@ public class CherryBlossomGrotto
                     new TwoLayerFeature(1, 0, 2))
             ).ignoreVines().build();
             CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree_config", Feature.TREE.configured(cherryBlossomConfig));
+
+            BaseTreeFeatureConfig bigCherryBlossomConfig = (new BaseTreeFeatureConfig.Builder(
+                    new SimpleBlockStateProvider(ModBlocks.CHERRY_LOG.defaultBlockState()),
+                    new SimpleBlockStateProvider(ModBlocks.CHERRY_LEAVES.defaultBlockState()),
+                    new BigCherryBlossomFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(0)),
+                    new BigCherryBlossomTrunkPlacer(9, 2, 3),
+                    new TwoLayerFeature(1, 1, 2))
+            ).ignoreVines().build();
+            BIG_CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":big_cherry_blossom_tree_config", Feature.TREE.configured(bigCherryBlossomConfig));
+
         }
     }
 
@@ -294,11 +310,15 @@ public class CherryBlossomGrotto
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
     public static class TrunkPlacerRegistryEventHandler {
         public static TrunkPlacerType<CherryBlossomTrunkPlacer> CHERRY_TREE_TRUNK_PLACER;
+        public static TrunkPlacerType<BigCherryBlossomTrunkPlacer> BIG_CHERRY_TREE_TRUNK_PLACER;
 
         @SubscribeEvent
         public static void setup(FMLCommonSetupEvent event) throws InvocationTargetException, InstantiationException, IllegalAccessException {
-            TrunkPlacerType<CherryBlossomTrunkPlacer> trunkPlacerType = CherryBlossomTrunkPlaceType.createTrunkPlacerType(CherryBlossomTrunkPlacer.CODEC);
-            CHERRY_TREE_TRUNK_PLACER = Registry.register(Registry.TRUNK_PLACER_TYPES, MOD_ID + ":cherry_blossom_tree_trunk_placer", trunkPlacerType);
+            TrunkPlacerType<CherryBlossomTrunkPlacer> cherryBlossomTrunkPlacerType = CherryBlossomTrunkPlacerType.createTrunkPlacerType(CherryBlossomTrunkPlacer.CODEC);
+            CHERRY_TREE_TRUNK_PLACER = Registry.register(Registry.TRUNK_PLACER_TYPES, MOD_ID + ":cherry_blossom_tree_trunk_placer", cherryBlossomTrunkPlacerType);
+
+            TrunkPlacerType<BigCherryBlossomTrunkPlacer> bigCherryBlossomTrunkPlacerType = BigCherryBlossomTrunkPlacerType.createTrunkPlacerType(BigCherryBlossomTrunkPlacer.CODEC);
+            BIG_CHERRY_TREE_TRUNK_PLACER = Registry.register(Registry.TRUNK_PLACER_TYPES, MOD_ID + ":big_cherry_blossom_tree_trunk_placer", bigCherryBlossomTrunkPlacerType);
         }
     }
 

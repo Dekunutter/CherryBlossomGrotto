@@ -29,6 +29,6 @@ public class CherryBlossomTree extends BigTree {
      */
     @Nullable
     protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getConfiguredMegaFeature(Random random) {
-        return null;
+        return CherryBlossomGrotto.WorldGenRegistryEventHandler.BIG_CHERRY_TREE;
     }
 }

@@ -19,8 +19,8 @@ import java.util.Set;
 import static com.deku.cherryblossomgrotto.CherryBlossomGrotto.TrunkPlacerRegistryEventHandler.CHERRY_TREE_TRUNK_PLACER;
 
 public class CherryBlossomTrunkPlacer extends AbstractTrunkPlacer {
-    public static final Codec<CherryBlossomTrunkPlacer> CODEC = RecordCodecBuilder.create((p_236897_0_) ->
-            trunkPlacerParts(p_236897_0_).apply(p_236897_0_, CherryBlossomTrunkPlacer::new)
+    public static final Codec<CherryBlossomTrunkPlacer> CODEC = RecordCodecBuilder.create((instance) ->
+            trunkPlacerParts(instance).apply(instance, CherryBlossomTrunkPlacer::new)
     );
 
     private final int FOLIAGE_RADIUS_OFFSET = 1;

@@ -6,4 +6,7 @@ import net.minecraftforge.registries.ObjectHolder;
 public class ModFoliagePlacers {
     @ObjectHolder("cherry_blossom_tree_foliage_placer")
     public static CherryBlossomFoliagePlacerType CHERRY_TREE_FOLIAGE_PLACER;
+
+    @ObjectHolder("big_cherry_blossom_tree_foliage_placer")
+    public static BigCherryBlossomFoliagePlacerType BIG_CHERRY_TREE_FOLIAGE_PLACER;
 }

@@ -13,12 +13,12 @@ import net.minecraft.world.gen.foliageplacer.FoliagePlacerType;
 import java.util.Random;
 import java.util.Set;
 
-public class CherryBlossomFoliagePlacer extends FoliagePlacer {
-    public static final Codec<CherryBlossomFoliagePlacer> CODEC = RecordCodecBuilder.create((instance) ->
-        foliagePlacerParts(instance).apply(instance, CherryBlossomFoliagePlacer::new)
+public class BigCherryBlossomFoliagePlacer extends FoliagePlacer {
+    public static final Codec<BigCherryBlossomFoliagePlacer> CODEC = RecordCodecBuilder.create((instance) ->
+            foliagePlacerParts(instance).apply(instance, BigCherryBlossomFoliagePlacer::new)
     );
 
-    public CherryBlossomFoliagePlacer(FeatureSpread radius, FeatureSpread heightOffset) {
+    public BigCherryBlossomFoliagePlacer(FeatureSpread radius, FeatureSpread heightOffset) {
         super(radius, heightOffset);
     }
 
@@ -29,7 +29,7 @@ public class CherryBlossomFoliagePlacer extends FoliagePlacer {
      */
     @Override
     protected FoliagePlacerType<?> type() {
-        return ModFoliagePlacers.CHERRY_TREE_FOLIAGE_PLACER;
+        return ModFoliagePlacers.BIG_CHERRY_TREE_FOLIAGE_PLACER;
     }
 
     /**
@@ -50,11 +50,16 @@ public class CherryBlossomFoliagePlacer extends FoliagePlacer {
      */
     @Override
     protected void createFoliage(IWorldGenerationReader worldGenReader, Random random, BaseTreeFeatureConfig treeConfig, int trunkLength, Foliage foliage, int foliageHeight, int foliageRadius, Set<BlockPos> placedBlockPositions, int offsetY, MutableBoundingBox boundingBox) {
-        boolean isDoubleTrunk = foliage.doubleTrunk();
-        BlockPos foliageStartPosition = foliage.foliagePos().above(offsetY);
-        this.placeLeavesRow(worldGenReader, random, treeConfig, foliageStartPosition, foliageRadius + foliage.radiusOffset(), placedBlockPositions, -1 - foliageHeight, isDoubleTrunk, boundingBox);
-        this.placeLeavesRow(worldGenReader, random, treeConfig, foliageStartPosition, foliageRadius - 1, placedBlockPositions, -foliageHeight, isDoubleTrunk, boundingBox);
-        this.placeLeavesRow(worldGenReader, random, treeConfig, foliageStartPosition, foliageRadius + foliage.radiusOffset() - 1, placedBlockPositions, 0, isDoubleTrunk, boundingBox);
+        this.placeLeavesRow(worldGenReader, random, treeConfig, foliage.foliagePos(), 1, placedBlockPositions, 1, false, boundingBox);
+        System.out.println("Foliage height is " + foliageHeight);
+        System.out.println("Foliage position is " + foliage.foliagePos());
+        for(int positionY = 0; positionY > -foliageHeight; positionY--) {
+            System.out.println("TRYING AT Y POSITION " + positionY);
+            int radius = Math.max(foliageRadius + foliage.radiusOffset() - 1 - positionY, 0);
+            System.out.println("WITH RADIUS " + radius);
+            this.placeLeavesRow(worldGenReader, random, treeConfig, foliage.foliagePos(), radius, placedBlockPositions, positionY, false, boundingBox);
+        }
+        this.placeLeavesRow(worldGenReader, random, treeConfig, foliage.foliagePos(), 2, placedBlockPositions, -foliageHeight, false, boundingBox);
     }
 
     /**
@@ -68,7 +73,7 @@ public class CherryBlossomFoliagePlacer extends FoliagePlacer {
      */
     @Override
     public int foliageHeight(Random random, int p_230374_2_, BaseTreeFeatureConfig treeConfig) {
-        return 0;
+        return 3;
     }
 
     /**

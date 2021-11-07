@@ -8,7 +8,7 @@ import net.minecraft.world.gen.trunkplacer.TrunkPlacerType;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-public class CherryBlossomTrunkPlaceType {
+public class CherryBlossomTrunkPlacerType {
     /**
      * Builds a trunk placer type for our cherry blossom tree.
      * Since TrunkPlacerType in the source is privatized we need to use reflection.
