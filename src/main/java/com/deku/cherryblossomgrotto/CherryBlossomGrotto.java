@@ -27,6 +27,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.particles.ParticleType;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundCategory;
@@ -186,6 +187,9 @@ public class CherryBlossomGrotto
 
             //NOTE: Just a test on overriding base game blocks directly in the registry
             //blockRegistryEvent.getRegistry().register(new DirtTest());
+
+            blockRegistryEvent.getRegistry().register(new ZenLantern());
+            blockRegistryEvent.getRegistry().register(new SoulZenLantern());
         }
 
         public static TileEntityType<CherryLeavesTileEntity> cherryLeavesDataType;
@@ -217,6 +221,9 @@ public class CherryBlossomGrotto
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PETALS, new Item.Properties()).setRegistryName("cherry_blossom_petals"));
             //itemRegistryEvent.getRegistry().register(new BlockItem(OverriddenBlocks.DIRT, new Item.Properties()).setRegistryName("dirt"));
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_SAPLING, new Item.Properties()).setRegistryName("cherry_blossom_sapling"));
+
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.ZEN_LANTERN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("zen_lantern"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.SOUL_ZEN_LANTERN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("soul_zen_lantern"));
         }
 
         /**

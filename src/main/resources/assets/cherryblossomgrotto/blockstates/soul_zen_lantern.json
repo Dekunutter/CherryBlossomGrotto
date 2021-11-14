@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "half=lower": { "model": "cherryblossomgrotto:block/zen_lantern_bottom" },
+    "half=upper": { "model" :  "cherryblossomgrotto:block/soul_zen_lantern_top" }
+  }
+}

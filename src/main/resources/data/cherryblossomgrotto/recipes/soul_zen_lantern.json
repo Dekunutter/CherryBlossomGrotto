@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "X#X",
+    "X X"
+  ],
+  "key": {
+    "X": [
+      {
+        "item": "minecraft:stone"
+      },
+      {
+        "item": "minecraft:cobblestone"
+      }
+    ],
+    "#": {
+      "item": "minecraft:soul_torch"
+    }
+  },
+  "result": {
+    "item": "cherryblossomgrotto:soul_zen_lantern"
+  }
+}
