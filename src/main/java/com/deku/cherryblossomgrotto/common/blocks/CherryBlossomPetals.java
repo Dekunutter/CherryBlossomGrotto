@@ -4,6 +4,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -155,7 +156,7 @@ public class CherryBlossomPetals extends Block {
      * Sets the correct state for the block upon its placement.
      * Allows for layers to be incremented upon further placement of the block from the item menu.
      *
-     * @param itemContext Usage context of the item interfacting with the block
+     * @param itemContext Usage context of the item interfacing with the block
      * @return Updated state of the block that was placed
      */
     @Override
@@ -197,14 +198,14 @@ public class CherryBlossomPetals extends Block {
     /**
      * Checks if the current block is a "free" block.
      * One that can be overwritten in place of a pile of cherry blossom petals
-     * Currently checks if the given block is an air block, a type of fire, liquid or is marked replaceable
+     * Currently checks if the given block is an air block, liquid or is marked replaceable
      *
      * @param state State of the block being checked
      * @return Whether the block is "free" for replacement by cherry blossom petals or not
      */
-    public static boolean isFree(BlockState state) {
+    public static boolean isFree(BlockState state, IWorld world, BlockPos position) {
         Material material = state.getMaterial();
-        return state.isAir() || state.is(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable();
+        return state.isAir() || material.isLiquid() || material.isReplaceable();
     }
 
     /**

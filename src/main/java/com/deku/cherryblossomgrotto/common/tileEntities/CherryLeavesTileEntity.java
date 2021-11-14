@@ -37,13 +37,16 @@ public class CherryLeavesTileEntity extends TileEntity implements ITickableTileE
             //TODO: Maybe put a height max on this rather than just tracing to 0. Plus more recent Minecraft versions go deeper, beyond 0 so need to adjust for that
             while (belowPosition.getY() >= 0) {
                 BlockState belowState = world.getBlockState(belowPosition);
-                if (!world.isEmptyBlock(belowPosition) || !CherryBlossomPetals.isFree(belowState)) {
+                if (!world.isEmptyBlock(belowPosition)) {
                     BlockPos spawningPosition = belowPosition.above();
-                    if (belowState.getBlock().is(ModBlocks.CHERRY_PETALS)) {
-                        CherryBlossomPetals petals = (CherryBlossomPetals) belowState.getBlock();
-                        petals.updateLayerState(belowPosition, world);
-                    } else if (world.isEmptyBlock(spawningPosition) || CherryBlossomPetals.isFree(world.getBlockState(spawningPosition))) {
-                        world.setBlockAndUpdate(spawningPosition, ModBlocks.CHERRY_PETALS.defaultBlockState());
+                    if (ModBlocks.CHERRY_PETALS.defaultBlockState().canSurvive(world, spawningPosition)) {
+                        if (belowState.getBlock().is(ModBlocks.CHERRY_PETALS)) {
+                            CherryBlossomPetals petals = (CherryBlossomPetals) belowState.getBlock();
+                            petals.updateLayerState(belowPosition, world);
+                        } else if (CherryBlossomPetals.isFree(world.getBlockState(spawningPosition), world, spawningPosition)) {
+                            System.out.println("DETERMINED AS FREE AT " + spawningPosition);
+                            world.setBlockAndUpdate(spawningPosition, ModBlocks.CHERRY_PETALS.defaultBlockState());
+                        }
                     }
                     break;
                 }
