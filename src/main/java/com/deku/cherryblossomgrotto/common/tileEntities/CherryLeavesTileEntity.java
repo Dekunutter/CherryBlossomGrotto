@@ -39,12 +39,11 @@ public class CherryLeavesTileEntity extends TileEntity implements ITickableTileE
                 BlockState belowState = world.getBlockState(belowPosition);
                 if (!world.isEmptyBlock(belowPosition)) {
                     BlockPos spawningPosition = belowPosition.above();
-                    if (ModBlocks.CHERRY_PETALS.defaultBlockState().canSurvive(world, spawningPosition)) {
-                        if (belowState.getBlock().is(ModBlocks.CHERRY_PETALS)) {
-                            CherryBlossomPetals petals = (CherryBlossomPetals) belowState.getBlock();
-                            petals.updateLayerState(belowPosition, world);
-                        } else if (CherryBlossomPetals.isFree(world.getBlockState(spawningPosition), world, spawningPosition)) {
-                            System.out.println("DETERMINED AS FREE AT " + spawningPosition);
+                    if (belowState.getBlock().is(ModBlocks.CHERRY_PETALS)) {
+                        CherryBlossomPetals petals = (CherryBlossomPetals) belowState.getBlock();
+                        petals.updateLayerState(belowPosition, world);
+                    } else if (CherryBlossomPetals.isFree(world.getBlockState(spawningPosition), world, spawningPosition)) {
+                        if (ModBlocks.CHERRY_PETALS.defaultBlockState().canSurvive(world, spawningPosition)) {
                             world.setBlockAndUpdate(spawningPosition, ModBlocks.CHERRY_PETALS.defaultBlockState());
                         }
                     }
