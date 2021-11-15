@@ -4,8 +4,6 @@ import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.DoubleBlockHalf;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -29,7 +27,7 @@ public class CherryBlossomPetals extends Block {
     };
 
     public CherryBlossomPetals() {
-        super(AbstractBlock.Properties.of(Material.LEAVES).strength(0.1f).sound(SoundType.GRASS).noOcclusion().requiresCorrectToolForDrops());
+        super(AbstractBlock.Properties.of(Material.LEAVES).strength(0.1f).sound(SoundType.GRASS).noOcclusion());
         setRegistryName("cherry_blossom_petals");
         this.registerDefaultState(this.defaultBlockState().setValue(HALF_LAYERS, 1));
     }

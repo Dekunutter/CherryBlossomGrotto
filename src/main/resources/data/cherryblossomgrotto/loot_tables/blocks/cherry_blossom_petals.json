@@ -1,0 +1,190 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:alternatives",
+              "conditions": [
+                {
+                  "condition": "minecraft:inverted",
+                  "term": {
+                    "condition": "minecraft:match_tool",
+                    "predicate": {
+                      "enchantments": [
+                        {
+                          "enchantment": "minecraft:silk_touch",
+                          "levels": {
+                            "min": 1
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "condition": "minecraft:block_state_property",
+                      "block": "cherryblossomgrotto:cherry_blossom_petals",
+                      "properties": {
+                        "half_layers": "1"
+                      }
+                    }
+                  ],
+                  "name": "cherryblossomgrotto:cherry_blossom_petal"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "condition": "minecraft:block_state_property",
+                      "block": "cherryblossomgrotto:cherry_blossom_petals",
+                      "properties": {
+                        "half_layers": "2"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "function": "minecraft:set_count",
+                      "count": 2
+                    }
+                  ],
+                  "name": "cherryblossomgrotto:cherry_blossom_petal"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "condition": "minecraft:block_state_property",
+                      "block": "cherryblossomgrotto:cherry_blossom_petals",
+                      "properties": {
+                        "half_layers": "3"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "function": "minecraft:set_count",
+                      "count": 3
+                    }
+                  ],
+                  "name": "cherryblossomgrotto:cherry_blossom_petal"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "condition": "minecraft:block_state_property",
+                      "block": "cherryblossomgrotto:cherry_blossom_petals",
+                      "properties": {
+                        "half_layers": "4"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "function": "minecraft:set_count",
+                      "count": 4
+                    }
+                  ],
+                  "name": "cherryblossomgrotto:cherry_blossom_petal"
+                }
+              ]
+            },
+            {
+              "type": "minecraft:alternatives",
+              "children": [
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "condition": "minecraft:block_state_property",
+                      "block": "cherryblossomgrotto:cherry_blossom_petals",
+                      "properties": {
+                        "half_layers": "1"
+                      }
+                    }
+                  ],
+                  "name": "cherryblossomgrotto:cherry_blossom_petals"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "condition": "minecraft:block_state_property",
+                      "block": "cherryblossomgrotto:cherry_blossom_petals",
+                      "properties": {
+                        "half_layers": "2"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "function": "minecraft:set_count",
+                      "count": 2
+                    }
+                  ],
+                  "name": "cherryblossomgrotto:cherry_blossom_petals"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "condition": "minecraft:block_state_property",
+                      "block": "cherryblossomgrotto:cherry_blossom_petals",
+                      "properties": {
+                        "half_layers": "3"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "function": "minecraft:set_count",
+                      "count": 3
+                    }
+                  ],
+                  "name": "cherryblossomgrotto:cherry_blossom_petals"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "condition": "minecraft:block_state_property",
+                      "block": "cherryblossomgrotto:cherry_blossom_petals",
+                      "properties": {
+                        "half_layers": "4"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "function": "minecraft:set_count",
+                      "count": 4
+                    }
+                  ],
+                  "name": "cherryblossomgrotto:cherry_blossom_petals"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:entity_properties",
+          "predicate": {},
+          "entity": "this"
+        }
+      ]
+    }
+  ]
+}

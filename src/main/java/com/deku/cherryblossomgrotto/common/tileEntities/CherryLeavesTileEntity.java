@@ -1,6 +1,5 @@
 package com.deku.cherryblossomgrotto.common.tileEntities;
 
-import com.deku.cherryblossomgrotto.CherryBlossomGrotto;
 import com.deku.cherryblossomgrotto.common.blocks.CherryBlossomPetals;
 import com.deku.cherryblossomgrotto.common.blocks.ModBlocks;
 import net.minecraft.block.BlockState;
