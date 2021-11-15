@@ -1,6 +1,7 @@
 package com.deku.cherryblossomgrotto;
 
 import com.deku.cherryblossomgrotto.common.blocks.*;
+import com.deku.cherryblossomgrotto.common.items.CherryBlossomPetal;
 import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalFactory;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
 import com.deku.cherryblossomgrotto.common.tileEntities.CherryLeavesTileEntity;
@@ -210,20 +211,22 @@ public class CherryBlossomGrotto
         public static void onItemsRegistry(final RegistryEvent.Register<Item> itemRegistryEvent) {
             LOGGER.info("HELLO from Register Item");
 
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_LOG, new Item.Properties()).setRegistryName("cherry_blossom_log"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.STRIPPED_CHERRY_LOG, new Item.Properties()).setRegistryName("stripped_cherry_blossom_log"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_WOOD, new Item.Properties()).setRegistryName("cherry_blossom_wood"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.STRIPPED_CHERRY_WOOD, new Item.Properties()).setRegistryName("stripped_cherry_blossom_wood"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PLANKS, new Item.Properties()).setRegistryName("cherry_blossom_planks"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_LOG, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_log"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.STRIPPED_CHERRY_LOG, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName("stripped_cherry_blossom_log"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_WOOD, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_wood"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.STRIPPED_CHERRY_WOOD, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName("stripped_cherry_blossom_wood"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PLANKS, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_planks"));
 
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_LEAVES, new Item.Properties()).setRegistryName("cherry_blossom_leaves"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_LEAVES, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("cherry_blossom_leaves"));
 
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PETALS, new Item.Properties()).setRegistryName("cherry_blossom_petals"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PETALS, new Item.Properties().tab(ItemGroup.TAB_MISC)).setRegistryName("cherry_blossom_petals"));
             //itemRegistryEvent.getRegistry().register(new BlockItem(OverriddenBlocks.DIRT, new Item.Properties()).setRegistryName("dirt"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_SAPLING, new Item.Properties()).setRegistryName("cherry_blossom_sapling"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_SAPLING, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("cherry_blossom_sapling"));
 
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.ZEN_LANTERN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("zen_lantern"));
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.SOUL_ZEN_LANTERN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("soul_zen_lantern"));
+
+            itemRegistryEvent.getRegistry().register(new CherryBlossomPetal());
         }
 
         /**
