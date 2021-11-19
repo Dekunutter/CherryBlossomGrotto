@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "type=bottom": { "model": "cherryblossomgrotto:block/cherry_blossom_slab" },
+    "type=double": { "model": "cherryblossomgrotto:block/cherry_blossom_planks" },
+    "type=top": { "model": "cherryblossomgrotto:block/cherry_blossom_slab_top" }
+  }
+}

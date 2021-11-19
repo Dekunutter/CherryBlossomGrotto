@@ -19,6 +19,12 @@ public class ModBlocks {
     @ObjectHolder("cherry_blossom_planks")
     public static CherryBlossomPlanks CHERRY_PLANKS;
 
+    @ObjectHolder("cherry_blossom_slab")
+    public static CherryBlossomSlab CHERRY_SLAB;
+
+    @ObjectHolder("cherry_blossom_stairs")
+    public static CherryBlossomStairs CHERRY_STAIRS;
+
     @ObjectHolder("cherry_blossom_leaves")
     public static CherryBlossomLeaves CHERRY_LEAVES;
 

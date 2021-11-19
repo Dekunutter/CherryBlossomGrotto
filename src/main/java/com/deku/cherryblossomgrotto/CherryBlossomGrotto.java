@@ -177,6 +177,8 @@ public class CherryBlossomGrotto
             blockRegistryEvent.getRegistry().register(new CherryBlossomWood());
             blockRegistryEvent.getRegistry().register(new StrippedCherryBlossomWood());
             blockRegistryEvent.getRegistry().register(new CherryBlossomPlanks());
+            blockRegistryEvent.getRegistry().register(new CherryBlossomSlab());
+            blockRegistryEvent.getRegistry().register(new CherryBlossomStairs());
 
             blockRegistryEvent.getRegistry().register(new CherryBlossomLeaves());
 
@@ -216,6 +218,8 @@ public class CherryBlossomGrotto
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_WOOD, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_wood"));
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.STRIPPED_CHERRY_WOOD, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName("stripped_cherry_blossom_wood"));
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PLANKS, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_planks"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_SLAB, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_slab"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_STAIRS, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_stairs"));
 
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_LEAVES, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("cherry_blossom_leaves"));
 
