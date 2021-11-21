@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button",
+  "textures": {
+    "texture": "cherryblossomgrotto:block/cherry_blossom_planks"
+  }
+}

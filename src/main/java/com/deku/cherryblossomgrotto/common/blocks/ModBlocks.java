@@ -25,6 +25,24 @@ public class ModBlocks {
     @ObjectHolder("cherry_blossom_stairs")
     public static CherryBlossomStairs CHERRY_STAIRS;
 
+    @ObjectHolder("cherry_blossom_button")
+    public static CherryBlossomButton CHERRY_BUTTON;
+
+    @ObjectHolder("cherry_blossom_fence")
+    public static CherryBlossomFence CHERRY_FENCE;
+
+    @ObjectHolder("cherry_blossom_fence_gate")
+    public static CherryBlossomFenceGate CHERRY_FENCE_GATE;
+
+    @ObjectHolder("cherry_blossom_pressure_plate")
+    public static CherryBlossomPressurePlate CHERRY_PRESSURE_PLATE;
+
+    @ObjectHolder("cherry_blossom_sign")
+    public static CherryBlossomSign CHERRY_SIGN;
+
+    @ObjectHolder("cherry_blossom_wall_sign")
+    public static CherryBlossomWallSign CHERRY_WALL_SIGN;
+
     @ObjectHolder("cherry_blossom_leaves")
     public static CherryBlossomLeaves CHERRY_LEAVES;
 

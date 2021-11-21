@@ -7,4 +7,7 @@ import net.minecraftforge.registries.ObjectHolder;
 public class ModTileEntityData {
     @ObjectHolder("cherry_leaves_tile_entity")
     public static TileEntityType<CherryLeavesTileEntity> CHERRY_LEAVES_TILE_DATA;
+
+    @ObjectHolder("cherry_sign_tile_entity")
+    public static TileEntityType<CherryBlossomSignTileEntity> CHERRY_SIGN_TILE_DATA;
 }

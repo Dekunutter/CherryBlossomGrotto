@@ -4,7 +4,9 @@ import com.deku.cherryblossomgrotto.common.blocks.*;
 import com.deku.cherryblossomgrotto.common.items.CherryBlossomPetal;
 import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalFactory;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
+import com.deku.cherryblossomgrotto.common.tileEntities.CherryBlossomSignTileEntity;
 import com.deku.cherryblossomgrotto.common.tileEntities.CherryLeavesTileEntity;
+import com.deku.cherryblossomgrotto.common.tileEntities.ModTileEntityData;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.BigCherryBlossomFoliagePlacer;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.BigCherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.CherryBlossomFoliagePlacer;
@@ -15,20 +17,16 @@ import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.CherryBlossomT
 import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.CherryBlossomTrunkPlacer;
 import com.deku.cherryblossomgrotto.utils.LogTweaker;
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.RotatedPillarBlock;
+import net.minecraft.block.*;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.color.BlockColors;
+import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
+import net.minecraft.item.*;
 import net.minecraft.particles.ParticleType;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundCategory;
@@ -56,6 +54,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -115,17 +114,31 @@ public class CherryBlossomGrotto
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> clientOnlyRegistrar::registerClientOnlyEvents);
     }
 
+    /**
+     * Sets up logic that is common to both the client and server
+     *
+     * In this case we are registering our custom wood types so that we can use associated resources.
+     *
+     * @param event The setup event
+     */
     private void setup(final FMLCommonSetupEvent event)
     {
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT");
+
+        event.enqueueWork(() -> {
+            WoodType.register(ModWoodType.CHERRY_BLOSSOM);
+        });
     }
 
     /**
      * Sets up client specific logic, such as rendering types.
      *
-     * In this case we are adding the cut-out render type to our custom grass block so
-     * that overlays display properly on that block.
+     * In this case we are performing the following:
+     * - adding the cut-out render type to our custom grass block so that overlays display properly on that block.
+     * - Rendering some textures as cutout mipmaps so that opacity is adhered to
+     * - Binding the sign renderer to our custom sign tile entity.
+     * - Adding our custom wood types to the atlas, which enables them to be valid sign materials.
      *
      * @param event The client setup event
      */
@@ -136,6 +149,12 @@ public class CherryBlossomGrotto
         //RenderTypeLookup.setRenderLayer(ModBlocks.GRASS, RenderType.cutout());
         RenderTypeLookup.setRenderLayer(ModBlocks.CHERRY_PETALS, RenderType.cutoutMipped());
         RenderTypeLookup.setRenderLayer(ModBlocks.CHERRY_SAPLING, RenderType.cutoutMipped());
+
+        ClientRegistry.bindTileEntityRenderer(ModTileEntityData.CHERRY_SIGN_TILE_DATA, SignTileEntityRenderer::new);
+
+        event.enqueueWork(() -> {
+            Atlases.addWoodType(ModWoodType.CHERRY_BLOSSOM);
+        });
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
@@ -179,6 +198,12 @@ public class CherryBlossomGrotto
             blockRegistryEvent.getRegistry().register(new CherryBlossomPlanks());
             blockRegistryEvent.getRegistry().register(new CherryBlossomSlab());
             blockRegistryEvent.getRegistry().register(new CherryBlossomStairs());
+            blockRegistryEvent.getRegistry().register(new CherryBlossomButton());
+            blockRegistryEvent.getRegistry().register(new CherryBlossomFence());
+            blockRegistryEvent.getRegistry().register(new CherryBlossomFenceGate());
+            blockRegistryEvent.getRegistry().register(new CherryBlossomPressurePlate());
+            blockRegistryEvent.getRegistry().register(new CherryBlossomSign());
+            blockRegistryEvent.getRegistry().register(new CherryBlossomWallSign());
 
             blockRegistryEvent.getRegistry().register(new CherryBlossomLeaves());
 
@@ -195,13 +220,21 @@ public class CherryBlossomGrotto
             blockRegistryEvent.getRegistry().register(new SoulZenLantern());
         }
 
-        public static TileEntityType<CherryLeavesTileEntity> cherryLeavesDataType;
-
+        /**
+         * Used to register tile entities into the game using the mod event bus
+         * Associated entity tile data is assigned before registration
+         *
+         * @param tileEntityRegistryEvent The registry event with which tile entities will be registered
+         */
         @SubscribeEvent
         public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> tileEntityRegistryEvent) {
-            cherryLeavesDataType = TileEntityType.Builder.of(CherryLeavesTileEntity::new, ModBlocks.CHERRY_LEAVES.getBlock()).build(null);
+            TileEntityType<CherryLeavesTileEntity> cherryLeavesDataType = TileEntityType.Builder.of(CherryLeavesTileEntity::new, ModBlocks.CHERRY_LEAVES.getBlock()).build(null);
             cherryLeavesDataType.setRegistryName("cherryblossomgrotto:cherry_leaves_tile_entity");
             tileEntityRegistryEvent.getRegistry().register(cherryLeavesDataType);
+
+            TileEntityType<CherryBlossomSignTileEntity> cherrySignDataType = TileEntityType.Builder.of(CherryBlossomSignTileEntity::new, ModBlocks.CHERRY_SIGN.getBlock(), ModBlocks.CHERRY_WALL_SIGN.getBlock()).build(null);
+            cherrySignDataType.setRegistryName("cherryblossomgrotto:cherry_sign_tile_entity");
+            tileEntityRegistryEvent.getRegistry().register(cherrySignDataType);
         }
 
         /**
@@ -220,6 +253,11 @@ public class CherryBlossomGrotto
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PLANKS, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_planks"));
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_SLAB, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_slab"));
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_STAIRS, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_stairs"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_BUTTON, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("cherry_blossom_button"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_FENCE, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("cherry_blossom_fence"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_FENCE_GATE, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("cherry_blossom_fence_gate"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PRESSURE_PLATE, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("cherry_blossom_pressure_plate"));
+            itemRegistryEvent.getRegistry().register(new SignItem(new Item.Properties().tab(ItemGroup.TAB_DECORATIONS), ModBlocks.CHERRY_SIGN, ModBlocks.CHERRY_WALL_SIGN).setRegistryName("cherry_blossom_sign"));
 
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_LEAVES, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("cherry_blossom_leaves"));
 
