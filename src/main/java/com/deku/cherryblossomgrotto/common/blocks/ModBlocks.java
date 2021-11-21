@@ -43,6 +43,9 @@ public class ModBlocks {
     @ObjectHolder("cherry_blossom_wall_sign")
     public static CherryBlossomWallSign CHERRY_WALL_SIGN;
 
+    @ObjectHolder("cherry_blossom_door")
+    public static CherryBlossomDoor CHERRY_DOOR;
+
     @ObjectHolder("cherry_blossom_leaves")
     public static CherryBlossomLeaves CHERRY_LEAVES;
 

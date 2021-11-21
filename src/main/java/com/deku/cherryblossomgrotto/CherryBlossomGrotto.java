@@ -204,6 +204,7 @@ public class CherryBlossomGrotto
             blockRegistryEvent.getRegistry().register(new CherryBlossomPressurePlate());
             blockRegistryEvent.getRegistry().register(new CherryBlossomSign());
             blockRegistryEvent.getRegistry().register(new CherryBlossomWallSign());
+            blockRegistryEvent.getRegistry().register(new CherryBlossomDoor());
 
             blockRegistryEvent.getRegistry().register(new CherryBlossomLeaves());
 
@@ -258,6 +259,7 @@ public class CherryBlossomGrotto
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_FENCE_GATE, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("cherry_blossom_fence_gate"));
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PRESSURE_PLATE, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("cherry_blossom_pressure_plate"));
             itemRegistryEvent.getRegistry().register(new SignItem(new Item.Properties().tab(ItemGroup.TAB_DECORATIONS), ModBlocks.CHERRY_SIGN, ModBlocks.CHERRY_WALL_SIGN).setRegistryName("cherry_blossom_sign"));
+            itemRegistryEvent.getRegistry().register(new TallBlockItem(ModBlocks.CHERRY_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("cherry_blossom_door"));
 
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_LEAVES, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("cherry_blossom_leaves"));
 
@@ -265,8 +267,8 @@ public class CherryBlossomGrotto
             //itemRegistryEvent.getRegistry().register(new BlockItem(OverriddenBlocks.DIRT, new Item.Properties()).setRegistryName("dirt"));
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_SAPLING, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("cherry_blossom_sapling"));
 
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.ZEN_LANTERN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("zen_lantern"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.SOUL_ZEN_LANTERN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("soul_zen_lantern"));
+            itemRegistryEvent.getRegistry().register(new TallBlockItem(ModBlocks.ZEN_LANTERN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("zen_lantern"));
+            itemRegistryEvent.getRegistry().register(new TallBlockItem(ModBlocks.SOUL_ZEN_LANTERN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("soul_zen_lantern"));
 
             itemRegistryEvent.getRegistry().register(new CherryBlossomPetal());
         }
