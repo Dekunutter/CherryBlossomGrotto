@@ -1,6 +1,10 @@
 package com.deku.cherryblossomgrotto;
 
+import com.deku.cherryblossomgrotto.client.ModBoatRenderer;
 import com.deku.cherryblossomgrotto.common.blocks.*;
+import com.deku.cherryblossomgrotto.common.entity.item.ModBoatEntity;
+import com.deku.cherryblossomgrotto.common.entity.item.ModEntityData;
+import com.deku.cherryblossomgrotto.common.items.CherryBlossomBoat;
 import com.deku.cherryblossomgrotto.common.items.CherryBlossomPetal;
 import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalFactory;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
@@ -24,6 +28,9 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
@@ -55,6 +62,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -145,6 +153,8 @@ public class CherryBlossomGrotto
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
         LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
+
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityData.MOD_BOAT_DATA, ModBoatRenderer::new);
 
         //RenderTypeLookup.setRenderLayer(ModBlocks.GRASS, RenderType.cutout());
         RenderTypeLookup.setRenderLayer(ModBlocks.CHERRY_PETALS, RenderType.cutoutMipped());
@@ -262,6 +272,7 @@ public class CherryBlossomGrotto
             itemRegistryEvent.getRegistry().register(new SignItem(new Item.Properties().tab(ItemGroup.TAB_DECORATIONS), ModBlocks.CHERRY_SIGN, ModBlocks.CHERRY_WALL_SIGN).setRegistryName("cherry_blossom_sign"));
             itemRegistryEvent.getRegistry().register(new TallBlockItem(ModBlocks.CHERRY_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("cherry_blossom_door"));
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("cherry_blossom_trapdoor"));
+            itemRegistryEvent.getRegistry().register(new CherryBlossomBoat());
 
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_LEAVES, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("cherry_blossom_leaves"));
 
@@ -273,6 +284,19 @@ public class CherryBlossomGrotto
             itemRegistryEvent.getRegistry().register(new TallBlockItem(ModBlocks.SOUL_ZEN_LANTERN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("soul_zen_lantern"));
 
             itemRegistryEvent.getRegistry().register(new CherryBlossomPetal());
+        }
+
+        /**
+         * Used to register entities into the game using the mod event bus
+         * Associated entity data is assigned before registration
+         *
+         * @param entityRegistryEvent The registry event with which entities will be registered
+         */
+        @SubscribeEvent
+        public static void onEntityRegistry(final RegistryEvent.Register<EntityType<?>> entityRegistryEvent) {
+            EntityType<Entity> modBoatEntity = EntityType.Builder.of(ModBoatEntity::new, EntityClassification.MISC).setCustomClientFactory(ModBoatEntity::new).sized(1.375f, 0.5625f).clientTrackingRange(10).build("mod_boat");
+            modBoatEntity.setRegistryName("cherryblossomgrotto:mod_boat_entity");
+            entityRegistryEvent.getRegistry().register(modBoatEntity);
         }
 
         /**
