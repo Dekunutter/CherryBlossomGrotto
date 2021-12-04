@@ -6,8 +6,10 @@ import com.deku.cherryblossomgrotto.common.entity.item.ModBoatEntity;
 import com.deku.cherryblossomgrotto.common.entity.item.ModEntityData;
 import com.deku.cherryblossomgrotto.common.items.CherryBlossomBoat;
 import com.deku.cherryblossomgrotto.common.items.CherryBlossomPetal;
+import com.deku.cherryblossomgrotto.common.items.Katana;
 import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalFactory;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
+import com.deku.cherryblossomgrotto.common.recipes.FoldingRecipe;
 import com.deku.cherryblossomgrotto.common.tileEntities.CherryBlossomSignTileEntity;
 import com.deku.cherryblossomgrotto.common.tileEntities.CherryLeavesTileEntity;
 import com.deku.cherryblossomgrotto.common.tileEntities.ModTileEntityData;
@@ -34,8 +36,11 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.SpecialRecipeSerializer;
 import net.minecraft.particles.ParticleType;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -52,6 +57,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -284,6 +290,8 @@ public class CherryBlossomGrotto
             itemRegistryEvent.getRegistry().register(new TallBlockItem(ModBlocks.SOUL_ZEN_LANTERN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("soul_zen_lantern"));
 
             itemRegistryEvent.getRegistry().register(new CherryBlossomPetal());
+
+            itemRegistryEvent.getRegistry().register(new Katana());
         }
 
         /**
@@ -297,6 +305,20 @@ public class CherryBlossomGrotto
             EntityType<Entity> modBoatEntity = EntityType.Builder.of(ModBoatEntity::new, EntityClassification.MISC).setCustomClientFactory(ModBoatEntity::new).sized(1.375f, 0.5625f).clientTrackingRange(10).build("mod_boat");
             modBoatEntity.setRegistryName("cherryblossomgrotto:mod_boat_entity");
             entityRegistryEvent.getRegistry().register(modBoatEntity);
+        }
+
+        /**
+         * Used to register recipe serializers into the game using the mod event bus
+         *
+         * @param recipeSerializerRegistryEvent The registry event with which recipe serializers will be registered
+         */
+        @SubscribeEvent
+        public static void onRecipeRegistry(final RegistryEvent.Register<IRecipeSerializer<?>> recipeSerializerRegistryEvent) {
+            LOGGER.info("HELLO from Register Recipe Serializer");
+
+            SpecialRecipeSerializer<FoldingRecipe> foldingSerializer = new SpecialRecipeSerializer<>(FoldingRecipe::new);
+            foldingSerializer.setRegistryName(new ResourceLocation(MOD_ID,"folding"));
+            recipeSerializerRegistryEvent.getRegistry().register(foldingSerializer);
         }
 
         /**
@@ -407,6 +429,16 @@ public class CherryBlossomGrotto
      */
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.FORGE)
     public static class EventHandler {
+        /**
+         * Used to handle changes to item attribute modifiers on vanilla items.
+         * Called whenever a player equips/unequips an item or whenever an item's tooltip is being renderred.
+         *
+         * @param event The event object that is built when an item needs to check its attribute modifiers
+         */
+        @SubscribeEvent
+        public static void itemAttributeModifier(ItemAttributeModifierEvent event) {
+        }
+
         /**
          * Used to handle events that occur when a chunk is loaded.
          * Currently this replaces any base game grass blocks with the mod's overridden grass block.

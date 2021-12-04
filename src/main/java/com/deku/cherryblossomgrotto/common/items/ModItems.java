@@ -9,4 +9,7 @@ public class ModItems {
 
     @ObjectHolder("cherry_blossom_boat")
     public static CherryBlossomBoat CHERRY_BOAT;
+
+    @ObjectHolder("katana")
+    public static Katana KATANA;
 }
