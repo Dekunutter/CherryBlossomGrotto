@@ -302,6 +302,8 @@ public class CherryBlossomGrotto
          */
         @SubscribeEvent
         public static void onEntityRegistry(final RegistryEvent.Register<EntityType<?>> entityRegistryEvent) {
+            LOGGER.info("HELLO from Register Entity");
+
             EntityType<Entity> modBoatEntity = EntityType.Builder.of(ModBoatEntity::new, EntityClassification.MISC).setCustomClientFactory(ModBoatEntity::new).sized(1.375f, 0.5625f).clientTrackingRange(10).build("mod_boat");
             modBoatEntity.setRegistryName("cherryblossomgrotto:mod_boat_entity");
             entityRegistryEvent.getRegistry().register(modBoatEntity);
