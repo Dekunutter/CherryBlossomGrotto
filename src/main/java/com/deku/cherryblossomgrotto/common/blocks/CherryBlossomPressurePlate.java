@@ -8,7 +8,7 @@ import net.minecraft.block.material.MaterialColor;
 
 public class CherryBlossomPressurePlate extends PressurePlateBlock {
     public CherryBlossomPressurePlate() {
-        super(PressurePlateBlock.Sensitivity.EVERYTHING, AbstractBlock.Properties.of(Material.WOOD, MaterialColor.WOOD).noCollission().strength(0.5F).sound(SoundType.WOOD));
+        super(PressurePlateBlock.Sensitivity.EVERYTHING, AbstractBlock.Properties.of(Material.WOOD, MaterialColor.TERRACOTTA_RED).noCollission().strength(0.5F).sound(SoundType.WOOD));
         setRegistryName("cherry_blossom_pressure_plate");
     }
 }

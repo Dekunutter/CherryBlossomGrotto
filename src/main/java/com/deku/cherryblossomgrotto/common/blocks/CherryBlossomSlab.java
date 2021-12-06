@@ -12,7 +12,7 @@ import net.minecraft.world.IBlockReader;
 
 public class CherryBlossomSlab extends SlabBlock {
     public CherryBlossomSlab() {
-        super(AbstractBlock.Properties.of(Material.WOOD, MaterialColor.WOOD).strength(2.0f, 3.0f).sound(SoundType.WOOD));
+        super(AbstractBlock.Properties.of(Material.WOOD, MaterialColor.TERRACOTTA_RED).strength(2.0f, 3.0f).sound(SoundType.WOOD));
         setRegistryName("cherry_blossom_slab");
     }
 

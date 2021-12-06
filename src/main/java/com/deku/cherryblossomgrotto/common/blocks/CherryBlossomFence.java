@@ -8,7 +8,7 @@ import net.minecraft.block.material.MaterialColor;
 
 public class CherryBlossomFence extends FenceBlock {
     public CherryBlossomFence() {
-        super(AbstractBlock.Properties.of(Material.WOOD, MaterialColor.WOOD).strength(2.0f, 3.0f).sound(SoundType.WOOD));
+        super(AbstractBlock.Properties.of(Material.WOOD, MaterialColor.TERRACOTTA_RED).strength(2.0f, 3.0f).sound(SoundType.WOOD));
         setRegistryName("cherry_blossom_fence");
     }
 }

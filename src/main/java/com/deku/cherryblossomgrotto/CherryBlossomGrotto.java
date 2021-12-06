@@ -236,6 +236,17 @@ public class CherryBlossomGrotto
 
             blockRegistryEvent.getRegistry().register(new ZenLantern());
             blockRegistryEvent.getRegistry().register(new SoulZenLantern());
+
+            blockRegistryEvent.getRegistry().register(new StoneTrapdoor());
+            blockRegistryEvent.getRegistry().register(new SmoothStoneTrapdoor());
+            blockRegistryEvent.getRegistry().register(new CobblestoneTrapdoor());
+            blockRegistryEvent.getRegistry().register(new OakPlanksTrapdoor());
+            blockRegistryEvent.getRegistry().register(new DarkOakPlanksTrapdoor());
+            blockRegistryEvent.getRegistry().register(new AcaciaPlanksTrapdoor());
+            blockRegistryEvent.getRegistry().register(new JunglePlanksTrapdoor());
+            blockRegistryEvent.getRegistry().register(new SprucePlanksTrapdoor());
+            blockRegistryEvent.getRegistry().register(new BirchPlanksTrapdoor());
+            blockRegistryEvent.getRegistry().register(new CherryBlossomPlanksTrapdoor());
         }
 
         /**
@@ -292,6 +303,17 @@ public class CherryBlossomGrotto
             itemRegistryEvent.getRegistry().register(new CherryBlossomPetal());
 
             itemRegistryEvent.getRegistry().register(new Katana());
+
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.ACACIA_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("acacia_planks_trapdoor"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.BIRCH_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("birch_planks_trapdoor"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.DARK_OAK_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("dark_oak_planks_trapdoor"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.JUNGLE_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("jungle_planks_trapdoor"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.OAK_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("oak_planks_trapdoor"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.SPRUCE_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("spruce_planks_trapdoor"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_BLOSSOM_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("cherry_blossom_planks_trapdoor"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.SMOOTH_STONE_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("smooth_stone_trapdoor"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.STONE_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("stone_trapdoor"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.COBBLESTONE_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("cobblestone_trapdoor"));
         }
 
         /**

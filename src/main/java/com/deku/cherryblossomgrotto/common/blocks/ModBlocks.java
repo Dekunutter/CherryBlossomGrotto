@@ -66,4 +66,34 @@ public class ModBlocks {
 
     @ObjectHolder("soul_zen_lantern")
     public static SoulZenLantern SOUL_ZEN_LANTERN;
+
+    @ObjectHolder("acacia_planks_trapdoor")
+    public static AcaciaPlanksTrapdoor ACACIA_PLANKS_TRAP_DOOR;
+
+    @ObjectHolder("birch_planks_trapdoor")
+    public static BirchPlanksTrapdoor BIRCH_PLANKS_TRAP_DOOR;
+
+    @ObjectHolder("dark_oak_planks_trapdoor")
+    public static DarkOakPlanksTrapdoor DARK_OAK_PLANKS_TRAP_DOOR;
+
+    @ObjectHolder("jungle_planks_trapdoor")
+    public static JunglePlanksTrapdoor JUNGLE_PLANKS_TRAP_DOOR;
+
+    @ObjectHolder("oak_planks_trapdoor")
+    public static OakPlanksTrapdoor OAK_PLANKS_TRAP_DOOR;
+
+    @ObjectHolder("spruce_planks_trapdoor")
+    public static SprucePlanksTrapdoor SPRUCE_PLANKS_TRAP_DOOR;
+
+    @ObjectHolder("cherry_blossom_planks_trapdoor")
+    public static CherryBlossomPlanksTrapdoor CHERRY_BLOSSOM_PLANKS_TRAP_DOOR;
+
+    @ObjectHolder("smooth_stone_trapdoor")
+    public static SmoothStoneTrapdoor SMOOTH_STONE_TRAP_DOOR;
+
+    @ObjectHolder("stone_trapdoor")
+    public static StoneTrapdoor STONE_TRAP_DOOR;
+
+    @ObjectHolder("cobblestone_trapdoor")
+    public static CobblestoneTrapdoor COBBLESTONE_TRAP_DOOR;
 }

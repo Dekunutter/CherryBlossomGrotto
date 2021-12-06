@@ -10,7 +10,7 @@ import net.minecraft.world.IBlockReader;
 
 public class CherryBlossomWallSign extends WallSignBlock {
     public CherryBlossomWallSign() {
-        super(Properties.of(Material.WOOD, MaterialColor.COLOR_RED).noCollission().strength(1.0F).sound(SoundType.WOOD).lootFrom(() -> ModBlocks.CHERRY_SIGN), ModWoodType.CHERRY_BLOSSOM);
+        super(Properties.of(Material.WOOD, MaterialColor.TERRACOTTA_RED).noCollission().strength(1.0F).sound(SoundType.WOOD).lootFrom(() -> ModBlocks.CHERRY_SIGN), ModWoodType.CHERRY_BLOSSOM);
         setRegistryName("cherry_blossom_wall_sign");
     }
 
