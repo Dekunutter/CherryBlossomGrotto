@@ -61,6 +61,9 @@ public class ModBlocks {
     @ObjectHolder("cherry_blossom_sapling")
     public static CherryBlossomSapling CHERRY_SAPLING;
 
+    @ObjectHolder("potted_cherry_blossom_sapling")
+    public static PottedCherryBlossomSapling POTTED_CHERRY_SAPLING;
+
     @ObjectHolder("zen_lantern")
     public static ZenLantern ZEN_LANTERN;
 

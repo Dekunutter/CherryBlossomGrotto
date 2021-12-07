@@ -165,6 +165,7 @@ public class CherryBlossomGrotto
         //RenderTypeLookup.setRenderLayer(ModBlocks.GRASS, RenderType.cutout());
         RenderTypeLookup.setRenderLayer(ModBlocks.CHERRY_PETALS, RenderType.cutoutMipped());
         RenderTypeLookup.setRenderLayer(ModBlocks.CHERRY_SAPLING, RenderType.cutoutMipped());
+        RenderTypeLookup.setRenderLayer(ModBlocks.POTTED_CHERRY_SAPLING, RenderType.cutoutMipped());
 
         ClientRegistry.bindTileEntityRenderer(ModTileEntityData.CHERRY_SIGN_TILE_DATA, SignTileEntityRenderer::new);
 
@@ -230,6 +231,7 @@ public class CherryBlossomGrotto
             blockRegistryEvent.getRegistry().register(new CherryBlossomPetals());
 
             blockRegistryEvent.getRegistry().register(new CherryBlossomSapling());
+            blockRegistryEvent.getRegistry().register(new PottedCherryBlossomSapling());
 
             //NOTE: Just a test on overriding base game blocks directly in the registry
             //blockRegistryEvent.getRegistry().register(new DirtTest());
@@ -296,6 +298,7 @@ public class CherryBlossomGrotto
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PETALS, new Item.Properties().tab(ItemGroup.TAB_MISC)).setRegistryName("cherry_blossom_petals"));
             //itemRegistryEvent.getRegistry().register(new BlockItem(OverriddenBlocks.DIRT, new Item.Properties()).setRegistryName("dirt"));
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_SAPLING, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("cherry_blossom_sapling"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.POTTED_CHERRY_SAPLING, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("potted_cherry_blossom_sapling"));
 
             itemRegistryEvent.getRegistry().register(new TallBlockItem(ModBlocks.ZEN_LANTERN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("zen_lantern"));
             itemRegistryEvent.getRegistry().register(new TallBlockItem(ModBlocks.SOUL_ZEN_LANTERN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("soul_zen_lantern"));
