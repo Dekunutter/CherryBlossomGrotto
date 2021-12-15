@@ -2,10 +2,14 @@
   "type": "minecraft:crafting_shaped",
   "group": "wooden_trapdoor",
   "pattern": [
+    "XXX",
     "###",
     "###"
   ],
   "key": {
+    "X": {
+      "item": "cherryblossomgrotto:cherry_blossom_petal"
+    },
     "#": {
       "item": "minecraft:cobblestone"
     }
