@@ -1,6 +1,6 @@
 package com.deku.cherryblossomgrotto.common.blocks;
 
-import com.deku.cherryblossomgrotto.CherryBlossomGrotto;
+import com.deku.cherryblossomgrotto.Main;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.world.ClientWorld;
@@ -64,7 +64,7 @@ public class NewGrassBlock extends net.minecraft.block.GrassBlock {
      */
     public void coverWithCherryBlossomPetals(ClientWorld world, BlockPos position, BlockState state) {
         world.setBlock(position, state.setValue(ModBlockStateProperties.CHERRY_BLOSSOM_PETAL_COVERED, true), 2);
-        CherryBlossomGrotto.LOGGER.info("Cherry state is " + state.getValue(ModBlockStateProperties.CHERRY_BLOSSOM_PETAL_COVERED));
+        Main.LOGGER.info("Cherry state is " + state.getValue(ModBlockStateProperties.CHERRY_BLOSSOM_PETAL_COVERED));
     }
 
     /**

@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import static com.deku.cherryblossomgrotto.CherryBlossomGrotto.MOD_ID;
+import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
 @OnlyIn(Dist.CLIENT)
 public class ModBoatRenderer extends BoatRenderer {

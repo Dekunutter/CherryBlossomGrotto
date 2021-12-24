@@ -1,6 +1,5 @@
 package com.deku.cherryblossomgrotto.common.features;
 
-import com.deku.cherryblossomgrotto.CherryBlossomGrotto;
 import net.minecraft.block.trees.BigTree;
 import net.minecraft.world.gen.feature.*;
 
@@ -8,9 +7,10 @@ import javax.annotation.Nullable;
 import java.util.Random;
 
 
-public class CherryBlossomTree extends BigTree {
+public class CherryBlossomTreeSpawner extends BigTree {
     /***
-     * Determines the tree feature that this class will grow
+     * Determines the tree feature that this class will grow.
+     * Has a chance to spawn the tree with a beehivce if bees are enabled by the spawner.
      *
      * @param random Randomizer for differentiating tree sub-types if needed
      * @param hasBees Whether the tree can support bees
@@ -18,7 +18,7 @@ public class CherryBlossomTree extends BigTree {
      */
     @Nullable
     protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getConfiguredFeature(Random random, boolean hasBees) {
-        return CherryBlossomGrotto.WorldGenRegistryEventHandler.CHERRY_TREE;
+        return hasBees ? ModFeatures.CHERRY_TREE_BEES_005 : ModFeatures.CHERRY_TREE;
     }
 
     /**
@@ -29,6 +29,6 @@ public class CherryBlossomTree extends BigTree {
      */
     @Nullable
     protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getConfiguredMegaFeature(Random random) {
-        return CherryBlossomGrotto.WorldGenRegistryEventHandler.BIG_CHERRY_TREE;
+        return ModFeatures.BIG_CHERRY_TREE;
     }
 }

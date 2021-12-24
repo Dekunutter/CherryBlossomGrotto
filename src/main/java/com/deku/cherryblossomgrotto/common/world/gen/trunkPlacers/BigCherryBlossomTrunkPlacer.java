@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import static com.deku.cherryblossomgrotto.CherryBlossomGrotto.TrunkPlacerRegistryEventHandler.BIG_CHERRY_TREE_TRUNK_PLACER;
+import static com.deku.cherryblossomgrotto.Main.TrunkPlacerRegistryEventHandler.BIG_CHERRY_TREE_TRUNK_PLACER;
 
 public class BigCherryBlossomTrunkPlacer extends GiantTrunkPlacer {
     public static final Codec<BigCherryBlossomTrunkPlacer> CODEC = RecordCodecBuilder.create((instance) ->

@@ -4,6 +4,7 @@ import com.deku.cherryblossomgrotto.client.ModBoatRenderer;
 import com.deku.cherryblossomgrotto.common.blocks.*;
 import com.deku.cherryblossomgrotto.common.entity.item.ModBoatEntity;
 import com.deku.cherryblossomgrotto.common.entity.item.ModEntityData;
+import com.deku.cherryblossomgrotto.common.features.*;
 import com.deku.cherryblossomgrotto.common.items.CherryBlossomBoat;
 import com.deku.cherryblossomgrotto.common.items.CherryBlossomPetal;
 import com.deku.cherryblossomgrotto.common.items.Katana;
@@ -13,15 +14,16 @@ import com.deku.cherryblossomgrotto.common.recipes.FoldingRecipe;
 import com.deku.cherryblossomgrotto.common.tileEntities.CherryBlossomSignTileEntity;
 import com.deku.cherryblossomgrotto.common.tileEntities.CherryLeavesTileEntity;
 import com.deku.cherryblossomgrotto.common.tileEntities.ModTileEntityData;
-import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.BigCherryBlossomFoliagePlacer;
+import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeInitializer;
+import com.deku.cherryblossomgrotto.common.world.gen.blockstateprovider.CherryBlossomForestFlowerProviderType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.BigCherryBlossomFoliagePlacerType;
-import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.CherryBlossomFoliagePlacer;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.CherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.BigCherryBlossomTrunkPlacer;
 import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.BigCherryBlossomTrunkPlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.CherryBlossomTrunkPlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.CherryBlossomTrunkPlacer;
 import com.deku.cherryblossomgrotto.utils.LogTweaker;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.*;
 import net.minecraft.client.Minecraft;
@@ -47,11 +49,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunk;
+import net.minecraft.world.gen.blockplacer.DoublePlantBlockPlacer;
+import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
+import net.minecraft.world.gen.blockstateprovider.BlockStateProviderType;
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.foliageplacer.FoliagePlacerType;
+import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig;
+import net.minecraft.world.gen.placement.Placement;
+import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraft.world.gen.trunkplacer.TrunkPlacerType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
@@ -76,17 +85,20 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod(CherryBlossomGrotto.MOD_ID)
-public class CherryBlossomGrotto
+@Mod(Main.MOD_ID)
+public class Main
 {
     // TODO: Set to true to hide noise on console when mod is finished
     final boolean HIDE_CONSOLE_NOISE = false;
@@ -95,7 +107,7 @@ public class CherryBlossomGrotto
     public static final String MOD_ID = "cherryblossomgrotto";
 
     // Initialize logger
-    public static final Logger LOGGER = LogManager.getLogger(CherryBlossomGrotto.class);
+    public static final Logger LOGGER = LogManager.getLogger(Main.class);
 
     /**
      * Constructor for initializing the mod.
@@ -105,7 +117,7 @@ public class CherryBlossomGrotto
      *      - Registries
      *      - Ensuring client-only registrars only execute on a client
      */
-    public CherryBlossomGrotto() {
+    public Main() {
         if (HIDE_CONSOLE_NOISE) {
             LogTweaker.applyLogFilterLevel(Level.WARN);
         }
@@ -121,6 +133,10 @@ public class CherryBlossomGrotto
         eventBus.addListener(this::doClientStuff);
 
         ClientOnlyRegistrar clientOnlyRegistrar = new ClientOnlyRegistrar(eventBus);
+
+        // Biome logic
+        ModBiomeInitializer.BIOMES.register(eventBus);
+        ModBiomeInitializer.registerBiomes();
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -334,6 +350,51 @@ public class CherryBlossomGrotto
             entityRegistryEvent.getRegistry().register(modBoatEntity);
         }
 
+        public static final DeferredRegister<Biome> BIOME_DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.BIOMES, MOD_ID);
+
+        /**
+         * Used to register features into the game using the mod event bus
+         *
+         * @param featureRegistryEvent The registry event with which features will be registered
+         */
+        @SubscribeEvent
+        public static void onFeaturesRegistry(final RegistryEvent.Register<Feature<?>> featureRegistryEvent) {
+            LOGGER.info("HELLO from Register Feature");
+
+            //featureRegistryEvent.getRegistry().register(new CherryBlossomTreeFeature(false));
+            //featureRegistryEvent.getRegistry().register(new LargeCherryBlossomTreeFeature(false));
+
+            ModFeatures.CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree", new CherryBlossomTreeConfiguredFeature());
+            ModFeatures.BIG_CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":big_cherry_blossom_tree", new BigCherryBlossomTreeConfiguredFeature());
+            ModFeatures.CHERRY_TREE_BEES_0002 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree_bees_0002", new CherryBlossomTreeBees0002ConfiguredFeature());
+            ModFeatures.CHERRY_TREE_BEES_002 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree_bees_002", new CherryBlossomTreeBees002ConfiguredFeature());
+            ModFeatures.CHERRY_TREE_BEES_005 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree_bees_005", new CherryBlossomTreeBees005ConfiguredFeature());
+
+            // TODO: Might be able to get this to work in JSON if I registered the cherry trees in a deferred register using registryobjects (though that doesnt like configuredfeatures passed in for some reason)...
+            ModFeatures.CHERRY_TREE_FOREST = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest", Feature.RANDOM_SELECTOR.configured(new MultipleRandomFeatureConfig(ImmutableList.of(ModFeatures.BIG_CHERRY_TREE.weighted(0.01f)), ModFeatures.CHERRY_TREE_BEES_002)).decorated(Features.Placements.HEIGHTMAP_SQUARE).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(6, 0.1f, 1))));
+
+            // TODO: Add this forest flowers provider back in (it doesnt work with double block flowers) to spawn different groups later. Its useful code, just got replaced by the simpler list logic below
+            //ModFeatures.CHERRY_TREE_FOREST_FLOWERS = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest_flowers", Feature.FLOWER.configured((new BlockClusterFeatureConfig.Builder(CherryBlossomGrottoFlowerBlockStateProvider.INSTANCE, new DoublePlantBlockPlacer())).tries(64).build()).decorated(Features.Placements.ADD_32).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(100));
+
+            ImmutableList<Supplier<ConfiguredFeature<?, ?>>> CHERRY_BLOSSOM_FOREST_FLOWER_FEATURES = ImmutableList.of(() -> {
+                return Feature.RANDOM_PATCH.configured((new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(Blocks.LILAC.defaultBlockState()), new DoublePlantBlockPlacer())).tries(64).noProjection().build());
+            }, () -> {
+                return Feature.RANDOM_PATCH.configured((new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(Blocks.LILY_OF_THE_VALLEY.defaultBlockState()), SimpleBlockPlacer.INSTANCE)).tries(64).noProjection().build());
+            }, () -> {
+                return Feature.RANDOM_PATCH.configured((new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(Blocks.PEONY.defaultBlockState()), new DoublePlantBlockPlacer())).tries(64).noProjection().build());
+            }, () -> {
+                return Feature.NO_BONEMEAL_FLOWER.configured((new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(Blocks.ALLIUM.defaultBlockState()), SimpleBlockPlacer.INSTANCE)).tries(64).build());
+            });
+            ModFeatures.CHERRY_TREE_FOREST_FLOWERS = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest_flowers", Feature.SIMPLE_RANDOM_SELECTOR.configured(new SingleRandomFeature(CHERRY_BLOSSOM_FOREST_FLOWER_FEATURES)).count(FeatureSpread.of(-3, 4)).decorated(Features.Placements.ADD_32).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(15));
+        }
+
+        @SubscribeEvent
+        public static void onBlockStateProviderTypeRegistry(final RegistryEvent.Register<BlockStateProviderType<?>> blockStateProviderRegistryEvent) {
+            LOGGER.info("HELLO from Register Block State Provider Type");
+
+            blockStateProviderRegistryEvent.getRegistry().register(new CherryBlossomForestFlowerProviderType());
+        }
+
         /**
          * Used to register recipe serializers into the game using the mod event bus
          *
@@ -380,7 +441,7 @@ public class CherryBlossomGrotto
          */
         @SubscribeEvent
         public static void onParticleFactoryRegistry(final ParticleFactoryRegisterEvent particleFactoryRegistryEvent) {
-            CherryBlossomGrotto.LOGGER.info("HELLO from Register Particle Factory");
+            Main.LOGGER.info("HELLO from Register Particle Factory");
 
             Minecraft.getInstance().particleEngine.register(ModParticles.CHERRY_PETAL, FallingCherryBlossomPetalFactory::new);
         }
@@ -396,40 +457,6 @@ public class CherryBlossomGrotto
 
             BlockColors blockColors = event.getBlockColors();
             //blockColors.register(GrassBlockColor.instance, ModBlocks.GRASS);
-        }
-    }
-
-    /**
-     * Inner class for world generation feature event registers.
-     * Foliage placers take parameters for adding additional offsets to the foliage's height and specifying the desired radius.
-     * Trunk placers take in a base height and two additional randomizers which will add to the overall height for extra randomness.
-     * TwoLayerFeature generates a loose "boundary" around other generated features to ensure that trees don't form too close to others
-     */
-    @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-    public static class WorldGenRegistryEventHandler {
-        public static ConfiguredFeature<BaseTreeFeatureConfig, ?> CHERRY_TREE;
-        public static ConfiguredFeature<BaseTreeFeatureConfig, ?> BIG_CHERRY_TREE;
-
-        @SubscribeEvent
-        public static void setup(FMLCommonSetupEvent event) {
-            BaseTreeFeatureConfig cherryBlossomConfig = (new BaseTreeFeatureConfig.Builder(
-                    new SimpleBlockStateProvider(ModBlocks.CHERRY_LOG.defaultBlockState()),
-                    new SimpleBlockStateProvider(ModBlocks.CHERRY_LEAVES.defaultBlockState()),
-                    new CherryBlossomFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(0)),
-                    new CherryBlossomTrunkPlacer(4, 2, 2),
-                    new TwoLayerFeature(1, 0, 2))
-            ).ignoreVines().build();
-            CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree_config", Feature.TREE.configured(cherryBlossomConfig));
-
-            BaseTreeFeatureConfig bigCherryBlossomConfig = (new BaseTreeFeatureConfig.Builder(
-                    new SimpleBlockStateProvider(ModBlocks.CHERRY_LOG.defaultBlockState()),
-                    new SimpleBlockStateProvider(ModBlocks.CHERRY_LEAVES.defaultBlockState()),
-                    new BigCherryBlossomFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(0)),
-                    new BigCherryBlossomTrunkPlacer(9, 2, 3),
-                    new TwoLayerFeature(1, 1, 2))
-            ).ignoreVines().build();
-            BIG_CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":big_cherry_blossom_tree_config", Feature.TREE.configured(bigCherryBlossomConfig));
-
         }
     }
 

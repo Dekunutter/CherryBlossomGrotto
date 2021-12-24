@@ -1,6 +1,6 @@
 package com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers;
 
-import com.deku.cherryblossomgrotto.CherryBlossomGrotto;
+import com.deku.cherryblossomgrotto.Main;
 import com.deku.cherryblossomgrotto.common.utils.ForgeReflection;
 import com.mojang.serialization.Codec;
 import net.minecraft.world.gen.trunkplacer.TrunkPlacerType;
@@ -26,19 +26,19 @@ public class CherryBlossomTrunkPlacerType {
             if (constructorParameters.length == 1 && constructorParameters[0] == Codec.class) {
                 return (TrunkPlacerType<CherryBlossomTrunkPlacer>) constructor.newInstance(trunkPlacerCodec);
             } else {
-                CherryBlossomGrotto.LOGGER.error("Cherry Blossom Trunk Place Type instantiating with UNEXPECTED PARAMS");
+                Main.LOGGER.error("Cherry Blossom Trunk Place Type instantiating with UNEXPECTED PARAMS");
                 return null;
             }
         } catch (NullPointerException exception) {
-            CherryBlossomGrotto.LOGGER.error("Cherry Blossom Trunk Place Type NOT FOUND");
+            Main.LOGGER.error("Cherry Blossom Trunk Place Type NOT FOUND");
         } catch (InstantiationException exception) {
-            CherryBlossomGrotto.LOGGER.error("Cherry Blossom Trunk Place Type is instantiating an ABSTRACT CLASS");
+            Main.LOGGER.error("Cherry Blossom Trunk Place Type is instantiating an ABSTRACT CLASS");
             return null;
         } catch (IllegalAccessException exception) {
-            CherryBlossomGrotto.LOGGER.error("Cherry Blossom Trunk Place Type is instantiating with INCORRECT PARAMS");
+            Main.LOGGER.error("Cherry Blossom Trunk Place Type is instantiating with INCORRECT PARAMS");
         }
         catch (InvocationTargetException exception) {
-            CherryBlossomGrotto.LOGGER.error("Cherry Blossom Trunk Place Type is instantiating with an EXCEPTION");
+            Main.LOGGER.error("Cherry Blossom Trunk Place Type is instantiating with an EXCEPTION");
         }
         return null;
     }
