@@ -24,7 +24,9 @@
   },
   "starts": [
     "minecraft:village_plains",
-    "minecraft:ruined_portal"
+    "minecraft:ruined_portal",
+    "cherryblossomgrotto:configured_giant_buddha",
+    "cherryblossomgrotto:configured_torii_gate"
   ],
   "spawners": {
     "monster": [

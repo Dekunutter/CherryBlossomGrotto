@@ -18,6 +18,7 @@ import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeInitializer;
 import com.deku.cherryblossomgrotto.common.world.gen.blockstateprovider.CherryBlossomForestFlowerProviderType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.BigCherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.CherryBlossomFoliagePlacerType;
+import com.deku.cherryblossomgrotto.common.world.gen.structures.*;
 import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.BigCherryBlossomTrunkPlacer;
 import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.BigCherryBlossomTrunkPlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.CherryBlossomTrunkPlacerType;
@@ -50,8 +51,10 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunk;
+import net.minecraft.world.gen.FlatChunkGenerator;
 import net.minecraft.world.gen.blockplacer.DoublePlantBlockPlacer;
 import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
 import net.minecraft.world.gen.blockstateprovider.BlockStateProviderType;
@@ -60,8 +63,9 @@ import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.foliageplacer.FoliagePlacerType;
 import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig;
 import net.minecraft.world.gen.placement.Placement;
-import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
+import net.minecraft.world.gen.settings.DimensionStructuresSettings;
 import net.minecraft.world.gen.trunkplacer.TrunkPlacerType;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -69,8 +73,10 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ChunkEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -116,12 +122,19 @@ public class Main
      *      - Event Bus listeners
      *      - Registries
      *      - Ensuring client-only registrars only execute on a client
+     *      - Ensures that mod structure piece types are registered early
+     *      - Ensures that biomes are registered early
+     *      - Adds additional forge event listeners for biome and world loading events
      */
     public Main() {
         if (HIDE_CONSOLE_NOISE) {
             LogTweaker.applyLogFilterLevel(Level.WARN);
         }
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        // Structure logic
+        ModStructurePieceTypes.register();
+        ModStructureInitializer.STRUCTURES.register(eventBus);
 
         // Register the setup method for modloading
         eventBus.addListener(this::setup);
@@ -139,7 +152,10 @@ public class Main
         ModBiomeInitializer.registerBiomes();
 
         // Register ourselves for server and other game events we are interested in
-        MinecraftForge.EVENT_BUS.register(this);
+        IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
+        forgeEventBus.addListener(EventPriority.HIGH, this::biomeModification);
+        forgeEventBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
+        forgeEventBus.register(this);
 
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> clientOnlyRegistrar::registerClientOnlyEvents);
     }
@@ -148,6 +164,7 @@ public class Main
      * Sets up logic that is common to both the client and server
      *
      * In this case we are registering our custom wood types so that we can use associated resources.
+     * Then we initialize all our modded structures.
      *
      * @param event The setup event
      */
@@ -158,6 +175,8 @@ public class Main
 
         event.enqueueWork(() -> {
             WoodType.register(ModWoodType.CHERRY_BLOSSOM);
+            ModStructureInitializer.setupStructures();
+            ModConfiguredStructureInitializer.registerConfiguredStructures();
         });
     }
 
@@ -188,6 +207,69 @@ public class Main
         event.enqueueWork(() -> {
             Atlases.addWoodType(ModWoodType.CHERRY_BLOSSOM);
         });
+    }
+
+    /**
+     * Modifies biomes as they are loading into the world via a forge event.
+     * We ensure that modded structures can be loaded into specific vanilla biomes here
+     *
+     * @param event The event thrown by the biome being loaded.
+     */
+    private void biomeModification(final BiomeLoadingEvent event) {
+        if (event.getName().equals(Biomes.BAMBOO_JUNGLE.location())) {
+            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_GIANT_BUDDHA).addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_TORII_GATE);
+        }
+        if (event.getName().equals(Biomes.BAMBOO_JUNGLE_HILLS.location())) {
+            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_GIANT_BUDDHA).addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_TORII_GATE);
+        }
+        if (event.getName().equals(Biomes.JUNGLE.location())) {
+            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_GIANT_BUDDHA);
+        }
+        if (event.getName().equals(Biomes.JUNGLE_EDGE.location())) {
+            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_GIANT_BUDDHA);
+        }
+        if (event.getName().equals(Biomes.JUNGLE_HILLS.location())) {
+            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_GIANT_BUDDHA);
+        }
+        if (event.getName().equals(Biomes.MODIFIED_JUNGLE_EDGE.location())) {
+            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_GIANT_BUDDHA);
+        }
+        if (event.getName().equals(Biomes.MODIFIED_JUNGLE.location())) {
+            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_GIANT_BUDDHA);
+        }
+        if (event.getName().equals(Biomes.SNOWY_MOUNTAINS.location())) {
+            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_GIANT_BUDDHA).addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_TORII_GATE);
+        }
+        if (event.getName().equals(Biomes.SNOWY_TAIGA_MOUNTAINS.location())) {
+            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_GIANT_BUDDHA);
+        }
+        if (event.getName().equals(Biomes.GIANT_SPRUCE_TAIGA_HILLS.location())) {
+            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_GIANT_BUDDHA);
+        }
+        if (event.getName().equals(Biomes.BEACH.location())) {
+            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_TORII_GATE);
+        }
+    }
+
+    /**
+     * Adds dimensional spacing to all structures as they load into the world via a forge event.
+     * This function basically has the final say on if a structure can be spawned in a given dimension or generator.
+     * It blocks modded structures from spawning in flat worlds since that is preferred by those map types.
+     * It also adds modded structures to the vanilla structure config which allows the game to actually spawn the structures
+     * according to their separation settings.
+     *
+     * @param event The event thrown by the world being loaded
+     */
+    private void addDimensionalSpacing(final WorldEvent.Load event) {
+        if (event.getWorld() instanceof ServerWorld) {
+            ServerWorld serverWorld =  (ServerWorld) event.getWorld();
+            if (serverWorld.getChunkSource().getGenerator() instanceof FlatChunkGenerator && serverWorld.dimension().equals(World.OVERWORLD)) {
+                return;
+            }
+
+            serverWorld.getChunkSource().generator.getSettings().structureConfig().putIfAbsent(ModStructureInitializer.GIANT_BUDDHA.get(), DimensionStructuresSettings.DEFAULTS.get(ModStructureInitializer.GIANT_BUDDHA.get()));
+            serverWorld.getChunkSource().generator.getSettings().structureConfig().putIfAbsent(ModStructureInitializer.TORII_GATE.get(), DimensionStructuresSettings.DEFAULTS.get(ModStructureInitializer.TORII_GATE.get()));
+        }
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
