@@ -51,10 +51,10 @@ public class ShurikenRenderer extends EntityRenderer<ShurikenEntity> {
     public void render(ShurikenEntity entity, float yaw, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int packedLight) {
         matrixStack.pushPose();
 
+        applySpin(entity, matrixStack);
+
         matrixStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
         matrixStack.scale(RENDERED_SCALE_X, RENDERED_SCALE_Y, RENDERED_SCALE_Z);
-
-        applyInFlightSpin(entity, matrixStack);
 
         IVertexBuilder vertexBuilder = buffer.getBuffer(RenderType.entityCutout(this.getTextureLocation(entity)));
         MatrixStack.Entry stackEntry = matrixStack.last();
@@ -69,15 +69,13 @@ public class ShurikenRenderer extends EntityRenderer<ShurikenEntity> {
     }
 
     /**
-     * Applies additional rotation around the Z axis pivot while in flight to give the appearance of it spinning through the air
+     * Applies additional rotation around the Y axis pivot to give the appearance of it spinning through the air
      *
      * @param entity Entity to apply the spin to
      * @param matrixStack The rendering stack that holds the rendering co-ordinates of the entity
      */
-    private void applyInFlightSpin(ShurikenEntity entity, MatrixStack matrixStack) {
-        if (!entity.isOnGround()) {
-            matrixStack.mulPose(Vector3f.ZP.rotationDegrees(entity.spin * 3.0F));
-        }
+    private void applySpin(ShurikenEntity entity, MatrixStack matrixStack) {
+        matrixStack.mulPose(Vector3f.YP.rotationDegrees(entity.spin));
     }
 
     /**

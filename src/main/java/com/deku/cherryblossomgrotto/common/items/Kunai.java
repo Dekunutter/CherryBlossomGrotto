@@ -20,7 +20,7 @@ import java.util.function.Predicate;
 
 
 public class Kunai extends ShootableItem implements IVanishable {
-    private static final float VERTICAL_OFFSET = 0.0f;
+    private static final float FLIGHT_DROP = 0.0f;
     private static final float FLIGHT_SPEED = 1.5f;
     private static final float VARIATION = 5.0f;
 
@@ -44,7 +44,7 @@ public class Kunai extends ShootableItem implements IVanishable {
      */
     @Override
     public UseAction getUseAnimation(ItemStack itemStack) {
-        return UseAction.BLOCK;
+        return UseAction.BOW;
     }
 
     /**
@@ -77,7 +77,7 @@ public class Kunai extends ShootableItem implements IVanishable {
     public void releaseUsing(ItemStack itemstack, World world, LivingEntity user, int ticks) {
         if (!world.isClientSide) {
             KunaiEntity entity = new KunaiEntity(user, world);
-            entity.shootFromRotation(user, user.xRot, user.yRot, VERTICAL_OFFSET, FLIGHT_SPEED, VARIATION);
+            entity.shootFromRotation(user, user.xRot, user.yRot, FLIGHT_DROP, FLIGHT_SPEED, VARIATION);
             world.addFreshEntity(entity);
         }
 

@@ -97,8 +97,6 @@ public class ShurikenEntity extends AbstractArrowEntity implements IEntityAdditi
 
         if (!inGround) {
             spin += 100;
-        } else {
-            spin = 0;
         }
     }
 
