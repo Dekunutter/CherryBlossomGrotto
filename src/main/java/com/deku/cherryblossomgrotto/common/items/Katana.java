@@ -18,7 +18,7 @@ import static com.deku.cherryblossomgrotto.common.utils.VanillaAttributeUUIDs.AT
 
 public class Katana extends SwordItem {
     public Katana() {
-        super(ItemTier.IRON, 4, -2.4f, new Item.Properties().tab(ItemGroup.TAB_COMBAT));
+        super(ItemTier.IRON, 4, -3.4f, new Item.Properties().tab(ItemGroup.TAB_COMBAT));
         setRegistryName("katana");
     }
 
