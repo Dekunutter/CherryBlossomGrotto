@@ -1,13 +1,15 @@
 package com.deku.cherryblossomgrotto;
 
+import com.deku.cherryblossomgrotto.client.KunaiRenderer;
 import com.deku.cherryblossomgrotto.client.ModBoatRenderer;
+import com.deku.cherryblossomgrotto.client.ShurikenRenderer;
 import com.deku.cherryblossomgrotto.common.blocks.*;
 import com.deku.cherryblossomgrotto.common.entity.item.ModBoatEntity;
-import com.deku.cherryblossomgrotto.common.entity.item.ModEntityData;
+import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
+import com.deku.cherryblossomgrotto.common.entity.projectile.KunaiEntity;
+import com.deku.cherryblossomgrotto.common.entity.projectile.ShurikenEntity;
 import com.deku.cherryblossomgrotto.common.features.*;
-import com.deku.cherryblossomgrotto.common.items.CherryBlossomBoat;
-import com.deku.cherryblossomgrotto.common.items.CherryBlossomPetal;
-import com.deku.cherryblossomgrotto.common.items.Katana;
+import com.deku.cherryblossomgrotto.common.items.*;
 import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalFactory;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
 import com.deku.cherryblossomgrotto.common.recipes.FoldingRecipe;
@@ -196,6 +198,8 @@ public class Main
         LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
 
         RenderingRegistry.registerEntityRenderingHandler(ModEntityData.MOD_BOAT_DATA, ModBoatRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityData.KUNAI_DATA, KunaiRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityData.SHURIKEN_DATA, ShurikenRenderer::new);
 
         //RenderTypeLookup.setRenderLayer(ModBlocks.GRASS, RenderType.cutout());
         RenderTypeLookup.setRenderLayer(ModBlocks.CHERRY_PETALS, RenderType.cutoutMipped());
@@ -404,6 +408,8 @@ public class Main
             itemRegistryEvent.getRegistry().register(new CherryBlossomPetal());
 
             itemRegistryEvent.getRegistry().register(new Katana());
+            itemRegistryEvent.getRegistry().register(new Kunai());
+            itemRegistryEvent.getRegistry().register(new Shuriken());
 
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.ACACIA_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("acacia_planks_trapdoor"));
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.BIRCH_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("birch_planks_trapdoor"));
@@ -427,12 +433,18 @@ public class Main
         public static void onEntityRegistry(final RegistryEvent.Register<EntityType<?>> entityRegistryEvent) {
             LOGGER.info("HELLO from Register Entity");
 
-            EntityType<Entity> modBoatEntity = EntityType.Builder.of(ModBoatEntity::new, EntityClassification.MISC).setCustomClientFactory(ModBoatEntity::new).sized(1.375f, 0.5625f).clientTrackingRange(10).build("mod_boat");
-            modBoatEntity.setRegistryName("cherryblossomgrotto:mod_boat_entity");
+            EntityType<Entity> modBoatEntity = EntityType.Builder.of(ModBoatEntity::new, EntityClassification.MISC).setCustomClientFactory(ModBoatEntity::new).sized(1.375f, 0.5625f).clientTrackingRange(10).build("mod_boat_entity");
+            modBoatEntity.setRegistryName("mod_boat_entity");
             entityRegistryEvent.getRegistry().register(modBoatEntity);
-        }
 
-        public static final DeferredRegister<Biome> BIOME_DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.BIOMES, MOD_ID);
+            EntityType<Entity> kunaiEntity = EntityType.Builder.of(KunaiEntity::new, EntityClassification.MISC).setCustomClientFactory(KunaiEntity::new).sized(0.5f, 0.5f).clientTrackingRange(4).updateInterval(20).build("kunai_entity");
+            kunaiEntity.setRegistryName("kunai_entity");
+            entityRegistryEvent.getRegistry().register(kunaiEntity);
+
+            EntityType<Entity> shurikenEntity = EntityType.Builder.of(ShurikenEntity::new, EntityClassification.MISC).setCustomClientFactory(ShurikenEntity::new).sized(0.5f, 0.5f).clientTrackingRange(4).updateInterval(20).build("shuriken_entity");
+            shurikenEntity.setRegistryName("shuriken_entity");
+            entityRegistryEvent.getRegistry().register(shurikenEntity);
+        }
 
         /**
          * Used to register features into the game using the mod event bus

@@ -12,4 +12,10 @@ public class ModItems {
 
     @ObjectHolder("katana")
     public static Katana KATANA;
+
+    @ObjectHolder("kunai")
+    public static Kunai KUNAI;
+
+    @ObjectHolder("shuriken")
+    public static Shuriken SHURIKEN;
 }

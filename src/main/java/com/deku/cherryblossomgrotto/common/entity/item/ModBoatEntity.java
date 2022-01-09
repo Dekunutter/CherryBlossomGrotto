@@ -1,6 +1,7 @@
 package com.deku.cherryblossomgrotto.common.entity.item;
 
 import com.deku.cherryblossomgrotto.common.blocks.ModBlocks;
+import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
 import com.deku.cherryblossomgrotto.common.items.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
