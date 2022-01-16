@@ -11,8 +11,8 @@ public class NinjaSandals extends ArmorItem {
     private NinjaSuitModel armorModel;
 
     public NinjaSandals() {
-        super(ArmorMaterial.LEATHER, EquipmentSlotType.FEET, new Item.Properties().tab(ItemGroup.TAB_COMBAT));
-        setRegistryName("ninja_sandal");
+        super(ModArmorMaterial.WOOL, EquipmentSlotType.FEET, new Item.Properties().tab(ItemGroup.TAB_COMBAT));
+        setRegistryName("ninja_sandals");
         armorModel = new NinjaSuitModel();
     }
 

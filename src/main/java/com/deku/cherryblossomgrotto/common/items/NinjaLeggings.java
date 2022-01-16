@@ -7,12 +7,12 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 
-public class NinjaPants extends ArmorItem {
+public class NinjaLeggings extends ArmorItem {
     private NinjaSuitModel armorModel;
 
-    public NinjaPants() {
-        super(ArmorMaterial.LEATHER, EquipmentSlotType.LEGS, new Item.Properties().tab(ItemGroup.TAB_COMBAT));
-        setRegistryName("ninja_pants");
+    public NinjaLeggings() {
+        super(ModArmorMaterial.WOOL, EquipmentSlotType.LEGS, new Item.Properties().tab(ItemGroup.TAB_COMBAT));
+        setRegistryName("ninja_leggings");
         armorModel = new NinjaSuitModel();
     }
 

@@ -11,7 +11,7 @@ public class NinjaTunic extends ArmorItem {
     private NinjaSuitModel armorModel;
 
     public NinjaTunic() {
-        super(ArmorMaterial.LEATHER, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT));
+        super(ModArmorMaterial.WOOL, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT));
         setRegistryName("ninja_tunic");
         armorModel = new NinjaSuitModel();
     }

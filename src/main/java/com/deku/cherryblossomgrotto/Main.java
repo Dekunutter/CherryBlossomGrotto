@@ -411,7 +411,7 @@ public class Main
 
             itemRegistryEvent.getRegistry().register(new NinjaMask());
             itemRegistryEvent.getRegistry().register(new NinjaTunic());
-            itemRegistryEvent.getRegistry().register(new NinjaPants());
+            itemRegistryEvent.getRegistry().register(new NinjaLeggings());
             itemRegistryEvent.getRegistry().register(new NinjaSandals());
 
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.ACACIA_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("acacia_planks_trapdoor"));

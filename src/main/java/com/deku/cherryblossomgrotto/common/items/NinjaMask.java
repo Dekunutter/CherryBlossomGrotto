@@ -11,7 +11,7 @@ public class NinjaMask extends ArmorItem {
     private NinjaSuitModel armorModel;
 
     public NinjaMask() {
-        super(ArmorMaterial.LEATHER, EquipmentSlotType.HEAD, new Item.Properties().tab(ItemGroup.TAB_COMBAT));
+        super(ModArmorMaterial.WOOL, EquipmentSlotType.HEAD, new Item.Properties().tab(ItemGroup.TAB_COMBAT));
         setRegistryName("ninja_mask");
         armorModel = new NinjaSuitModel();
     }
