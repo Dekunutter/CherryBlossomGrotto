@@ -1,4 +1,4 @@
-package com.deku.cherryblossomgrotto.client;
+package com.deku.cherryblossomgrotto.client.renderers;
 
 import com.deku.cherryblossomgrotto.common.entity.item.ModBoatEntity;
 import net.minecraft.client.renderer.entity.BoatRenderer;

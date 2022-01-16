@@ -1,8 +1,8 @@
 package com.deku.cherryblossomgrotto;
 
-import com.deku.cherryblossomgrotto.client.KunaiRenderer;
-import com.deku.cherryblossomgrotto.client.ModBoatRenderer;
-import com.deku.cherryblossomgrotto.client.ShurikenRenderer;
+import com.deku.cherryblossomgrotto.client.renderers.KunaiRenderer;
+import com.deku.cherryblossomgrotto.client.renderers.ModBoatRenderer;
+import com.deku.cherryblossomgrotto.client.renderers.ShurikenRenderer;
 import com.deku.cherryblossomgrotto.common.blocks.*;
 import com.deku.cherryblossomgrotto.common.entity.item.ModBoatEntity;
 import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
@@ -52,7 +52,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunk;
@@ -71,6 +70,8 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
+import net.minecraftforge.client.event.RenderHandEvent;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.RegistryEvent;
@@ -93,8 +94,6 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -410,6 +409,11 @@ public class Main
             itemRegistryEvent.getRegistry().register(new Kunai());
             itemRegistryEvent.getRegistry().register(new Shuriken());
 
+            itemRegistryEvent.getRegistry().register(new NinjaMask());
+            itemRegistryEvent.getRegistry().register(new NinjaTunic());
+            itemRegistryEvent.getRegistry().register(new NinjaPants());
+            itemRegistryEvent.getRegistry().register(new NinjaSandals());
+
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.ACACIA_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("acacia_planks_trapdoor"));
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.BIRCH_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("birch_planks_trapdoor"));
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.DARK_OAK_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("dark_oak_planks_trapdoor"));
@@ -663,6 +667,24 @@ public class Main
                     world.setBlock(position, block.defaultBlockState().setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS)), 11);
                     event.getItemStack().hurtAndBreak(1, player, (p_220036_0_) -> p_220036_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
                 }
+            }
+        }
+
+        @SubscribeEvent
+        public static void onRenderPlayerEvent(RenderPlayerEvent.Pre event) {
+            // TODO: Try manipulating the player arm in here (or in the POST event) to perform an action
+            event.getRenderer().getModel().rightArm.visible = true;
+        }
+
+        @SubscribeEvent
+        public static void onRenderPlayerEvent(RenderPlayerEvent.Post event) {
+            //event.getRenderer().getModel().rightArm.translateAndRotate();
+            event.getRenderer().getModel().rightArm.visible = true;
+        }
+
+        @SubscribeEvent
+        public static void onRenderPlayerEvent(RenderHandEvent event) {
+            if (event.getItemStack().getItem() == ModItems.SHURIKEN) {
             }
         }
     }

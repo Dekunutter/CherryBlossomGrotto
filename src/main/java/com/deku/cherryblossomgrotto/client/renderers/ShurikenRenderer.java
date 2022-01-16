@@ -1,4 +1,4 @@
-package com.deku.cherryblossomgrotto.client;
+package com.deku.cherryblossomgrotto.client.renderers;
 
 import com.deku.cherryblossomgrotto.common.entity.projectile.ShurikenEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
