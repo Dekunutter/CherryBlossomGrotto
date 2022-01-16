@@ -41,7 +41,7 @@ public class NinjaSuitModel extends BipedModel<LivingEntity> {
 	public NinjaSuitModel() {
 		super(1.0f, 0, 128, 128);
 
-		texture = new ResourceLocation("cherryblossomgrotto:textures/item/ninja_suit.png").toString();
+		texture = new ResourceLocation("cherryblossomgrotto:textures/model/ninja_suit.png").toString();
 
 		helmet = new ModelRenderer(this);
 		helmet.setPos(0, 0, 0);
