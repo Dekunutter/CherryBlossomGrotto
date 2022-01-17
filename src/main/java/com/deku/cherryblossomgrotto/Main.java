@@ -413,6 +413,10 @@ public class Main
             itemRegistryEvent.getRegistry().register(new NinjaTunic());
             itemRegistryEvent.getRegistry().register(new NinjaLeggings());
             itemRegistryEvent.getRegistry().register(new NinjaSandals());
+            itemRegistryEvent.getRegistry().register(new KabutoHelmet());
+            itemRegistryEvent.getRegistry().register(new KabutoCuirass());
+            itemRegistryEvent.getRegistry().register(new KabutoGreaves());
+            itemRegistryEvent.getRegistry().register(new KabutoSandals());
 
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.ACACIA_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("acacia_planks_trapdoor"));
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.BIRCH_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("birch_planks_trapdoor"));
