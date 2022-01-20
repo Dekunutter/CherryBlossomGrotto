@@ -10,7 +10,7 @@
       "item": "minecraft:iron_ingot"
     },
     "X": {
-      "tag": "minecraft:red_dye"
+      "item": "minecraft:red_dye"
     }
   },
   "result": {
