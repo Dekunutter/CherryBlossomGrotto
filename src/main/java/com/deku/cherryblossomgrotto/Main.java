@@ -1,9 +1,14 @@
 package com.deku.cherryblossomgrotto;
 
+import com.deku.cherryblossomgrotto.client.network.handlers.DoubleJumpClientMessageHandler;
+import com.deku.cherryblossomgrotto.client.network.messages.DoubleJumpClientMessage;
 import com.deku.cherryblossomgrotto.client.renderers.KunaiRenderer;
 import com.deku.cherryblossomgrotto.client.renderers.ModBoatRenderer;
 import com.deku.cherryblossomgrotto.client.renderers.ShurikenRenderer;
 import com.deku.cherryblossomgrotto.common.blocks.*;
+import com.deku.cherryblossomgrotto.common.capabilities.DoubleJumpCapability;
+import com.deku.cherryblossomgrotto.common.capabilities.ModCapabilitiesInitializer;
+import com.deku.cherryblossomgrotto.common.enchantments.ModEnchantmentInitializer;
 import com.deku.cherryblossomgrotto.common.entity.item.ModBoatEntity;
 import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
 import com.deku.cherryblossomgrotto.common.entity.projectile.KunaiEntity;
@@ -16,6 +21,7 @@ import com.deku.cherryblossomgrotto.common.recipes.FoldingRecipe;
 import com.deku.cherryblossomgrotto.common.tileEntities.CherryBlossomSignTileEntity;
 import com.deku.cherryblossomgrotto.common.tileEntities.CherryLeavesTileEntity;
 import com.deku.cherryblossomgrotto.common.tileEntities.ModTileEntityData;
+import com.deku.cherryblossomgrotto.common.utils.ForgeReflection;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeInitializer;
 import com.deku.cherryblossomgrotto.common.world.gen.blockstateprovider.CherryBlossomForestFlowerProviderType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.BigCherryBlossomFoliagePlacerType;
@@ -25,6 +31,8 @@ import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.BigCherryBloss
 import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.BigCherryBlossomTrunkPlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.CherryBlossomTrunkPlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.CherryBlossomTrunkPlacer;
+import com.deku.cherryblossomgrotto.server.network.handlers.DoubleJumpServerMessageHandler;
+import com.deku.cherryblossomgrotto.server.network.messages.DoubleJumpServerMessage;
 import com.deku.cherryblossomgrotto.utils.LogTweaker;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -35,10 +43,13 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -73,8 +84,12 @@ import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -94,14 +109,23 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.network.NetworkRegistry;
+import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fml.network.simple.SimpleChannel;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+
+import static com.deku.cherryblossomgrotto.common.capabilities.ModCapabilitiesInitializer.DOUBLE_JUMP_CAPABILITY;
+import static com.deku.cherryblossomgrotto.common.enchantments.ModEnchantmentInitializer.DOUBLE_JUMP_ENCHANTMENT;
+import static net.minecraftforge.fml.network.NetworkDirection.PLAY_TO_CLIENT;
+import static net.minecraftforge.fml.network.NetworkDirection.PLAY_TO_SERVER;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Main.MOD_ID)
@@ -116,6 +140,12 @@ public class Main
     // Initialize logger
     public static final Logger LOGGER = LogManager.getLogger(Main.class);
 
+    // Network Protocol Version
+    public static final String NETWORK_PROTOCOL_VERSION = "1.0";
+
+    // Network channel
+    public static SimpleChannel NETWORK_CHANNEL = null;
+
     /**
      * Constructor for initializing the mod.
      * Handles the setup of:
@@ -128,6 +158,8 @@ public class Main
      *      - Adds additional forge event listeners for biome and world loading events
      */
     public Main() {
+        NETWORK_CHANNEL =  NetworkRegistry.newSimpleChannel(new ResourceLocation(MOD_ID, "cherryblossomgrottochannel"), () -> NETWORK_PROTOCOL_VERSION, DoubleJumpClientMessageHandler::isProtocolAcceptedOnClient, DoubleJumpServerMessageHandler::isProtocolAcceptedOnServer);
+
         if (HIDE_CONSOLE_NOISE) {
             LogTweaker.applyLogFilterLevel(Level.WARN);
         }
@@ -136,6 +168,9 @@ public class Main
         // Structure logic
         ModStructurePieceTypes.register();
         ModStructureInitializer.STRUCTURES.register(eventBus);
+
+        // Enchantment logic
+        ModEnchantmentInitializer.ENCHANTMENTS.register(eventBus);
 
         // Register the setup method for modloading
         eventBus.addListener(this::setup);
@@ -164,8 +199,10 @@ public class Main
     /**
      * Sets up logic that is common to both the client and server
      *
-     * In this case we are registering our custom wood types so that we can use associated resources.
+     * In this case we are registering our custom network messages to the simple network channel.
+     * Then we register our custom wood types so that we can use associated resources.
      * Then we initialize all our modded structures.
+     * Finally, we initialize all our modded capabilities.
      *
      * @param event The setup event
      */
@@ -174,10 +211,14 @@ public class Main
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT");
 
+        NETWORK_CHANNEL.registerMessage(DoubleJumpServerMessage.MESSAGE_ID, DoubleJumpServerMessage.class, DoubleJumpServerMessage::encode, DoubleJumpServerMessage::decode, DoubleJumpServerMessageHandler::onMessageReceived, Optional.of(PLAY_TO_SERVER));
+        NETWORK_CHANNEL.registerMessage(DoubleJumpClientMessage.MESSAGE_ID, DoubleJumpClientMessage.class, DoubleJumpClientMessage::encode, DoubleJumpClientMessage::decode, DoubleJumpClientMessageHandler::onMessageReceived, Optional.of(PLAY_TO_CLIENT));
+
         event.enqueueWork(() -> {
             WoodType.register(ModWoodType.CHERRY_BLOSSOM);
             ModStructureInitializer.setupStructures();
             ModConfiguredStructureInitializer.registerConfiguredStructures();
+            ModCapabilitiesInitializer.registerCapabilities();
         });
     }
 
@@ -585,6 +626,18 @@ public class Main
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.FORGE)
     public static class EventHandler {
         /**
+         * Used to attach modded capabilities to entities using the Forge event bus
+         *
+         * @param event The attachment event with which capabilities will be attached to different entity types
+         */
+        @SubscribeEvent
+        public static void onEntityCapabilityRegistration(final AttachCapabilitiesEvent<Entity> event) {
+            if (event.getObject() instanceof PlayerEntity) {
+                event.addCapability(new ResourceLocation(MOD_ID,"double_jump"), new DoubleJumpCapability());
+            }
+        }
+
+        /**
          * Used to handle changes to item attribute modifiers on vanilla items.
          * Called whenever a player equips/unequips an item or whenever an item's tooltip is being renderred.
          *
@@ -689,6 +742,80 @@ public class Main
         @SubscribeEvent
         public static void onRenderPlayerEvent(RenderHandEvent event) {
             if (event.getItemStack().getItem() == ModItems.SHURIKEN) {
+            }
+        }
+
+        /**
+         * Handles any custom logic that is needed on players on any given tick.
+         *
+         * Currently this checks if the player has tried to perform a double jump and communicates that action
+         * to the server and performs all necessary updates to the player.
+         *
+         * @param event The tick event for a given player
+         */
+        @SubscribeEvent
+        public static void onPlayerTick(final TickEvent.PlayerTickEvent event) {
+            if (event.phase == TickEvent.Phase.END) {
+                PlayerEntity player = event.player;
+                boolean isJumping = (boolean) ForgeReflection.getPrivatizedFieldValue(LivingEntity.class, "jumping", player);
+                int jumpCooldownTimer = (int) ForgeReflection.getPrivatizedFieldValue(LivingEntity.class, "noJumpDelay", player);
+                if (isJumping && jumpCooldownTimer <= 0) {
+
+                    if (!player.isPassenger() && !player.isFallFlying() && !player.isInWater() && !player.isInLava() && !player.isSleeping() && !player.isSwimming() && !player.isDeadOrDying()) {
+                        if (player.getFoodData().getFoodLevel() > 3 && EnchantmentHelper.getEnchantmentLevel(DOUBLE_JUMP_ENCHANTMENT.get(), player) > 0) {
+                            DoubleJumpCapability.IDoubleJump doubleJumpCapability = player.getCapability(DOUBLE_JUMP_CAPABILITY).orElse(null);
+                            if (doubleJumpCapability != null) {
+                                if (!doubleJumpCapability.hasDoubleJumped()) {
+                                    player.jumpFromGround();
+                                    player.fallDistance = 0.0F;
+                                    player.causeFoodExhaustion(player.isSprinting() ? 0.2F * 3.0F : 0.05F * 3.0F);
+                                    ForgeReflection.setPrivatizedFieldToValue(LivingEntity.class, "noJumpDelay", 10, player);
+
+                                    DoubleJumpServerMessage message = new DoubleJumpServerMessage(true);
+                                    Main.NETWORK_CHANNEL.sendToServer(message);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /**
+         * Handles any custom logic that needs to happen whenever a living entity falls and hits the ground.
+         *
+         * This resets the double jump state of the given entity.
+         *
+         * @param event The event triggered by a living entity falling and hitting the ground.
+         */
+        @SubscribeEvent
+        public static void onPlayerFall(final LivingFallEvent event) {
+            if (event.getEntity() instanceof PlayerEntity) {
+                PlayerEntity player = (PlayerEntity) event.getEntity();
+                DoubleJumpCapability.IDoubleJump doubleJumpCapability = player.getCapability(DOUBLE_JUMP_CAPABILITY).orElse(null);
+                if (doubleJumpCapability != null) {
+                    doubleJumpCapability.setHasDoubleJumped(false);
+                }
+            }
+        }
+
+        /**
+         * Handles any custom logic that needs to happen when an entity joins the current world.
+         *
+         * This attempts to communicate the saved NBT state on a player's double jump capability back onto to
+         * the player so that they can't reset their double jumping state by reconnecting to the server.
+         *
+         * @param event The event triggered by an entity joining the world
+         */
+        @SubscribeEvent(priority = EventPriority.HIGHEST)
+        public static void onEntityJoinWorld(final EntityJoinWorldEvent event) {
+            if (event.getEntity() instanceof ServerPlayerEntity) {
+                ServerPlayerEntity player = (ServerPlayerEntity) event.getEntity();
+                boolean hasDoubleJumped = player.getCapability(DOUBLE_JUMP_CAPABILITY).map(DoubleJumpCapability.IDoubleJump::hasDoubleJumped).orElse(false);
+                if (hasDoubleJumped) {
+                    DoubleJumpClientMessage message = new DoubleJumpClientMessage(player.getUUID(), true);
+                    Main.NETWORK_CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), message);
+                }
             }
         }
     }
