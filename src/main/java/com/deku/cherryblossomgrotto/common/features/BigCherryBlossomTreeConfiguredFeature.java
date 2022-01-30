@@ -11,9 +11,9 @@ public class BigCherryBlossomTreeConfiguredFeature extends ConfiguredFeature<Bas
         super(Feature.TREE, (new BaseTreeFeatureConfig.Builder(
                 new SimpleBlockStateProvider(ModBlocks.CHERRY_LOG.defaultBlockState()),
                 new SimpleBlockStateProvider(ModBlocks.CHERRY_LEAVES.defaultBlockState()),
-                new BigCherryBlossomFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(0)),
+                new BigCherryBlossomFoliagePlacer(FeatureSpread.fixed(5), FeatureSpread.fixed(0)),
                 new BigCherryBlossomTrunkPlacer(9, 2, 3),
-                new TwoLayerFeature(1, 1, 2))
+                new TwoLayerFeature(1, 0, 2))
         ).ignoreVines().build());
     }
 }

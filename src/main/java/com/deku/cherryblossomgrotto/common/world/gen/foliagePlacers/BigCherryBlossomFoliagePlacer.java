@@ -1,5 +1,6 @@
 package com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers;
 
+import com.deku.cherryblossomgrotto.common.utils.Randomizer;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.math.BlockPos;
@@ -50,16 +51,42 @@ public class BigCherryBlossomFoliagePlacer extends FoliagePlacer {
      */
     @Override
     protected void createFoliage(IWorldGenerationReader worldGenReader, Random random, BaseTreeFeatureConfig treeConfig, int trunkLength, Foliage foliage, int foliageHeight, int foliageRadius, Set<BlockPos> placedBlockPositions, int offsetY, MutableBoundingBox boundingBox) {
-        this.placeLeavesRow(worldGenReader, random, treeConfig, foliage.foliagePos(), 1, placedBlockPositions, 1, false, boundingBox);
-        System.out.println("Foliage height is " + foliageHeight);
-        System.out.println("Foliage position is " + foliage.foliagePos());
-        for(int positionY = 0; positionY > -foliageHeight; positionY--) {
-            System.out.println("TRYING AT Y POSITION " + positionY);
-            int radius = Math.max(foliageRadius + foliage.radiusOffset() - 1 - positionY, 0);
-            System.out.println("WITH RADIUS " + radius);
-            this.placeLeavesRow(worldGenReader, random, treeConfig, foliage.foliagePos(), radius, placedBlockPositions, positionY, false, boundingBox);
+        if (foliage.doubleTrunk()) {
+            // Places the base row which is a cross of leaves and at the top level of logs
+            this.placeLeavesRow(worldGenReader, random, treeConfig, foliage.foliagePos(), foliageRadius - 2, placedBlockPositions, -1, true, boundingBox);
+
+            generateCanopy(worldGenReader, random, treeConfig, foliage, foliageHeight, foliageRadius, placedBlockPositions, boundingBox);
+        } else {
+            foliageRadius -= 3;
+
+            // top off with a small amount of leaves
+            this.placeLeavesRow(worldGenReader, random, treeConfig, foliage.foliagePos(), 1, placedBlockPositions, 1, false, boundingBox);
+
+            // Places the base row which is a cross of leaves and at the top level of logs
+            this.placeLeavesRow(worldGenReader, random, treeConfig, foliage.foliagePos(), foliageRadius, placedBlockPositions, 0, false, boundingBox);
+
+            // bottom out with a single block of leaves to cover the source log
+            this.placeLeavesRow(worldGenReader, random, treeConfig, foliage.foliagePos(), 0, placedBlockPositions, -1, false, boundingBox);
         }
-        this.placeLeavesRow(worldGenReader, random, treeConfig, foliage.foliagePos(), 2, placedBlockPositions, -foliageHeight, false, boundingBox);
+    }
+
+    /**
+     * Places foliage in a typical canopy shape by looping through all height levels for the leave generation and making individual rows one after the other with a degrading radius value.
+     *
+     * @param worldGenReader Instance of the world generator
+     * @param random A random number generator
+     * @param treeConfig Configuration class for getting the state of the placed blocks
+     * @param foliage Foliage settings for this foliage placer
+     * @param foliageHeight Height of the foliage to be created at this foliage point
+     * @param foliageRadius The radius of the foliage
+     * @param placedBlockPositions The position of all blocks placed into the world by this foliage generation
+     * @param boundingBox Bounding limitations of the generator
+     */
+    private void generateCanopy(IWorldGenerationReader worldGenReader, Random random, BaseTreeFeatureConfig treeConfig, Foliage foliage, int foliageHeight, int foliageRadius, Set<BlockPos> placedBlockPositions, MutableBoundingBox boundingBox) {
+        for (int positionY = foliageHeight; positionY > -1; positionY--) {
+            int radius = Math.max(foliageRadius + foliage.radiusOffset() - positionY, 0);
+            this.placeLeavesRow(worldGenReader, random, treeConfig, foliage.foliagePos(), radius, placedBlockPositions, positionY, foliage.doubleTrunk(), boundingBox);
+        }
     }
 
     /**
@@ -67,13 +94,13 @@ public class BigCherryBlossomFoliagePlacer extends FoliagePlacer {
      * If this is increased then the number of rows per foliage spawn point will increase
      *
      * @param random A random number generator
-     * @param p_230374_2_
+     * @param trunkHeight Height of the trunk spawning this foliage
      * @param treeConfig Configuration class for getting the state of the placed blocks
      * @return The height of the foliage for this tree
      */
     @Override
-    public int foliageHeight(Random random, int p_230374_2_, BaseTreeFeatureConfig treeConfig) {
-        return 3;
+    public int foliageHeight(Random random, int trunkHeight, BaseTreeFeatureConfig treeConfig) {
+        return Randomizer.getRandomNumberWithinBounds(random, 3, 4);
     }
 
     /**
@@ -92,10 +119,18 @@ public class BigCherryBlossomFoliagePlacer extends FoliagePlacer {
      */
     @Override
     protected boolean shouldSkipLocation(Random random, int relativePositionX, int relativePositionY, int relativePositionZ, int radius, boolean hasDoubleTrunk) {
-        if (relativePositionY == 0) {
+        if (relativePositionY == -1) {
             return (relativePositionX > 1 || relativePositionZ > 1) && relativePositionX != 0 && relativePositionZ != 0;
         } else {
-            return relativePositionX == radius && relativePositionZ == radius && radius > 0;
+            int relativePosition = (relativePositionX * relativePositionX) + (relativePositionZ * relativePositionZ);
+            int radiusSquared = radius * radius;
+            if (relativePosition == radiusSquared) {
+                return Randomizer.getRandomNumberWithinBounds(random, 0, 20) >= 18;
+            } else if (relativePosition > radiusSquared) {
+                return Randomizer.getRandomNumberWithinBounds(random, 0, 20) >= 3;
+            } else {
+                return false;
+            }
         }
     }
 }

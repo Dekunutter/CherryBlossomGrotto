@@ -244,9 +244,9 @@ public class BigCherryBlossomTrunkPlacer extends GiantTrunkPlacer {
         int branchXOffset = Randomizer.getRandomNumberWithinBounds(random, 0, 1);
         int branchZOffset = Randomizer.getRandomNumberWithinBounds(random, 0, 1);
 
-        int branchLengthX = Randomizer.getRandomNumberWithinBounds(random, 2, 3);
-        int branchLengthY = Randomizer.getRandomNumberWithinBounds(random, 3, 4);
-        int branchLengthZ = Randomizer.getRandomNumberWithinBounds(random, 2, 3);
+        int branchLengthX = Randomizer.getRandomNumberWithinBounds(random, 3, 4);
+        int branchLengthY = Randomizer.getRandomNumberWithinBounds(random, 1, 2);
+        int branchLengthZ = Randomizer.getRandomNumberWithinBounds(random, 3, 4);
 
         // Something to ensure that exact 45 degrees on a horizontal plane don't occur cause I dont like how it looks for the tree
         if (branchLengthX == branchLengthZ) {
@@ -293,7 +293,7 @@ public class BigCherryBlossomTrunkPlacer extends GiantTrunkPlacer {
 
         BlockPos middleOffset = greedyPoints.get(greedyPoints.size() / 2).subtract(trueStartingPosition);
         BlockPos finalOffset = greedyPoints.get(greedyPoints.size() - 1).subtract(trueStartingPosition);
-        return ImmutableList.of(new FoliagePlacer.Foliage(trueStartingPosition.offset(finalOffset.getX(), finalOffset.getY(), finalOffset.getZ()), 0, true), new FoliagePlacer.Foliage(trueStartingPosition.offset(middleOffset.getX(), middleOffset.getY(), middleOffset.getZ()), 0, true));
+        return ImmutableList.of(new FoliagePlacer.Foliage(trueStartingPosition.offset(finalOffset.getX(), finalOffset.getY(), finalOffset.getZ()), 0, false), new FoliagePlacer.Foliage(trueStartingPosition.offset(middleOffset.getX(), middleOffset.getY(), middleOffset.getZ()), 0, false));
     }
 
     /**
