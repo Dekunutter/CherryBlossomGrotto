@@ -24,13 +24,12 @@ import com.deku.cherryblossomgrotto.common.tileEntities.ModTileEntityData;
 import com.deku.cherryblossomgrotto.common.utils.ForgeReflection;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeInitializer;
 import com.deku.cherryblossomgrotto.common.world.gen.blockstateprovider.CherryBlossomForestFlowerProviderType;
-import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.BigCherryBlossomFoliagePlacerType;
+import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.FancyCherryBlossomFoliagePlacer;
+import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.FancyCherryBlossomFoliagePlacerType;
+import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.GrandCherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.CherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.structures.*;
-import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.BigCherryBlossomTrunkPlacer;
-import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.BigCherryBlossomTrunkPlacerType;
-import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.CherryBlossomTrunkPlacerType;
-import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.CherryBlossomTrunkPlacer;
+import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.*;
 import com.deku.cherryblossomgrotto.server.network.handlers.DoubleJumpServerMessageHandler;
 import com.deku.cherryblossomgrotto.server.network.messages.DoubleJumpServerMessage;
 import com.deku.cherryblossomgrotto.utils.LogTweaker;
@@ -507,13 +506,14 @@ public class Main
             //featureRegistryEvent.getRegistry().register(new LargeCherryBlossomTreeFeature(false));
 
             ModFeatures.CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree", new CherryBlossomTreeConfiguredFeature());
-            ModFeatures.BIG_CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":big_cherry_blossom_tree", new BigCherryBlossomTreeConfiguredFeature());
+            ModFeatures.FANCY_CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":fancy_cherry_blossom_tree", new FancyCherryBlossomTreeConfiguredFeature());
+            ModFeatures.GRAND_CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":grand_cherry_blossom_tree", new GrandCherryBlossomTreeConfiguredFeature());
             ModFeatures.CHERRY_TREE_BEES_0002 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree_bees_0002", new CherryBlossomTreeBees0002ConfiguredFeature());
             ModFeatures.CHERRY_TREE_BEES_002 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree_bees_002", new CherryBlossomTreeBees002ConfiguredFeature());
             ModFeatures.CHERRY_TREE_BEES_005 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree_bees_005", new CherryBlossomTreeBees005ConfiguredFeature());
 
             // TODO: Might be able to get this to work in JSON if I registered the cherry trees in a deferred register using registryobjects (though that doesnt like configuredfeatures passed in for some reason)...
-            ModFeatures.CHERRY_TREE_FOREST = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest", Feature.RANDOM_SELECTOR.configured(new MultipleRandomFeatureConfig(ImmutableList.of(ModFeatures.BIG_CHERRY_TREE.weighted(0.01f)), ModFeatures.CHERRY_TREE_BEES_002)).decorated(Features.Placements.HEIGHTMAP_SQUARE).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(6, 0.1f, 1))));
+            ModFeatures.CHERRY_TREE_FOREST = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest", Feature.RANDOM_SELECTOR.configured(new MultipleRandomFeatureConfig(ImmutableList.of(ModFeatures.GRAND_CHERRY_TREE.weighted(0.01f), ModFeatures.FANCY_CHERRY_TREE.weighted(0.1f)), ModFeatures.CHERRY_TREE_BEES_002)).decorated(Features.Placements.HEIGHTMAP_SQUARE).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(6, 0.1f, 1))));
 
             // TODO: Add this forest flowers provider back in (it doesnt work with double block flowers) to spawn different groups later. Its useful code, just got replaced by the simpler list logic below
             //ModFeatures.CHERRY_TREE_FOREST_FLOWERS = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest_flowers", Feature.FLOWER.configured((new BlockClusterFeatureConfig.Builder(CherryBlossomGrottoFlowerBlockStateProvider.INSTANCE, new DoublePlantBlockPlacer())).tries(64).build()).decorated(Features.Placements.ADD_32).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(100));
@@ -561,7 +561,7 @@ public class Main
             LOGGER.info("HELLO from Register Foliage Placer");
 
             foliagePlacerRegistryEvent.getRegistry().register(new CherryBlossomFoliagePlacerType());
-            foliagePlacerRegistryEvent.getRegistry().register(new BigCherryBlossomFoliagePlacerType());
+            foliagePlacerRegistryEvent.getRegistry().register(new GrandCherryBlossomFoliagePlacerType());
         }
 
         /**
@@ -608,15 +608,15 @@ public class Main
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
     public static class TrunkPlacerRegistryEventHandler {
         public static TrunkPlacerType<CherryBlossomTrunkPlacer> CHERRY_TREE_TRUNK_PLACER;
-        public static TrunkPlacerType<BigCherryBlossomTrunkPlacer> BIG_CHERRY_TREE_TRUNK_PLACER;
+        public static TrunkPlacerType<GrandCherryBlossomTrunkPlacer> GRAND_CHERRY_TREE_TRUNK_PLACER;
 
         @SubscribeEvent
         public static void setup(FMLCommonSetupEvent event) throws InvocationTargetException, InstantiationException, IllegalAccessException {
             TrunkPlacerType<CherryBlossomTrunkPlacer> cherryBlossomTrunkPlacerType = CherryBlossomTrunkPlacerType.createTrunkPlacerType(CherryBlossomTrunkPlacer.CODEC);
             CHERRY_TREE_TRUNK_PLACER = Registry.register(Registry.TRUNK_PLACER_TYPES, MOD_ID + ":cherry_blossom_tree_trunk_placer", cherryBlossomTrunkPlacerType);
-
-            TrunkPlacerType<BigCherryBlossomTrunkPlacer> bigCherryBlossomTrunkPlacerType = BigCherryBlossomTrunkPlacerType.createTrunkPlacerType(BigCherryBlossomTrunkPlacer.CODEC);
-            BIG_CHERRY_TREE_TRUNK_PLACER = Registry.register(Registry.TRUNK_PLACER_TYPES, MOD_ID + ":big_cherry_blossom_tree_trunk_placer", bigCherryBlossomTrunkPlacerType);
+            
+            TrunkPlacerType<GrandCherryBlossomTrunkPlacer> grandCherryBlossomTrunkPlacerType = GrandCherryBlossomTrunkPlacerType.createTrunkPlacerType(GrandCherryBlossomTrunkPlacer.CODEC);
+            GRAND_CHERRY_TREE_TRUNK_PLACER = Registry.register(Registry.TRUNK_PLACER_TYPES, MOD_ID + ":big_cherry_blossom_tree_trunk_placer", grandCherryBlossomTrunkPlacerType);
         }
     }
 

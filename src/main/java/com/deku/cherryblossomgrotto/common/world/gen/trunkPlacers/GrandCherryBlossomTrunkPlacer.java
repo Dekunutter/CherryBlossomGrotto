@@ -20,14 +20,14 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import static com.deku.cherryblossomgrotto.Main.TrunkPlacerRegistryEventHandler.BIG_CHERRY_TREE_TRUNK_PLACER;
+import static com.deku.cherryblossomgrotto.Main.TrunkPlacerRegistryEventHandler.GRAND_CHERRY_TREE_TRUNK_PLACER;
 
-public class BigCherryBlossomTrunkPlacer extends GiantTrunkPlacer {
-    public static final Codec<BigCherryBlossomTrunkPlacer> CODEC = RecordCodecBuilder.create((instance) ->
-        trunkPlacerParts(instance).apply(instance, BigCherryBlossomTrunkPlacer::new)
+public class GrandCherryBlossomTrunkPlacer extends GiantTrunkPlacer {
+    public static final Codec<GrandCherryBlossomTrunkPlacer> CODEC = RecordCodecBuilder.create((instance) ->
+        trunkPlacerParts(instance).apply(instance, GrandCherryBlossomTrunkPlacer::new)
     );
 
-    public BigCherryBlossomTrunkPlacer(int baseHeight, int randomHeightA, int randomHeightB) {
+    public GrandCherryBlossomTrunkPlacer(int baseHeight, int randomHeightA, int randomHeightB) {
         super(baseHeight, randomHeightA, randomHeightB);
     }
 
@@ -37,7 +37,7 @@ public class BigCherryBlossomTrunkPlacer extends GiantTrunkPlacer {
      * @return The trunk placer type
      */
     protected TrunkPlacerType<?> type() {
-        return BIG_CHERRY_TREE_TRUNK_PLACER;
+        return GRAND_CHERRY_TREE_TRUNK_PLACER;
     }
 
     /**

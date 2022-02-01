@@ -54,7 +54,10 @@ public class CherryBlossomFoliagePlacer extends FoliagePlacer {
         BlockPos foliageStartPosition = foliage.foliagePos().above(offsetY);
         this.placeLeavesRow(worldGenReader, random, treeConfig, foliageStartPosition, foliageRadius + foliage.radiusOffset(), placedBlockPositions, -1 - foliageHeight, isDoubleTrunk, boundingBox);
         this.placeLeavesRow(worldGenReader, random, treeConfig, foliageStartPosition, foliageRadius - 1, placedBlockPositions, -foliageHeight, isDoubleTrunk, boundingBox);
-        this.placeLeavesRow(worldGenReader, random, treeConfig, foliageStartPosition, foliageRadius + foliage.radiusOffset() - 1, placedBlockPositions, 0, isDoubleTrunk, boundingBox);
+
+        if (random.nextInt(2) == 1) {
+            this.placeLeavesRow(worldGenReader, random, treeConfig, foliageStartPosition, foliageRadius + foliage.radiusOffset() - 1, placedBlockPositions, -2 - foliageHeight, isDoubleTrunk, boundingBox);
+        }
     }
 
     /**
@@ -62,12 +65,12 @@ public class CherryBlossomFoliagePlacer extends FoliagePlacer {
      * If this is increased then the number of rows per foliage spawn point will increase
      *
      * @param random A random number generator
-     * @param p_230374_2_
+     * @param trunkLength length of the trunk this foliage is spawning on
      * @param treeConfig Configuration class for getting the state of the placed blocks
      * @return The height of the foliage for this tree
      */
     @Override
-    public int foliageHeight(Random random, int p_230374_2_, BaseTreeFeatureConfig treeConfig) {
+    public int foliageHeight(Random random, int trunkLength, BaseTreeFeatureConfig treeConfig) {
         return 0;
     }
 
@@ -88,9 +91,17 @@ public class CherryBlossomFoliagePlacer extends FoliagePlacer {
     @Override
     protected boolean shouldSkipLocation(Random random, int relativePositionX, int relativePositionY, int relativePositionZ, int radius, boolean hasDoubleTrunk) {
         if (relativePositionY == 0) {
+            if (relativePositionX >= 1 && relativePositionZ >= 1) {
+                return true;
+            }
             return (relativePositionX > 1 || relativePositionZ > 1) && relativePositionX != 0 && relativePositionZ != 0;
         } else {
-            return relativePositionX == radius && relativePositionZ == radius && radius > 0;
+            if (relativePositionX == radius) {
+                return relativePositionZ >= (radius - 1);
+            } else if (relativePositionZ == radius) {
+                return relativePositionX >= (radius - 1);
+            }
+            return false;
         }
     }
 }

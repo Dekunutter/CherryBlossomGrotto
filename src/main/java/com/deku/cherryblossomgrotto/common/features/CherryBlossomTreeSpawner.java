@@ -29,7 +29,7 @@ public class CherryBlossomTreeSpawner extends BigTree {
      */
     @Nullable
     protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getConfiguredMegaFeature(Random random) {
-        return ModFeatures.BIG_CHERRY_TREE;
-        //return ModFeatures.LARGE_CHERRY_TREE;
+        return ModFeatures.FANCY_CHERRY_TREE;
+
     }
 }

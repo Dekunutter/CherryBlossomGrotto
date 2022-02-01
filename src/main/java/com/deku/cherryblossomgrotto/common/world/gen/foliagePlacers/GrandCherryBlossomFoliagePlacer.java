@@ -1,5 +1,6 @@
 package com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers;
 
+import com.deku.cherryblossomgrotto.Main;
 import com.deku.cherryblossomgrotto.common.utils.Randomizer;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -14,12 +15,12 @@ import net.minecraft.world.gen.foliageplacer.FoliagePlacerType;
 import java.util.Random;
 import java.util.Set;
 
-public class BigCherryBlossomFoliagePlacer extends FoliagePlacer {
-    public static final Codec<BigCherryBlossomFoliagePlacer> CODEC = RecordCodecBuilder.create((instance) ->
-            foliagePlacerParts(instance).apply(instance, BigCherryBlossomFoliagePlacer::new)
+public class GrandCherryBlossomFoliagePlacer extends FoliagePlacer {
+    public static final Codec<GrandCherryBlossomFoliagePlacer> CODEC = RecordCodecBuilder.create((instance) ->
+            foliagePlacerParts(instance).apply(instance, GrandCherryBlossomFoliagePlacer::new)
     );
 
-    public BigCherryBlossomFoliagePlacer(FeatureSpread radius, FeatureSpread heightOffset) {
+    public GrandCherryBlossomFoliagePlacer(FeatureSpread radius, FeatureSpread heightOffset) {
         super(radius, heightOffset);
     }
 
@@ -30,7 +31,7 @@ public class BigCherryBlossomFoliagePlacer extends FoliagePlacer {
      */
     @Override
     protected FoliagePlacerType<?> type() {
-        return ModFoliagePlacers.BIG_CHERRY_TREE_FOLIAGE_PLACER;
+        return ModFoliagePlacers.GRAND_CHERRY_TREE_FOLIAGE_PLACER;
     }
 
     /**

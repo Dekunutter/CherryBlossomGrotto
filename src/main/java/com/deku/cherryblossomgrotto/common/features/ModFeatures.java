@@ -8,7 +8,8 @@ public class ModFeatures {
     public static ConfiguredFeature<BaseTreeFeatureConfig, ?> CHERRY_TREE_BEES_0002;
     public static ConfiguredFeature<BaseTreeFeatureConfig, ?> CHERRY_TREE_BEES_002;
     public static ConfiguredFeature<BaseTreeFeatureConfig, ?> CHERRY_TREE_BEES_005;
-    public static ConfiguredFeature<BaseTreeFeatureConfig, ?> BIG_CHERRY_TREE;
+    public static ConfiguredFeature<BaseTreeFeatureConfig, ?> FANCY_CHERRY_TREE;
+    public static ConfiguredFeature<BaseTreeFeatureConfig, ?> GRAND_CHERRY_TREE;
 
     public static ConfiguredFeature<?, ?> CHERRY_TREE_FOREST;
     public static ConfiguredFeature<?, ?> CHERRY_TREE_FOREST_FLOWERS;
