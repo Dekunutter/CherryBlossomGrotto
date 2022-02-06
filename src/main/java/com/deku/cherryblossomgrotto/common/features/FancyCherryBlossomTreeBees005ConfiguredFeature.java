@@ -8,6 +8,6 @@ import net.minecraft.world.gen.feature.Features;
 
 public class FancyCherryBlossomTreeBees005ConfiguredFeature extends ConfiguredFeature<BaseTreeFeatureConfig, Feature<BaseTreeFeatureConfig>> {
     public FancyCherryBlossomTreeBees005ConfiguredFeature() {
-        super(Feature.TREE, ModFeatures.FANCY_CHERRY_TREE.config().withDecorators(ImmutableList.of(Features.Placements.BEEHIVE_005)));
+        super(Feature.TREE, ModConfiguredFeatures.FANCY_CHERRY_TREE.config().withDecorators(ImmutableList.of(Features.Placements.BEEHIVE_005)));
     }
 }

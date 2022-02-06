@@ -27,6 +27,7 @@ import com.deku.cherryblossomgrotto.common.world.gen.blockstateprovider.CherryBl
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.GrandCherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.CherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.structures.*;
+import com.deku.cherryblossomgrotto.common.world.gen.topLayerModifications.ModTopLayerModifications;
 import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.*;
 import com.deku.cherryblossomgrotto.server.network.handlers.DoubleJumpServerMessageHandler;
 import com.deku.cherryblossomgrotto.server.network.messages.DoubleJumpServerMessage;
@@ -161,6 +162,9 @@ public class Main
             LogTweaker.applyLogFilterLevel(Level.WARN);
         }
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        //top layer generation logic
+        ModTopLayerModifications.TOP_LAYER_MODIFICATIONS.register(eventBus);
 
         // Structure logic
         ModStructurePieceTypes.register();
@@ -500,16 +504,18 @@ public class Main
         public static void onFeaturesRegistry(final RegistryEvent.Register<Feature<?>> featureRegistryEvent) {
             LOGGER.info("HELLO from Register Feature");
 
-            ModFeatures.CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree", new CherryBlossomTreeConfiguredFeature());
-            ModFeatures.FANCY_CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":fancy_cherry_blossom_tree", new FancyCherryBlossomTreeConfiguredFeature());
-            ModFeatures.GRAND_CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":grand_cherry_blossom_tree", new GrandCherryBlossomTreeConfiguredFeature());
-            ModFeatures.CHERRY_TREE_BEES_0002 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree_bees_0002", new CherryBlossomTreeBees0002ConfiguredFeature());
-            ModFeatures.CHERRY_TREE_BEES_002 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree_bees_002", new CherryBlossomTreeBees002ConfiguredFeature());
-            ModFeatures.CHERRY_TREE_BEES_005 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree_bees_005", new CherryBlossomTreeBees005ConfiguredFeature());
-            ModFeatures.FANCY_CHERRY_TREE_BEES_005 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":fancy_cherry_blossom_tree_bees_005", new FancyCherryBlossomTreeBees005ConfiguredFeature());
+            ModConfiguredFeatures.CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree", new CherryBlossomTreeConfiguredFeature());
+            ModConfiguredFeatures.FANCY_CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":fancy_cherry_blossom_tree", new FancyCherryBlossomTreeConfiguredFeature());
+            ModConfiguredFeatures.GRAND_CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":grand_cherry_blossom_tree", new GrandCherryBlossomTreeConfiguredFeature());
+            ModConfiguredFeatures.CHERRY_TREE_BEES_0002 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree_bees_0002", new CherryBlossomTreeBees0002ConfiguredFeature());
+            ModConfiguredFeatures.CHERRY_TREE_BEES_002 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree_bees_002", new CherryBlossomTreeBees002ConfiguredFeature());
+            ModConfiguredFeatures.CHERRY_TREE_BEES_005 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree_bees_005", new CherryBlossomTreeBees005ConfiguredFeature());
+            ModConfiguredFeatures.FANCY_CHERRY_TREE_BEES_005 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":fancy_cherry_blossom_tree_bees_005", new FancyCherryBlossomTreeBees005ConfiguredFeature());
+
+            ModConfiguredFeatures.CHERRY_PETAL_COVER = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_petal_ground_cover", new CherryBlossomPetalCoverConfiguredFeature());
 
             // TODO: Might be able to get this to work in JSON if I registered the cherry trees in a deferred register using registryobjects (though that doesnt like configuredfeatures passed in for some reason)...
-            ModFeatures.CHERRY_TREE_FOREST = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest", Feature.RANDOM_SELECTOR.configured(new MultipleRandomFeatureConfig(ImmutableList.of(ModFeatures.GRAND_CHERRY_TREE.weighted(0.01f), ModFeatures.FANCY_CHERRY_TREE.weighted(0.1f)), ModFeatures.CHERRY_TREE_BEES_002)).decorated(Features.Placements.HEIGHTMAP_SQUARE).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(6, 0.1f, 1))));
+            ModConfiguredFeatures.CHERRY_TREE_FOREST = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest", Feature.RANDOM_SELECTOR.configured(new MultipleRandomFeatureConfig(ImmutableList.of(ModConfiguredFeatures.GRAND_CHERRY_TREE.weighted(0.01f), ModConfiguredFeatures.FANCY_CHERRY_TREE.weighted(0.1f)), ModConfiguredFeatures.CHERRY_TREE_BEES_002)).decorated(Features.Placements.HEIGHTMAP_SQUARE).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(6, 0.1f, 1))));
 
             // TODO: Add this forest flowers provider back in (it doesnt work with double block flowers) to spawn different groups later. Its useful code, just got replaced by the simpler list logic below
             //ModFeatures.CHERRY_TREE_FOREST_FLOWERS = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest_flowers", Feature.FLOWER.configured((new BlockClusterFeatureConfig.Builder(CherryBlossomGrottoFlowerBlockStateProvider.INSTANCE, new DoublePlantBlockPlacer())).tries(64).build()).decorated(Features.Placements.ADD_32).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(100));
@@ -523,7 +529,7 @@ public class Main
             }, () -> {
                 return Feature.NO_BONEMEAL_FLOWER.configured((new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(Blocks.ALLIUM.defaultBlockState()), SimpleBlockPlacer.INSTANCE)).tries(64).build());
             });
-            ModFeatures.CHERRY_TREE_FOREST_FLOWERS = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest_flowers", Feature.SIMPLE_RANDOM_SELECTOR.configured(new SingleRandomFeature(CHERRY_BLOSSOM_FOREST_FLOWER_FEATURES)).count(FeatureSpread.of(-3, 4)).decorated(Features.Placements.ADD_32).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(15));
+            ModConfiguredFeatures.CHERRY_TREE_FOREST_FLOWERS = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest_flowers", Feature.SIMPLE_RANDOM_SELECTOR.configured(new SingleRandomFeature(CHERRY_BLOSSOM_FOREST_FLOWER_FEATURES)).count(FeatureSpread.of(-3, 4)).decorated(Features.Placements.ADD_32).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(15));
         }
 
         @SubscribeEvent
