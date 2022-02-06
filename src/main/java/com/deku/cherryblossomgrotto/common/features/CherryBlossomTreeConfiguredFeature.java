@@ -13,7 +13,7 @@ public class CherryBlossomTreeConfiguredFeature extends ConfiguredFeature<BaseTr
                 new SimpleBlockStateProvider(ModBlocks.CHERRY_LOG.defaultBlockState()),
                 new SimpleBlockStateProvider(ModBlocks.CHERRY_LEAVES.defaultBlockState()),
                 new CherryBlossomFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(1)),
-                new CherryBlossomTrunkPlacer(4, 2, 2),
+                new CherryBlossomTrunkPlacer(4, 2, 0),
                 new TwoLayerFeature(1, 0, 2))
         ).ignoreVines().build());
     }

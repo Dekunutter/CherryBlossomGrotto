@@ -11,6 +11,8 @@ public class CherryBlossomTreeSpawner extends BigTree {
     /***
      * Determines the tree feature that this class will grow.
      * Has a chance to spawn the tree with a beehivce if bees are enabled by the spawner.
+     * There is also a 50/50 chance that the tree will spawn as a fancy cherry blossom, which is a
+     * slightly larger and more complex tree shape with different leaf canopy formation
      *
      * @param random Randomizer for differentiating tree sub-types if needed
      * @param hasBees Whether the tree can support bees
@@ -18,7 +20,11 @@ public class CherryBlossomTreeSpawner extends BigTree {
      */
     @Nullable
     protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getConfiguredFeature(Random random, boolean hasBees) {
-        return hasBees ? ModFeatures.CHERRY_TREE_BEES_005 : ModFeatures.CHERRY_TREE;
+        if (random.nextInt(10) < 5) {
+            return hasBees ? ModFeatures.FANCY_CHERRY_TREE_BEES_005 : ModFeatures.FANCY_CHERRY_TREE;
+        } else {
+            return hasBees ? ModFeatures.CHERRY_TREE_BEES_005 : ModFeatures.CHERRY_TREE;
+        }
     }
 
     /**
@@ -29,7 +35,6 @@ public class CherryBlossomTreeSpawner extends BigTree {
      */
     @Nullable
     protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getConfiguredMegaFeature(Random random) {
-        return ModFeatures.FANCY_CHERRY_TREE;
-
+        return ModFeatures.GRAND_CHERRY_TREE;
     }
 }

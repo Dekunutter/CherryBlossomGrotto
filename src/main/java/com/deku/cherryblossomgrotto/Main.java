@@ -24,8 +24,6 @@ import com.deku.cherryblossomgrotto.common.tileEntities.ModTileEntityData;
 import com.deku.cherryblossomgrotto.common.utils.ForgeReflection;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeInitializer;
 import com.deku.cherryblossomgrotto.common.world.gen.blockstateprovider.CherryBlossomForestFlowerProviderType;
-import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.FancyCherryBlossomFoliagePlacer;
-import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.FancyCherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.GrandCherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.CherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.structures.*;
@@ -502,15 +500,13 @@ public class Main
         public static void onFeaturesRegistry(final RegistryEvent.Register<Feature<?>> featureRegistryEvent) {
             LOGGER.info("HELLO from Register Feature");
 
-            //featureRegistryEvent.getRegistry().register(new CherryBlossomTreeFeature(false));
-            //featureRegistryEvent.getRegistry().register(new LargeCherryBlossomTreeFeature(false));
-
             ModFeatures.CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree", new CherryBlossomTreeConfiguredFeature());
             ModFeatures.FANCY_CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":fancy_cherry_blossom_tree", new FancyCherryBlossomTreeConfiguredFeature());
             ModFeatures.GRAND_CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":grand_cherry_blossom_tree", new GrandCherryBlossomTreeConfiguredFeature());
             ModFeatures.CHERRY_TREE_BEES_0002 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree_bees_0002", new CherryBlossomTreeBees0002ConfiguredFeature());
             ModFeatures.CHERRY_TREE_BEES_002 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree_bees_002", new CherryBlossomTreeBees002ConfiguredFeature());
             ModFeatures.CHERRY_TREE_BEES_005 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree_bees_005", new CherryBlossomTreeBees005ConfiguredFeature());
+            ModFeatures.FANCY_CHERRY_TREE_BEES_005 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":fancy_cherry_blossom_tree_bees_005", new FancyCherryBlossomTreeBees005ConfiguredFeature());
 
             // TODO: Might be able to get this to work in JSON if I registered the cherry trees in a deferred register using registryobjects (though that doesnt like configuredfeatures passed in for some reason)...
             ModFeatures.CHERRY_TREE_FOREST = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest", Feature.RANDOM_SELECTOR.configured(new MultipleRandomFeatureConfig(ImmutableList.of(ModFeatures.GRAND_CHERRY_TREE.weighted(0.01f), ModFeatures.FANCY_CHERRY_TREE.weighted(0.1f)), ModFeatures.CHERRY_TREE_BEES_002)).decorated(Features.Placements.HEIGHTMAP_SQUARE).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(6, 0.1f, 1))));
@@ -608,13 +604,17 @@ public class Main
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
     public static class TrunkPlacerRegistryEventHandler {
         public static TrunkPlacerType<CherryBlossomTrunkPlacer> CHERRY_TREE_TRUNK_PLACER;
+        public static TrunkPlacerType<FancyCherryBlossomTrunkPlacer> FANCY_CHERRY_TREE_TRUNK_PLACER;
         public static TrunkPlacerType<GrandCherryBlossomTrunkPlacer> GRAND_CHERRY_TREE_TRUNK_PLACER;
 
         @SubscribeEvent
         public static void setup(FMLCommonSetupEvent event) throws InvocationTargetException, InstantiationException, IllegalAccessException {
             TrunkPlacerType<CherryBlossomTrunkPlacer> cherryBlossomTrunkPlacerType = CherryBlossomTrunkPlacerType.createTrunkPlacerType(CherryBlossomTrunkPlacer.CODEC);
             CHERRY_TREE_TRUNK_PLACER = Registry.register(Registry.TRUNK_PLACER_TYPES, MOD_ID + ":cherry_blossom_tree_trunk_placer", cherryBlossomTrunkPlacerType);
-            
+
+            TrunkPlacerType<FancyCherryBlossomTrunkPlacer> fancyCherryBlossomTrunkPlacerType = FancyCherryBlossomTrunkPlacerType.createTrunkPlacerType(FancyCherryBlossomTrunkPlacer.CODEC);
+            FANCY_CHERRY_TREE_TRUNK_PLACER = Registry.register(Registry.TRUNK_PLACER_TYPES, MOD_ID + ":fancy_cherry_blossom_tree_trunk_placer", fancyCherryBlossomTrunkPlacerType);
+
             TrunkPlacerType<GrandCherryBlossomTrunkPlacer> grandCherryBlossomTrunkPlacerType = GrandCherryBlossomTrunkPlacerType.createTrunkPlacerType(GrandCherryBlossomTrunkPlacer.CODEC);
             GRAND_CHERRY_TREE_TRUNK_PLACER = Registry.register(Registry.TRUNK_PLACER_TYPES, MOD_ID + ":big_cherry_blossom_tree_trunk_placer", grandCherryBlossomTrunkPlacerType);
         }
