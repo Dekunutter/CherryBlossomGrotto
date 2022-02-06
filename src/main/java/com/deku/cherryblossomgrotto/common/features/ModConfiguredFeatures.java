@@ -14,6 +14,8 @@ public class ModConfiguredFeatures {
 
     public static ConfiguredFeature<?, ?> CHERRY_PETAL_COVER;
 
+    public static ConfiguredFeature<?, ?> IRON_ORE_SPARSE;
+
     public static ConfiguredFeature<?, ?> CHERRY_TREE_FOREST;
     public static ConfiguredFeature<?, ?> CHERRY_TREE_FOREST_FLOWERS;
 }

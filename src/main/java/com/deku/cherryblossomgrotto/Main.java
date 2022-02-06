@@ -163,9 +163,6 @@ public class Main
         }
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        //top layer generation logic
-        ModTopLayerModifications.TOP_LAYER_MODIFICATIONS.register(eventBus);
-
         // Structure logic
         ModStructurePieceTypes.register();
         ModStructureInitializer.STRUCTURES.register(eventBus);
@@ -183,6 +180,9 @@ public class Main
         eventBus.addListener(this::doClientStuff);
 
         ClientOnlyRegistrar clientOnlyRegistrar = new ClientOnlyRegistrar(eventBus);
+
+        //top layer generation logic
+        ModTopLayerModifications.TOP_LAYER_MODIFICATIONS.register(eventBus);
 
         // Biome logic
         ModBiomeInitializer.BIOMES.register(eventBus);
@@ -514,9 +514,9 @@ public class Main
 
             ModConfiguredFeatures.CHERRY_PETAL_COVER = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_petal_ground_cover", new CherryBlossomPetalCoverConfiguredFeature());
 
-            // TODO: Might be able to get this to work in JSON if I registered the cherry trees in a deferred register using registryobjects (though that doesnt like configuredfeatures passed in for some reason)...
-            ModConfiguredFeatures.CHERRY_TREE_FOREST = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest", Feature.RANDOM_SELECTOR.configured(new MultipleRandomFeatureConfig(ImmutableList.of(ModConfiguredFeatures.GRAND_CHERRY_TREE.weighted(0.01f), ModConfiguredFeatures.FANCY_CHERRY_TREE.weighted(0.1f)), ModConfiguredFeatures.CHERRY_TREE_BEES_002)).decorated(Features.Placements.HEIGHTMAP_SQUARE).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(6, 0.1f, 1))));
+            ModConfiguredFeatures.IRON_ORE_SPARSE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":ore_iron_sparse", new OreIronSparseConfiguredFeature());
 
+            ModConfiguredFeatures.CHERRY_TREE_FOREST = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest", Feature.RANDOM_SELECTOR.configured(new MultipleRandomFeatureConfig(ImmutableList.of(ModConfiguredFeatures.GRAND_CHERRY_TREE.weighted(0.01f), ModConfiguredFeatures.FANCY_CHERRY_TREE.weighted(0.1f)), ModConfiguredFeatures.CHERRY_TREE_BEES_002)).decorated(Features.Placements.HEIGHTMAP_SQUARE).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(6, 0.1f, 1))));
             // TODO: Add this forest flowers provider back in (it doesnt work with double block flowers) to spawn different groups later. Its useful code, just got replaced by the simpler list logic below
             //ModFeatures.CHERRY_TREE_FOREST_FLOWERS = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest_flowers", Feature.FLOWER.configured((new BlockClusterFeatureConfig.Builder(CherryBlossomGrottoFlowerBlockStateProvider.INSTANCE, new DoublePlantBlockPlacer())).tries(64).build()).decorated(Features.Placements.ADD_32).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(100));
 
