@@ -156,6 +156,8 @@ public class Main
      *      - Adds additional forge event listeners for biome and world loading events
      */
     public Main() {
+        LOGGER.info("HELLO FROM MAIN");
+
         NETWORK_CHANNEL =  NetworkRegistry.newSimpleChannel(new ResourceLocation(MOD_ID, "cherryblossomgrottochannel"), () -> NETWORK_PROTOCOL_VERSION, DoubleJumpClientMessageHandler::isProtocolAcceptedOnClient, DoubleJumpServerMessageHandler::isProtocolAcceptedOnServer);
 
         if (HIDE_CONSOLE_NOISE) {
@@ -207,10 +209,9 @@ public class Main
      *
      * @param event The setup event
      */
-    private void setup(final FMLCommonSetupEvent event)
-    {
+    private void setup(final FMLCommonSetupEvent event) {
         // some preinit code
-        LOGGER.info("HELLO FROM PREINIT");
+        LOGGER.info("HELLO FROM PREINIT COMMON");
 
         NETWORK_CHANNEL.registerMessage(DoubleJumpServerMessage.MESSAGE_ID, DoubleJumpServerMessage.class, DoubleJumpServerMessage::encode, DoubleJumpServerMessage::decode, DoubleJumpServerMessageHandler::onMessageReceived, Optional.of(PLAY_TO_SERVER));
         NETWORK_CHANNEL.registerMessage(DoubleJumpClientMessage.MESSAGE_ID, DoubleJumpClientMessage.class, DoubleJumpClientMessage::encode, DoubleJumpClientMessage::decode, DoubleJumpClientMessageHandler::onMessageReceived, Optional.of(PLAY_TO_CLIENT));
@@ -379,6 +380,8 @@ public class Main
             //NOTE: Just a test on overriding base game blocks directly in the registry
             //blockRegistryEvent.getRegistry().register(new DirtTest());
 
+            blockRegistryEvent.getRegistry().register(new ShojiScreen());
+
             blockRegistryEvent.getRegistry().register(new ZenLantern());
             blockRegistryEvent.getRegistry().register(new SoulZenLantern());
 
@@ -444,6 +447,8 @@ public class Main
 
             itemRegistryEvent.getRegistry().register(new TallBlockItem(ModBlocks.ZEN_LANTERN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("zen_lantern"));
             itemRegistryEvent.getRegistry().register(new TallBlockItem(ModBlocks.SOUL_ZEN_LANTERN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("soul_zen_lantern"));
+
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.SHOJI_SCREEN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("shoji_screen"));
 
             itemRegistryEvent.getRegistry().register(new CherryBlossomPetal());
 

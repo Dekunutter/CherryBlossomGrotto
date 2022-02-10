@@ -70,6 +70,9 @@ public class ModBlocks {
     @ObjectHolder("soul_zen_lantern")
     public static SoulZenLantern SOUL_ZEN_LANTERN;
 
+    @ObjectHolder("shoji_screen")
+    public static ShojiScreen SHOJI_SCREEN;
+
     @ObjectHolder("acacia_planks_trapdoor")
     public static AcaciaPlanksTrapdoor ACACIA_PLANKS_TRAP_DOOR;
 
