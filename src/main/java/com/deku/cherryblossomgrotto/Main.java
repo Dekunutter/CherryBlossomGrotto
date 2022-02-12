@@ -247,6 +247,7 @@ public class Main
         RenderTypeLookup.setRenderLayer(ModBlocks.CHERRY_PETALS, RenderType.cutoutMipped());
         RenderTypeLookup.setRenderLayer(ModBlocks.CHERRY_SAPLING, RenderType.cutoutMipped());
         RenderTypeLookup.setRenderLayer(ModBlocks.POTTED_CHERRY_SAPLING, RenderType.cutoutMipped());
+        RenderTypeLookup.setRenderLayer(ModBlocks.RICE_PADDY, RenderType.cutoutMipped());
 
         ClientRegistry.bindTileEntityRenderer(ModTileEntityData.CHERRY_SIGN_TILE_DATA, SignTileEntityRenderer::new);
 
@@ -382,6 +383,8 @@ public class Main
 
             blockRegistryEvent.getRegistry().register(new ShojiScreen());
 
+            blockRegistryEvent.getRegistry().register(new RicePaddy());
+
             blockRegistryEvent.getRegistry().register(new ZenLantern());
             blockRegistryEvent.getRegistry().register(new SoulZenLantern());
 
@@ -449,6 +452,8 @@ public class Main
             itemRegistryEvent.getRegistry().register(new TallBlockItem(ModBlocks.SOUL_ZEN_LANTERN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("soul_zen_lantern"));
 
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.SHOJI_SCREEN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("shoji_screen"));
+
+            itemRegistryEvent.getRegistry().register(new Rice());
 
             itemRegistryEvent.getRegistry().register(new CherryBlossomPetal());
 

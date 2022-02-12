@@ -73,6 +73,9 @@ public class ModBlocks {
     @ObjectHolder("shoji_screen")
     public static ShojiScreen SHOJI_SCREEN;
 
+    @ObjectHolder("rice_paddy")
+    public static RicePaddy RICE_PADDY;
+
     @ObjectHolder("acacia_planks_trapdoor")
     public static AcaciaPlanksTrapdoor ACACIA_PLANKS_TRAP_DOOR;
 

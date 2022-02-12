@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "cherryblossomgrotto:block/rice_paddy_stage3"
+  }
+}

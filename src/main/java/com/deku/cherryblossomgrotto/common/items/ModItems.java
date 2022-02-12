@@ -18,4 +18,7 @@ public class ModItems {
 
     @ObjectHolder("shuriken")
     public static Shuriken SHURIKEN;
+
+    @ObjectHolder("rice")
+    public static Rice RICE;
 }
