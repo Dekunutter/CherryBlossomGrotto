@@ -34,7 +34,7 @@ public class ShojiScreen extends Block {
 
 
     public ShojiScreen() {
-        super(AbstractBlock.Properties.of(Material.WOOD, MaterialColor.NONE).strength(0.1f).sound(SoundType.GRASS));
+        super(AbstractBlock.Properties.of(Material.WOOD, MaterialColor.NONE).noOcclusion().strength(0.1f).sound(SoundType.GRASS));
         setRegistryName("shoji_screen");
         registerDefaultState(defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER).setValue(FACING, Direction.NORTH));
     }

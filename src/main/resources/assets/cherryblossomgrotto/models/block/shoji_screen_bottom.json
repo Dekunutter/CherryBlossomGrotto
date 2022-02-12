@@ -3,9 +3,7 @@
   "textures": {
     "top": "cherryblossomgrotto:block/shoji_screen_top",
     "bottom": "cherryblossomgrotto:block/shoji_screen_bottom",
-    "textures": {
-      "particle": "#bottom"
-    }
+    "particle": "#bottom"
   },
   "elements": [
     {
