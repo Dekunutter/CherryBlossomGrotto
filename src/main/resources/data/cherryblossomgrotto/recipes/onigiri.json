@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "#X#"
+  ],
+  "key": {
+    "#": {
+      "item": "cherryblossomgrotto:rice"
+    },
+    "X": {
+      "item": "minecraft:kelp"
+    }
+  },
+  "result": {
+    "item": "cherryblossomgrotto:onigiri",
+    "count": 2
+  }
+}

@@ -21,4 +21,7 @@ public class ModItems {
 
     @ObjectHolder("rice")
     public static Rice RICE;
+
+    @ObjectHolder("onigiri")
+    public static Onigiri ONIGIRI;
 }

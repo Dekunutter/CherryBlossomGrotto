@@ -453,7 +453,9 @@ public class Main
 
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.SHOJI_SCREEN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("shoji_screen"));
 
+            // TODO: Find a way to add these to the composter
             itemRegistryEvent.getRegistry().register(new Rice());
+            itemRegistryEvent.getRegistry().register(new Onigiri());
 
             itemRegistryEvent.getRegistry().register(new CherryBlossomPetal());
 
