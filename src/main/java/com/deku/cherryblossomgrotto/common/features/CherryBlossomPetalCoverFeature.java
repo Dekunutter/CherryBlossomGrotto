@@ -77,6 +77,9 @@ public class CherryBlossomPetalCoverFeature extends Feature<NoFeatureConfig> {
                 spawningPosition.set(belowPosition).move(Direction.UP, 1);
                 BlockState spawningState = seedReader.getBlockState(spawningPosition);
                 if (spawningState.isAir()) {
+                    if (seedReader.getBlockState(belowPosition).is(ModBlocks.CHERRY_PETALS)) {
+                        continue;
+                    }
                     if (ModBlocks.CHERRY_PETALS.defaultBlockState().canSurvive(seedReader, spawningPosition)) {
                         BlockState cherryPetalState = ModBlocks.CHERRY_PETALS.defaultBlockState();
                         cherryPetalState.setValue(HALF_LAYERS, Randomizer.getRandomNumberWithinBounds(random, 1, 4));

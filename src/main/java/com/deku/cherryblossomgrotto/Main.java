@@ -14,6 +14,7 @@ import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
 import com.deku.cherryblossomgrotto.common.entity.projectile.KunaiEntity;
 import com.deku.cherryblossomgrotto.common.entity.projectile.ShurikenEntity;
 import com.deku.cherryblossomgrotto.common.features.*;
+import com.deku.cherryblossomgrotto.common.features.template.ModProcessorLists;
 import com.deku.cherryblossomgrotto.common.items.*;
 import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalFactory;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
@@ -82,10 +83,7 @@ import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.ItemAttributeModifierEvent;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.*;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -165,6 +163,10 @@ public class Main
         }
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        // Biome logic
+        ModBiomeInitializer.BIOMES.register(eventBus);
+        ModBiomeInitializer.registerBiomes();
+
         // Structure logic
         ModStructurePieceTypes.register();
         ModStructureInitializer.STRUCTURES.register(eventBus);
@@ -185,10 +187,6 @@ public class Main
 
         //top layer generation logic
         ModTopLayerModifications.TOP_LAYER_MODIFICATIONS.register(eventBus);
-
-        // Biome logic
-        ModBiomeInitializer.BIOMES.register(eventBus);
-        ModBiomeInitializer.registerBiomes();
 
         // Register ourselves for server and other game events we are interested in
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
@@ -219,6 +217,7 @@ public class Main
         event.enqueueWork(() -> {
             WoodType.register(ModWoodType.CHERRY_BLOSSOM);
             ModStructureInitializer.setupStructures();
+            ModProcessorLists.register();
             ModConfiguredStructureInitializer.registerConfiguredStructures();
             ModCapabilitiesInitializer.registerCapabilities();
         });

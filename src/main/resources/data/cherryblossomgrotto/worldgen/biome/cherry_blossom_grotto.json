@@ -23,7 +23,7 @@
     }
   },
   "starts": [
-    "minecraft:village_plains",
+    "cherryblossomgrotto:village_cherry_blossom_grotto",
     "minecraft:ruined_portal",
     "cherryblossomgrotto:configured_giant_buddha",
     "cherryblossomgrotto:configured_torii_gate"

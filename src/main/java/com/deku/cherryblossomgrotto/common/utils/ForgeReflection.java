@@ -26,6 +26,10 @@ public class ForgeReflection {
         return null;
     }
 
+    public static void setStaticFinalFieldToValue(Class classToCheck, String fieldName, Object newValue) {
+        setStaticFinalFieldToValue(classToCheck, fieldName, newValue, false);
+    }
+
     /**
      * Gets a static final field from a class by a given name and sets it to a given value using reflection.
      * Makes the field accessible, then changes its modifier to make it not final before setting the new value in place
@@ -34,16 +38,18 @@ public class ForgeReflection {
      * @param fieldName The name of the field we want to change the value of
      * @param newValue The new value of the field
      */
-    public static void setStaticFinalFieldToValue(Class classToCheck, String fieldName, Object newValue) {
+    public static void setStaticFinalFieldToValue(Class classToCheck, String fieldName, Object newValue, boolean isFinalClass) {
         try {
-            Field field = classToCheck.getField(fieldName);
-            field.setAccessible(true);
-
-            Field fieldModifier = Field.class.getDeclaredField("modifiers");
-            fieldModifier.setAccessible(true);
-            fieldModifier.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-
-            field.set(null, newValue);
+            Field[] fields = classToCheck.getDeclaredFields();
+            for (Field field : fields) {
+                if (field.getName().equals(fieldName)) {
+                    field.setAccessible(true);
+                    Field fieldModifier = Field.class.getDeclaredField("modifiers");
+                    fieldModifier.setAccessible(true);
+                    fieldModifier.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+                    field.set(null, newValue);
+                }
+            }
         } catch (NoSuchFieldException e) {
             Main.LOGGER.error("Failed to replace value of static final field " + fieldName + " on " + classToCheck.getName());
         } catch (IllegalAccessException e) {
@@ -78,6 +84,9 @@ public class ForgeReflection {
             for (Field field : fields) {
                 if (field.getName().equals(fieldName)) {
                     field.setAccessible(true);
+                    Field fieldModifier = Field.class.getDeclaredField("modifiers");
+                    fieldModifier.setAccessible(true);
+                    fieldModifier.setInt(field, field.getModifiers() & ~Modifier.FINAL);
                     if (instance != null) {
                         return field.get(instance);
                     } else {
@@ -85,8 +94,9 @@ public class ForgeReflection {
                     }
                 }
             }
-        } catch (IllegalAccessException e) {
+        } catch (IllegalAccessException | NoSuchFieldException e) {
             Main.LOGGER.error("Failed to access field " + fieldName + " on " + classToCheck.getName());
+            return null;
         }
 
         Main.LOGGER.error("Field of name " + fieldName + " was not found on " + classToCheck.getName());
@@ -132,6 +142,7 @@ public class ForgeReflection {
             }
         } catch (IllegalAccessException e) {
             Main.LOGGER.error("Failed to access field " + fieldName + " on " + classToCheck.getName());
+            return;
         }
 
         if (!found) {

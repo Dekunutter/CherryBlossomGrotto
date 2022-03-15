@@ -7,12 +7,14 @@ import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -27,10 +29,12 @@ import javax.annotation.Nullable;
 public class ShojiScreen extends Block {
     public static final DirectionProperty FACING = HorizontalBlock.FACING;
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
-    protected static final VoxelShape SOUTH_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 3.0D);
-    protected static final VoxelShape NORTH_AABB = Block.box(0.0D, 0.0D, 13.0D, 16.0D, 16.0D, 16.0D);
-    protected static final VoxelShape WEST_AABB = Block.box(13.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
-    protected static final VoxelShape EAST_AABB = Block.box(0.0D, 0.0D, 0.0D, 3.0D, 16.0D, 16.0D);
+
+    // NOTE: Actual model is only 3px wide but extended to 10px to resolve pathfinding issues with thin double-block objects and entities
+    protected static final VoxelShape SOUTH_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 10.0D);
+    protected static final VoxelShape NORTH_AABB = Block.box(0.0D, 0.0D, 6.0D, 16.0D, 16.0D, 16.0D);
+    protected static final VoxelShape WEST_AABB = Block.box(6.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+    protected static final VoxelShape EAST_AABB = Block.box(0.0D, 0.0D, 0.0D, 10.0D, 16.0D, 16.0D);
 
 
     public ShojiScreen() {
@@ -183,5 +187,41 @@ public class ShojiScreen extends Block {
     public int getFireSpreadSpeed(BlockState state, IBlockReader world, BlockPos pos, Direction face)
     {
         return 6;
+    }
+
+    /**
+     * Ensures that path finding entities treat this block as an obstruction even though it has no occlusion and is not a
+     * full shape.
+     *
+     * @param state State of the block we are pathing against
+     * @param blockReader Reader for accessing block information
+     * @param position Position of the block we are pathing against
+     * @param pathType The type of path being checked (land, water, or air)
+     * @return Whether block is pathable given the path type being checked
+     */
+    @Override
+    public boolean isPathfindable(BlockState state, IBlockReader blockReader, BlockPos position, PathType pathType) {
+        switch(pathType) {
+            case LAND:
+                return false;
+            case WATER:
+                return false;
+            case AIR:
+                return false;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Rotates the block based on the direction the player is facing when it was placed.
+     *
+     * @param state State of the block being placed
+     * @param rotation Rotation the block is being placed at
+     * @return Sets the rotation for the facing value into block state for this block
+     */
+    @Override
+    public BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 }
