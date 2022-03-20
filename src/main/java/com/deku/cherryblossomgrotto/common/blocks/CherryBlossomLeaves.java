@@ -38,7 +38,7 @@ public class CherryBlossomLeaves extends LeavesBlock {
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, World world, BlockPos position, Random random) {
         super.animateTick(state, world, position, random);
-        if (random.nextInt(8) == 0) {
+        if (random.nextInt(16) == 0) {
             FallingCherryBlossomPetalData cherryBlossomPetal = new FallingCherryBlossomPetalData(new Color(255, 255, 255, 255), 1.0f);
             world.addParticle(cherryBlossomPetal, (float) position.getX() + random.nextFloat(), (float) position.getY() - 1.0f, (float) position.getZ() + random.nextFloat(), 0.0d, -0.1d, 0.0d);
         }
