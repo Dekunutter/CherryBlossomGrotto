@@ -24,4 +24,7 @@ public class ModItems {
 
     @ObjectHolder("onigiri")
     public static Onigiri ONIGIRI;
+
+    @ObjectHolder("koi_bucket")
+    public static KoiBucket KOI_BUCKET;
 }

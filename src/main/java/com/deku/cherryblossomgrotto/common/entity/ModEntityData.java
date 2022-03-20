@@ -1,6 +1,7 @@
 package com.deku.cherryblossomgrotto.common.entity;
 
 import com.deku.cherryblossomgrotto.common.entity.item.ModBoatEntity;
+import com.deku.cherryblossomgrotto.common.entity.passive.fish.KoiEntity;
 import com.deku.cherryblossomgrotto.common.entity.projectile.KunaiEntity;
 import com.deku.cherryblossomgrotto.common.entity.projectile.ShurikenEntity;
 import net.minecraft.entity.EntityType;
@@ -16,4 +17,7 @@ public class ModEntityData {
 
     @ObjectHolder("shuriken_entity")
     public static EntityType<ShurikenEntity> SHURIKEN_DATA;
+
+    @ObjectHolder("koi_entity")
+    public static EntityType<KoiEntity> KOI_DATA;
 }

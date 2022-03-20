@@ -2,6 +2,7 @@ package com.deku.cherryblossomgrotto;
 
 import com.deku.cherryblossomgrotto.client.network.handlers.DoubleJumpClientMessageHandler;
 import com.deku.cherryblossomgrotto.client.network.messages.DoubleJumpClientMessage;
+import com.deku.cherryblossomgrotto.client.renderers.KoiRenderer;
 import com.deku.cherryblossomgrotto.client.renderers.KunaiRenderer;
 import com.deku.cherryblossomgrotto.client.renderers.ModBoatRenderer;
 import com.deku.cherryblossomgrotto.client.renderers.ShurikenRenderer;
@@ -9,10 +10,8 @@ import com.deku.cherryblossomgrotto.common.blocks.*;
 import com.deku.cherryblossomgrotto.common.capabilities.DoubleJumpCapability;
 import com.deku.cherryblossomgrotto.common.capabilities.ModCapabilitiesInitializer;
 import com.deku.cherryblossomgrotto.common.enchantments.ModEnchantmentInitializer;
-import com.deku.cherryblossomgrotto.common.entity.item.ModBoatEntity;
+import com.deku.cherryblossomgrotto.common.entity.EntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
-import com.deku.cherryblossomgrotto.common.entity.projectile.KunaiEntity;
-import com.deku.cherryblossomgrotto.common.entity.projectile.ShurikenEntity;
 import com.deku.cherryblossomgrotto.common.features.*;
 import com.deku.cherryblossomgrotto.common.features.template.ModProcessorLists;
 import com.deku.cherryblossomgrotto.common.items.*;
@@ -44,9 +43,10 @@ import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
+import net.minecraft.entity.passive.fish.AbstractFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -84,6 +84,7 @@ import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.*;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -241,6 +242,7 @@ public class Main
         RenderingRegistry.registerEntityRenderingHandler(ModEntityData.MOD_BOAT_DATA, ModBoatRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityData.KUNAI_DATA, KunaiRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityData.SHURIKEN_DATA, ShurikenRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityData.KOI_DATA, KoiRenderer::new);
 
         //RenderTypeLookup.setRenderLayer(ModBlocks.GRASS, RenderType.cutout());
         RenderTypeLookup.setRenderLayer(ModBlocks.CHERRY_PETALS, RenderType.cutoutMipped());
@@ -452,7 +454,11 @@ public class Main
 
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.SHOJI_SCREEN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("shoji_screen"));
 
+            itemRegistryEvent.getRegistry().register(new KoiBucket(EntityTypeInitializer.KOI_ENTITY_TYPE));
+
             // TODO: Find a way to add these to the composter
+            itemRegistryEvent.getRegistry().register(new Koi());
+            itemRegistryEvent.getRegistry().register(new CookedKoi());
             itemRegistryEvent.getRegistry().register(new Rice());
             itemRegistryEvent.getRegistry().register(new Onigiri());
 
@@ -484,6 +490,21 @@ public class Main
         }
 
         /**
+         * Used to attach attribute modifiers to entities using the Forge event bus.
+         * Required for living entities.
+         *
+         * @param event The attachment event with which attribute modifiers will be attached to different entity types
+         */
+        @SubscribeEvent
+        public static void onEntityAttributeRegistration(final EntityAttributeCreationEvent event) {
+            LOGGER.info("HELLO from Register Entity Attribute");
+
+            event.put(EntityTypeInitializer.KOI_ENTITY_TYPE, AbstractFishEntity.createAttributes().build());
+
+            GlobalEntityTypeAttributes.put(EntityTypeInitializer.KOI_ENTITY_TYPE, AbstractFishEntity.createAttributes().build());
+        }
+
+        /**
          * Used to register entities into the game using the mod event bus
          * Associated entity data is assigned before registration
          *
@@ -493,17 +514,17 @@ public class Main
         public static void onEntityRegistry(final RegistryEvent.Register<EntityType<?>> entityRegistryEvent) {
             LOGGER.info("HELLO from Register Entity");
 
-            EntityType<Entity> modBoatEntity = EntityType.Builder.of(ModBoatEntity::new, EntityClassification.MISC).setCustomClientFactory(ModBoatEntity::new).sized(1.375f, 0.5625f).clientTrackingRange(10).build("mod_boat_entity");
-            modBoatEntity.setRegistryName("mod_boat_entity");
-            entityRegistryEvent.getRegistry().register(modBoatEntity);
+            EntityTypeInitializer.BOAT_ENTITY_TYPE.setRegistryName("mod_boat_entity");
+            entityRegistryEvent.getRegistry().register(EntityTypeInitializer.BOAT_ENTITY_TYPE);
 
-            EntityType<Entity> kunaiEntity = EntityType.Builder.of(KunaiEntity::new, EntityClassification.MISC).setCustomClientFactory(KunaiEntity::new).sized(0.5f, 0.5f).clientTrackingRange(4).updateInterval(20).build("kunai_entity");
-            kunaiEntity.setRegistryName("kunai_entity");
-            entityRegistryEvent.getRegistry().register(kunaiEntity);
+            EntityTypeInitializer.KUNAI_ENTITY_TYPE.setRegistryName("kunai_entity");
+            entityRegistryEvent.getRegistry().register(EntityTypeInitializer.KUNAI_ENTITY_TYPE);
 
-            EntityType<Entity> shurikenEntity = EntityType.Builder.of(ShurikenEntity::new, EntityClassification.MISC).setCustomClientFactory(ShurikenEntity::new).sized(0.5f, 0.5f).clientTrackingRange(4).updateInterval(20).build("shuriken_entity");
-            shurikenEntity.setRegistryName("shuriken_entity");
-            entityRegistryEvent.getRegistry().register(shurikenEntity);
+            EntityTypeInitializer.SHURIKEN_ENTITY_TYPE.setRegistryName("shuriken_entity");
+            entityRegistryEvent.getRegistry().register(EntityTypeInitializer.SHURIKEN_ENTITY_TYPE);
+
+            EntityTypeInitializer.KOI_ENTITY_TYPE.setRegistryName("koi_entity");
+            entityRegistryEvent.getRegistry().register(EntityTypeInitializer.KOI_ENTITY_TYPE);
         }
 
         /**
