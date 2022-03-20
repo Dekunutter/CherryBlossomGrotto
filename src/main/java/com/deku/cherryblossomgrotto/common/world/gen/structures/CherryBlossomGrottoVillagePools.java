@@ -200,9 +200,8 @@ public class CherryBlossomGrottoVillagePools {
                 new ResourceLocation("village/cherry_blossom_grotto/fish"),
                 new ResourceLocation("empty"),
                 ImmutableList.of(
-                    Pair.of(
-                        JigsawPiece.legacy("village/cherry_blossom_grotto/fish/tropical_fish"), 1)
-                ),
+                    Pair.of(JigsawPiece.legacy("village/cherry_blossom_grotto/fish/koi"), 10),
+                    Pair.of(JigsawPiece.legacy("village/cherry_blossom_grotto/fish/tropical_fish"), 1)),
                 JigsawPattern.PlacementBehaviour.RIGID
             )
         );

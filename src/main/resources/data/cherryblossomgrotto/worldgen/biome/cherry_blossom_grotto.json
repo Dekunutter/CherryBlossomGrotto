@@ -120,12 +120,6 @@
       }
     ],
     "water_creature": [
-      {
-        "type": "cherryblossomgrotto:koi",
-        "weight": 3,
-        "minCount": 3,
-        "maxCount": 10
-      }
     ],
     "water_ambient": [
     ],
