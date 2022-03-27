@@ -1,10 +1,12 @@
 package com.deku.cherryblossomgrotto.client.renderers;
 
 import com.deku.cherryblossomgrotto.client.models.KoiModel;
+import com.deku.cherryblossomgrotto.client.renderers.layers.KoiPatternLayer;
 import com.deku.cherryblossomgrotto.common.entity.passive.fish.KoiEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
@@ -15,10 +17,11 @@ import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
 // NOTE: Since kois are just re-skinned salmons I'm just doing a flat copy of the logic in the vanilla salmon renderer for now to save time
 @OnlyIn(Dist.CLIENT)
-public class KoiRenderer extends MobRenderer<KoiEntity, KoiModel<KoiEntity>> {
+public class KoiRenderer extends MobRenderer<KoiEntity, EntityModel<KoiEntity>> {
 
     public KoiRenderer(EntityRendererManager renderManager) {
-        super(renderManager, new KoiModel<>(), 0.4F);
+        super(renderManager, new KoiModel<>(0.0F), 0.4F);
+        this.addLayer(new KoiPatternLayer(this));
     }
 
     /**
