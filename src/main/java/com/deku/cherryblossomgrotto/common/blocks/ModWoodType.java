@@ -1,7 +1,7 @@
 package com.deku.cherryblossomgrotto.common.blocks;
 
-import net.minecraft.block.WoodType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.state.properties.WoodType;
 
 import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
