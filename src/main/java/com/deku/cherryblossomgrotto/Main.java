@@ -63,8 +63,6 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biomes;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.FlatChunkGenerator;
 import net.minecraft.world.gen.blockplacer.DoublePlantBlockPlacer;
 import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
@@ -693,7 +691,7 @@ public class Main
          */
         @SubscribeEvent(priority= EventPriority.NORMAL, receiveCanceled = true)
         public static void onChunkEvent(ChunkEvent.Load event) {
-            IChunk chunk = event.getChunk();
+            /*IChunk chunk = event.getChunk();
 
             if (chunk instanceof Chunk) {
                 int chunkSize = chunk.getSections().length;
@@ -708,7 +706,7 @@ public class Main
                         }
                     }
                 }
-            }
+            }*/
         }
 
         /**
