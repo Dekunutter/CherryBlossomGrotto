@@ -36,10 +36,10 @@ public class ModConfiguredStructureInitializer {
         CherryBlossomGrottoVillagePools.bootstrap();
         JigsawPatternRegistry.bootstrap();
 
-        Map<RegistryKey<Biome>, VillagerType> villagerBiomes =  (Map<RegistryKey<Biome>, VillagerType>) ForgeReflection.getPrivatizedFieldValue(VillagerType.class, "BY_BIOME");
+        Map<RegistryKey<Biome>, VillagerType> villagerBiomes =  (Map<RegistryKey<Biome>, VillagerType>) ForgeReflection.getObfuscatedPrivatizedFieldValue(VillagerType.class, "field_221180_h");
         Map<RegistryKey<Biome>, VillagerType> newVillagerBiomes = new HashMap<>(villagerBiomes);
         newVillagerBiomes.put(ModBiomeInitializer.CHERRY_BLOSSOM_GROTTO, VillagerType.PLAINS);
-        ForgeReflection.setStaticFinalFieldToValue(VillagerType.class, "BY_BIOME", newVillagerBiomes, true);
+        ForgeReflection.setObfuscatedStaticFinalFieldToValue(VillagerType.class, "field_221180_h", newVillagerBiomes);
 
         Registry<StructureFeature<? ,?>> registry = WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE;
         Registry.register(registry, new ResourceLocation(MOD_ID, "configured_giant_buddha"), CONFIGURED_GIANT_BUDDHA);
@@ -53,11 +53,11 @@ public class ModConfiguredStructureInitializer {
      *  Allows modded structures to generate in flat world generation by adding them to the structure features of the flat generation settings class.
      */
     private static void addStructuresToFlatGeneration() {
-        Map<Structure<?>, StructureFeature<?, ?>> originalValues = (HashMap) ForgeReflection.getPrivatizedFieldValue(FlatGenerationSettings.class, "STRUCTURE_FEATURES");
+        Map<Structure<?>, StructureFeature<?, ?>> originalValues = (HashMap) ForgeReflection.getObfuscatedPrivatizedFieldValue(FlatGenerationSettings.class, "field_202247_j");
         Map<Structure<?>, StructureFeature<?, ?>> newValues = new HashMap<>(originalValues);
         newValues.put(ModStructureInitializer.GIANT_BUDDHA.get(), CONFIGURED_GIANT_BUDDHA);
         newValues.put(ModStructureInitializer.TORII_GATE.get(), CONFIGURED_TORII_GATE);
         newValues.put(Structure.VILLAGE, VILLAGE_CHERRY_BLOSSOM_GROTTO);
-        ForgeReflection.setStaticFinalFieldToValue(FlatGenerationSettings.class, "STRUCTURE_FEATURES", newValues);
+        ForgeReflection.setObfuscatedStaticFinalFieldToValue(FlatGenerationSettings.class, "field_202247_j", newValues);
     }
 }
