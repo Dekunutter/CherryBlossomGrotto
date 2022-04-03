@@ -370,15 +370,10 @@ public class Main
 
             blockRegistryEvent.getRegistry().register(new CherryBlossomLeaves());
 
-            // TODO: Commented out overridden grass block for possible removal in the future. Find all instances and remove if block goes unused
-            //blockRegistryEvent.getRegistry().register(new NewGrassBlock());
             blockRegistryEvent.getRegistry().register(new CherryBlossomPetals());
 
             blockRegistryEvent.getRegistry().register(new CherryBlossomSapling());
             blockRegistryEvent.getRegistry().register(new PottedCherryBlossomSapling());
-
-            //NOTE: Just a test on overriding base game blocks directly in the registry
-            //blockRegistryEvent.getRegistry().register(new DirtTest());
 
             blockRegistryEvent.getRegistry().register(new ShojiScreen());
 
@@ -444,7 +439,6 @@ public class Main
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_LEAVES, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("cherry_blossom_leaves"));
 
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PETALS, new Item.Properties().tab(ItemGroup.TAB_MISC)).setRegistryName("cherry_blossom_petals"));
-            //itemRegistryEvent.getRegistry().register(new BlockItem(OverriddenBlocks.DIRT, new Item.Properties()).setRegistryName("dirt"));
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_SAPLING, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("cherry_blossom_sapling"));
 
             itemRegistryEvent.getRegistry().register(new TallBlockItem(ModBlocks.ZEN_LANTERN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("zen_lantern"));
@@ -681,32 +675,6 @@ public class Main
          */
         @SubscribeEvent
         public static void itemAttributeModifier(ItemAttributeModifierEvent event) {
-        }
-
-        /**
-         * Used to handle events that occur when a chunk is loaded.
-         * Currently this replaces any base game grass blocks with the mod's overridden grass block.
-         *
-         * @param event The event object that is built when a chunk is loaded
-         */
-        @SubscribeEvent(priority= EventPriority.NORMAL, receiveCanceled = true)
-        public static void onChunkEvent(ChunkEvent.Load event) {
-            /*IChunk chunk = event.getChunk();
-
-            if (chunk instanceof Chunk) {
-                int chunkSize = chunk.getSections().length;
-                if (event.getWorld().isClientSide()) {
-                    for (int x = 0; x < chunkSize; ++x) {
-                        for (int z = 0; z < chunkSize; ++z) {
-                            for (int y = 0; y < chunk.getMaxBuildHeight(); ++y) {
-                                if (chunk.getBlockState(new BlockPos(x, y, z)).getBlock() == Blocks.GRASS_BLOCK) {
-                                    //chunk.setBlockState(new BlockPos(x, y, z), ModBlocks.GRASS.defaultBlockState(), true);
-                                }
-                            }
-                        }
-                    }
-                }
-            }*/
         }
 
         /**
