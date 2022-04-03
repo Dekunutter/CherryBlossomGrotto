@@ -1,5 +1,6 @@
 # CherryBlossomGrotto
-WIP of a Minecraft mod using the 1.16.5 version of the MC Forge framework
+WIP of a Minecraft mod using the 1.16.5 version of the MC Forge framework.
+Warning: Everything seems to be pretty stable, but codebase is in dire need of a cleanup.
 
 # Contents
 The main focus of this mod is the cherry blossom grotto that it adds to the Minecraft overworld.
