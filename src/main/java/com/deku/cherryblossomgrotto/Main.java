@@ -793,8 +793,8 @@ public class Main
         public static void onPlayerTick(final TickEvent.PlayerTickEvent event) {
             if (event.phase == TickEvent.Phase.END) {
                 PlayerEntity player = event.player;
-                boolean isJumping = (boolean) ForgeReflection.getPrivatizedFieldValue(LivingEntity.class, "jumping", player);
-                int jumpCooldownTimer = (int) ForgeReflection.getPrivatizedFieldValue(LivingEntity.class, "noJumpDelay", player);
+                boolean isJumping = (boolean) ForgeReflection.getObfuscatedPrivatizedFieldValue(LivingEntity.class, "field_70703_bu", player);
+                int jumpCooldownTimer = (int) ForgeReflection.getObfuscatedPrivatizedFieldValue(LivingEntity.class, "field_70773_bE", player);
                 if (isJumping && jumpCooldownTimer <= 0) {
 
                     if (!player.isPassenger() && !player.isFallFlying() && !player.isInWater() && !player.isInLava() && !player.isSleeping() && !player.isSwimming() && !player.isDeadOrDying()) {
@@ -805,7 +805,7 @@ public class Main
                                     player.jumpFromGround();
                                     player.fallDistance = 0.0F;
                                     player.causeFoodExhaustion(player.isSprinting() ? 0.2F * 3.0F : 0.05F * 3.0F);
-                                    ForgeReflection.setPrivatizedFieldToValue(LivingEntity.class, "noJumpDelay", 10, player);
+                                    ForgeReflection.setObfuscatedPrivatizedFieldToValue(LivingEntity.class, "field_70773_bE", 10, player);
 
                                     DoubleJumpServerMessage message = new DoubleJumpServerMessage(true);
                                     Main.NETWORK_CHANNEL.sendToServer(message);

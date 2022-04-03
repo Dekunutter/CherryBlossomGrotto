@@ -50,11 +50,11 @@ public class ModStructureInitializer {
 
         if (shouldTransformLand) {
             ImmutableList<Structure<?>> allStructures = ImmutableList.<Structure<?>>builder().addAll(Structure.NOISE_AFFECTING_FEATURES).add(structure).build();
-            ForgeReflection.setStaticFinalFieldToValue(Structure.class, "NOISE_AFFECTING_FEATURES", allStructures);
+            ForgeReflection.setObfuscatedStaticFinalFieldToValue(Structure.class, "field_236384_t_", allStructures);
         }
 
         ImmutableMap<Structure<?>, StructureSeparationSettings> defaultStructureSettings = ImmutableMap.<Structure<?>, StructureSeparationSettings>builder().putAll(DimensionStructuresSettings.DEFAULTS).put(structure, separationSettings).build();
-        ForgeReflection.setStaticFinalFieldToValue(DimensionStructuresSettings.class, "DEFAULTS", defaultStructureSettings);
+        ForgeReflection.setObfuscatedStaticFinalFieldToValue(DimensionStructuresSettings.class, "field_236191_b_", defaultStructureSettings);
         WorldGenRegistries.NOISE_GENERATOR_SETTINGS.entrySet().forEach(settings -> {
             Map<Structure<?>, StructureSeparationSettings> structureMap = settings.getValue().structureSettings().structureConfig();
         });
