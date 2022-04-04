@@ -4,24 +4,24 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.Mth;
 
 import java.awt.*;
 import java.util.Locale;
 
-public class FallingCherryBlossomPetalData implements IParticleData {
+public class FallingCherryBlossomPetalOptions implements ParticleOptions {
     private Color tint;
     private double diameter;
 
-    public FallingCherryBlossomPetalData(Color tint, double diameter) {
+    public FallingCherryBlossomPetalOptions(Color tint, double diameter) {
         this.tint = tint;
         this.diameter = diameter;
     }
 
-    private FallingCherryBlossomPetalData(int rgb, double diameter) {
+    private FallingCherryBlossomPetalOptions(int rgb, double diameter) {
         this.tint = new Color(rgb);
         this.diameter = diameter;
     }
@@ -50,7 +50,7 @@ public class FallingCherryBlossomPetalData implements IParticleData {
      * @return Particle type
      */
     @Override
-    public ParticleType<FallingCherryBlossomPetalData> getType() {
+    public ParticleType<FallingCherryBlossomPetalOptions> getType() {
         return ModParticles.CHERRY_PETAL;
     }
 
@@ -60,7 +60,7 @@ public class FallingCherryBlossomPetalData implements IParticleData {
      * @param buffer Buffer to be sent to the client
      */
     @Override
-    public void writeToNetwork(PacketBuffer buffer) {
+    public void writeToNetwork(FriendlyByteBuf buffer) {
         buffer.writeInt(tint.getRed());
         buffer.writeInt(tint.getGreen());
         buffer.writeInt(tint.getBlue());
@@ -80,11 +80,11 @@ public class FallingCherryBlossomPetalData implements IParticleData {
     /**
      * Used to serialize and deserialize this particle
      */
-    public static final Codec<FallingCherryBlossomPetalData> CODEC = RecordCodecBuilder.create(
+    public static final Codec<FallingCherryBlossomPetalOptions> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
                     Codec.INT.fieldOf("int").forGetter(d -> d.tint.getRGB()),
                     Codec.DOUBLE.fieldOf("diameter").forGetter(d -> d.diameter)
-            ).apply(instance, FallingCherryBlossomPetalData::new)
+            ).apply(instance, FallingCherryBlossomPetalOptions::new)
     );
 
     /**
@@ -92,50 +92,51 @@ public class FallingCherryBlossomPetalData implements IParticleData {
      * This is deprecated in Minecraft's code but seems to still be a key component in setting up any particle for the time being
      */
     @Deprecated
-    public static final IDeserializer<FallingCherryBlossomPetalData> DESERIALIZER = new IDeserializer<FallingCherryBlossomPetalData>() {
+    public static final ParticleOptions.Deserializer<FallingCherryBlossomPetalOptions> DESERIALIZER = new ParticleOptions.Deserializer<FallingCherryBlossomPetalOptions>() {
+
         /**
          * Parse the parameters for this particle from a /particle command
          *
-         * @param particleTypeIn The particle type
+         * @param particleType The particle type
          * @param reader The reader object containing the /particle commands
          * @return Particle data
          * @throws CommandSyntaxException Thrown when there was an error in the command
          */
         @Override
-        public FallingCherryBlossomPetalData fromCommand(ParticleType<FallingCherryBlossomPetalData> particleTypeIn, StringReader reader) throws CommandSyntaxException {
+        public FallingCherryBlossomPetalOptions fromCommand(ParticleType<FallingCherryBlossomPetalOptions> particleType, StringReader reader) throws CommandSyntaxException {
             reader.expect(' ');
             double diameter = reader.readDouble();
 
             final int minColor = 0;
             final int maxColor = 255;
             reader.expect(' ');
-            int red = MathHelper.clamp(reader.readInt(), minColor, maxColor);
-            int green = MathHelper.clamp(reader.readInt(), minColor, maxColor);
-            int blue = MathHelper.clamp(reader.readInt(), minColor, maxColor);
+            int red = Mth.clamp(reader.readInt(), minColor, maxColor);
+            int green = Mth.clamp(reader.readInt(), minColor, maxColor);
+            int blue = Mth.clamp(reader.readInt(), minColor, maxColor);
             Color color = new Color(red, green, blue);
 
-            return new FallingCherryBlossomPetalData(color, diameter);
+            return new FallingCherryBlossomPetalOptions(color, diameter);
         }
 
         /**
          * Reads particle information from a PacketBuffer after the client has received it from the server
          *
-         * @param particleTypeIn The particle type
+         * @param particleType The particle type
          * @param buffer The buffer containing all the particle information
          * @return Particle data
          */
         @Override
-        public FallingCherryBlossomPetalData fromNetwork(ParticleType<FallingCherryBlossomPetalData> particleTypeIn, PacketBuffer buffer) {
+        public FallingCherryBlossomPetalOptions fromNetwork(ParticleType<FallingCherryBlossomPetalOptions> particleType, FriendlyByteBuf buffer) {
             final int minColor = 0;
             final int maxColor = 255;
-            int red = MathHelper.clamp(buffer.readInt(), minColor, maxColor);
-            int green = MathHelper.clamp(buffer.readInt(), minColor, maxColor);
-            int blue = MathHelper.clamp(buffer.readInt(), minColor, maxColor);
+            int red = Mth.clamp(buffer.readInt(), minColor, maxColor);
+            int green = Mth.clamp(buffer.readInt(), minColor, maxColor);
+            int blue = Mth.clamp(buffer.readInt(), minColor, maxColor);
             Color color = new Color(red, green, blue);
 
             double diameter = buffer.readDouble();
 
-            return new FallingCherryBlossomPetalData(color, diameter);
+            return new FallingCherryBlossomPetalOptions(color, diameter);
         }
     };
 }

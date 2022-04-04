@@ -1,18 +1,18 @@
-package com.deku.cherryblossomgrotto.common.tileEntities;
+package com.deku.cherryblossomgrotto.common.blockEntities;
 
 import com.deku.cherryblossomgrotto.common.blocks.CherryBlossomPetals;
 import com.deku.cherryblossomgrotto.common.blocks.ModBlocks;
-import net.minecraft.block.BlockState;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Random;
 
-public class CherryLeavesTileEntity extends TileEntity implements ITickableTileEntity {
-    public CherryLeavesTileEntity() {
-        super(ModTileEntityData.CHERRY_LEAVES_TILE_DATA);
+public class CherryLeavesBlockEntity extends BlockEntity {
+    public CherryLeavesBlockEntity(BlockPos position, BlockState state) {
+        super(ModBlockEntityType.CHERRY_LEAVES_TILE_DATA, position, state);
     }
 
     /**
@@ -20,17 +20,13 @@ public class CherryLeavesTileEntity extends TileEntity implements ITickableTileE
      * This entity is attached to an instance of a cherry blossom leaves block and traces downwards to see if piles of
      * petals should spawn.
      */
-    @Override
-    public void tick() {
-        if (!isValidTick()) {
+    public static void tick(Level world, BlockPos position, BlockState state, BeehiveBlockEntity entity) {
+        if (!isValidTick(world)) {
             return;
         }
 
         Random random = new Random();
         if (random.nextInt(500) == 0) {
-            World world = this.level;
-
-            BlockPos position = this.getBlockPos();
             BlockPos belowPosition = position.below();
 
             //TODO: Maybe put a height max on this rather than just tracing to 0. Plus more recent Minecraft versions go deeper, beyond 0 so need to adjust for that
@@ -38,7 +34,7 @@ public class CherryLeavesTileEntity extends TileEntity implements ITickableTileE
                 BlockState belowState = world.getBlockState(belowPosition);
                 if (!world.isEmptyBlock(belowPosition)) {
                     BlockPos spawningPosition = belowPosition.above();
-                    if (belowState.getBlock().is(ModBlocks.CHERRY_PETALS)) {
+                    if (belowState.getBlock() == ModBlocks.CHERRY_PETALS) {
                         CherryBlossomPetals petals = (CherryBlossomPetals) belowState.getBlock();
                         petals.updateLayerState(belowPosition, world);
                     } else if (CherryBlossomPetals.isFree(world.getBlockState(spawningPosition), world, spawningPosition)) {
@@ -59,12 +55,10 @@ public class CherryLeavesTileEntity extends TileEntity implements ITickableTileE
      *
      * @return Whether the current tick is valid
      */
-    private boolean isValidTick() {
-        if (!this.hasLevel()) {
+    private static boolean isValidTick(Level world) {
+        if (world == null) {
             return false;
         }
-
-        World world = this.getLevel();
 
         if (world.isClientSide) {
             return false;

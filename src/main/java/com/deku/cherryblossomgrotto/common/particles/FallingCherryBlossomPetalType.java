@@ -1,13 +1,13 @@
 package com.deku.cherryblossomgrotto.common.particles;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.particles.ParticleType;
+import net.minecraft.core.particles.ParticleType;
 
-public class FallingCherryBlossomPetalType extends ParticleType<FallingCherryBlossomPetalData> {
+public class FallingCherryBlossomPetalType extends ParticleType<FallingCherryBlossomPetalOptions> {
     private static final boolean ALWAYS_SHOW = false;
 
     public FallingCherryBlossomPetalType() {
-        super(ALWAYS_SHOW, FallingCherryBlossomPetalData.DESERIALIZER);
+        super(ALWAYS_SHOW, FallingCherryBlossomPetalOptions.DESERIALIZER);
     }
 
     /**
@@ -15,7 +15,7 @@ public class FallingCherryBlossomPetalType extends ParticleType<FallingCherryBlo
      * @return
      */
     @Override
-    public Codec<FallingCherryBlossomPetalData> codec() {
-        return FallingCherryBlossomPetalData.CODEC;
+    public Codec<FallingCherryBlossomPetalOptions> codec() {
+        return FallingCherryBlossomPetalOptions.CODEC;
     }
 }

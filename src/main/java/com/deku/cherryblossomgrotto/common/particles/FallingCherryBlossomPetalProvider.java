@@ -1,16 +1,19 @@
 package com.deku.cherryblossomgrotto.common.particles;
 
-import net.minecraft.client.particle.IAnimatedSprite;
-import net.minecraft.client.particle.IParticleFactory;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
-public class FallingCherryBlossomPetalFactory implements IParticleFactory<FallingCherryBlossomPetalData> {
-    private final IAnimatedSprite sprites;
+@OnlyIn(Dist.CLIENT)
+public class FallingCherryBlossomPetalProvider implements ParticleProvider<FallingCherryBlossomPetalOptions> {
+    private final SpriteSet sprites;
 
-    public FallingCherryBlossomPetalFactory(IAnimatedSprite sprites) {
+    public FallingCherryBlossomPetalProvider(SpriteSet sprites) {
         this.sprites = sprites;
     }
 
@@ -29,7 +32,7 @@ public class FallingCherryBlossomPetalFactory implements IParticleFactory<Fallin
      */
     @Nullable
     @Override
-    public Particle createParticle(FallingCherryBlossomPetalData particleData, ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+    public Particle createParticle(FallingCherryBlossomPetalOptions particleData, ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
         FallingCherryBlossomPetal petal = new FallingCherryBlossomPetal(world, particleData.getTint(), particleData.getDiameter(), sprites, x, y, z, xSpeed, ySpeed, zSpeed);
         petal.pickSprite(sprites);
         return petal;
