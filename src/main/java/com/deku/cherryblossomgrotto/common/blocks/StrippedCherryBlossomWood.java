@@ -1,18 +1,18 @@
 package com.deku.cherryblossomgrotto.common.blocks;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.RotatedPillarBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 
 public class StrippedCherryBlossomWood  extends RotatedPillarBlock {
     public StrippedCherryBlossomWood() {
-        super(AbstractBlock.Properties.of(Material.WOOD, MaterialColor.WOOD).strength(2.0f).sound(SoundType.WOOD));
+        super(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.WOOD).strength(2.0f).sound(SoundType.WOOD));
         setRegistryName("stripped_cherry_blossom_wood");
     }
 
@@ -26,7 +26,7 @@ public class StrippedCherryBlossomWood  extends RotatedPillarBlock {
      * @return The flammability value of the block given its position in the world and the face being set alight
      */
     @Override
-    public int getFlammability(BlockState state, IBlockReader world, BlockPos pos, Direction face)
+    public int getFlammability(BlockState state, BlockGetter world, BlockPos pos, Direction face)
     {
         return 5;
     }
@@ -41,7 +41,7 @@ public class StrippedCherryBlossomWood  extends RotatedPillarBlock {
      * @return The likelihood that this burning block will be destroyed by the fire
      */
     @Override
-    public int getFireSpreadSpeed(BlockState state, IBlockReader world, BlockPos pos, Direction face)
+    public int getFireSpreadSpeed(BlockState state, BlockGetter world, BlockPos pos, Direction face)
     {
         return 5;
     }
