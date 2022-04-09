@@ -1,33 +1,34 @@
 package com.deku.cherryblossomgrotto.common.blocks;
 
-import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.pathfinding.PathType;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.state.properties.DoubleBlockHalf;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
 
 
 public class ShojiScreen extends Block {
-    public static final DirectionProperty FACING = HorizontalBlock.FACING;
+    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
 
     // NOTE: Actual model is only 3px wide but extended to 10px to resolve pathfinding issues with thin double-block objects and entities
@@ -38,7 +39,7 @@ public class ShojiScreen extends Block {
 
 
     public ShojiScreen() {
-        super(AbstractBlock.Properties.of(Material.WOOD, MaterialColor.NONE).noOcclusion().strength(0.1f).sound(SoundType.GRASS));
+        super(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.NONE).noOcclusion().strength(0.1f).sound(SoundType.GRASS));
         setRegistryName("shoji_screen");
         registerDefaultState(defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER).setValue(FACING, Direction.NORTH));
     }
@@ -49,12 +50,12 @@ public class ShojiScreen extends Block {
      * This determines in what direction the block will be rendered, since it doesnt fill an entire block
      *
      * @param state State of this block
-     * @param blockReader Reader for information from this block
+     * @param blockGetter Reader for information from this block
      * @param position Position of this block
      * @param selectionContext The context under which this block was selected
      * @return
      */
-    public VoxelShape getShape(BlockState state, IBlockReader blockReader, BlockPos position, ISelectionContext selectionContext) {
+    public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos position, CollisionContext selectionContext) {
         Direction direction = state.getValue(FACING);
         switch(direction) {
             case EAST:
@@ -77,15 +78,15 @@ public class ShojiScreen extends Block {
      * @param blockState State of the block having its shape updated
      * @param direction Direction we are going to update the shape in
      * @param otherBlockState State of the other block in the check
-     * @param world World the block is being updated in
+     * @param levelAccessor Accessor for the level that the block is being updated in
      * @param position Position of the block having its shape updated
      * @param otherPosition Position of the other block in the check
      * @return Updated block state of the current block
      */
-    public BlockState updateShape(BlockState blockState, Direction direction, BlockState otherBlockState, IWorld world, BlockPos position, BlockPos otherPosition) {
+    public BlockState updateShape(BlockState blockState, Direction direction, BlockState otherBlockState, LevelAccessor levelAccessor, BlockPos position, BlockPos otherPosition) {
         DoubleBlockHalf doubleblockhalf = blockState.getValue(HALF);
         if (direction.getAxis() != Direction.Axis.Y || doubleblockhalf == DoubleBlockHalf.LOWER != (direction == Direction.UP) || otherBlockState.is(this) && otherBlockState.getValue(HALF) != doubleblockhalf) {
-            return doubleblockhalf == DoubleBlockHalf.LOWER && direction == Direction.DOWN && !blockState.canSurvive(world, position) ? Blocks.AIR.defaultBlockState() : super.updateShape(blockState, direction, otherBlockState, world, position, otherPosition);
+            return doubleblockhalf == DoubleBlockHalf.LOWER && direction == Direction.DOWN && !blockState.canSurvive(levelAccessor, position) ? Blocks.AIR.defaultBlockState() : super.updateShape(blockState, direction, otherBlockState, levelAccessor, position, otherPosition);
         } else {
             return Blocks.AIR.defaultBlockState();
         }
@@ -95,14 +96,14 @@ public class ShojiScreen extends Block {
      * Sets the correct state for the block upon its placement.
      * Designates the lower half of the block with a block state so that we can differentiate it from the top in other functions.
      *
-     * @param itemUseContext Usage context of the item interfacing with the block
+     * @param blockPlaceContext Usage context of the block as it is placed into the level
      * @return Updated state of the block that was placed.
      */
     @Nullable
-    public BlockState getStateForPlacement(BlockItemUseContext itemUseContext) {
-        BlockPos position = itemUseContext.getClickedPos();
-        if (position.getY() < 255 && itemUseContext.getLevel().getBlockState(position.above()).canBeReplaced(itemUseContext)) {
-            return this.defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER).setValue(FACING, itemUseContext.getHorizontalDirection());
+    public BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
+        BlockPos position = blockPlaceContext.getClickedPos();
+        if (position.getY() < 255 && blockPlaceContext.getLevel().getBlockState(position.above()).canBeReplaced(blockPlaceContext)) {
+            return this.defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER).setValue(FACING, blockPlaceContext.getHorizontalDirection());
         } else {
             return null;
         }
@@ -111,14 +112,14 @@ public class ShojiScreen extends Block {
     /**
      * Places the block into the world if the position above is also free so that the top block can be generated also.
      *
-     * @param world World the block is being placed in
+     * @param level Level the block is being placed in
      * @param position Position the block is being placed on
      * @param blockState State of the block to be placed
      * @param entity The entity placing the block
      * @param itemStack The stack of items that the block may be originating from
      */
-    public void setPlacedBy(World world, BlockPos position, BlockState blockState, LivingEntity entity, ItemStack itemStack) {
-        world.setBlock(position.above(), blockState.setValue(HALF, DoubleBlockHalf.UPPER), 3);
+    public void setPlacedBy(Level level, BlockPos position, BlockState blockState, LivingEntity entity, ItemStack itemStack) {
+        level.setBlock(position.above(), blockState.setValue(HALF, DoubleBlockHalf.UPPER), 3);
     }
 
     /**
@@ -127,14 +128,14 @@ public class ShojiScreen extends Block {
      * If the current block being checked is the upper half, ensures that the block underneath it is the lower half of the object.
      *
      * @param blockState State of the block being checked
-     * @param worldReader Reader for the world the block is in
+     * @param levelReader Reader for the level the block is in
      * @param position Position of the block being checked
      * @return Whether the block can survive in its current position
      */
-    public boolean canSurvive(BlockState blockState, IWorldReader worldReader, BlockPos position) {
+    public boolean canSurvive(BlockState blockState, LevelReader levelReader, BlockPos position) {
         BlockPos blockpos = position.below();
-        BlockState blockstate = worldReader.getBlockState(blockpos);
-        return blockState.getValue(HALF) == DoubleBlockHalf.LOWER ? blockstate.isFaceSturdy(worldReader, blockpos, Direction.UP) : blockstate.is(this);
+        BlockState blockstate = levelReader.getBlockState(blockpos);
+        return blockState.getValue(HALF) == DoubleBlockHalf.LOWER ? blockstate.isFaceSturdy(levelReader, blockpos, Direction.UP) : blockstate.is(this);
     }
 
     /**
@@ -144,7 +145,7 @@ public class ShojiScreen extends Block {
      * @param builder The builder for the state container
      */
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(HALF, FACING);
     }
 
@@ -163,13 +164,13 @@ public class ShojiScreen extends Block {
      * Sets the flammability of the block. The higher the number the more likely it is to catch fire
      *
      * @param state State of the block
-     * @param world World that the block exists in
+     * @param level Level that we are getting the block from
      * @param pos Position of the block
      * @param face The face of the block being set on fire
      * @return The flammability value of the block given its position in the world and the face being set alight
      */
     @Override
-    public int getFlammability(BlockState state, IBlockReader world, BlockPos pos, Direction face)
+    public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction face)
     {
         return 6;
     }
@@ -178,13 +179,13 @@ public class ShojiScreen extends Block {
      * Determines how likely the fire is to destroy the block. The higher the number the more likely it is to burn up.
      *
      * @param state State of the block
-     * @param world World that the block exists in
+     * @param level Level that the block exists in
      * @param pos Position of the block
      * @param face The face of the block that's currently aflame
      * @return The likelihood that this burning block will be destroyed by the fire
      */
     @Override
-    public int getFireSpreadSpeed(BlockState state, IBlockReader world, BlockPos pos, Direction face)
+    public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction face)
     {
         return 6;
     }
@@ -194,13 +195,13 @@ public class ShojiScreen extends Block {
      * full shape.
      *
      * @param state State of the block we are pathing against
-     * @param blockReader Reader for accessing block information
+     * @param blockGetter Reader for accessing block information
      * @param position Position of the block we are pathing against
      * @param pathType The type of path being checked (land, water, or air)
      * @return Whether block is pathable given the path type being checked
      */
     @Override
-    public boolean isPathfindable(BlockState state, IBlockReader blockReader, BlockPos position, PathType pathType) {
+    public boolean isPathfindable(BlockState state, BlockGetter blockGetter, BlockPos position, PathComputationType pathType) {
         switch(pathType) {
             case LAND:
                 return false;
