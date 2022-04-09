@@ -1,42 +1,41 @@
-package com.deku.cherryblossomgrotto.common.entity.item;
+package com.deku.cherryblossomgrotto.common.entity.vehicle;
 
 import com.deku.cherryblossomgrotto.common.blocks.ModBlocks;
 import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
 import com.deku.cherryblossomgrotto.common.items.ModItems;
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.BoatEntity;
-import net.minecraft.item.Item;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.FMLPlayMessages;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PlayMessages;
 
-public class ModBoatEntity extends BoatEntity {
-    private static final DataParameter<Integer> MOD_BOAT_TYPE = EntityDataManager.defineId(ModBoatEntity.class, DataSerializers.INT);
+public class ModBoatEntity extends Boat {
+    private static final EntityDataAccessor<Integer> MOD_BOAT_TYPE = SynchedEntityData.defineId(ModBoatEntity.class, EntityDataSerializers.INT);
 
-    public ModBoatEntity(EntityType<Entity> entityType, World world) {
-        super(ModEntityData.MOD_BOAT_DATA, world);
+    public ModBoatEntity(EntityType<ModBoatEntity> entityType, Level level) {
+        super(ModEntityData.MOD_BOAT_DATA, level);
     }
 
-    public ModBoatEntity(World world, double positionX, double positionY, double positionZ) {
-        super(ModEntityData.MOD_BOAT_DATA, world);
+    public ModBoatEntity(Level level, double positionX, double positionY, double positionZ) {
+        super(ModEntityData.MOD_BOAT_DATA, level);
         this.setPos(positionX, positionY, positionZ);
-        this.setDeltaMovement(Vector3d.ZERO);
+        this.setDeltaMovement(Vec3.ZERO);
         this.xo = positionX;
         this.yo = positionY;
         this.zo = positionZ;
 
     }
 
-    public ModBoatEntity(FMLPlayMessages.SpawnEntity spawnEntity, World world) {
-        super(ModEntityData.MOD_BOAT_DATA, world);
+    public ModBoatEntity(PlayMessages.SpawnEntity spawnEntity, Level level) {
+        this(ModEntityData.MOD_BOAT_DATA, level);
     }
 
     /**
@@ -45,7 +44,7 @@ public class ModBoatEntity extends BoatEntity {
      * @param compound The object the custom boat type is being saved to
      */
     @Override
-    protected void addAdditionalSaveData(CompoundNBT compound)
+    protected void addAdditionalSaveData(CompoundTag compound)
     {
         super.addAdditionalSaveData(compound);
 
@@ -59,7 +58,7 @@ public class ModBoatEntity extends BoatEntity {
      * @param compound The object the custom boat type is being read from
      */
     @Override
-    protected void readAdditionalSaveData(CompoundNBT compound)
+    protected void readAdditionalSaveData(CompoundTag compound)
     {
         super.readAdditionalSaveData(compound);
 
@@ -83,7 +82,7 @@ public class ModBoatEntity extends BoatEntity {
      * @return The packet containing entity spawning data to be sent across the network
      */
     @Override
-    public IPacket<?> getAddEntityPacket()
+    public Packet<?> getAddEntityPacket()
     {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
@@ -115,9 +114,9 @@ public class ModBoatEntity extends BoatEntity {
      * @return The vanilla boat type assigned to this boat
      */
     @Override
-    public BoatEntity.Type getBoatType()
+    public Boat.Type getBoatType()
     {
-        return BoatEntity.Type.OAK;
+        return Boat.Type.OAK;
     }
 
     /**
@@ -126,7 +125,7 @@ public class ModBoatEntity extends BoatEntity {
      * @param boatType The boat type we would be changing to, if we allowed it.
      */
     @Override
-    public void setType(BoatEntity.Type boatType)
+    public void setType(Boat.Type boatType)
     {
     }
 

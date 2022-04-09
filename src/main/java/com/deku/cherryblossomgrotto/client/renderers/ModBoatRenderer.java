@@ -1,11 +1,10 @@
 package com.deku.cherryblossomgrotto.client.renderers;
 
-import com.deku.cherryblossomgrotto.common.entity.item.ModBoatEntity;
+import com.deku.cherryblossomgrotto.common.entity.vehicle.ModBoatEntity;
 import net.minecraft.client.renderer.entity.BoatRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.model.BoatModel;
-import net.minecraft.entity.item.BoatEntity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -16,10 +15,9 @@ public class ModBoatRenderer extends BoatRenderer {
     private static final ResourceLocation[] BOAT_TEXTURES = new ResourceLocation[] {
             new ResourceLocation(MOD_ID,"textures/entity/boat/cherry_blossom.png")
     };
-    protected final BoatModel model = new BoatModel();
 
-    public ModBoatRenderer(EntityRendererManager renderManager) {
-        super(renderManager);
+    public ModBoatRenderer(EntityRendererProvider.Context renderContext) {
+        super(renderContext);
     }
 
     /**
@@ -30,7 +28,7 @@ public class ModBoatRenderer extends BoatRenderer {
      * @return The resource location of the texture we want to use
      */
     @Override
-    public ResourceLocation getTextureLocation(BoatEntity entity) {
+    public ResourceLocation getTextureLocation(Boat entity) {
         if (entity instanceof ModBoatEntity) {
             return BOAT_TEXTURES[((ModBoatEntity) entity).getModBoatType().ordinal()];
         } else {

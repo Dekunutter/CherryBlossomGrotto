@@ -1,30 +1,32 @@
 package com.deku.cherryblossomgrotto.common.items;
 
-import com.deku.cherryblossomgrotto.common.entity.item.ModBoatEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import com.deku.cherryblossomgrotto.common.entity.vehicle.ModBoatEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 import java.util.function.Predicate;
 
 public class CherryBlossomBoat extends Item {
-    private static final Predicate<Entity> NOT_SPECTATING_AND_COLLIDABLE = EntityPredicates.NO_SPECTATORS.and(Entity::isPickable);
+    private static final Predicate<Entity> ENTITY_PREDICATE = EntitySelector.NO_SPECTATORS.and(Entity::isPickable);
     private final ModBoatEntity.ModType type;
 
     public CherryBlossomBoat() {
-        super(new Item.Properties().stacksTo(1).tab(ItemGroup.TAB_TRANSPORTATION));
+        super(new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_TRANSPORTATION));
         setRegistryName("cherry_blossom_boat");
         type = ModBoatEntity.ModType.CHERRY;
     }
@@ -37,66 +39,66 @@ public class CherryBlossomBoat extends Item {
      * If a block was found in the raytrace we place the boat into the world, rotate it to match the player's current
      * direction and ensure the boat is loaded onto the server.
      *
-     * @param world The world in which the item was used
+     * @param level The world in which the item was used
      * @param player The player that used the item
      * @param hand The hand that the item was held in at time of use
      * @return The action that will be taken as a result of this item use
      */
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand)
     {
         ItemStack itemStack = player.getItemInHand(hand);
-        RayTraceResult rayTraceResult = getPlayerPOVHitResult(world, player, RayTraceContext.FluidMode.ANY);
+        HitResult rayTraceResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.ANY);
 
-        if (rayTraceResult.getType() == RayTraceResult.Type.MISS)
+        if (rayTraceResult.getType() == HitResult.Type.MISS)
         {
-            return ActionResult.pass(itemStack);
+            return InteractionResultHolder.pass(itemStack);
         }
         else
         {
-            Vector3d view = player.getViewVector(1.0F);
-            List<Entity> entityList = world.getEntities(player, player.getBoundingBox().expandTowards(view.scale(5.0D)).inflate(1.0D), NOT_SPECTATING_AND_COLLIDABLE);
+            Vec3 view = player.getViewVector(1.0F);
+            List<Entity> entityList = level.getEntities(player, player.getBoundingBox().expandTowards(view.scale(5.0D)).inflate(1.0D), ENTITY_PREDICATE);
             if (!entityList.isEmpty())
             {
-                Vector3d eyePosition = player.getEyePosition(1.0F);
+                Vec3 eyePosition = player.getEyePosition(1.0F);
 
                 for (Entity entity : entityList)
                 {
-                    AxisAlignedBB entityBoundingBox = entity.getBoundingBox().inflate(entity.getPickRadius());
+                    AABB entityBoundingBox = entity.getBoundingBox().inflate(entity.getPickRadius());
                     if (entityBoundingBox.contains(eyePosition))
                     {
-                        return ActionResult.pass(itemStack);
+                        return InteractionResultHolder.pass(itemStack);
                     }
                 }
             }
 
-            if (rayTraceResult.getType() == RayTraceResult.Type.BLOCK)
+            if (rayTraceResult.getType() == HitResult.Type.BLOCK)
             {
-                ModBoatEntity boat = new ModBoatEntity(world, rayTraceResult.getLocation().x, rayTraceResult.getLocation().y, rayTraceResult.getLocation().z);
+                ModBoatEntity boat = new ModBoatEntity(level, rayTraceResult.getLocation().x, rayTraceResult.getLocation().y, rayTraceResult.getLocation().z);
                 boat.setModBoatType(this.type);
-                boat.yRot = player.yRot;
-                if (!world.noCollision(boat, boat.getBoundingBox().inflate(-0.1D)))
+                boat.setYRot(player.getYRot());
+                if (!level.noCollision(boat, boat.getBoundingBox()))
                 {
-                    return ActionResult.fail(itemStack);
+                    return InteractionResultHolder.fail(itemStack);
                 }
                 else
                 {
-                    if (!world.isClientSide)
+                    if (!level.isClientSide)
                     {
-                        world.addFreshEntity(boat);
-                        if (!player.abilities.instabuild)
-                        {
+                        level.addFreshEntity(boat);
+                        level.gameEvent(player, GameEvent.ENTITY_PLACE, new BlockPos(rayTraceResult.getLocation()));
+                        if (!player.getAbilities().instabuild) {
                             itemStack.shrink(1);
                         }
                     }
 
                     player.awardStat(Stats.ITEM_USED.get(this));
-                    return ActionResult.sidedSuccess(itemStack, world.isClientSide());
+                    return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
                 }
             }
             else
             {
-                return ActionResult.pass(itemStack);
+                return InteractionResultHolder.pass(itemStack);
             }
         }
     }
