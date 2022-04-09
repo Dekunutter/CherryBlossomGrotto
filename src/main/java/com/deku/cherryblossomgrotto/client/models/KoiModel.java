@@ -1,65 +1,55 @@
 package com.deku.cherryblossomgrotto.client.models;
 
-import com.google.common.collect.ImmutableList;
-import net.minecraft.client.renderer.entity.model.SegmentedModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.model.ColorableHierarchicalModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 // NOTE: Since kois are just re-skinned salmons I'm just doing a flat copy of the logic in the vanilla salmon model for now to save time
 @OnlyIn(Dist.CLIENT)
-public class KoiModel<T extends Entity> extends SegmentedModel<T> {
-    private final ModelRenderer bodyFront;
-    private final ModelRenderer bodyBack;
-    private final ModelRenderer head;
-    private final ModelRenderer sideFin0;
-    private final ModelRenderer sideFin1;
+public class KoiModel<T extends Entity> extends ColorableHierarchicalModel<T> {
+    private final ModelPart root;
+    private final ModelPart bodyBack;
 
-    public KoiModel(float inflation) {
-        this.texWidth = 32;
-        this.texHeight = 32;
-        int i = 20;
-        this.bodyFront = new ModelRenderer(this, 0, 0);
-        this.bodyFront.addBox(-1.5F, -2.5F, 0.0F, 3.0F, 5.0F, 8.0F, inflation);
-        this.bodyFront.setPos(0.0F, 20.0F, 0.0F);
-        this.bodyBack = new ModelRenderer(this, 0, 13);
-        this.bodyBack.addBox(-1.5F, -2.5F, 0.0F, 3.0F, 5.0F, 8.0F, inflation);
-        this.bodyBack.setPos(0.0F, 20.0F, 8.0F);
-        this.head = new ModelRenderer(this, 22, 0);
-        this.head.addBox(-1.0F, -2.0F, -3.0F, 2.0F, 4.0F, 3.0F, inflation);
-        this.head.setPos(0.0F, 20.0F, 0.0F);
-        ModelRenderer modelrenderer = new ModelRenderer(this, 20, 10);
-        modelrenderer.addBox(0.0F, -2.5F, 0.0F, 0.0F, 5.0F, 6.0F, inflation);
-        modelrenderer.setPos(0.0F, 0.0F, 8.0F);
-        this.bodyBack.addChild(modelrenderer);
-        ModelRenderer modelrenderer1 = new ModelRenderer(this, 2, 1);
-        modelrenderer1.addBox(0.0F, 0.0F, 0.0F, 0.0F, 2.0F, 3.0F, inflation);
-        modelrenderer1.setPos(0.0F, -4.5F, 5.0F);
-        this.bodyFront.addChild(modelrenderer1);
-        ModelRenderer modelrenderer2 = new ModelRenderer(this, 0, 2);
-        modelrenderer2.addBox(0.0F, 0.0F, 0.0F, 0.0F, 2.0F, 4.0F, inflation);
-        modelrenderer2.setPos(0.0F, -4.5F, -1.0F);
-        this.bodyBack.addChild(modelrenderer2);
-        this.sideFin0 = new ModelRenderer(this, -4, 0);
-        this.sideFin0.addBox(-2.0F, 0.0F, 0.0F, 2.0F, 0.0F, 2.0F, inflation);
-        this.sideFin0.setPos(-1.5F, 21.5F, 0.0F);
-        this.sideFin0.zRot = (-(float)Math.PI / 4F);
-        this.sideFin1 = new ModelRenderer(this, 0, 0);
-        this.sideFin1.addBox(0.0F, 0.0F, 0.0F, 2.0F, 0.0F, 2.0F, inflation);
-        this.sideFin1.setPos(1.5F, 21.5F, 0.0F);
-        this.sideFin1.zRot = ((float)Math.PI / 4F);
+    public KoiModel(ModelPart part) {
+        this.root = part;
+        this.bodyBack = part.getChild("body_back");
     }
 
     /**
-     * Gets a list of all the individual parts tied to this model.
+     * Gets the root model part for this model
      *
-     * @return Returns an iterable and immutable list of all model renderers for this model
+     * @return Returns the root model part for this model
      */
-    @Override
-    public Iterable<ModelRenderer> parts() {
-        return ImmutableList.of(this.bodyFront, this.bodyBack, this.head, this.sideFin0, this.sideFin1);
+    public ModelPart root() {
+        return this.root;
+    }
+
+    /**
+     * Creates the body by layer
+     *
+     * @return The layer definition for this model
+     */
+    public static LayerDefinition createBodyLayer() {
+        MeshDefinition meshdefinition = new MeshDefinition();
+        PartDefinition partdefinition = meshdefinition.getRoot();
+        int i = 20;
+        PartDefinition partdefinition1 = partdefinition.addOrReplaceChild("body_front", CubeListBuilder.create().texOffs(0, 0).addBox(-1.5F, -2.5F, 0.0F, 3.0F, 5.0F, 8.0F), PartPose.offset(0.0F, 20.0F, 0.0F));
+        PartDefinition partdefinition2 = partdefinition.addOrReplaceChild("body_back", CubeListBuilder.create().texOffs(0, 13).addBox(-1.5F, -2.5F, 0.0F, 3.0F, 5.0F, 8.0F), PartPose.offset(0.0F, 20.0F, 8.0F));
+        partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(22, 0).addBox(-1.0F, -2.0F, -3.0F, 2.0F, 4.0F, 3.0F), PartPose.offset(0.0F, 20.0F, 0.0F));
+        partdefinition2.addOrReplaceChild("back_fin", CubeListBuilder.create().texOffs(20, 10).addBox(0.0F, -2.5F, 0.0F, 0.0F, 5.0F, 6.0F), PartPose.offset(0.0F, 0.0F, 8.0F));
+        partdefinition1.addOrReplaceChild("top_front_fin", CubeListBuilder.create().texOffs(2, 1).addBox(0.0F, 0.0F, 0.0F, 0.0F, 2.0F, 3.0F), PartPose.offset(0.0F, -4.5F, 5.0F));
+        partdefinition2.addOrReplaceChild("top_back_fin", CubeListBuilder.create().texOffs(0, 2).addBox(0.0F, 0.0F, 0.0F, 0.0F, 2.0F, 4.0F), PartPose.offset(0.0F, -4.5F, -1.0F));
+        partdefinition.addOrReplaceChild("right_fin", CubeListBuilder.create().texOffs(-4, 0).addBox(-2.0F, 0.0F, 0.0F, 2.0F, 0.0F, 2.0F), PartPose.offsetAndRotation(-1.5F, 21.5F, 0.0F, 0.0F, 0.0F, (-(float)Math.PI / 4F)));
+        partdefinition.addOrReplaceChild("left_fin", CubeListBuilder.create().texOffs(0, 0).addBox(0.0F, 0.0F, 0.0F, 2.0F, 0.0F, 2.0F), PartPose.offsetAndRotation(1.5F, 21.5F, 0.0F, 0.0F, 0.0F, ((float)Math.PI / 4F)));
+        return LayerDefinition.create(meshdefinition, 32, 32);
     }
 
     /**
@@ -81,6 +71,6 @@ public class KoiModel<T extends Entity> extends SegmentedModel<T> {
             f1 = 1.7F;
         }
 
-        this.bodyBack.yRot = -f * 0.25F * MathHelper.sin(f1 * 0.6F * p_225597_4_);
+        this.bodyBack.yRot = -f * 0.25F * Mth.sin(f1 * 0.6F * p_225597_4_);
     }
 }

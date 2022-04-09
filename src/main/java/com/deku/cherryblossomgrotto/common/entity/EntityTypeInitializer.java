@@ -17,5 +17,5 @@ public class EntityTypeInitializer {
 
     public static EntityType<Entity> SHURIKEN_ENTITY_TYPE = EntityType.Builder.of(ShurikenEntity::new, EntityClassification.MISC).setCustomClientFactory(ShurikenEntity::new).sized(0.5f, 0.5f).clientTrackingRange(4).updateInterval(20).build("shuriken_entity");
 
-    public static EntityType<KoiEntity> KOI_ENTITY_TYPE = EntityType.Builder.<KoiEntity>of(KoiEntity::new, EntityClassification.WATER_AMBIENT).sized(0.7f, 0.4f).clientTrackingRange(4).build("koi_entity");
+    public static EntityType<KoiEntity> KOI_ENTITY_TYPE = EntityType.Builder.<KoiEntity>of(KoiEntity::new, MobCategory.WATER_AMBIENT).sized(0.7f, 0.4f).clientTrackingRange(4).build("koi_entity");
 }

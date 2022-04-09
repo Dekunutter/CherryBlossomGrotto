@@ -1,5 +1,8 @@
 package com.deku.cherryblossomgrotto;
 
+import com.deku.cherryblossomgrotto.client.models.geom.ModLayerDefinitions;
+import com.deku.cherryblossomgrotto.client.models.geom.ModModelLayerInitializer;
+import com.deku.cherryblossomgrotto.client.models.geom.ModModelLayerLocations;
 import com.deku.cherryblossomgrotto.client.network.handlers.DoubleJumpClientMessageHandler;
 import com.deku.cherryblossomgrotto.client.network.messages.DoubleJumpClientMessage;
 import com.deku.cherryblossomgrotto.client.renderers.KoiRenderer;
@@ -12,7 +15,6 @@ import com.deku.cherryblossomgrotto.common.capabilities.ModCapabilitiesInitializ
 import com.deku.cherryblossomgrotto.common.enchantments.ModEnchantmentInitializer;
 import com.deku.cherryblossomgrotto.common.entity.EntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
-import com.deku.cherryblossomgrotto.common.entity.vehicle.ModBoatEntity;
 import com.deku.cherryblossomgrotto.common.features.*;
 import com.deku.cherryblossomgrotto.common.features.template.ModProcessorLists;
 import com.deku.cherryblossomgrotto.common.items.*;
@@ -57,6 +59,7 @@ import net.minecraft.item.*;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.SpecialRecipeSerializer;
 import net.minecraft.particles.ParticleType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -67,6 +70,7 @@ import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.gen.FlatChunkGenerator;
 import net.minecraft.world.gen.blockplacer.DoublePlantBlockPlacer;
 import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
@@ -247,7 +251,6 @@ public class Main
 
         RenderingRegistry.registerEntityRenderingHandler(ModEntityData.KUNAI_DATA, KunaiRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityData.SHURIKEN_DATA, ShurikenRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntityData.KOI_DATA, KoiRenderer::new);
 
         //RenderTypeLookup.setRenderLayer(ModBlocks.GRASS, RenderType.cutout());
         RenderTypeLookup.setRenderLayer(ModBlocks.CHERRY_PETALS, RenderType.cutoutMipped());
@@ -494,9 +497,7 @@ public class Main
         public static void onEntityAttributeRegistration(final EntityAttributeCreationEvent event) {
             LOGGER.info("HELLO from Register Entity Attribute");
 
-            event.put(EntityTypeInitializer.KOI_ENTITY_TYPE, AbstractFishEntity.createAttributes().build());
-
-            GlobalEntityTypeAttributes.put(EntityTypeInitializer.KOI_ENTITY_TYPE, AbstractFishEntity.createAttributes().build());
+            event.put(EntityTypeInitializer.KOI_ENTITY_TYPE, AbstractSchoolingFish.createAttributes().build());
         }
 
         /**
@@ -522,9 +523,25 @@ public class Main
             entityRegistryEvent.getRegistry().register(EntityTypeInitializer.KOI_ENTITY_TYPE);
         }
 
+        /**
+         * Used to register entity renderers into the game using the mod event bus
+         *
+         * @param registerEntityEvent The registry event with which entity renderers will be registered
+         */
         @SubscribeEvent
-        public static void onEntityRendererRegistry(final EntityRenderersEvent.RegisterRenderers event) {
-            event.registerEntityRenderer(ModEntityData.MOD_BOAT_DATA, ModBoatRenderer::new);
+        public static void onEntityRendererRegistry(final EntityRenderersEvent.RegisterRenderers registerEntityEvent) {
+            registerEntityEvent.registerEntityRenderer(ModEntityData.MOD_BOAT_DATA, ModBoatRenderer::new);
+            registerEntityEvent.registerEntityRenderer(ModEntityData.KOI_DATA, KoiRenderer::new);
+        }
+
+        /**
+         * Used to register entity layer definitions into the game using the mod event bus
+         *
+         * @param registerLayerDefinitionEvent The registry event with which entity layer definitions will be registered
+         */
+        @SubscribeEvent
+        public static void onEntityRendererRegistry(final EntityRenderersEvent.RegisterLayerDefinitions registerLayerDefinitionEvent) {
+            registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.KOI, () -> ModLayerDefinitions.KOI_LAYER);
         }
 
         /**
