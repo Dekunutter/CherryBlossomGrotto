@@ -14,12 +14,10 @@ import com.deku.cherryblossomgrotto.common.entity.EntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
 import com.deku.cherryblossomgrotto.common.features.*;
 import com.deku.cherryblossomgrotto.common.features.template.ModProcessorLists;
-import com.deku.cherryblossomgrotto.common.foods.ModFoods;
 import com.deku.cherryblossomgrotto.common.items.*;
 import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalProvider;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
 import com.deku.cherryblossomgrotto.common.recipes.FoldingRecipe;
-import com.deku.cherryblossomgrotto.common.blockEntities.CherryBlossomSignTileEntity;
 import com.deku.cherryblossomgrotto.common.blockEntities.CherryLeavesBlockEntity;
 import com.deku.cherryblossomgrotto.common.blockEntities.ModBlockEntityType;
 import com.deku.cherryblossomgrotto.common.utils.ForgeReflection;
@@ -78,9 +76,9 @@ import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.settings.DimensionStructuresSettings;
 import net.minecraft.world.gen.trunkplacer.TrunkPlacerType;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 import net.minecraft.world.level.levelgen.feature.treedecorators.BeehiveDecorator;
@@ -412,14 +410,10 @@ public class Main
          * @param tileEntityRegistryEvent The registry event with which tile entities will be registered
          */
         @SubscribeEvent
-        public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> tileEntityRegistryEvent) {
-            TileEntityType<CherryLeavesBlockEntity> cherryLeavesDataType = TileEntityType.Builder.of(CherryLeavesBlockEntity::new, ModBlocks.CHERRY_LEAVES.getBlock()).build(null);
+        public static void onTileEntityRegistry(final RegistryEvent.Register<BlockEntityType<?>> tileEntityRegistryEvent) {
+            BlockEntityType<CherryLeavesBlockEntity> cherryLeavesDataType = BlockEntityType.Builder.of(CherryLeavesBlockEntity::new, ModBlocks.CHERRY_LEAVES).build(null);
             cherryLeavesDataType.setRegistryName("cherryblossomgrotto:cherry_leaves_tile_entity");
             tileEntityRegistryEvent.getRegistry().register(cherryLeavesDataType);
-
-            TileEntityType<CherryBlossomSignTileEntity> cherrySignDataType = TileEntityType.Builder.of(CherryBlossomSignTileEntity::new, ModBlocks.CHERRY_SIGN.getBlock(), ModBlocks.CHERRY_WALL_SIGN.getBlock()).build(null);
-            cherrySignDataType.setRegistryName("cherryblossomgrotto:cherry_sign_tile_entity");
-            tileEntityRegistryEvent.getRegistry().register(cherrySignDataType);
         }
 
         /**
