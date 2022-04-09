@@ -1,26 +1,25 @@
 package com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers;
 
-import com.deku.cherryblossomgrotto.Main;
 import com.deku.cherryblossomgrotto.common.utils.Randomizer;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.gen.IWorldGenerationReader;
-import net.minecraft.world.gen.feature.BaseTreeFeatureConfig;
-import net.minecraft.world.gen.feature.FeatureSpread;
-import net.minecraft.world.gen.foliageplacer.FoliagePlacer;
-import net.minecraft.world.gen.foliageplacer.FoliagePlacerType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.world.level.LevelSimulatedReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 
 import java.util.Random;
-import java.util.Set;
+import java.util.function.BiConsumer;
 
 public class GrandCherryBlossomFoliagePlacer extends FoliagePlacer {
     public static final Codec<GrandCherryBlossomFoliagePlacer> CODEC = RecordCodecBuilder.create((instance) ->
             foliagePlacerParts(instance).apply(instance, GrandCherryBlossomFoliagePlacer::new)
     );
 
-    public GrandCherryBlossomFoliagePlacer(FeatureSpread radius, FeatureSpread heightOffset) {
+    public GrandCherryBlossomFoliagePlacer(IntProvider radius, IntProvider heightOffset) {
         super(radius, heightOffset);
     }
 
@@ -39,54 +38,52 @@ public class GrandCherryBlossomFoliagePlacer extends FoliagePlacer {
      * This will generate three rows of foliage where applicable, starting with the largest row, which is flush with the top of the trunk.
      * The following rows will overwrite each other with a low radius as the top of the tree if foliage height is low.
      *
-     * @param worldGenReader Instance of the world generator
+     * @param levelReader Reader for the level the foliage is being generated in
+     * @param blockConsumer Consumer for block position and state
      * @param random A random number generator
      * @param treeConfig Configuration class for getting the state of the placed blocks
      * @param trunkLength Length of the current tree's trunk
      * @param foliage Foliage settings for this foliage placer
      * @param foliageHeight Height of the foliage to be created at this foliage point
      * @param foliageRadius The radius of the foliage
-     * @param placedBlockPositions The position of all blocks placed into the world by this foliage generation
      * @param offsetY The offset on the Y-axis to start the placement position
-     * @param boundingBox Bounding limitations of the generator
      */
     @Override
-    protected void createFoliage(IWorldGenerationReader worldGenReader, Random random, BaseTreeFeatureConfig treeConfig, int trunkLength, Foliage foliage, int foliageHeight, int foliageRadius, Set<BlockPos> placedBlockPositions, int offsetY, MutableBoundingBox boundingBox) {
+    protected void createFoliage(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, Random random, TreeConfiguration treeConfig, int trunkLength, FoliagePlacer.FoliageAttachment foliage, int foliageHeight, int foliageRadius, int offsetY) {
         if (foliage.doubleTrunk()) {
             // Places the base row which is a cross of leaves and at the top level of logs
-            this.placeLeavesRow(worldGenReader, random, treeConfig, foliage.foliagePos(), foliageRadius - 2, placedBlockPositions, -1, true, boundingBox);
+            this.placeLeavesRow(levelReader, blockConsumer, random, treeConfig, foliage.pos(), foliageRadius - 2, -1, true);
 
-            generateCanopy(worldGenReader, random, treeConfig, foliage, foliageHeight, foliageRadius, placedBlockPositions, boundingBox);
+            generateCanopy(levelReader, blockConsumer, random, treeConfig, foliage, foliageHeight, foliageRadius);
         } else {
             foliageRadius -= 3;
 
             // top off with a small amount of leaves
-            this.placeLeavesRow(worldGenReader, random, treeConfig, foliage.foliagePos(), 1, placedBlockPositions, 1, false, boundingBox);
+            this.placeLeavesRow(levelReader, blockConsumer, random, treeConfig, foliage.pos(), 1, 1, false);
 
             // Places the base row which is a cross of leaves and at the top level of logs
-            this.placeLeavesRow(worldGenReader, random, treeConfig, foliage.foliagePos(), foliageRadius, placedBlockPositions, 0, false, boundingBox);
+            this.placeLeavesRow(levelReader, blockConsumer, random, treeConfig, foliage.pos(), foliageRadius, 0, false);
 
             // bottom out with a single block of leaves to cover the source log
-            this.placeLeavesRow(worldGenReader, random, treeConfig, foliage.foliagePos(), 0, placedBlockPositions, -1, false, boundingBox);
+            this.placeLeavesRow(levelReader, blockConsumer, random, treeConfig, foliage.pos(), 0, -1, false);
         }
     }
 
     /**
      * Places foliage in a typical canopy shape by looping through all height levels for the leave generation and making individual rows one after the other with a degrading radius value.
      *
-     * @param worldGenReader Instance of the world generator
+     * @param levelReader Reader for the level the foliage is being generated in
+     * @param blockConsumer Consumer for block position and state
      * @param random A random number generator
      * @param treeConfig Configuration class for getting the state of the placed blocks
      * @param foliage Foliage settings for this foliage placer
      * @param foliageHeight Height of the foliage to be created at this foliage point
      * @param foliageRadius The radius of the foliage
-     * @param placedBlockPositions The position of all blocks placed into the world by this foliage generation
-     * @param boundingBox Bounding limitations of the generator
      */
-    private void generateCanopy(IWorldGenerationReader worldGenReader, Random random, BaseTreeFeatureConfig treeConfig, Foliage foliage, int foliageHeight, int foliageRadius, Set<BlockPos> placedBlockPositions, MutableBoundingBox boundingBox) {
+    private void generateCanopy(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, Random random, TreeConfiguration treeConfig, FoliagePlacer.FoliageAttachment foliage, int foliageHeight, int foliageRadius) {
         for (int positionY = foliageHeight; positionY > -1; positionY--) {
             int radius = Math.max(foliageRadius + foliage.radiusOffset() - positionY, 0);
-            this.placeLeavesRow(worldGenReader, random, treeConfig, foliage.foliagePos(), radius, placedBlockPositions, positionY, foliage.doubleTrunk(), boundingBox);
+            this.placeLeavesRow(levelReader, blockConsumer, random, treeConfig, foliage.pos(), radius, positionY, foliage.doubleTrunk());
         }
     }
 
@@ -100,7 +97,7 @@ public class GrandCherryBlossomFoliagePlacer extends FoliagePlacer {
      * @return The height of the foliage for this tree
      */
     @Override
-    public int foliageHeight(Random random, int trunkHeight, BaseTreeFeatureConfig treeConfig) {
+    public int foliageHeight(Random random, int trunkHeight, TreeConfiguration treeConfig) {
         return Randomizer.getRandomNumberWithinBounds(random, 3, 4);
     }
 

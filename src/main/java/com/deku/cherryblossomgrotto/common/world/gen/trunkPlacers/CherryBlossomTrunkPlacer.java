@@ -2,8 +2,8 @@ package com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.util.Direction;
-import net.minecraft.world.gen.trunkplacer.TrunkPlacerType;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 
 import java.util.Random;
 

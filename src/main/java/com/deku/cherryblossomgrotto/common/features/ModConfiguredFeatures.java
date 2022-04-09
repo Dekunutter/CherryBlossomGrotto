@@ -1,16 +1,17 @@
 package com.deku.cherryblossomgrotto.common.features;
 
-import net.minecraft.world.gen.feature.BaseTreeFeatureConfig;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.core.Holder;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 
 public class ModConfiguredFeatures {
-    public static ConfiguredFeature<BaseTreeFeatureConfig, ?> CHERRY_TREE;
-    public static ConfiguredFeature<BaseTreeFeatureConfig, ?> CHERRY_TREE_BEES_0002;
-    public static ConfiguredFeature<BaseTreeFeatureConfig, ?> CHERRY_TREE_BEES_002;
-    public static ConfiguredFeature<BaseTreeFeatureConfig, ?> CHERRY_TREE_BEES_005;
-    public static ConfiguredFeature<BaseTreeFeatureConfig, ?> FANCY_CHERRY_TREE;
-    public static ConfiguredFeature<BaseTreeFeatureConfig, ?> FANCY_CHERRY_TREE_BEES_005;
-    public static ConfiguredFeature<BaseTreeFeatureConfig, ?> GRAND_CHERRY_TREE;
+    public static Holder<ConfiguredFeature<TreeConfiguration, ?>> CHERRY_TREE;
+    public static Holder<ConfiguredFeature<TreeConfiguration, ?>> CHERRY_TREE_BEES_002;
+    public static Holder<ConfiguredFeature<TreeConfiguration, ?>> CHERRY_TREE_BEES_02;
+    public static Holder<ConfiguredFeature<TreeConfiguration, ?>> CHERRY_TREE_BEES_05;
+    public static Holder<ConfiguredFeature<TreeConfiguration, ?>> FANCY_CHERRY_TREE;
+    public static Holder<ConfiguredFeature<TreeConfiguration, ?>> FANCY_CHERRY_TREE_BEES_05;
+    public static Holder<ConfiguredFeature<TreeConfiguration, ?>> GRAND_CHERRY_TREE;
 
     public static ConfiguredFeature<?, ?> CHERRY_PETAL_COVER;
 

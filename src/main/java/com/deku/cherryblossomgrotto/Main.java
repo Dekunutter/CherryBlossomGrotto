@@ -15,12 +15,12 @@ import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
 import com.deku.cherryblossomgrotto.common.features.*;
 import com.deku.cherryblossomgrotto.common.features.template.ModProcessorLists;
 import com.deku.cherryblossomgrotto.common.items.*;
-import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalFactory;
+import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalProvider;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
 import com.deku.cherryblossomgrotto.common.recipes.FoldingRecipe;
-import com.deku.cherryblossomgrotto.common.tileEntities.CherryBlossomSignTileEntity;
-import com.deku.cherryblossomgrotto.common.tileEntities.CherryLeavesTileEntity;
-import com.deku.cherryblossomgrotto.common.tileEntities.ModTileEntityData;
+import com.deku.cherryblossomgrotto.common.blockEntities.CherryBlossomSignTileEntity;
+import com.deku.cherryblossomgrotto.common.blockEntities.CherryLeavesBlockEntity;
+import com.deku.cherryblossomgrotto.common.blockEntities.ModBlockEntityType;
 import com.deku.cherryblossomgrotto.common.utils.ForgeReflection;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeInitializer;
 import com.deku.cherryblossomgrotto.common.world.gen.blockstateprovider.CherryBlossomForestFlowerProviderType;
@@ -41,6 +41,9 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
+import net.minecraft.core.Registry;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -74,6 +77,11 @@ import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.settings.DimensionStructuresSettings;
 import net.minecraft.world.gen.trunkplacer.TrunkPlacerType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
+import net.minecraft.world.level.levelgen.feature.treedecorators.BeehiveDecorator;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
@@ -111,6 +119,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -247,7 +256,7 @@ public class Main
         RenderTypeLookup.setRenderLayer(ModBlocks.POTTED_CHERRY_SAPLING, RenderType.cutoutMipped());
         RenderTypeLookup.setRenderLayer(ModBlocks.RICE_PADDY, RenderType.cutoutMipped());
 
-        ClientRegistry.bindTileEntityRenderer(ModTileEntityData.CHERRY_SIGN_TILE_DATA, SignTileEntityRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(ModBlockEntityType.CHERRY_SIGN_TILE_DATA, SignTileEntityRenderer::new);
 
         event.enqueueWork(() -> {
             Atlases.addWoodType(ModWoodType.CHERRY_BLOSSOM);
@@ -401,7 +410,7 @@ public class Main
          */
         @SubscribeEvent
         public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> tileEntityRegistryEvent) {
-            TileEntityType<CherryLeavesTileEntity> cherryLeavesDataType = TileEntityType.Builder.of(CherryLeavesTileEntity::new, ModBlocks.CHERRY_LEAVES.getBlock()).build(null);
+            TileEntityType<CherryLeavesBlockEntity> cherryLeavesDataType = TileEntityType.Builder.of(CherryLeavesBlockEntity::new, ModBlocks.CHERRY_LEAVES.getBlock()).build(null);
             cherryLeavesDataType.setRegistryName("cherryblossomgrotto:cherry_leaves_tile_entity");
             tileEntityRegistryEvent.getRegistry().register(cherryLeavesDataType);
 
@@ -527,19 +536,21 @@ public class Main
         public static void onFeaturesRegistry(final RegistryEvent.Register<Feature<?>> featureRegistryEvent) {
             LOGGER.info("HELLO from Register Feature");
 
-            ModConfiguredFeatures.CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree", new CherryBlossomTreeConfiguredFeature());
-            ModConfiguredFeatures.FANCY_CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":fancy_cherry_blossom_tree", new FancyCherryBlossomTreeConfiguredFeature());
-            ModConfiguredFeatures.GRAND_CHERRY_TREE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":grand_cherry_blossom_tree", new GrandCherryBlossomTreeConfiguredFeature());
-            ModConfiguredFeatures.CHERRY_TREE_BEES_0002 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree_bees_0002", new CherryBlossomTreeBees0002ConfiguredFeature());
-            ModConfiguredFeatures.CHERRY_TREE_BEES_002 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree_bees_002", new CherryBlossomTreeBees002ConfiguredFeature());
-            ModConfiguredFeatures.CHERRY_TREE_BEES_005 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_tree_bees_005", new CherryBlossomTreeBees005ConfiguredFeature());
-            ModConfiguredFeatures.FANCY_CHERRY_TREE_BEES_005 = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":fancy_cherry_blossom_tree_bees_005", new FancyCherryBlossomTreeBees005ConfiguredFeature());
+            ModConfiguredFeatures.CHERRY_TREE = FeatureUtils.register(MOD_ID + ":cherry_blossom_tree", Feature.TREE, ModTreeFeatures.createCherryBlossomTree().build());
+            ModConfiguredFeatures.FANCY_CHERRY_TREE = FeatureUtils.register(MOD_ID + ":fancy_cherry_blossom_tree", Feature.TREE, ModTreeFeatures.createFancyCherryBlossomTree().build());
+            ModConfiguredFeatures.GRAND_CHERRY_TREE = FeatureUtils.register(MOD_ID + ":grand_cherry_blossom_tree", Feature.TREE, ModTreeFeatures.createGrandCherryBlossomTree().build());
+
+            ModConfiguredFeatures.CHERRY_TREE_BEES_002 = FeatureUtils.register(MOD_ID + ":cherry_blossom_tree_bees_002", Feature.TREE, ModTreeFeatures.createCherryBlossomTree().decorators(List.of(new BeehiveDecorator(0.002F))).build());
+            ModConfiguredFeatures.CHERRY_TREE_BEES_02 = FeatureUtils.register(MOD_ID + ":cherry_blossom_tree_bees_02", Feature.TREE, ModTreeFeatures.createCherryBlossomTree().decorators(List.of(new BeehiveDecorator(0.02F))).build());
+            ModConfiguredFeatures.CHERRY_TREE_BEES_05 = FeatureUtils.register(MOD_ID + ":cherry_blossom_tree_bees_05", Feature.TREE, ModTreeFeatures.createCherryBlossomTree().decorators(List.of(new BeehiveDecorator(0.05F))).build());
+
+            ModConfiguredFeatures.FANCY_CHERRY_TREE_BEES_05 = FeatureUtils.register(MOD_ID + ":fancy_cherry_blossom_tree_bees_05", Feature.TREE, ModTreeFeatures.createFancyCherryBlossomTree().decorators(List.of(new BeehiveDecorator(0.05F))).build());
 
             ModConfiguredFeatures.CHERRY_PETAL_COVER = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_petal_ground_cover", new CherryBlossomPetalCoverConfiguredFeature());
 
             ModConfiguredFeatures.IRON_ORE_SPARSE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":ore_iron_sparse", new OreIronSparseConfiguredFeature());
 
-            ModConfiguredFeatures.CHERRY_TREE_FOREST = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest", Feature.RANDOM_SELECTOR.configured(new MultipleRandomFeatureConfig(ImmutableList.of(ModConfiguredFeatures.GRAND_CHERRY_TREE.weighted(0.01f), ModConfiguredFeatures.FANCY_CHERRY_TREE.weighted(0.1f)), ModConfiguredFeatures.CHERRY_TREE_BEES_002)).decorated(Features.Placements.HEIGHTMAP_SQUARE).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(6, 0.1f, 1))));
+            ModConfiguredFeatures.CHERRY_TREE_FOREST = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest", Feature.RANDOM_SELECTOR.configured(new MultipleRandomFeatureConfig(ImmutableList.of(ModConfiguredFeatures.GRAND_CHERRY_TREE.weighted(0.01f), ModConfiguredFeatures.FANCY_CHERRY_TREE.weighted(0.1f)), ModConfiguredFeatures.CHERRY_TREE_BEES_02)).decorated(Features.Placements.HEIGHTMAP_SQUARE).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(6, 0.1f, 1))));
             // TODO: Add this forest flowers provider back in (it doesnt work with double block flowers) to spawn different groups later. Its useful code, just got replaced by the simpler list logic below
             //ModFeatures.CHERRY_TREE_FOREST_FLOWERS = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest_flowers", Feature.FLOWER.configured((new BlockClusterFeatureConfig.Builder(CherryBlossomGrottoFlowerBlockStateProvider.INSTANCE, new DoublePlantBlockPlacer())).tries(64).build()).decorated(Features.Placements.ADD_32).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(100));
 
@@ -610,7 +621,7 @@ public class Main
         public static void onParticleFactoryRegistry(final ParticleFactoryRegisterEvent particleFactoryRegistryEvent) {
             Main.LOGGER.info("HELLO from Register Particle Factory");
 
-            Minecraft.getInstance().particleEngine.register(ModParticles.CHERRY_PETAL, FallingCherryBlossomPetalFactory::new);
+            Minecraft.getInstance().particleEngine.register(ModParticles.CHERRY_PETAL, FallingCherryBlossomPetalProvider::new);
         }
 
         /**

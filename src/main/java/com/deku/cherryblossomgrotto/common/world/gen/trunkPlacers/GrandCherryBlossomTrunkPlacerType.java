@@ -3,7 +3,7 @@ package com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers;
 import com.deku.cherryblossomgrotto.Main;
 import com.deku.cherryblossomgrotto.common.utils.ForgeReflection;
 import com.mojang.serialization.Codec;
-import net.minecraft.world.gen.trunkplacer.TrunkPlacerType;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

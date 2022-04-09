@@ -1,21 +1,20 @@
 package com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers;
 
 import com.google.common.collect.Lists;
-import net.minecraft.block.RotatedPillarBlock;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.gen.IWorldGenerationReader;
-import net.minecraft.world.gen.feature.BaseTreeFeatureConfig;
-import net.minecraft.world.gen.feature.TreeFeature;
-import net.minecraft.world.gen.foliageplacer.FoliagePlacer;
-import net.minecraft.world.gen.trunkplacer.AbstractTrunkPlacer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.LevelSimulatedReader;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
+import java.util.function.BiConsumer;
 
-public abstract class AbstractCherryBlossomTrunkPlacer extends AbstractTrunkPlacer {
+public abstract class AbstractCherryBlossomTrunkPlacer extends TrunkPlacer {
     protected final int FOLIAGE_RADIUS_OFFSET = 1;
     protected final int BRANCH_FOLIAGE_RADIUS_OFFSET = 0;
 
@@ -69,28 +68,25 @@ public abstract class AbstractCherryBlossomTrunkPlacer extends AbstractTrunkPlac
      * Starting points for foliage to spawn are added to the end of the trunk and all tertiary branches.
      * Note: This is a heavy adaption of how acacia trees generate their trunks in vanilla.
      *
-     * @param worldGenReader Instance of the world generator
+     * @param levelReader Reader of the level that this trunk is being generated in
+     * @param blockConsumer Consumer for block position and state
      * @param random A random number generator
      * @param trunkLength The generalized length that the trunk will be
      * @param startingPosition Position of the starting block in the world
-     * @param placedBlockPositions The position of all blocks placed into the world by this trunk generator
-     * @param boundingBox Bounding limitations of the generator
      * @param treeConfig Configuration class for getting the state of the placed blocks
      * @return List of all points in the world where we will want to begin our foliage spawns
      */
     @Override
-    public List<FoliagePlacer.Foliage> placeTrunk(IWorldGenerationReader worldGenReader, Random random, int trunkLength, BlockPos startingPosition, Set<BlockPos> placedBlockPositions, MutableBoundingBox boundingBox, BaseTreeFeatureConfig treeConfig) {
-        if (!treeConfig.fromSapling) {
-            setDirtAt(worldGenReader, startingPosition.below());
-        }
+    public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, Random random, int trunkLength, BlockPos startingPosition, TreeConfiguration treeConfig) {
+        setDirtAt(levelReader, blockConsumer, random, startingPosition.below(), treeConfig);
 
-        List<FoliagePlacer.Foliage> foliageList = Lists.newArrayList();
+        List<FoliagePlacer.FoliageAttachment> foliageList = Lists.newArrayList();
 
         Direction trunkDirection = Direction.Plane.HORIZONTAL.getRandomDirection(random);
         int trunkCurvingPoint = calculateTrunkCurvingPoint(random, trunkLength);
         int curvingLength = calculateTrunkCurvingLength(random);
 
-        BlockPos.Mutable mutablePosition = new BlockPos.Mutable(startingPosition.getX(), startingPosition.getY(), startingPosition.getZ());
+        BlockPos.MutableBlockPos mutablePosition = new BlockPos.MutableBlockPos(startingPosition.getX(), startingPosition.getY(), startingPosition.getZ());
         int placementPositionX = startingPosition.getX();
         int placementPositionZ = startingPosition.getZ();
         int foliageStartY = 0;
@@ -107,21 +103,21 @@ public abstract class AbstractCherryBlossomTrunkPlacer extends AbstractTrunkPlac
             mutablePosition.set(placementPositionX, placementPositionY, placementPositionZ);
 
             // place individual logs with appropriate rotation to build up the trunk
-            if (placeLogWithRotation(worldGenReader, random, previousPosition, mutablePosition, placedBlockPositions, boundingBox, treeConfig)) {
+            if (placeLog(levelReader, blockConsumer, random, mutablePosition, treeConfig, (blockState) -> blockState.setValue(RotatedPillarBlock.AXIS, this.getLogAxis(mutablePosition, previousPosition)))) {
                 foliageStartY = placementPositionY + 1;
             }
 
             // spawning branches on any fancy cherry blossom trees
             if (isCanopyBranchingCapable(random, currentTrunkPosition, trunkLength)) {
-                generateBranch(worldGenReader, random, trunkLength, mutablePosition.immutable(), placedBlockPositions, trunkDirection, trunkCurvingPoint, boundingBox, treeConfig, foliageList);
+                generateBranch(levelReader, blockConsumer, random, trunkLength, mutablePosition.immutable(), trunkDirection, trunkCurvingPoint, treeConfig, foliageList);
             }
         }
 
-        foliageList.add(new FoliagePlacer.Foliage(new BlockPos(placementPositionX, foliageStartY, placementPositionZ), FOLIAGE_RADIUS_OFFSET, IS_THICK_TRUNK));
+        foliageList.add(new FoliagePlacer.FoliageAttachment(new BlockPos(placementPositionX, foliageStartY, placementPositionZ), FOLIAGE_RADIUS_OFFSET, IS_THICK_TRUNK));
 
         // spawn a singular branch on non-fancy cherry blossom tree spawns
         if (branchingType == BranchingType.SINGULAR) {
-            generateBranch(worldGenReader, random, trunkLength, mutablePosition.immutable(), placedBlockPositions, trunkDirection, trunkCurvingPoint, boundingBox, treeConfig, foliageList);
+            generateBranch(levelReader, blockConsumer, random, trunkLength, mutablePosition.immutable(), trunkDirection, trunkCurvingPoint, treeConfig, foliageList);
         }
 
         return foliageList;
@@ -132,18 +128,17 @@ public abstract class AbstractCherryBlossomTrunkPlacer extends AbstractTrunkPlac
      * Branches only generate if they are not going to be moving parallel to the direction of the trunk and are within the right height constraints.
      * Branches have a chance of spawning in a upward diagonal angle, but generally they will tend to be flat along the X/Z horizontal planes.
      *
-     * @param worldGenReader Instance of the world generator
+     * @param levelReader Reader of the level that this trunk is being generated in
+     * @param blockConsumer Consumer for block position and state
      * @param random A random number generator
      * @param trunkLength The generalized length that the trunk will be
      * @param branchingPosition Position of the starting block for this branch. Should be a block on the trunk
-     * @param placedBlockPositions The position of all blocks placed into the world by this trunk generator
      * @param trunkDirection The direction that the trunk has generated in
      * @param trunkCurvingPoint The point along the trunk that the curve starts
-     * @param boundingBox The bounding limitations of the generator
      * @param treeConfig Configuration class for getting the state of the placed blocks
      * @param foliageList List of all foliage spawning points for this tree
      */
-    protected void generateBranch(IWorldGenerationReader worldGenReader, Random random, int trunkLength, BlockPos branchingPosition, Set<BlockPos> placedBlockPositions, Direction trunkDirection, int trunkCurvingPoint, MutableBoundingBox boundingBox, BaseTreeFeatureConfig treeConfig, List<FoliagePlacer.Foliage> foliageList) {
+    protected void generateBranch(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, Random random, int trunkLength, BlockPos branchingPosition, Direction trunkDirection, int trunkCurvingPoint, TreeConfiguration treeConfig, List<FoliagePlacer.FoliageAttachment> foliageList) {
         int placementPositionX = branchingPosition.getX();
         int placementPositionY = branchingPosition.getY();
         int placementPositionZ = branchingPosition.getZ();
@@ -155,7 +150,7 @@ public abstract class AbstractCherryBlossomTrunkPlacer extends AbstractTrunkPlac
             return;
         }
 
-        BlockPos.Mutable mutablePosition = new BlockPos.Mutable(branchingPosition.getX(), branchingPosition.getY(), branchingPosition.getZ());
+        BlockPos.MutableBlockPos mutablePosition = new BlockPos.MutableBlockPos(branchingPosition.getX(), branchingPosition.getY(), branchingPosition.getZ());
         int foliageStartY = 0;
 
         int branchingPoint = calculateBranchingPoint(random, trunkCurvingPoint);
@@ -172,7 +167,7 @@ public abstract class AbstractCherryBlossomTrunkPlacer extends AbstractTrunkPlac
                 BlockPos previousPosition = new BlockPos(mutablePosition);
                 mutablePosition.set(placementPositionX, placementPositionY, placementPositionZ);
 
-                if (placeLogWithRotation(worldGenReader, random, previousPosition, mutablePosition, placedBlockPositions, boundingBox, treeConfig)) {
+                if (placeLog(levelReader, blockConsumer, random, mutablePosition, treeConfig, (blockState) -> blockState.setValue(RotatedPillarBlock.AXIS, this.getLogAxis(mutablePosition, previousPosition)))) {
                     foliageStartY = placementPositionY + 1;
                 }
             }
@@ -180,31 +175,7 @@ public abstract class AbstractCherryBlossomTrunkPlacer extends AbstractTrunkPlac
         }
 
         if (foliageStartY > 1) {
-            foliageList.add(new FoliagePlacer.Foliage(new BlockPos(placementPositionX, foliageStartY, placementPositionZ), BRANCH_FOLIAGE_RADIUS_OFFSET, IS_THICK_TRUNK));
-        }
-    }
-
-    /**
-     * Places a log into the world with a specified rotation.
-     * Logs will not be placed if it is deemed an invalid position for a tree feature to place a block.
-     * This is an adaption of the placeLog function in the vanilla trunk placers.
-     *
-     * @param worldGenReader Instance of the world generator
-     * @param random A random number generator
-     * @param previousPosition The position of the previously placed log in the sequence
-     * @param currentPosition The position we want to place the current log
-     * @param placedBlockPositions The position of all blocks placed into the world by this trunk generation
-     * @param boundingBox Bounding limitations of the generator
-     * @param treeConfig Configuration class for getting the state of the placed blocks
-     * @return Whether the log was placed into the world at the current positions successfully
-     */
-    protected boolean placeLogWithRotation(IWorldGenerationReader worldGenReader, Random random, BlockPos previousPosition, BlockPos currentPosition, Set<BlockPos> placedBlockPositions, MutableBoundingBox boundingBox, BaseTreeFeatureConfig treeConfig) {
-        if (TreeFeature.validTreePos(worldGenReader, currentPosition)) {
-            setBlock(worldGenReader, currentPosition, treeConfig.trunkProvider.getState(random, currentPosition).setValue(RotatedPillarBlock.AXIS, getLogAxis(currentPosition, previousPosition)), boundingBox);
-            placedBlockPositions.add(currentPosition.immutable());
-            return true;
-        } else {
-            return false;
+            foliageList.add(new FoliagePlacer.FoliageAttachment(new BlockPos(placementPositionX, foliageStartY, placementPositionZ), BRANCH_FOLIAGE_RADIUS_OFFSET, IS_THICK_TRUNK));
         }
     }
 
