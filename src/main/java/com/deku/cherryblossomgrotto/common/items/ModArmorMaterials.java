@@ -1,19 +1,18 @@
 package com.deku.cherryblossomgrotto.common.items;
 
 import com.deku.cherryblossomgrotto.Main;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.LazyValue;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.function.Supplier;
 
-public enum ModArmorMaterial implements IArmorMaterial {
+public enum ModArmorMaterials implements ArmorMaterial {
     WOOL("wool", 4, new int[] {1, 1, 1, 1}, 20, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, 0.0F, () -> {
         return Ingredient.of(Items.BLACK_WOOL);
     });
@@ -26,17 +25,17 @@ public enum ModArmorMaterial implements IArmorMaterial {
     private final SoundEvent sound;
     private final float toughness;
     private final float knockbackResistance;
-    private final LazyValue<Ingredient> repairIngredient;
+    private final Ingredient repairIngredient;
 
-    ModArmorMaterial(String p_i231593_3_, int p_i231593_4_, int[] p_i231593_5_, int p_i231593_6_, SoundEvent p_i231593_7_, float p_i231593_8_, float p_i231593_9_, Supplier<Ingredient> p_i231593_10_) {
-        this.name = p_i231593_3_;
-        this.durabilityMultiplier = p_i231593_4_;
-        this.slotProtections = p_i231593_5_;
-        this.enchantmentValue = p_i231593_6_;
-        this.sound = p_i231593_7_;
-        this.toughness = p_i231593_8_;
-        this.knockbackResistance = p_i231593_9_;
-        this.repairIngredient = new LazyValue<>(p_i231593_10_);
+    ModArmorMaterials(String name, int durabilityMultiplier, int[] slotProtections, int enchantmentValue, SoundEvent sound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient) {
+        this.name = name;
+        this.durabilityMultiplier = durabilityMultiplier;
+        this.slotProtections = slotProtections;
+        this.enchantmentValue = enchantmentValue;
+        this.sound = sound;
+        this.toughness = toughness;
+        this.knockbackResistance = knockbackResistance;
+        this.repairIngredient = repairIngredient.get();
     }
 
     /**
@@ -48,7 +47,7 @@ public enum ModArmorMaterial implements IArmorMaterial {
      * @return The durability of this piece of armour
      */
     @Override
-    public int getDurabilityForSlot(EquipmentSlotType slotType) {
+    public int getDurabilityForSlot(EquipmentSlot slotType) {
         return HEALTH_PER_SLOT[slotType.getIndex()] * this.durabilityMultiplier;
     }
 
@@ -60,7 +59,7 @@ public enum ModArmorMaterial implements IArmorMaterial {
      * @return
      */
     @Override
-    public int getDefenseForSlot(EquipmentSlotType slotType) {
+    public int getDefenseForSlot(EquipmentSlot slotType) {
         return this.slotProtections[slotType.getIndex()];
     }
 
@@ -91,7 +90,7 @@ public enum ModArmorMaterial implements IArmorMaterial {
      */
     @Override
     public Ingredient getRepairIngredient() {
-        return this.repairIngredient.get();
+        return this.repairIngredient;
     }
 
     /**

@@ -11,6 +11,7 @@ import com.deku.cherryblossomgrotto.client.renderers.KunaiRenderer;
 import com.deku.cherryblossomgrotto.client.renderers.ModBoatRenderer;
 import com.deku.cherryblossomgrotto.client.renderers.ShurikenRenderer;
 import com.deku.cherryblossomgrotto.client.renderers.layers.KabutoArmourLayer;
+import com.deku.cherryblossomgrotto.client.renderers.layers.NinjaRobesLayer;
 import com.deku.cherryblossomgrotto.common.blocks.*;
 import com.deku.cherryblossomgrotto.common.capabilities.DoubleJumpCapability;
 import com.deku.cherryblossomgrotto.common.capabilities.ModCapabilitiesInitializer;
@@ -551,13 +552,17 @@ public class Main
         public static void onEntityRendererRegistry(final EntityRenderersEvent.RegisterLayerDefinitions registerLayerDefinitionEvent) {
             registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.KOI, () -> ModLayerDefinitions.KOI_LAYER);
             registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.KABUTO_ARMOUR, () -> ModLayerDefinitions.KABUTO_ARMOUR_LAYER);
+            registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.NINJA_ROBES, () -> ModLayerDefinitions.NINJA_ROBES_LAYER);
         }
 
         @SubscribeEvent
         public static void onEntityRendererRegistry(final EntityRenderersEvent.AddLayers registerAddedLayerEvent) {
             LivingEntityRenderer<LivingEntity, HumanoidModel<LivingEntity>> renderer = registerAddedLayerEvent.getRenderer(EntityType.PLAYER);
-            KabutoArmourLayer layer = new KabutoArmourLayer(renderer, registerAddedLayerEvent.getEntityModels());
-            renderer.addLayer(layer);
+
+            KabutoArmourLayer kabutoArmourLayer = new KabutoArmourLayer(renderer, registerAddedLayerEvent.getEntityModels());
+            renderer.addLayer(kabutoArmourLayer);
+            NinjaRobesLayer ninjaRobesLayer = new NinjaRobesLayer(renderer, registerAddedLayerEvent.getEntityModels());
+            renderer.addLayer(ninjaRobesLayer);
         }
 
         /**
