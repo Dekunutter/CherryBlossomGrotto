@@ -1,6 +1,6 @@
 package com.deku.cherryblossomgrotto.common.loot_tables;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
