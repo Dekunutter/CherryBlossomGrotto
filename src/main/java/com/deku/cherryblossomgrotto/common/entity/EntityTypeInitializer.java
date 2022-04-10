@@ -13,7 +13,7 @@ import net.minecraft.world.entity.MobCategory;
 public class EntityTypeInitializer {
     public static EntityType<Entity> BOAT_ENTITY_TYPE = EntityType.Builder.of(ModBoatEntity::new, MobCategory.MISC).setCustomClientFactory(ModBoatEntity::new).sized(1.375f, 0.5625f).clientTrackingRange(10).build("mod_boat_entity");
 
-    public static EntityType<Entity> KUNAI_ENTITY_TYPE = EntityType.Builder.of(KunaiEntity::new, EntityClassification.MISC).setCustomClientFactory(KunaiEntity::new).sized(0.5f, 0.5f).clientTrackingRange(4).updateInterval(20).build("kunai_entity");
+    public static EntityType<Entity> KUNAI_ENTITY_TYPE = EntityType.Builder.of(KunaiEntity::new, MobCategory.MISC).setCustomClientFactory(KunaiEntity::new).sized(0.5f, 0.5f).clientTrackingRange(4).updateInterval(20).build("kunai_entity");
 
     public static EntityType<Entity> SHURIKEN_ENTITY_TYPE = EntityType.Builder.of(ShurikenEntity::new, EntityClassification.MISC).setCustomClientFactory(ShurikenEntity::new).sized(0.5f, 0.5f).clientTrackingRange(4).updateInterval(20).build("shuriken_entity");
 
