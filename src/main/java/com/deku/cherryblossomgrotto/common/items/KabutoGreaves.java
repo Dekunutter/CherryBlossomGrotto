@@ -10,6 +10,9 @@ import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.IItemRenderProperties;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Consumer;
 
 public class KabutoGreaves extends ArmorItem implements IItemRenderProperties {
     public KabutoGreaves() {
@@ -17,18 +20,24 @@ public class KabutoGreaves extends ArmorItem implements IItemRenderProperties {
         setRegistryName("kabuto_greaves");
     }
 
-    /**
-     * Gets the model for this piece of armour once it has been equipped
-     *
-     * @param entity The entity equipping this piece of armour
-     * @param itemStack The item stack this item came from
-     * @param armorSlot The slot the armour is being equipped in
-     * @param defaultArmor The default armour model for this entity
-     * @return The armour model of the equipped piece of armour
-     */
     @Override
-    public final HumanoidModel<?> getArmorModel(LivingEntity entity, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> defaultArmor) {
-        return KabutoArmourLayer.MODEL.applyEntityStats(defaultArmor);
+    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+        consumer.accept(new IItemRenderProperties() {
+            /**
+             * Gets the model for this piece of armour once it has been equipped
+             *
+             * @param entity The entity equipping this piece of armour
+             * @param itemStack The item stack this item came from
+             * @param armorSlot The slot the armour is being equipped in
+             * @param defaultArmor The default armour model for this entity
+             * @return The armour model of the equipped piece of armour
+             */
+            @Nullable
+            @Override
+            public final HumanoidModel<?> getArmorModel(LivingEntity entity, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> defaultArmor) {
+                return KabutoArmourLayer.MODEL.applyEntityStats(defaultArmor);
+            }
+        });
     }
 
     /**
