@@ -32,7 +32,6 @@ import com.deku.cherryblossomgrotto.common.world.gen.blockstateprovider.CherryBl
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.GrandCherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.CherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.structures.*;
-import com.deku.cherryblossomgrotto.common.world.gen.topLayerModifications.ModTopLayerModifications;
 import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.*;
 import com.deku.cherryblossomgrotto.server.network.handlers.DoubleJumpServerMessageHandler;
 import com.deku.cherryblossomgrotto.server.network.messages.DoubleJumpServerMessage;
@@ -207,9 +206,6 @@ public class Main
         eventBus.addListener(this::doClientStuff);
 
         ClientOnlyRegistrar clientOnlyRegistrar = new ClientOnlyRegistrar(eventBus);
-
-        //top layer generation logic
-        ModTopLayerModifications.TOP_LAYER_MODIFICATIONS.register(eventBus);
 
         // Register ourselves for server and other game events we are interested in
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
