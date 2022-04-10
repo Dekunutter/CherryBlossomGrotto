@@ -2,17 +2,18 @@ package com.deku.cherryblossomgrotto.common.recipes;
 
 import com.deku.cherryblossomgrotto.common.items.ModItems;
 import com.google.common.collect.Lists;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.*;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CustomRecipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.Level;
 
 import java.util.*;
 
-public class FoldingRecipe extends SpecialRecipe {
+public class FoldingRecipe extends CustomRecipe {
     private ItemStack katana;
     private ItemStack ingot;
 
@@ -26,11 +27,11 @@ public class FoldingRecipe extends SpecialRecipe {
      * The ordering or position of the ingredients in the crafting grid doesn't matter.
      *
      * @param craftingInventory The crafting menu and inventory
-     * @param world The world the player is crafting within
+     * @param level The level the player is crafting within
      * @return If the ingredients in this recipe are fulfilled
      */
     @Override
-    public boolean matches(CraftingInventory craftingInventory, World world) {
+    public boolean matches(CraftingContainer craftingInventory, Level level) {
         List<ItemStack> list = Lists.newArrayList();
 
         for(int i = 0; i < craftingInventory.getContainerSize(); ++i) {
@@ -95,12 +96,12 @@ public class FoldingRecipe extends SpecialRecipe {
      * @return The instance of the Katana with NBT data saved that will build our result
      */
     @Override
-    public ItemStack assemble(CraftingInventory craftingInventory) {
+    public ItemStack assemble(CraftingContainer craftingInventory) {
         if (katana == null || ingot == null) {
             return ItemStack.EMPTY;
         }
         ItemStack assembledKatana = katana.copy();
-        CompoundNBT compoundnbt = assembledKatana.getTag();
+        CompoundTag compoundnbt = assembledKatana.getTag();
 
         if (compoundnbt != null) {
             int currentFolds = compoundnbt.getInt("folds");
@@ -133,7 +134,7 @@ public class FoldingRecipe extends SpecialRecipe {
      * @return The serializer associated with this recipe
      */
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return ModRecipeData.FOLDING_DATA;
     }
 }

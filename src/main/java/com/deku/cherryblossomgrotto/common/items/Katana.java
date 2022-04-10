@@ -2,23 +2,23 @@ package com.deku.cherryblossomgrotto.common.items;
 
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.*;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 
 import static com.deku.cherryblossomgrotto.common.utils.VanillaAttributeUUIDs.ATTACK_DAMAGE_UUID;
 import static com.deku.cherryblossomgrotto.common.utils.VanillaAttributeUUIDs.ATTACK_SPEED_UUID;
 
 public class Katana extends SwordItem {
     public Katana() {
-        super(ItemTier.IRON, 4, -3.4f, new Item.Properties().tab(ItemGroup.TAB_COMBAT));
+        super(Tiers.IRON, 4, -3.4f, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT));
         setRegistryName("katana");
     }
 
@@ -34,6 +34,7 @@ public class Katana extends SwordItem {
 
     /**
      * Determines how fast the katana will destroy certain blocks
+     * Copied from source as an override to change cobweb destroy speed with this item
      *
      * @param itemStack the stack of items involved
      * @param state The state of the block being interacted with
@@ -45,7 +46,7 @@ public class Katana extends SwordItem {
             return 20.0F;
         } else {
             Material material = state.getMaterial();
-            return material != Material.PLANT && material != Material.REPLACEABLE_PLANT && material != Material.CORAL && !state.is(BlockTags.LEAVES) && material != Material.VEGETABLE ? 1.0F : 1.5F;
+            return material != Material.PLANT && material != Material.REPLACEABLE_PLANT && !state.is(BlockTags.LEAVES) && material != Material.VEGETABLE ? 1.0F : 1.5F;
         }
     }
 
@@ -58,14 +59,14 @@ public class Katana extends SwordItem {
      * @return
      */
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slotType, ItemStack stack) {
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slotType, ItemStack stack) {
         Multimap<Attribute, AttributeModifier> modifierMap = LinkedHashMultimap.create();
 
-        if (slotType != EquipmentSlotType.MAINHAND) {
+        if (slotType != EquipmentSlot.MAINHAND) {
             return modifierMap;
         }
 
-        CompoundNBT compoundnbt = stack.getTag();
+        CompoundTag compoundnbt = stack.getTag();
         double foldedSteelStrength = 0;
         if (compoundnbt != null) {
             int currentFolds = compoundnbt.getInt("folds");
@@ -77,7 +78,7 @@ public class Katana extends SwordItem {
             }
         }
 
-        modifierMap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_UUID, "Weapon modifier", (double) 4 + ItemTier.IRON.getAttackDamageBonus() + foldedSteelStrength, AttributeModifier.Operation.ADDITION));
+        modifierMap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_UUID, "Weapon modifier", (double) 4 + Tiers.IRON.getAttackDamageBonus() + foldedSteelStrength, AttributeModifier.Operation.ADDITION));
 
         // Changing this value seems to have weird side-effects. It translates the weapon in hand and when set to really low values it kills the attack damage modifier?
         modifierMap.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_UUID, "Weapon modifier", (double) -2.4f, AttributeModifier.Operation.ADDITION));
