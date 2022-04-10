@@ -259,8 +259,6 @@ public class Main
         // do something that can only be done on the client
         LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
 
-        RenderingRegistry.registerEntityRenderingHandler(ModEntityData.SHURIKEN_DATA, ShurikenRenderer::new);
-
         //RenderTypeLookup.setRenderLayer(ModBlocks.GRASS, RenderType.cutout());
         RenderTypeLookup.setRenderLayer(ModBlocks.CHERRY_PETALS, RenderType.cutoutMipped());
         RenderTypeLookup.setRenderLayer(ModBlocks.CHERRY_SAPLING, RenderType.cutoutMipped());
@@ -542,6 +540,7 @@ public class Main
             registerEntityEvent.registerEntityRenderer(ModEntityData.MOD_BOAT_DATA, ModBoatRenderer::new);
             registerEntityEvent.registerEntityRenderer(ModEntityData.KOI_DATA, KoiRenderer::new);
             registerEntityEvent.registerEntityRenderer(ModEntityData.KUNAI_DATA, KunaiRenderer::new);
+            registerEntityEvent.registerEntityRenderer(ModEntityData.SHURIKEN_DATA, ShurikenRenderer::new);
         }
 
         /**

@@ -1,17 +1,17 @@
 package com.deku.cherryblossomgrotto.client.renderers;
 
 import com.deku.cherryblossomgrotto.common.entity.projectile.ShurikenEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Matrix3f;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3f;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Matrix3f;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.resources.ResourceLocation;
 
 import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
@@ -20,8 +20,8 @@ public class ShurikenRenderer extends EntityRenderer<ShurikenEntity> {
     private static final float RENDERED_SCALE_Y = 0.05625F;
     private static final float RENDERED_SCALE_Z = 0.05625F;
 
-    public ShurikenRenderer(EntityRendererManager rendererManager) {
-        super(rendererManager);
+    public ShurikenRenderer(EntityRendererProvider.Context renderContext) {
+        super(renderContext);
     }
 
     /**
@@ -43,39 +43,39 @@ public class ShurikenRenderer extends EntityRenderer<ShurikenEntity> {
      * @param entity The shuriken entity to be rendered
      * @param yaw Rotation of the entity around the yaw axis
      * @param partialTicks The time through the current tick of the entity
-     * @param matrixStack The rendering stack that holds the rendering co-ordinates of the entity
+     * @param poseStack The rendering stack that holds the pose information of the entity
      * @param buffer Render buffer
      * @param packedLight Light affecting the entity
      */
     @Override
-    public void render(ShurikenEntity entity, float yaw, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int packedLight) {
-        matrixStack.pushPose();
+    public void render(ShurikenEntity entity, float yaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+        poseStack.pushPose();
 
-        applySpin(entity, matrixStack);
+        applySpin(entity, poseStack);
 
-        matrixStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
-        matrixStack.scale(RENDERED_SCALE_X, RENDERED_SCALE_Y, RENDERED_SCALE_Z);
+        poseStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
+        poseStack.scale(RENDERED_SCALE_X, RENDERED_SCALE_Y, RENDERED_SCALE_Z);
 
-        IVertexBuilder vertexBuilder = buffer.getBuffer(RenderType.entityCutout(this.getTextureLocation(entity)));
-        MatrixStack.Entry stackEntry = matrixStack.last();
+        VertexConsumer vertexBuilder = buffer.getBuffer(RenderType.entityCutout(this.getTextureLocation(entity)));
+        PoseStack.Pose stackEntry = poseStack.last();
         Matrix4f positionMatrix = stackEntry.pose();
         Matrix3f normalMatrix = stackEntry.normal();
 
         renderRightSideFace(positionMatrix, normalMatrix, vertexBuilder, packedLight);
         renderLeftSideFace(positionMatrix, normalMatrix, vertexBuilder, packedLight);
 
-        matrixStack.popPose();
-        super.render(entity, yaw, partialTicks, matrixStack, buffer, packedLight);
+        poseStack.popPose();
+        super.render(entity, yaw, partialTicks, poseStack, buffer, packedLight);
     }
 
     /**
      * Applies additional rotation around the Y axis pivot to give the appearance of it spinning through the air
      *
      * @param entity Entity to apply the spin to
-     * @param matrixStack The rendering stack that holds the rendering co-ordinates of the entity
+     * @param poseStack The rendering stack that holds the pose information of the entity
      */
-    private void applySpin(ShurikenEntity entity, MatrixStack matrixStack) {
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees(entity.spin));
+    private void applySpin(ShurikenEntity entity, PoseStack poseStack) {
+        poseStack.mulPose(Vector3f.YP.rotationDegrees(entity.spin));
     }
 
     /**
@@ -86,7 +86,7 @@ public class ShurikenRenderer extends EntityRenderer<ShurikenEntity> {
      * @param vertexBuilder Builder for the vertices
      * @param packedLight Light affecting the entity
      */
-    private void renderRightSideFace(Matrix4f positionMatrix, Matrix3f normalMatrix, IVertexBuilder vertexBuilder, int packedLight) {
+    private void renderRightSideFace(Matrix4f positionMatrix, Matrix3f normalMatrix, VertexConsumer vertexBuilder, int packedLight) {
         vertex(positionMatrix, normalMatrix, vertexBuilder, -4, 0, 0, 0.0F, 0.0F, 0, 1, 0, packedLight);
         vertex(positionMatrix, normalMatrix, vertexBuilder, 4, 0, 0, 1.0F, 0.0F, 0, 1, 0, packedLight);
         vertex(positionMatrix, normalMatrix, vertexBuilder, 4, 4, 0, 1.0F, 1.0F, 0, 1, 0, packedLight);
@@ -101,7 +101,7 @@ public class ShurikenRenderer extends EntityRenderer<ShurikenEntity> {
      * @param vertexBuilder Builder for the vertices
      * @param packedLight Light affecting the entity
      */
-    private void renderLeftSideFace(Matrix4f positionMatrix, Matrix3f normalMatrix, IVertexBuilder vertexBuilder, int packedLight) {
+    private void renderLeftSideFace(Matrix4f positionMatrix, Matrix3f normalMatrix, VertexConsumer vertexBuilder, int packedLight) {
         vertex(positionMatrix, normalMatrix, vertexBuilder, -4, 4, 0, 0.0F, 0.0F, 0, -1, 0, packedLight);
         vertex(positionMatrix, normalMatrix, vertexBuilder, 4, 4, 0, 1.0F, 0.0F, 0, -1, 0, packedLight);
         vertex(positionMatrix, normalMatrix, vertexBuilder, 4, 0, 0, 1.0F, 1.0F, 0, -1, 0, packedLight);
@@ -124,7 +124,7 @@ public class ShurikenRenderer extends EntityRenderer<ShurikenEntity> {
      * @param normalZ The normal value for the Z axis
      * @param lightingUV Value for mapping lighting data to the vertex
      */
-    private void vertex(Matrix4f positionMatrix, Matrix3f normalMatrix, IVertexBuilder vertexBuilder, int positionX, int positionY, int positionZ, float horizontalUV, float verticalUV, int normalX, int normalY, int normalZ, int lightingUV) {
+    private void vertex(Matrix4f positionMatrix, Matrix3f normalMatrix, VertexConsumer vertexBuilder, int positionX, int positionY, int positionZ, float horizontalUV, float verticalUV, int normalX, int normalY, int normalZ, int lightingUV) {
         vertexBuilder.vertex(positionMatrix, (float)positionX, (float)positionY, (float)positionZ).color(255, 255, 255, 255).uv(horizontalUV, verticalUV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lightingUV).normal(normalMatrix, (float)normalX, (float)normalZ, (float)normalY).endVertex();
     }
 }
