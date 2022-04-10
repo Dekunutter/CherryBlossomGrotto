@@ -1,7 +1,7 @@
 package com.deku.cherryblossomgrotto.common.utils;
 
 import com.deku.cherryblossomgrotto.Main;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
