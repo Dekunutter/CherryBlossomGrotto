@@ -1,5 +1,6 @@
 package com.deku.cherryblossomgrotto;
 
+import com.deku.cherryblossomgrotto.client.models.KabutoArmourModel;
 import com.deku.cherryblossomgrotto.client.models.geom.ModLayerDefinitions;
 import com.deku.cherryblossomgrotto.client.models.geom.ModModelLayerInitializer;
 import com.deku.cherryblossomgrotto.client.models.geom.ModModelLayerLocations;
@@ -9,6 +10,7 @@ import com.deku.cherryblossomgrotto.client.renderers.KoiRenderer;
 import com.deku.cherryblossomgrotto.client.renderers.KunaiRenderer;
 import com.deku.cherryblossomgrotto.client.renderers.ModBoatRenderer;
 import com.deku.cherryblossomgrotto.client.renderers.ShurikenRenderer;
+import com.deku.cherryblossomgrotto.client.renderers.layers.KabutoArmourLayer;
 import com.deku.cherryblossomgrotto.common.blocks.*;
 import com.deku.cherryblossomgrotto.common.capabilities.DoubleJumpCapability;
 import com.deku.cherryblossomgrotto.common.capabilities.ModCapabilitiesInitializer;
@@ -38,10 +40,14 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.*;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.color.BlockColors;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
@@ -70,7 +76,9 @@ import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.gen.FlatChunkGenerator;
 import net.minecraft.world.gen.blockplacer.DoublePlantBlockPlacer;
 import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
@@ -542,6 +550,14 @@ public class Main
         @SubscribeEvent
         public static void onEntityRendererRegistry(final EntityRenderersEvent.RegisterLayerDefinitions registerLayerDefinitionEvent) {
             registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.KOI, () -> ModLayerDefinitions.KOI_LAYER);
+            registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.KABUTO_ARMOUR, () -> ModLayerDefinitions.KABUTO_ARMOUR_LAYER);
+        }
+
+        @SubscribeEvent
+        public static void onEntityRendererRegistry(final EntityRenderersEvent.AddLayers registerAddedLayerEvent) {
+            LivingEntityRenderer<LivingEntity, HumanoidModel<LivingEntity>> renderer = registerAddedLayerEvent.getRenderer(EntityType.PLAYER);
+            KabutoArmourLayer layer = new KabutoArmourLayer(renderer, registerAddedLayerEvent.getEntityModels());
+            renderer.addLayer(layer);
         }
 
         /**

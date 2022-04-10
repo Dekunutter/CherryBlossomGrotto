@@ -1,22 +1,20 @@
 package com.deku.cherryblossomgrotto.common.items;
 
-import com.deku.cherryblossomgrotto.client.models.KabutoArmourModel;
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import com.deku.cherryblossomgrotto.client.renderers.layers.KabutoArmourLayer;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterials;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.client.IItemRenderProperties;
 
-public class KabutoGreaves extends ArmorItem {
-    private KabutoArmourModel armorModel;
-
+public class KabutoGreaves extends ArmorItem implements IItemRenderProperties {
     public KabutoGreaves() {
-        super(ArmorMaterial.IRON, EquipmentSlotType.LEGS, new Properties().tab(ItemGroup.TAB_COMBAT));
+        super(ArmorMaterials.IRON, EquipmentSlot.LEGS, new Properties().tab(CreativeModeTab.TAB_COMBAT));
         setRegistryName("kabuto_greaves");
-        armorModel = new KabutoArmourModel();
     }
 
     /**
@@ -29,8 +27,8 @@ public class KabutoGreaves extends ArmorItem {
      * @return The armour model of the equipped piece of armour
      */
     @Override
-    public final BipedModel getArmorModel(LivingEntity entity, ItemStack itemStack, EquipmentSlotType armorSlot, BipedModel defaultArmor) {
-        return armorModel.applyEntityStats(defaultArmor).applySlot(armorSlot);
+    public final HumanoidModel<?> getArmorModel(LivingEntity entity, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> defaultArmor) {
+        return KabutoArmourLayer.MODEL.applyEntityStats(defaultArmor);
     }
 
     /**
@@ -43,7 +41,7 @@ public class KabutoGreaves extends ArmorItem {
      * @return The resource location for this texture
      */
     @Override
-    public final String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        return armorModel.getTexture();
+    public final String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
+        return KabutoArmourLayer.MODEL.getTexture();
     }
 }

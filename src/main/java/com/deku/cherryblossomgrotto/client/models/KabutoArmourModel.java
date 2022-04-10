@@ -1,22 +1,37 @@
 package com.deku.cherryblossomgrotto.client.models;
 
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
 
-public class KabutoArmourModel extends BipedModel<LivingEntity> {
-	private ModelRenderer helmet;
-	private ModelRenderer cuirass;
-	private ModelRenderer rightArmSleeve;
-	private ModelRenderer leftArmSleeve;
-	private ModelRenderer rightGreave;
-	private ModelRenderer leftGreave;
-	private ModelRenderer rightSandal;
-	private ModelRenderer leftSandal;
+public class KabutoArmourModel extends HumanoidModel<LivingEntity> {
+	private ModelPart helmet;
+	private ModelPart cuirass;
+	private ModelPart rightArmSleeve;
+	private ModelPart leftArmSleeve;
+	private ModelPart rightGreave;
+	private ModelPart leftGreave;
+	private ModelPart rightSandal;
+	private ModelPart leftSandal;
 
 	private String texture;
+
+	public KabutoArmourModel(ModelPart root) {
+		super(root);
+		texture = new ResourceLocation("cherryblossomgrotto:textures/model/kabuto_armour.png").toString();
+
+		helmet = root.getChild("helmet");
+		cuirass = root.getChild("cuirass");
+		rightArmSleeve = root.getChild("rightArmSleeve");
+		leftArmSleeve = root.getChild("leftArmSleeve");
+		rightGreave = root.getChild("rightGreave");
+		leftGreave = root.getChild("leftGreave");
+		rightSandal = root.getChild("rightSandal");
+		leftSandal = root.getChild("leftSandal");
+	}
 
 	/**
 	 * NOTE TO GENERATE ARMOUR MODELS:
@@ -38,98 +53,97 @@ public class KabutoArmourModel extends BipedModel<LivingEntity> {
 	 * - Export your model as a Java file. Rip out the texOffs and box co-ords into your renderer, adding them
 	 *   as a child to the default modelling parts of the biped model.
 	 */
-	public KabutoArmourModel() {
-		super(1.0f, 0, 128, 128);
+	public static LayerDefinition createBodyLayer() {
+		MeshDefinition mesh = new MeshDefinition();
+		PartDefinition part = mesh.getRoot();
 
-		texture = new ResourceLocation("cherryblossomgrotto:textures/model/kabuto_armour.png").toString();
+		PartDefinition helmet = part.addOrReplaceChild("helmet", CubeListBuilder.create()
+				.texOffs(32, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.5F)).mirror(false)
+				.texOffs(13, 64).addBox(-5.0F, -9.0F, -5.0F, 10.0F, 1.0F, 10.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(44, 71).addBox(4.0F, -8.0F, -5.0F, 1.0F, 5.0F, 9.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(85, 60).addBox(-5.0F, -8.0F, -5.0F, 1.0F, 5.0F, 9.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(43, 64).addBox(-5.0F, -8.0F, 4.0F, 10.0F, 6.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(7, 70).addBox(-1.0F, -7.0F, -6.0F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(0, 64).addBox(-2.0F, -9.0F, -6.0F, 4.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(0, 68).addBox(-3.0F, -11.0F, -6.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(0, 73).addBox(-4.0F, -11.0F, -6.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(3, 73).addBox(3.0F, -11.0F, -6.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(3, 68).addBox(2.0F, -11.0F, -6.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(17, 64).addBox(-6.0F, -7.0F, -6.0F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(11, 64).addBox(4.0F, -7.0F, -6.0F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(17, 67).addBox(-5.0F, -5.0F, -6.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(11, 67).addBox(4.0F, -5.0F, -6.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false),
+			PartPose.offset(0.0F, 0.0F, 0.0F)
+		);
 
-		helmet = new ModelRenderer(this);
-		helmet.setPos(0, 0, 0);
-		head.addChild(helmet);
-		setRotationAngle(helmet, 0.0F, 0.0F, 0.0F);
-		helmet.texOffs(32, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, 0.5F, false);
-		helmet.texOffs(13, 64).addBox(-5.0F, -9.0F, -5.0F, 10.0F, 1.0F, 10.0F, 0.0F, false);
-		helmet.texOffs(44, 71).addBox(4.0F, -8.0F, -5.0F, 1.0F, 5.0F, 9.0F, 0.0F, false);
-		helmet.texOffs(85, 60).addBox(-5.0F, -8.0F, -5.0F, 1.0F, 5.0F, 9.0F, 0.0F, false);
-		helmet.texOffs(43, 64).addBox(-5.0F, -8.0F, 4.0F, 10.0F, 6.0F, 1.0F, 0.0F, false);
-		helmet.texOffs(7, 70).addBox(-1.0F, -7.0F, -6.0F, 2.0F, 1.0F, 1.0F, 0.0F, false);
-		helmet.texOffs(0, 64).addBox(-2.0F, -9.0F, -6.0F, 4.0F, 2.0F, 1.0F, 0.0F, false);
-		helmet.texOffs(0, 68).addBox(-3.0F, -11.0F, -6.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
-		helmet.texOffs(0, 73).addBox(-4.0F, -11.0F, -6.0F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-		helmet.texOffs(3, 73).addBox(3.0F, -11.0F, -6.0F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-		helmet.texOffs(3, 68).addBox(2.0F, -11.0F, -6.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
-		helmet.texOffs(17, 64).addBox(-6.0F, -7.0F, -6.0F, 2.0F, 2.0F, 1.0F, 0.0F, false);
-		helmet.texOffs(11, 64).addBox(4.0F, -7.0F, -6.0F, 2.0F, 2.0F, 1.0F, 0.0F, false);
-		helmet.texOffs(17, 67).addBox(-5.0F, -5.0F, -6.0F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-		helmet.texOffs(11, 67).addBox(4.0F, -5.0F, -6.0F, 1.0F, 1.0F, 1.0F, 0.0F, false);
+		PartDefinition cuirass = part.addOrReplaceChild("cuirass", CubeListBuilder.create()
+				.texOffs(16, 32).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)).mirror(false)
+				.texOffs(68, 65).addBox(-4.0F, 0.0F, -3.0F, 8.0F, 9.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(77, 75).addBox(-4.0F, 0.0F, 2.0F, 8.0F, 12.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false),
+			PartPose.offset(0.0F, 0.0F, 0.0F)
+		);
 
-		cuirass = new ModelRenderer(this);
-		cuirass.setPos( 0, 0, 0);
-		body.addChild(cuirass);
-		setRotationAngle(cuirass, 0.0F, 0.0F, 0.0F);
-		cuirass.texOffs(16, 32).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, 0.25F, false);
-		cuirass.texOffs(68, 65).addBox(-4.0F, 0.0F, -3.0F, 8.0F, 9.0F, 1.0F, 0.0F, false);
-		cuirass.texOffs(77, 75).addBox(-4.0F, 0.0F, 2.0F, 8.0F, 12.0F, 1.0F, 0.0F, false);
+		PartDefinition rightArmSleeve = part.addOrReplaceChild("rightArmSleeve", CubeListBuilder.create()
+				.texOffs(40, 32).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)).mirror(false)
+				.texOffs(0, 76).addBox(-4.0F, -3.0F, -3.0F, 5.0F, 1.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(16, 77).addBox(-4.0F, -2.0F, -3.0F, 1.0F, 4.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(2, 83).addBox(-4.0F, 7.0F, -3.0F, 1.0F, 4.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(30, 77).addBox(-4.0F, 3.0F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(0, 93).addBox(-3.0F, 10.0F, -3.0F, 3.0F, 1.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(16, 87).addBox(-3.0F, 7.0F, 2.0F, 3.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(24, 77).addBox(-3.0F, 3.0F, 2.0F, 3.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(0, 83).addBox(-3.0F, 7.0F, -3.0F, 3.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(24, 80).addBox(-3.0F, 3.0F, -3.0F, 3.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false),
+			PartPose.offset(0.0F, 0.0F, 0.0F)
+		);
 
-		rightArmSleeve = new ModelRenderer(this);
-		rightArm.addChild(rightArmSleeve);
-		setRotationAngle(rightArmSleeve, 0.0F, 0.0F, 0.0F);
-		rightArmSleeve.texOffs(40, 32).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.25F, false);
-		rightArmSleeve.texOffs(0, 76).addBox(-4.0F, -3.0F, -3.0F, 5.0F, 1.0F, 6.0F, 0.0F, false);
-		rightArmSleeve.texOffs(16, 77).addBox(-4.0F, -2.0F, -3.0F, 1.0F, 4.0F, 6.0F, 0.0F, false);
-		rightArmSleeve.texOffs(2, 83).addBox(-4.0F, 7.0F, -3.0F, 1.0F, 4.0F, 6.0F, 0.0F, false);
-		rightArmSleeve.texOffs(30, 77).addBox(-4.0F, 3.0F, -3.0F, 1.0F, 2.0F, 6.0F, 0.0F, false);
-		rightArmSleeve.texOffs(0, 93).addBox(-3.0F, 10.0F, -3.0F, 3.0F, 1.0F, 6.0F, 0.0F, false);
-		rightArmSleeve.texOffs(16, 87).addBox(-3.0F, 7.0F, 2.0F, 3.0F, 3.0F, 1.0F, 0.0F, false);
-		rightArmSleeve.texOffs(24, 77).addBox(-3.0F, 3.0F, 2.0F, 3.0F, 2.0F, 1.0F, 0.0F, false);
-		rightArmSleeve.texOffs(0, 83).addBox(-3.0F, 7.0F, -3.0F, 3.0F, 3.0F, 1.0F, 0.0F, false);
-		rightArmSleeve.texOffs(24, 80).addBox(-3.0F, 3.0F, -3.0F, 3.0F, 2.0F, 1.0F, 0.0F, false);
+		PartDefinition leftArmSleeve = part.addOrReplaceChild("leftArmSleeve", CubeListBuilder.create()
+				.texOffs(48, 48).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)).mirror(false)
+				.texOffs(18, 87).addBox(-1.0F, -3.0F, -3.0F, 5.0F, 1.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(34, 88).addBox(3.0F, -2.0F, -3.0F, 1.0F, 4.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(58, 90).addBox(3.0F, 7.0F, -3.0F, 1.0F, 4.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(48, 88).addBox(3.0F, 3.0F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(66, 89).addBox(0.0F, 10.0F, -3.0F, 3.0F, 1.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(56, 90).addBox(0.0F, 7.0F, -3.0F, 3.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(42, 91).addBox(0.0F, 3.0F, -3.0F, 3.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(56, 86).addBox(0.0F, 7.0F, 2.0F, 3.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(42, 88).addBox(0.0F, 3.0F, 2.0F, 3.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false),
+			PartPose.offset(0.0F, 0.0F, 0.0F)
+		);
 
-		leftArmSleeve = new ModelRenderer(this);
-		leftArm.addChild(leftArmSleeve);
-		setRotationAngle(leftArmSleeve, 0.0F, 0.0F, 0.0F);
-		leftArmSleeve.texOffs(48, 48).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.25F, false);
-		leftArmSleeve.texOffs(18, 87).addBox(-1.0F, -3.0F, -3.0F, 5.0F, 1.0F, 6.0F, 0.0F, false);
-		leftArmSleeve.texOffs(34, 88).addBox(3.0F, -2.0F, -3.0F, 1.0F, 4.0F, 6.0F, 0.0F, false);
-		leftArmSleeve.texOffs(58, 90).addBox(3.0F, 7.0F, -3.0F, 1.0F, 4.0F, 6.0F, 0.0F, false);
-		leftArmSleeve.texOffs(48, 88).addBox(3.0F, 3.0F, -3.0F, 1.0F, 2.0F, 6.0F, 0.0F, false);
-		leftArmSleeve.texOffs(66, 89).addBox(0.0F, 10.0F, -3.0F, 3.0F, 1.0F, 6.0F, 0.0F, false);
-		leftArmSleeve.texOffs(56, 90).addBox(0.0F, 7.0F, -3.0F, 3.0F, 3.0F, 1.0F, 0.0F, false);
-		leftArmSleeve.texOffs(42, 91).addBox(0.0F, 3.0F, -3.0F, 3.0F, 2.0F, 1.0F, 0.0F, false);
-		leftArmSleeve.texOffs(56, 86).addBox(0.0F, 7.0F, 2.0F, 3.0F, 3.0F, 1.0F, 0.0F, false);
-		leftArmSleeve.texOffs(42, 88).addBox(0.0F, 3.0F, 2.0F, 3.0F, 2.0F, 1.0F, 0.0F, false);
+		PartDefinition rightGreave = part.addOrReplaceChild("rightGreave", CubeListBuilder.create()
+				.texOffs(0, 32).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)).mirror(false)
+				.texOffs(18, 94).addBox(-3.0F, 0.0F, -3.0F, 5.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(0, 100).addBox(-3.0F, 5.0F, -3.0F, 5.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(25, 95).addBox(-3.0F, 0.0F, -2.0F, 1.0F, 4.0F, 5.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(19, 99).addBox(-2.0F, 0.0F, 2.0F, 2.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(0, 105).addBox(-2.0F, 5.0F, 2.0F, 2.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(7, 100).addBox(-3.0F, 5.0F, -2.0F, 1.0F, 4.0F, 5.0F, new CubeDeformation(0.0F)).mirror(false),
+			PartPose.offset(0.0F, 0.0F, 0.0F)
+		);
 
-		rightGreave = new ModelRenderer(this);
-		rightLeg.addChild(rightGreave);
-		setRotationAngle(rightGreave, 0.0F, 0.0F, 0.0F);
-		rightGreave.texOffs(0, 32).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.25F, false);
-		rightGreave.texOffs(18, 94).addBox(-3.0F, 0.0F, -3.0F, 5.0F, 4.0F, 1.0F, 0.0F, false);
-		rightGreave.texOffs(0, 100).addBox(-3.0F, 5.0F, -3.0F, 5.0F, 4.0F, 1.0F, 0.0F, false);
-		rightGreave.texOffs(25, 95).addBox(-3.0F, 0.0F, -2.0F, 1.0F, 4.0F, 5.0F, 0.0F, false);
-		rightGreave.texOffs(19, 99).addBox(-2.0F, 0.0F, 2.0F, 2.0F, 4.0F, 1.0F, 0.0F, false);
-		rightGreave.texOffs(0, 105).addBox(-2.0F, 5.0F, 2.0F, 2.0F, 4.0F, 1.0F, 0.0F, false);
-		rightGreave.texOffs(7, 100).addBox(-3.0F, 5.0F, -2.0F, 1.0F, 4.0F, 5.0F, 0.0F, false);
+		PartDefinition leftGreave = part.addOrReplaceChild("leftGreave", CubeListBuilder.create()
+				.texOffs(0, 48).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)).mirror(false)
+				.texOffs(37, 99).addBox(-2.0F, 0.0F, -3.0F, 5.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(32, 104).addBox(-2.0F, 5.0F, -3.0F, 5.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(44, 99).addBox(2.0F, 0.0F, -2.0F, 1.0F, 4.0F, 5.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(51, 99).addBox(0.0F, 0.0F, 2.0F, 2.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(37, 109).addBox(0.0F, 5.0F, 2.0F, 2.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(25, 104).addBox(2.0F, 5.0F, -2.0F, 1.0F, 4.0F, 5.0F, new CubeDeformation(0.0F)).mirror(false),
+			PartPose.offset(0.0F, 0.0F, 0.0F)
+		);
 
-		leftGreave = new ModelRenderer(this);
-		leftLeg.addChild(leftGreave);
-		setRotationAngle(leftGreave, 0.0F, 0.0F, 0.0F);
-		leftGreave.texOffs(0, 48).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.25F, false);
-		leftGreave.texOffs(37, 99).addBox(-2.0F, 0.0F, -3.0F, 5.0F, 4.0F, 1.0F, 0.0F, false);
-		leftGreave.texOffs(32, 104).addBox(-2.0F, 5.0F, -3.0F, 5.0F, 4.0F, 1.0F, 0.0F, false);
-		leftGreave.texOffs(44, 99).addBox(2.0F, 0.0F, -2.0F, 1.0F, 4.0F, 5.0F, 0.0F, false);
-		leftGreave.texOffs(51, 99).addBox(0.0F, 0.0F, 2.0F, 2.0F, 4.0F, 1.0F, 0.0F, false);
-		leftGreave.texOffs(37, 109).addBox(0.0F, 5.0F, 2.0F, 2.0F, 4.0F, 1.0F, 0.0F, false);
-		leftGreave.texOffs(25, 104).addBox(2.0F, 5.0F, -2.0F, 1.0F, 4.0F, 5.0F, 0.0F, false);
+		PartDefinition rightSandal = part.addOrReplaceChild("rightSandal", CubeListBuilder.create()
+				.texOffs(43, 108).addBox(-2.0F, 11.0F, -3.0F, 4.0F, 1.0F, 5.0F, new CubeDeformation(0.0F)).mirror(false),
+			PartPose.offset(0.0F, 0.0F, 0.0F)
+		);
 
-		rightSandal = new ModelRenderer(this);
-		rightLeg.addChild(rightSandal);
-		setRotationAngle(rightSandal, 0.0F, 0.0F, 0.0F);
-		rightSandal.texOffs(43, 108).addBox(-2.0F, 11.0F, -3.0F, 4.0F, 1.0F, 5.0F, 0.0F, false);
+		PartDefinition leftSandal = part.addOrReplaceChild("leftSandal", CubeListBuilder.create()
+				.texOffs(61, 108).addBox(-2.0F, 11.0F, -3.0F, 4.0F, 1.0F, 5.0F, new CubeDeformation(0.0F)).mirror(false),
+			PartPose.offset(0.0F, 0.0F, 0.0F)
+		);
 
-		leftSandal = new ModelRenderer(this);
-		leftLeg.addChild(leftSandal);
-		setRotationAngle(leftSandal, 0.0F, 0.0F, 0.0F);
-		leftSandal.texOffs(61, 108).addBox(-2.0F, 11.0F, -3.0F, 4.0F, 1.0F, 5.0F, 0.0F, false);
+		return LayerDefinition.create(mesh, 64, 32);
 	}
 
 	/**
@@ -147,7 +161,7 @@ public class KabutoArmourModel extends BipedModel<LivingEntity> {
 	 * @param defaultArmor Default armour model of the entity
 	 * @return This armour model
 	 */
-	public final KabutoArmourModel applyEntityStats(BipedModel defaultArmor){
+	public final KabutoArmourModel applyEntityStats(HumanoidModel<?> defaultArmor){
 		this.crouching = defaultArmor.crouching;
 		this.rightArmPose = defaultArmor.rightArmPose;
 		this.leftArmPose = defaultArmor.leftArmPose;
@@ -156,57 +170,16 @@ public class KabutoArmourModel extends BipedModel<LivingEntity> {
 	}
 
 	/**
-	 * Applies some changes to the entity based on what equipment slot this model is equipped to.
-	 * Controls whether individual pieces of the model should be displayed or not by their renderer.
-	 *
-	 * @param slot The equipment slot that this piece of armour is being applied to.
- 	 * @return This armour model
-	 */
-	public BipedModel applySlot(EquipmentSlotType slot){
-		helmet.visible = false;
-		cuirass.visible = false;
-		rightArmSleeve.visible = false;
-		leftArmSleeve.visible = false;
-		rightGreave.visible = false;
-		leftGreave.visible = false;
-		rightSandal.visible = false;
-		leftSandal.visible = false;
-
-		switch(slot){
-			case HEAD:
-				helmet.visible = true;
-				break;
-			case CHEST:
-				cuirass.visible = true;
-				rightArmSleeve.visible = true;
-				leftArmSleeve.visible = true;
-				break;
-			case LEGS:
-				rightGreave.visible = true;
-				leftGreave.visible = true;
-				break;
-			case FEET:
-				rightSandal.visible = true;
-				leftSandal.visible = true;
-				break;
-			default:
-				break;
-		}
-
-		return this;
-	}
-
-	/**
 	 * Sets the rotation of the given model renderer
 	 *
-	 * @param modelRenderer The renderer for the model we want to render
+	 * @param part The part for the model we want to render
 	 * @param x Rotation on the X axis
 	 * @param y Rotation on the Y axis
 	 * @param z Rotation on the Z axis
 	 */
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.xRot = x;
-		modelRenderer.yRot = y;
-		modelRenderer.zRot = z;
+	public void setRotationAngle(ModelPart part, float x, float y, float z) {
+		part.xRot = x;
+		part.yRot = y;
+		part.zRot = z;
 	}
 }

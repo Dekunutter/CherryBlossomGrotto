@@ -1,36 +1,40 @@
 package com.deku.cherryblossomgrotto.common.items;
 
-import com.deku.cherryblossomgrotto.client.models.KabutoArmourModel;
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import com.deku.cherryblossomgrotto.client.renderers.layers.KabutoArmourLayer;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.*;
+import net.minecraftforge.client.IItemRenderProperties;
+import org.jetbrains.annotations.Nullable;
 
-public class KabutoCuirass extends ArmorItem {
-    private KabutoArmourModel armorModel;
+import java.util.function.Consumer;
 
+public class KabutoCuirass extends ArmorItem implements IItemRenderProperties {
     public KabutoCuirass() {
-        super(ArmorMaterial.IRON, EquipmentSlotType.CHEST, new Properties().tab(ItemGroup.TAB_COMBAT));
+        super(ArmorMaterials.IRON, EquipmentSlot.CHEST, new Properties().tab(CreativeModeTab.TAB_COMBAT));
         setRegistryName("kabuto_cuirass");
-        armorModel = new KabutoArmourModel();
     }
 
-    /**
-     * Gets the model for this piece of armour once it has been equipped
-     *
-     * @param entity The entity equipping this piece of armour
-     * @param itemStack The item stack this item came from
-     * @param armorSlot The slot the armour is being equipped in
-     * @param defaultArmor The default armour model for this entity
-     * @return The armour model of the equipped piece of armour
-     */
     @Override
-    public final BipedModel getArmorModel(LivingEntity entity, ItemStack itemStack, EquipmentSlotType armorSlot, BipedModel defaultArmor) {
-        return armorModel.applyEntityStats(defaultArmor).applySlot(armorSlot);
+    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+        consumer.accept(new IItemRenderProperties() {
+            /**
+             * Gets the model for this piece of armour once it has been equipped
+             *
+             * @param entity The entity equipping this piece of armour
+             * @param itemStack The item stack this item came from
+             * @param armorSlot The slot the armour is being equipped in
+             * @param defaultArmor The default armour model for this entity
+             * @return The armour model of the equipped piece of armour
+             */
+            @Nullable
+            @Override
+            public final HumanoidModel<?> getArmorModel(LivingEntity entity, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> defaultArmor) {
+                return KabutoArmourLayer.MODEL.applyEntityStats(defaultArmor);
+            }
+        });
     }
 
     /**
@@ -43,7 +47,7 @@ public class KabutoCuirass extends ArmorItem {
      * @return The resource location for this texture
      */
     @Override
-    public final String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        return armorModel.getTexture();
+    public final String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
+        return KabutoArmourLayer.MODEL.getTexture();
     }
 }
