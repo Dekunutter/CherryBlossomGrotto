@@ -1,14 +1,14 @@
 package com.deku.cherryblossomgrotto.common.world.gen.biomes;
 
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeMaker;
+import net.minecraft.core.Registry;
+import net.minecraft.data.worldgen.biome.OverworldBiomes;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.BiomeManager;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
@@ -18,10 +18,10 @@ public class ModBiomeInitializer {
     public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, MOD_ID);
 
     static {
-        createBiome("cherry_blossom_grotto", BiomeMaker::theVoidBiome);
+        createBiome("cherry_blossom_grotto", OverworldBiomes::theVoid);
     }
 
-    public static RegistryKey<Biome> CHERRY_BLOSSOM_GROTTO = registerBiome("cherry_blossom_grotto");
+    public static ResourceKey<Biome> CHERRY_BLOSSOM_GROTTO = registerBiome("cherry_blossom_grotto");
 
     /**
      * Registers the biome into the vanilla game by the biome registry
@@ -29,8 +29,8 @@ public class ModBiomeInitializer {
      * @param biomeName The registry name of the biome
      * @return The registered key for the custom biome
      */
-    public static RegistryKey<Biome> registerBiome(String biomeName) {
-        return RegistryKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(MOD_ID, biomeName));
+    public static ResourceKey<Biome> registerBiome(String biomeName) {
+        return ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(MOD_ID, biomeName));
     }
 
     /**

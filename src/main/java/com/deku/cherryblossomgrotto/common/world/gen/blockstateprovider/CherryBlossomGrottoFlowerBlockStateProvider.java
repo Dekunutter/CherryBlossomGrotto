@@ -1,13 +1,13 @@
 package com.deku.cherryblossomgrotto.common.world.gen.blockstateprovider;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.blockstateprovider.BlockStateProvider;
-import net.minecraft.world.gen.blockstateprovider.BlockStateProviderType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProviderType;
 
 import java.util.Random;
 
@@ -34,7 +34,7 @@ public class CherryBlossomGrottoFlowerBlockStateProvider extends BlockStateProvi
      * @return The block state returned by the provider
      */
     public BlockState getState(Random random, BlockPos position) {
-        double randomFlowerChoice = MathHelper.clamp((1.0d + Biome.BIOME_INFO_NOISE.getValue((double) position.getX() / 48.0d, (double) position.getZ() / 48.0d, false)) / 2.0d, 0.0d, 0.9999d);
+        double randomFlowerChoice = Mth.clamp((1.0d + Biome.BIOME_INFO_NOISE.getValue((double) position.getX() / 48.0d, (double) position.getZ() / 48.0d, false)) / 2.0d, 0.0d, 0.9999d);
         return FLOWERS[(int) (randomFlowerChoice * (double) FLOWERS.length)];
     }
 

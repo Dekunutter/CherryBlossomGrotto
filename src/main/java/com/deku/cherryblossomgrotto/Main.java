@@ -96,6 +96,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 import net.minecraft.world.level.levelgen.feature.treedecorators.BeehiveDecorator;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
@@ -584,7 +586,8 @@ public class Main
 
             ModConfiguredFeatures.FANCY_CHERRY_TREE_BEES_05 = FeatureUtils.register(MOD_ID + ":fancy_cherry_blossom_tree_bees_05", Feature.TREE, ModTreeFeatures.createFancyCherryBlossomTree().decorators(List.of(new BeehiveDecorator(0.05F))).build());
 
-            ModConfiguredFeatures.CHERRY_PETAL_COVER = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_petal_ground_cover", new CherryBlossomPetalCoverConfiguredFeature());
+            featureRegistryEvent.getRegistry().register(new CherryBlossomPetalCoverFeature());
+            ModConfiguredFeatures.CHERRY_PETAL_COVER = FeatureUtils.register(MOD_ID + ":cherry_blossom_petal_ground_cover", ModFeatures.CHERRY_BLOSSOM_GROUND_COVER);
 
             ModConfiguredFeatures.IRON_ORE_SPARSE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":ore_iron_sparse", new OreIronSparseConfiguredFeature());
 
