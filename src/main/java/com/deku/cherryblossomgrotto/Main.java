@@ -1,6 +1,5 @@
 package com.deku.cherryblossomgrotto;
 
-import com.deku.cherryblossomgrotto.client.models.KabutoArmourModel;
 import com.deku.cherryblossomgrotto.client.models.geom.ModLayerDefinitions;
 import com.deku.cherryblossomgrotto.client.models.geom.ModModelLayerInitializer;
 import com.deku.cherryblossomgrotto.client.models.geom.ModModelLayerLocations;
@@ -40,9 +39,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -78,7 +75,6 @@ import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.gen.FlatChunkGenerator;
 import net.minecraft.world.gen.blockplacer.DoublePlantBlockPlacer;
 import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
@@ -95,8 +91,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 import net.minecraft.world.level.levelgen.feature.treedecorators.BeehiveDecorator;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
@@ -585,7 +579,7 @@ public class Main
             featureRegistryEvent.getRegistry().register(new CherryBlossomPetalCoverFeature());
             ModConfiguredFeatures.CHERRY_PETAL_COVER = FeatureUtils.register(MOD_ID + ":cherry_blossom_petal_ground_cover", ModFeatures.CHERRY_BLOSSOM_GROUND_COVER);
 
-            ModConfiguredFeatures.IRON_ORE_SPARSE = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":ore_iron_sparse", new OreIronSparseConfiguredFeature());
+            ModConfiguredFeatures.IRON_ORE_SPARSE = FeatureUtils.register(MOD_ID + ":ore_iron_sparse", Feature.ORE, ModOreFeatures.createSparseIronOre());
 
             ModConfiguredFeatures.CHERRY_TREE_FOREST = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest", Feature.RANDOM_SELECTOR.configured(new MultipleRandomFeatureConfig(ImmutableList.of(ModConfiguredFeatures.GRAND_CHERRY_TREE.weighted(0.01f), ModConfiguredFeatures.FANCY_CHERRY_TREE.weighted(0.1f)), ModConfiguredFeatures.CHERRY_TREE_BEES_02)).decorated(Features.Placements.HEIGHTMAP_SQUARE).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(6, 0.1f, 1))));
             // TODO: Add this forest flowers provider back in (it doesnt work with double block flowers) to spawn different groups later. Its useful code, just got replaced by the simpler list logic below

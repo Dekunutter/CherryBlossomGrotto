@@ -3,6 +3,7 @@ package com.deku.cherryblossomgrotto.common.features;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 
 public class ModConfiguredFeatures {
@@ -16,7 +17,7 @@ public class ModConfiguredFeatures {
 
     public static Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> CHERRY_PETAL_COVER;
 
-    public static ConfiguredFeature<?, ?> IRON_ORE_SPARSE;
+    public static Holder<ConfiguredFeature<OreConfiguration, ?>> IRON_ORE_SPARSE;
 
     public static ConfiguredFeature<?, ?> CHERRY_TREE_FOREST;
     public static ConfiguredFeature<?, ?> CHERRY_TREE_FOREST_FLOWERS;
