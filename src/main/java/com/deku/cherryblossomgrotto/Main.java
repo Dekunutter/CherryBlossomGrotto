@@ -1,7 +1,6 @@
 package com.deku.cherryblossomgrotto;
 
 import com.deku.cherryblossomgrotto.client.models.geom.ModLayerDefinitions;
-import com.deku.cherryblossomgrotto.client.models.geom.ModModelLayerInitializer;
 import com.deku.cherryblossomgrotto.client.models.geom.ModModelLayerLocations;
 import com.deku.cherryblossomgrotto.client.network.handlers.DoubleJumpClientMessageHandler;
 import com.deku.cherryblossomgrotto.client.network.messages.DoubleJumpClientMessage;
@@ -22,92 +21,54 @@ import com.deku.cherryblossomgrotto.common.features.template.ModProcessorLists;
 import com.deku.cherryblossomgrotto.common.items.*;
 import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalProvider;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
-import com.deku.cherryblossomgrotto.common.recipes.FoldingRecipe;
 import com.deku.cherryblossomgrotto.common.blockEntities.CherryLeavesBlockEntity;
-import com.deku.cherryblossomgrotto.common.blockEntities.ModBlockEntityType;
 import com.deku.cherryblossomgrotto.common.utils.ForgeReflection;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeInitializer;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeTags;
 import com.deku.cherryblossomgrotto.common.world.gen.blockstateprovider.CherryBlossomForestFlowerProviderType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.GrandCherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.CherryBlossomFoliagePlacerType;
-import com.deku.cherryblossomgrotto.common.world.gen.placements.ModTreePlacements;
 import com.deku.cherryblossomgrotto.common.world.gen.structures.*;
 import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.*;
 import com.deku.cherryblossomgrotto.server.network.handlers.DoubleJumpServerMessageHandler;
 import com.deku.cherryblossomgrotto.server.network.messages.DoubleJumpServerMessage;
 import com.deku.cherryblossomgrotto.utils.LogTweaker;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.block.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.renderer.Atlases;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.Sheets;
-import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.worldgen.features.FeatureUtils;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
-import net.minecraft.entity.passive.fish.AbstractFishEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.*;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.SpecialRecipeSerializer;
-import net.minecraft.particles.ParticleType;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biomes;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
-import net.minecraft.world.gen.FlatChunkGenerator;
-import net.minecraft.world.gen.blockplacer.DoublePlantBlockPlacer;
-import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
-import net.minecraft.world.gen.blockstateprovider.BlockStateProviderType;
-import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
-import net.minecraft.world.gen.feature.*;
-import net.minecraft.world.gen.foliageplacer.FoliagePlacerType;
-import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig;
-import net.minecraft.world.gen.placement.Placement;
-import net.minecraft.world.gen.settings.DimensionStructuresSettings;
-import net.minecraft.world.gen.trunkplacer.TrunkPlacerType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RepairItemRecipe;
+import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
-import net.minecraft.world.level.levelgen.feature.WeightedPlacedFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.RandomFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProviderType;
-import net.minecraft.world.level.levelgen.feature.treedecorators.BeehiveDecorator;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.common.MinecraftForge;
@@ -117,42 +78,35 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.PacketDistributor;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.network.simple.SimpleChannel;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static com.deku.cherryblossomgrotto.common.capabilities.ModCapabilitiesInitializer.DOUBLE_JUMP_CAPABILITY;
 import static com.deku.cherryblossomgrotto.common.enchantments.ModEnchantmentInitializer.DOUBLE_JUMP_ENCHANTMENT;
-import static net.minecraftforge.fml.network.NetworkDirection.PLAY_TO_CLIENT;
-import static net.minecraftforge.fml.network.NetworkDirection.PLAY_TO_SERVER;
+import static net.minecraftforge.network.NetworkDirection.PLAY_TO_CLIENT;
+import static net.minecraftforge.network.NetworkDirection.PLAY_TO_SERVER;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Main.MOD_ID)
@@ -187,7 +141,7 @@ public class Main
     public Main() {
         LOGGER.info("HELLO FROM MAIN");
 
-        NETWORK_CHANNEL =  NetworkRegistry.newSimpleChannel(new ResourceLocation(MOD_ID, "cherryblossomgrottochannel"), () -> NETWORK_PROTOCOL_VERSION, DoubleJumpClientMessageHandler::isProtocolAcceptedOnClient, DoubleJumpServerMessageHandler::isProtocolAcceptedOnServer);
+        NETWORK_CHANNEL = NetworkRegistry.newSimpleChannel(new ResourceLocation(MOD_ID, "cherryblossomgrottochannel"), () -> NETWORK_PROTOCOL_VERSION, DoubleJumpClientMessageHandler::isProtocolAcceptedOnClient, DoubleJumpServerMessageHandler::isProtocolAcceptedOnServer);
 
         if (HIDE_CONSOLE_NOISE) {
             LogTweaker.applyLogFilterLevel(Level.WARN);
@@ -261,15 +215,13 @@ public class Main
      */
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
-        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
+        LOGGER.info("Got game settings {}", Minecraft.getInstance().options);
 
         //RenderTypeLookup.setRenderLayer(ModBlocks.GRASS, RenderType.cutout());
-        RenderTypeLookup.setRenderLayer(ModBlocks.CHERRY_PETALS, RenderType.cutoutMipped());
-        RenderTypeLookup.setRenderLayer(ModBlocks.CHERRY_SAPLING, RenderType.cutoutMipped());
-        RenderTypeLookup.setRenderLayer(ModBlocks.POTTED_CHERRY_SAPLING, RenderType.cutoutMipped());
-        RenderTypeLookup.setRenderLayer(ModBlocks.RICE_PADDY, RenderType.cutoutMipped());
-
-        ClientRegistry.bindTileEntityRenderer(ModBlockEntityType.CHERRY_SIGN_TILE_DATA, SignTileEntityRenderer::new);
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.CHERRY_PETALS, RenderType.cutoutMipped());
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.CHERRY_SAPLING, RenderType.cutoutMipped());
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.POTTED_CHERRY_SAPLING, RenderType.cutoutMipped());
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.RICE_PADDY, RenderType.cutoutMipped());
 
         event.enqueueWork(() -> {
             Sheets.addWoodType(ModWoodType.CHERRY_BLOSSOM);
@@ -532,10 +484,10 @@ public class Main
          * @param recipeSerializerRegistryEvent The registry event with which recipe serializers will be registered
          */
         @SubscribeEvent
-        public static void onRecipeRegistry(final RegistryEvent.Register<IRecipeSerializer<?>> recipeSerializerRegistryEvent) {
+        public static void onRecipeRegistry(final RegistryEvent.Register<RecipeSerializer<?>> recipeSerializerRegistryEvent) {
             LOGGER.info("HELLO from Register Recipe Serializer");
 
-            SpecialRecipeSerializer<FoldingRecipe> foldingSerializer = new SpecialRecipeSerializer<>(FoldingRecipe::new);
+            SimpleRecipeSerializer<?> foldingSerializer = new SimpleRecipeSerializer<>(RepairItemRecipe::new);
             foldingSerializer.setRegistryName(new ResourceLocation(MOD_ID,"folding"));
             recipeSerializerRegistryEvent.getRegistry().register(foldingSerializer);
         }
@@ -635,7 +587,7 @@ public class Main
          */
         @SubscribeEvent
         public static void onEntityCapabilityRegistration(final AttachCapabilitiesEvent<Entity> event) {
-            if (event.getObject() instanceof PlayerEntity) {
+            if (event.getObject() instanceof Player) {
                 event.addCapability(new ResourceLocation(MOD_ID,"double_jump"), new DoubleJumpCapability());
             }
         }
@@ -690,16 +642,16 @@ public class Main
             final Map<Block, Block> BLOCK_STRIPPING_MAP = (new ImmutableMap.Builder<Block, Block>().put(ModBlocks.CHERRY_LOG, ModBlocks.STRIPPED_CHERRY_LOG).put(ModBlocks.CHERRY_WOOD, ModBlocks.STRIPPED_CHERRY_WOOD)).build();
 
             if (event.getItemStack().getItem() instanceof AxeItem) {
-                World world = event.getWorld();
+                net.minecraft.world.level.Level level = event.getWorld();
                 BlockPos position = event.getPos();
-                BlockState state = world.getBlockState(position);
+                BlockState state = level.getBlockState(position);
                 Block block = BLOCK_STRIPPING_MAP.get(state.getBlock());
                 if (block != null) {
                     LOGGER.info("STRIP EVENT occurred due to right-click");
-                    PlayerEntity player = event.getPlayer();
-                    world.playSound(player, position, SoundEvents.AXE_STRIP, SoundCategory.BLOCKS, 1.0f, 1.0f);
-                    world.setBlock(position, block.defaultBlockState().setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS)), 11);
-                    event.getItemStack().hurtAndBreak(1, player, (p_220036_0_) -> p_220036_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
+                    Player player = event.getPlayer();
+                    level.playSound(player, position, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0f, 1.0f);
+                    level.setBlock(position, block.defaultBlockState().setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS)), 11);
+                    event.getItemStack().hurtAndBreak(1, player, (p_220036_0_) -> p_220036_0_.broadcastBreakEvent(EquipmentSlot.MAINHAND));
                 }
             }
         }
@@ -733,7 +685,7 @@ public class Main
         @SubscribeEvent
         public static void onPlayerTick(final TickEvent.PlayerTickEvent event) {
             if (event.phase == TickEvent.Phase.END) {
-                PlayerEntity player = event.player;
+                Player player = event.player;
                 boolean isJumping = (boolean) ForgeReflection.getObfuscatedPrivatizedFieldValue(LivingEntity.class, "field_70703_bu", player);
                 int jumpCooldownTimer = (int) ForgeReflection.getObfuscatedPrivatizedFieldValue(LivingEntity.class, "field_70773_bE", player);
                 if (isJumping && jumpCooldownTimer <= 0) {
@@ -767,8 +719,8 @@ public class Main
          */
         @SubscribeEvent
         public static void onPlayerFall(final LivingFallEvent event) {
-            if (event.getEntity() instanceof PlayerEntity) {
-                PlayerEntity player = (PlayerEntity) event.getEntity();
+            if (event.getEntity() instanceof Player) {
+                Player player = (Player) event.getEntity();
                 DoubleJumpCapability.IDoubleJump doubleJumpCapability = player.getCapability(DOUBLE_JUMP_CAPABILITY).orElse(null);
                 if (doubleJumpCapability != null) {
                     doubleJumpCapability.setHasDoubleJumped(false);
@@ -786,8 +738,8 @@ public class Main
          */
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         public static void onEntityJoinWorld(final EntityJoinWorldEvent event) {
-            if (event.getEntity() instanceof ServerPlayerEntity) {
-                ServerPlayerEntity player = (ServerPlayerEntity) event.getEntity();
+            if (event.getEntity() instanceof ServerPlayer) {
+                ServerPlayer player = (ServerPlayer) event.getEntity();
                 boolean hasDoubleJumped = player.getCapability(DOUBLE_JUMP_CAPABILITY).map(DoubleJumpCapability.IDoubleJump::hasDoubleJumped).orElse(false);
                 if (hasDoubleJumped) {
                     DoubleJumpClientMessage message = new DoubleJumpClientMessage(player.getUUID(), true);

@@ -1,9 +1,9 @@
 package com.deku.cherryblossomgrotto.common.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
