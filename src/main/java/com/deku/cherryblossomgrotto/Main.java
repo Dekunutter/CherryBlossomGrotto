@@ -86,11 +86,15 @@ import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.settings.DimensionStructuresSettings;
 import net.minecraft.world.gen.trunkplacer.TrunkPlacerType;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 import net.minecraft.world.level.levelgen.feature.treedecorators.BeehiveDecorator;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
@@ -203,8 +207,6 @@ public class Main
 
         // Register ourselves for server and other game events we are interested in
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
-        forgeEventBus.addListener(EventPriority.HIGH, this::biomeModification);
-        forgeEventBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
         forgeEventBus.register(this);
 
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> clientOnlyRegistrar::registerClientOnlyEvents);
@@ -229,7 +231,6 @@ public class Main
 
         event.enqueueWork(() -> {
             WoodType.register(ModWoodType.CHERRY_BLOSSOM);
-            ModStructureInitializer.setupStructures();
             ModProcessorLists.register();
             ModConfiguredStructureInitializer.registerConfiguredStructures();
             ModCapabilitiesInitializer.registerCapabilities();
@@ -262,69 +263,6 @@ public class Main
         event.enqueueWork(() -> {
             Atlases.addWoodType(ModWoodType.CHERRY_BLOSSOM);
         });
-    }
-
-    /**
-     * Modifies biomes as they are loading into the world via a forge event.
-     * We ensure that modded structures can be loaded into specific vanilla biomes here
-     *
-     * @param event The event thrown by the biome being loaded.
-     */
-    private void biomeModification(final BiomeLoadingEvent event) {
-        if (event.getName().equals(Biomes.BAMBOO_JUNGLE.location())) {
-            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_GIANT_BUDDHA).addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_TORII_GATE);
-        }
-        if (event.getName().equals(Biomes.BAMBOO_JUNGLE_HILLS.location())) {
-            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_GIANT_BUDDHA).addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_TORII_GATE);
-        }
-        if (event.getName().equals(Biomes.JUNGLE.location())) {
-            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_GIANT_BUDDHA);
-        }
-        if (event.getName().equals(Biomes.JUNGLE_EDGE.location())) {
-            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_GIANT_BUDDHA);
-        }
-        if (event.getName().equals(Biomes.JUNGLE_HILLS.location())) {
-            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_GIANT_BUDDHA);
-        }
-        if (event.getName().equals(Biomes.MODIFIED_JUNGLE_EDGE.location())) {
-            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_GIANT_BUDDHA);
-        }
-        if (event.getName().equals(Biomes.MODIFIED_JUNGLE.location())) {
-            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_GIANT_BUDDHA);
-        }
-        if (event.getName().equals(Biomes.SNOWY_MOUNTAINS.location())) {
-            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_GIANT_BUDDHA).addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_TORII_GATE);
-        }
-        if (event.getName().equals(Biomes.SNOWY_TAIGA_MOUNTAINS.location())) {
-            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_GIANT_BUDDHA);
-        }
-        if (event.getName().equals(Biomes.GIANT_SPRUCE_TAIGA_HILLS.location())) {
-            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_GIANT_BUDDHA);
-        }
-        if (event.getName().equals(Biomes.BEACH.location())) {
-            event.getGeneration().addStructureStart(ModConfiguredStructureInitializer.CONFIGURED_TORII_GATE);
-        }
-    }
-
-    /**
-     * Adds dimensional spacing to all structures as they load into the world via a forge event.
-     * This function basically has the final say on if a structure can be spawned in a given dimension or generator.
-     * It blocks modded structures from spawning in flat worlds since that is preferred by those map types.
-     * It also adds modded structures to the vanilla structure config which allows the game to actually spawn the structures
-     * according to their separation settings.
-     *
-     * @param event The event thrown by the world being loaded
-     */
-    private void addDimensionalSpacing(final WorldEvent.Load event) {
-        if (event.getWorld() instanceof ServerWorld) {
-            ServerWorld serverWorld =  (ServerWorld) event.getWorld();
-            if (serverWorld.getChunkSource().getGenerator() instanceof FlatChunkGenerator && serverWorld.dimension().equals(World.OVERWORLD)) {
-                return;
-            }
-
-            serverWorld.getChunkSource().generator.getSettings().structureConfig().putIfAbsent(ModStructureInitializer.GIANT_BUDDHA.get(), DimensionStructuresSettings.DEFAULTS.get(ModStructureInitializer.GIANT_BUDDHA.get()));
-            serverWorld.getChunkSource().generator.getSettings().structureConfig().putIfAbsent(ModStructureInitializer.TORII_GATE.get(), DimensionStructuresSettings.DEFAULTS.get(ModStructureInitializer.TORII_GATE.get()));
-        }
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
@@ -425,31 +363,31 @@ public class Main
         public static void onItemsRegistry(final RegistryEvent.Register<Item> itemRegistryEvent) {
             LOGGER.info("HELLO from Register Item");
 
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_LOG, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_log"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.STRIPPED_CHERRY_LOG, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName("stripped_cherry_blossom_log"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_WOOD, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_wood"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.STRIPPED_CHERRY_WOOD, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName("stripped_cherry_blossom_wood"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PLANKS, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_planks"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_SLAB, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_slab"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_STAIRS, new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_stairs"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_BUTTON, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("cherry_blossom_button"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_FENCE, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("cherry_blossom_fence"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_FENCE_GATE, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("cherry_blossom_fence_gate"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PRESSURE_PLATE, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("cherry_blossom_pressure_plate"));
-            itemRegistryEvent.getRegistry().register(new SignItem(new Item.Properties().tab(ItemGroup.TAB_DECORATIONS), ModBlocks.CHERRY_SIGN, ModBlocks.CHERRY_WALL_SIGN).setRegistryName("cherry_blossom_sign"));
-            itemRegistryEvent.getRegistry().register(new TallBlockItem(ModBlocks.CHERRY_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("cherry_blossom_door"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("cherry_blossom_trapdoor"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_LOG, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_log"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.STRIPPED_CHERRY_LOG, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)).setRegistryName("stripped_cherry_blossom_log"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_WOOD, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_wood"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.STRIPPED_CHERRY_WOOD, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)).setRegistryName("stripped_cherry_blossom_wood"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PLANKS, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_planks"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_SLAB, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_slab"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_STAIRS, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_stairs"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_BUTTON, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("cherry_blossom_button"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_FENCE, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)).setRegistryName("cherry_blossom_fence"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_FENCE_GATE, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("cherry_blossom_fence_gate"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PRESSURE_PLATE, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("cherry_blossom_pressure_plate"));
+            itemRegistryEvent.getRegistry().register(new SignItem(new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS), ModBlocks.CHERRY_SIGN, ModBlocks.CHERRY_WALL_SIGN).setRegistryName("cherry_blossom_sign"));
+            itemRegistryEvent.getRegistry().register(new DoubleHighBlockItem(ModBlocks.CHERRY_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("cherry_blossom_door"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("cherry_blossom_trapdoor"));
             itemRegistryEvent.getRegistry().register(new CherryBlossomBoat());
 
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_LEAVES, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("cherry_blossom_leaves"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_LEAVES, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)).setRegistryName("cherry_blossom_leaves"));
 
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PETALS, new Item.Properties().tab(ItemGroup.TAB_MISC)).setRegistryName("cherry_blossom_petals"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_SAPLING, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("cherry_blossom_sapling"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PETALS, new Item.Properties().tab(CreativeModeTab.TAB_MISC)).setRegistryName("cherry_blossom_petals"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_SAPLING, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)).setRegistryName("cherry_blossom_sapling"));
 
-            itemRegistryEvent.getRegistry().register(new TallBlockItem(ModBlocks.ZEN_LANTERN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("zen_lantern"));
-            itemRegistryEvent.getRegistry().register(new TallBlockItem(ModBlocks.SOUL_ZEN_LANTERN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("soul_zen_lantern"));
+            itemRegistryEvent.getRegistry().register(new DoubleHighBlockItem(ModBlocks.ZEN_LANTERN, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)).setRegistryName("zen_lantern"));
+            itemRegistryEvent.getRegistry().register(new DoubleHighBlockItem(ModBlocks.SOUL_ZEN_LANTERN, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)).setRegistryName("soul_zen_lantern"));
 
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.SHOJI_SCREEN, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName("shoji_screen"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.SHOJI_SCREEN, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)).setRegistryName("shoji_screen"));
 
             itemRegistryEvent.getRegistry().register(new KoiBucket(EntityTypeInitializer.KOI_ENTITY_TYPE));
 
@@ -474,16 +412,16 @@ public class Main
             itemRegistryEvent.getRegistry().register(new KabutoGreaves());
             itemRegistryEvent.getRegistry().register(new KabutoSandals());
 
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.ACACIA_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("acacia_planks_trapdoor"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.BIRCH_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("birch_planks_trapdoor"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.DARK_OAK_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("dark_oak_planks_trapdoor"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.JUNGLE_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("jungle_planks_trapdoor"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.OAK_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("oak_planks_trapdoor"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.SPRUCE_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("spruce_planks_trapdoor"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_BLOSSOM_PLANKS_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("cherry_blossom_planks_trapdoor"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.SMOOTH_STONE_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("smooth_stone_trapdoor"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.STONE_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("stone_trapdoor"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.COBBLESTONE_TRAP_DOOR, new Item.Properties().tab(ItemGroup.TAB_REDSTONE)).setRegistryName("cobblestone_trapdoor"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.ACACIA_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("acacia_planks_trapdoor"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.BIRCH_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("birch_planks_trapdoor"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.DARK_OAK_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("dark_oak_planks_trapdoor"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.JUNGLE_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("jungle_planks_trapdoor"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.OAK_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("oak_planks_trapdoor"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.SPRUCE_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("spruce_planks_trapdoor"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_BLOSSOM_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("cherry_blossom_planks_trapdoor"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.SMOOTH_STONE_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("smooth_stone_trapdoor"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.STONE_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("stone_trapdoor"));
+            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.COBBLESTONE_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("cobblestone_trapdoor"));
         }
 
         /**
