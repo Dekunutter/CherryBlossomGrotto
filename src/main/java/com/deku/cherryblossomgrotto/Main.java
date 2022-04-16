@@ -27,9 +27,11 @@ import com.deku.cherryblossomgrotto.common.blockEntities.CherryLeavesBlockEntity
 import com.deku.cherryblossomgrotto.common.blockEntities.ModBlockEntityType;
 import com.deku.cherryblossomgrotto.common.utils.ForgeReflection;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeInitializer;
+import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeTags;
 import com.deku.cherryblossomgrotto.common.world.gen.blockstateprovider.CherryBlossomForestFlowerProviderType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.GrandCherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.CherryBlossomFoliagePlacerType;
+import com.deku.cherryblossomgrotto.common.world.gen.placements.ModTreePlacements;
 import com.deku.cherryblossomgrotto.common.world.gen.structures.*;
 import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.*;
 import com.deku.cherryblossomgrotto.server.network.handlers.DoubleJumpServerMessageHandler;
@@ -39,15 +41,19 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.*;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -94,8 +100,11 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.WeightedPlacedFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.RandomFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProviderType;
 import net.minecraft.world.level.levelgen.feature.treedecorators.BeehiveDecorator;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import net.minecraft.world.server.ServerWorld;
@@ -107,6 +116,7 @@ import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -127,6 +137,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -261,7 +272,7 @@ public class Main
         ClientRegistry.bindTileEntityRenderer(ModBlockEntityType.CHERRY_SIGN_TILE_DATA, SignTileEntityRenderer::new);
 
         event.enqueueWork(() -> {
-            Atlases.addWoodType(ModWoodType.CHERRY_BLOSSOM);
+            Sheets.addWoodType(ModWoodType.CHERRY_BLOSSOM);
         });
     }
 
@@ -280,7 +291,7 @@ public class Main
     }
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
-    public void onServerStarting(FMLServerStartingEvent event) {
+    public void onServerStarting(ServerStartingEvent event) {
         // do something when the server starts
         LOGGER.info("HELLO from server starting");
     }
@@ -504,35 +515,8 @@ public class Main
         public static void onFeaturesRegistry(final RegistryEvent.Register<Feature<?>> featureRegistryEvent) {
             LOGGER.info("HELLO from Register Feature");
 
-            ModConfiguredFeatures.CHERRY_TREE = FeatureUtils.register(MOD_ID + ":cherry_blossom_tree", Feature.TREE, ModTreeFeatures.createCherryBlossomTree().build());
-            ModConfiguredFeatures.FANCY_CHERRY_TREE = FeatureUtils.register(MOD_ID + ":fancy_cherry_blossom_tree", Feature.TREE, ModTreeFeatures.createFancyCherryBlossomTree().build());
-            ModConfiguredFeatures.GRAND_CHERRY_TREE = FeatureUtils.register(MOD_ID + ":grand_cherry_blossom_tree", Feature.TREE, ModTreeFeatures.createGrandCherryBlossomTree().build());
-
-            ModConfiguredFeatures.CHERRY_TREE_BEES_002 = FeatureUtils.register(MOD_ID + ":cherry_blossom_tree_bees_002", Feature.TREE, ModTreeFeatures.createCherryBlossomTree().decorators(List.of(new BeehiveDecorator(0.002F))).build());
-            ModConfiguredFeatures.CHERRY_TREE_BEES_02 = FeatureUtils.register(MOD_ID + ":cherry_blossom_tree_bees_02", Feature.TREE, ModTreeFeatures.createCherryBlossomTree().decorators(List.of(new BeehiveDecorator(0.02F))).build());
-            ModConfiguredFeatures.CHERRY_TREE_BEES_05 = FeatureUtils.register(MOD_ID + ":cherry_blossom_tree_bees_05", Feature.TREE, ModTreeFeatures.createCherryBlossomTree().decorators(List.of(new BeehiveDecorator(0.05F))).build());
-
-            ModConfiguredFeatures.FANCY_CHERRY_TREE_BEES_05 = FeatureUtils.register(MOD_ID + ":fancy_cherry_blossom_tree_bees_05", Feature.TREE, ModTreeFeatures.createFancyCherryBlossomTree().decorators(List.of(new BeehiveDecorator(0.05F))).build());
-
             featureRegistryEvent.getRegistry().register(new CherryBlossomPetalCoverFeature());
-            ModConfiguredFeatures.CHERRY_PETAL_COVER = FeatureUtils.register(MOD_ID + ":cherry_blossom_petal_ground_cover", ModFeatures.CHERRY_BLOSSOM_GROUND_COVER);
-
-            ModConfiguredFeatures.IRON_ORE_SPARSE = FeatureUtils.register(MOD_ID + ":ore_iron_sparse", Feature.ORE, ModOreFeatures.createSparseIronOre());
-
-            ModConfiguredFeatures.CHERRY_TREE_FOREST = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest", Feature.RANDOM_SELECTOR.configured(new MultipleRandomFeatureConfig(ImmutableList.of(ModConfiguredFeatures.GRAND_CHERRY_TREE.weighted(0.01f), ModConfiguredFeatures.FANCY_CHERRY_TREE.weighted(0.1f)), ModConfiguredFeatures.CHERRY_TREE_BEES_02)).decorated(Features.Placements.HEIGHTMAP_SQUARE).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(6, 0.1f, 1))));
-            // TODO: Add this forest flowers provider back in (it doesnt work with double block flowers) to spawn different groups later. Its useful code, just got replaced by the simpler list logic below
-            //ModFeatures.CHERRY_TREE_FOREST_FLOWERS = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest_flowers", Feature.FLOWER.configured((new BlockClusterFeatureConfig.Builder(CherryBlossomGrottoFlowerBlockStateProvider.INSTANCE, new DoublePlantBlockPlacer())).tries(64).build()).decorated(Features.Placements.ADD_32).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(100));
-
-            ImmutableList<Supplier<ConfiguredFeature<?, ?>>> CHERRY_BLOSSOM_FOREST_FLOWER_FEATURES = ImmutableList.of(() -> {
-                return Feature.RANDOM_PATCH.configured((new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(Blocks.LILAC.defaultBlockState()), new DoublePlantBlockPlacer())).tries(64).noProjection().build());
-            }, () -> {
-                return Feature.RANDOM_PATCH.configured((new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(Blocks.LILY_OF_THE_VALLEY.defaultBlockState()), SimpleBlockPlacer.INSTANCE)).tries(64).noProjection().build());
-            }, () -> {
-                return Feature.RANDOM_PATCH.configured((new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(Blocks.PEONY.defaultBlockState()), new DoublePlantBlockPlacer())).tries(64).noProjection().build());
-            }, () -> {
-                return Feature.NO_BONEMEAL_FLOWER.configured((new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(Blocks.ALLIUM.defaultBlockState()), SimpleBlockPlacer.INSTANCE)).tries(64).build());
-            });
-            ModConfiguredFeatures.CHERRY_TREE_FOREST_FLOWERS = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, MOD_ID + ":cherry_blossom_forest_flowers", Feature.SIMPLE_RANDOM_SELECTOR.configured(new SingleRandomFeature(CHERRY_BLOSSOM_FOREST_FLOWER_FEATURES)).count(FeatureSpread.of(-3, 4)).decorated(Features.Placements.ADD_32).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(15));
+            //TODO: Should I register configured features in here after the feature registration has run? Right now they register at the global level spread across a few new classes and sit in holders. This might not be the right stage to be registering them...
         }
 
         @SubscribeEvent
@@ -604,6 +588,16 @@ public class Main
 
             BlockColors blockColors = event.getBlockColors();
             //blockColors.register(GrassBlockColor.instance, ModBlocks.GRASS);
+        }
+
+        @SubscribeEvent
+        public static void onDataGeneratorRegistration(GatherDataEvent event) {
+            LOGGER.info("HELLO from Register Data Generator");
+
+            DataGenerator generator = event.getGenerator();
+            if(event.includeServer()) {
+                generator.addProvider(new ModBiomeTags(generator, event.getExistingFileHelper()));
+            }
         }
     }
 
