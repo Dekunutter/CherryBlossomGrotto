@@ -9,6 +9,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 public class KabutoArmourModel extends HumanoidModel<LivingEntity> {
 	private ModelPart helmet;
+	private ModelPart hat;
 	private ModelPart cuirass;
 	private ModelPart rightArmSleeve;
 	private ModelPart leftArmSleeve;
@@ -23,14 +24,15 @@ public class KabutoArmourModel extends HumanoidModel<LivingEntity> {
 		super(root);
 		texture = new ResourceLocation("cherryblossomgrotto:textures/model/kabuto_armour.png").toString();
 
-		helmet = root.getChild("helmet");
-		cuirass = root.getChild("cuirass");
-		rightArmSleeve = root.getChild("rightArmSleeve");
-		leftArmSleeve = root.getChild("leftArmSleeve");
-		rightGreave = root.getChild("rightGreave");
-		leftGreave = root.getChild("leftGreave");
-		rightSandal = root.getChild("rightSandal");
-		leftSandal = root.getChild("leftSandal");
+		helmet = root.getChild("head");
+		hat = root.getChild("hat");
+		cuirass = root.getChild("body");
+		rightArmSleeve = root.getChild("right_arm");
+		leftArmSleeve = root.getChild("left_arm");
+		rightGreave = root.getChild("right_leg");
+		leftGreave = root.getChild("left_leg");
+		rightSandal = root.getChild("right_foot");
+		leftSandal = root.getChild("left_foot");
 	}
 
 	/**
@@ -57,7 +59,7 @@ public class KabutoArmourModel extends HumanoidModel<LivingEntity> {
 		MeshDefinition mesh = new MeshDefinition();
 		PartDefinition part = mesh.getRoot();
 
-		PartDefinition helmet = part.addOrReplaceChild("helmet", CubeListBuilder.create()
+		PartDefinition helmet = part.addOrReplaceChild("head", CubeListBuilder.create()
 				.texOffs(32, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.5F)).mirror(false)
 				.texOffs(13, 64).addBox(-5.0F, -9.0F, -5.0F, 10.0F, 1.0F, 10.0F, new CubeDeformation(0.0F)).mirror(false)
 				.texOffs(44, 71).addBox(4.0F, -8.0F, -5.0F, 1.0F, 5.0F, 9.0F, new CubeDeformation(0.0F)).mirror(false)
@@ -76,14 +78,16 @@ public class KabutoArmourModel extends HumanoidModel<LivingEntity> {
 			PartPose.offset(0.0F, 0.0F, 0.0F)
 		);
 
-		PartDefinition cuirass = part.addOrReplaceChild("cuirass", CubeListBuilder.create()
+		PartDefinition hat = part.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+		PartDefinition cuirass = part.addOrReplaceChild("body", CubeListBuilder.create()
 				.texOffs(16, 32).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)).mirror(false)
 				.texOffs(68, 65).addBox(-4.0F, 0.0F, -3.0F, 8.0F, 9.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
 				.texOffs(77, 75).addBox(-4.0F, 0.0F, 2.0F, 8.0F, 12.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false),
 			PartPose.offset(0.0F, 0.0F, 0.0F)
 		);
 
-		PartDefinition rightArmSleeve = part.addOrReplaceChild("rightArmSleeve", CubeListBuilder.create()
+		PartDefinition rightArmSleeve = part.addOrReplaceChild("right_arm", CubeListBuilder.create()
 				.texOffs(40, 32).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)).mirror(false)
 				.texOffs(0, 76).addBox(-4.0F, -3.0F, -3.0F, 5.0F, 1.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false)
 				.texOffs(16, 77).addBox(-4.0F, -2.0F, -3.0F, 1.0F, 4.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false)
@@ -97,7 +101,7 @@ public class KabutoArmourModel extends HumanoidModel<LivingEntity> {
 			PartPose.offset(0.0F, 0.0F, 0.0F)
 		);
 
-		PartDefinition leftArmSleeve = part.addOrReplaceChild("leftArmSleeve", CubeListBuilder.create()
+		PartDefinition leftArmSleeve = part.addOrReplaceChild("left_arm", CubeListBuilder.create()
 				.texOffs(48, 48).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)).mirror(false)
 				.texOffs(18, 87).addBox(-1.0F, -3.0F, -3.0F, 5.0F, 1.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false)
 				.texOffs(34, 88).addBox(3.0F, -2.0F, -3.0F, 1.0F, 4.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false)
@@ -111,7 +115,7 @@ public class KabutoArmourModel extends HumanoidModel<LivingEntity> {
 			PartPose.offset(0.0F, 0.0F, 0.0F)
 		);
 
-		PartDefinition rightGreave = part.addOrReplaceChild("rightGreave", CubeListBuilder.create()
+		PartDefinition rightGreave = part.addOrReplaceChild("right_leg", CubeListBuilder.create()
 				.texOffs(0, 32).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)).mirror(false)
 				.texOffs(18, 94).addBox(-3.0F, 0.0F, -3.0F, 5.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
 				.texOffs(0, 100).addBox(-3.0F, 5.0F, -3.0F, 5.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
@@ -122,7 +126,7 @@ public class KabutoArmourModel extends HumanoidModel<LivingEntity> {
 			PartPose.offset(0.0F, 0.0F, 0.0F)
 		);
 
-		PartDefinition leftGreave = part.addOrReplaceChild("leftGreave", CubeListBuilder.create()
+		PartDefinition leftGreave = part.addOrReplaceChild("left_leg", CubeListBuilder.create()
 				.texOffs(0, 48).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)).mirror(false)
 				.texOffs(37, 99).addBox(-2.0F, 0.0F, -3.0F, 5.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
 				.texOffs(32, 104).addBox(-2.0F, 5.0F, -3.0F, 5.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
@@ -133,12 +137,12 @@ public class KabutoArmourModel extends HumanoidModel<LivingEntity> {
 			PartPose.offset(0.0F, 0.0F, 0.0F)
 		);
 
-		PartDefinition rightSandal = part.addOrReplaceChild("rightSandal", CubeListBuilder.create()
+		PartDefinition rightSandal = part.addOrReplaceChild("right_foot", CubeListBuilder.create()
 				.texOffs(43, 108).addBox(-2.0F, 11.0F, -3.0F, 4.0F, 1.0F, 5.0F, new CubeDeformation(0.0F)).mirror(false),
 			PartPose.offset(0.0F, 0.0F, 0.0F)
 		);
 
-		PartDefinition leftSandal = part.addOrReplaceChild("leftSandal", CubeListBuilder.create()
+		PartDefinition leftSandal = part.addOrReplaceChild("left_foot", CubeListBuilder.create()
 				.texOffs(61, 108).addBox(-2.0F, 11.0F, -3.0F, 4.0F, 1.0F, 5.0F, new CubeDeformation(0.0F)).mirror(false),
 			PartPose.offset(0.0F, 0.0F, 0.0F)
 		);
