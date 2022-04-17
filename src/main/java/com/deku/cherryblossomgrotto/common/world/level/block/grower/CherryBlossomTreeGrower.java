@@ -14,14 +14,14 @@ public class CherryBlossomTreeGrower extends AbstractTreeGrower {
     @Nullable
     protected Holder<? extends ConfiguredFeature<?, ?>> getConfiguredFeature(Random random, boolean hasBees) {
         if (random.nextInt(10) < 5) {
-            return hasBees ? ModTreeFeatures.FANCY_CHERRY_BLOSSOM_BEES_05 : ModTreeFeatures.FANCY_CHERRY_BLOSSOM;
+            return hasBees ? Holder.direct(ModTreeFeatures.FANCY_CHERRY_BLOSSOM_BEES_05) : Holder.direct(ModTreeFeatures.FANCY_CHERRY_BLOSSOM);
         } else {
-            return hasBees ? ModTreeFeatures.CHERRY_BLOSSOM_BEES_05 : ModTreeFeatures.CHERRY_BLOSSOM;
+            return hasBees ? Holder.direct(ModTreeFeatures.CHERRY_BLOSSOM_BEES_05) : Holder.direct(ModTreeFeatures.CHERRY_BLOSSOM);
         }
     }
 
     @Nullable
     protected Holder<? extends ConfiguredFeature<?, ?>> getConfiguredMegaFeature(Random random) {
-        return ModTreeFeatures.GRAND_CHERRY_BLOSSOM;
+        return Holder.direct(ModTreeFeatures.GRAND_CHERRY_BLOSSOM);
     }
 }

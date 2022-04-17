@@ -13,6 +13,8 @@ import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
 
 import java.util.List;
 
+import static com.deku.cherryblossomgrotto.Main.MOD_ID;
+
 public class ModStructureSets {
     public static final Holder<StructureSet> GIANT_BUDDHAS = registerStructureSet(
         ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation("giant_buddhas")),
@@ -43,6 +45,10 @@ public class ModStructureSets {
             new RandomSpreadStructurePlacement(34, 8, RandomSpreadType.LINEAR, 10387312)
         )
     );
+
+    public static void bootstrap() {
+
+    }
 
     /**
      * Register a structure set with the built-in registry for these objects

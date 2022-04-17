@@ -7,7 +7,22 @@ import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
+import static com.deku.cherryblossomgrotto.Main.MOD_ID;
+
 public class ModVillagePlacements {
-    public static final Holder<PlacedFeature> CHERRY_BLOSSOM_TREE_VILLAGE = PlacementUtils.register("cherry_blossom", ModTreeFeatures.CHERRY_BLOSSOM, PlacementUtils.filteredByBlockSurvival(ModBlocks.CHERRY_SAPLING));
-    public static final Holder<PlacedFeature> FLOWER_FOREST_VILLAGE = PlacementUtils.register("flower_forest", VegetationFeatures.FLOWER_FLOWER_FOREST);
+    public static Holder<PlacedFeature> CHERRY_BLOSSOM_TREE_VILLAGE;
+    public static Holder<PlacedFeature> FLOWER_FOREST_VILLAGE;
+
+    public static void register() {
+        CHERRY_BLOSSOM_TREE_VILLAGE = PlacementUtils.register(
+            MOD_ID + ":cherry_blossom",
+            Holder.direct(ModTreeFeatures.CHERRY_BLOSSOM),
+            PlacementUtils.filteredByBlockSurvival(ModBlocks.CHERRY_SAPLING)
+        );
+
+        FLOWER_FOREST_VILLAGE = PlacementUtils.register(
+            MOD_ID + ":flower_forest",
+            VegetationFeatures.FLOWER_FLOWER_FOREST
+        );
+    }
 }

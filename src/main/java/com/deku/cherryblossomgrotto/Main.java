@@ -27,6 +27,7 @@ import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeTags;
 import com.deku.cherryblossomgrotto.common.world.gen.blockstateprovider.CherryBlossomForestFlowerProviderType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.GrandCherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.CherryBlossomFoliagePlacerType;
+import com.deku.cherryblossomgrotto.common.world.gen.placements.*;
 import com.deku.cherryblossomgrotto.common.world.gen.structures.*;
 import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.*;
 import com.deku.cherryblossomgrotto.server.network.handlers.DoubleJumpServerMessageHandler;
@@ -43,6 +44,7 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -197,7 +199,24 @@ public class Main
             ModProcessorLists.register();
             ModConfiguredStructureInitializer.registerConfiguredStructures();
             ModStructurePieceTypes.register();
+            ModStructureSets.bootstrap();
         });
+
+        // TODO: Do configured structure features in this way too (and structure sets). Maybe need to figure out a better place to put this stuff
+        //  But the queued work is not executing this early enough to register. Need to figure out the structures to unblock the custom biome generation
+        ModTreeFeatures.register();
+        ModTreePlacements.register();
+
+        ModVegetationFeatures.register();
+        ModVegetationPlacements.register();
+
+        ModOreFeatures.register();
+        ModOrePlacements.register();
+
+        ModMiscOverworldFeatures.register();
+        ModMiscOverworldPlacements.register();
+
+        ModVillagePlacements.register();
     }
 
     /**
@@ -448,12 +467,16 @@ public class Main
 
         @SubscribeEvent
         public static void onEntityRendererRegistry(final EntityRenderersEvent.AddLayers registerAddedLayerEvent) {
+            LOGGER.error("HELLO from Register Entity Renderer");
+
             LivingEntityRenderer<LivingEntity, HumanoidModel<LivingEntity>> renderer = registerAddedLayerEvent.getRenderer(EntityType.PLAYER);
 
-            KabutoArmourLayer kabutoArmourLayer = new KabutoArmourLayer(renderer, registerAddedLayerEvent.getEntityModels());
-            renderer.addLayer(kabutoArmourLayer);
-            NinjaRobesLayer ninjaRobesLayer = new NinjaRobesLayer(renderer, registerAddedLayerEvent.getEntityModels());
-            renderer.addLayer(ninjaRobesLayer);
+            if (renderer != null) {
+                KabutoArmourLayer kabutoArmourLayer = new KabutoArmourLayer(renderer, registerAddedLayerEvent.getEntityModels());
+                renderer.addLayer(kabutoArmourLayer);
+                NinjaRobesLayer ninjaRobesLayer = new NinjaRobesLayer(renderer, registerAddedLayerEvent.getEntityModels());
+                renderer.addLayer(ninjaRobesLayer);
+            }
         }
 
         /**

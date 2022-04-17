@@ -56,6 +56,10 @@ public class ModConfiguredStructureInitializer {
         )
     );
 
+    public static void bootstrap() {
+
+    }
+
     /**
      * Registers all structures as configured structure features by using the configured structure feature world gen registry.
      */
