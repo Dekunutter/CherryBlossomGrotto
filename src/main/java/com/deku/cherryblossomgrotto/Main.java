@@ -152,7 +152,6 @@ public class Main
         ModBiomeInitializer.registerBiomes();
 
         // Structure logic
-        ModStructurePieceTypes.register();
         ModStructureInitializer.STRUCTURES.register(eventBus);
 
         // Enchantment logic
@@ -197,6 +196,7 @@ public class Main
             WoodType.register(ModWoodType.CHERRY_BLOSSOM);
             ModProcessorLists.register();
             ModConfiguredStructureInitializer.registerConfiguredStructures();
+            ModStructurePieceTypes.register();
         });
     }
 
@@ -567,6 +567,7 @@ public class Main
         public static TrunkPlacerType<FancyCherryBlossomTrunkPlacer> FANCY_CHERRY_TREE_TRUNK_PLACER;
         public static TrunkPlacerType<GrandCherryBlossomTrunkPlacer> GRAND_CHERRY_TREE_TRUNK_PLACER;
 
+        //TODO: Move all this initialization logic into the main FMLCommonSetupEvent work queue
         @SubscribeEvent
         public static void setup(FMLCommonSetupEvent event) throws InvocationTargetException, InstantiationException, IllegalAccessException {
             TrunkPlacerType<CherryBlossomTrunkPlacer> cherryBlossomTrunkPlacerType = CherryBlossomTrunkPlacerType.createTrunkPlacerType(CherryBlossomTrunkPlacer.CODEC);
