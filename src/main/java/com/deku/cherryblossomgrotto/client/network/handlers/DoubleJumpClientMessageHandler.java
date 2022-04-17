@@ -12,7 +12,7 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import static com.deku.cherryblossomgrotto.common.capabilities.ModCapabilitiesInitializer.DOUBLE_JUMP_CAPABILITY;
+import static com.deku.cherryblossomgrotto.common.capabilities.ModCapabilities.DOUBLE_JUMP_CAPABILITY;
 
 public class DoubleJumpClientMessageHandler {
     /**

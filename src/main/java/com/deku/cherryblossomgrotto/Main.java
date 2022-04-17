@@ -12,7 +12,6 @@ import com.deku.cherryblossomgrotto.client.renderers.layers.KabutoArmourLayer;
 import com.deku.cherryblossomgrotto.client.renderers.layers.NinjaRobesLayer;
 import com.deku.cherryblossomgrotto.common.blocks.*;
 import com.deku.cherryblossomgrotto.common.capabilities.DoubleJumpCapability;
-import com.deku.cherryblossomgrotto.common.capabilities.ModCapabilitiesInitializer;
 import com.deku.cherryblossomgrotto.common.enchantments.ModEnchantmentInitializer;
 import com.deku.cherryblossomgrotto.common.entity.EntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
@@ -72,6 +71,7 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.*;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -103,7 +103,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.deku.cherryblossomgrotto.common.capabilities.ModCapabilitiesInitializer.DOUBLE_JUMP_CAPABILITY;
 import static com.deku.cherryblossomgrotto.common.enchantments.ModEnchantmentInitializer.DOUBLE_JUMP_ENCHANTMENT;
 import static net.minecraftforge.network.NetworkDirection.PLAY_TO_CLIENT;
 import static net.minecraftforge.network.NetworkDirection.PLAY_TO_SERVER;
@@ -198,7 +197,6 @@ public class Main
             WoodType.register(ModWoodType.CHERRY_BLOSSOM);
             ModProcessorLists.register();
             ModConfiguredStructureInitializer.registerConfiguredStructures();
-            ModCapabilitiesInitializer.registerCapabilities();
         });
     }
 
@@ -543,6 +541,13 @@ public class Main
         }
 
         @SubscribeEvent
+        public static void onCapabilityRegistration(RegisterCapabilitiesEvent capabilityRegistryEvent) {
+            Main.LOGGER.info("HELLO from Register Capability");
+
+            capabilityRegistryEvent.register(DoubleJumpCapability.DoubleJump.class);
+        }
+
+        @SubscribeEvent
         public static void onDataGeneratorRegistration(GatherDataEvent event) {
             LOGGER.info("HELLO from Register Data Generator");
 
@@ -588,7 +593,9 @@ public class Main
         @SubscribeEvent
         public static void onEntityCapabilityRegistration(final AttachCapabilitiesEvent<Entity> event) {
             if (event.getObject() instanceof Player) {
-                event.addCapability(new ResourceLocation(MOD_ID,"double_jump"), new DoubleJumpCapability());
+                if (!event.getObject().getCapability(DoubleJumpCapability.DOUBLE_JUMP).isPresent()) {
+                    event.addCapability(new ResourceLocation(MOD_ID,"double_jump"), new DoubleJumpCapability());
+                }
             }
         }
 
@@ -692,7 +699,7 @@ public class Main
 
                     if (!player.isPassenger() && !player.isFallFlying() && !player.isInWater() && !player.isInLava() && !player.isSleeping() && !player.isSwimming() && !player.isDeadOrDying()) {
                         if (player.getFoodData().getFoodLevel() > 3 && EnchantmentHelper.getEnchantmentLevel(DOUBLE_JUMP_ENCHANTMENT.get(), player) > 0) {
-                            DoubleJumpCapability.IDoubleJump doubleJumpCapability = player.getCapability(DOUBLE_JUMP_CAPABILITY).orElse(null);
+                            DoubleJumpCapability.IDoubleJump doubleJumpCapability = player.getCapability(DoubleJumpCapability.DOUBLE_JUMP).orElse(null);
                             if (doubleJumpCapability != null) {
                                 if (!doubleJumpCapability.hasDoubleJumped()) {
                                     player.jumpFromGround();
@@ -721,7 +728,7 @@ public class Main
         public static void onPlayerFall(final LivingFallEvent event) {
             if (event.getEntity() instanceof Player) {
                 Player player = (Player) event.getEntity();
-                DoubleJumpCapability.IDoubleJump doubleJumpCapability = player.getCapability(DOUBLE_JUMP_CAPABILITY).orElse(null);
+                DoubleJumpCapability.IDoubleJump doubleJumpCapability = player.getCapability(DoubleJumpCapability.DOUBLE_JUMP).orElse(null);
                 if (doubleJumpCapability != null) {
                     doubleJumpCapability.setHasDoubleJumped(false);
                 }
@@ -740,7 +747,7 @@ public class Main
         public static void onEntityJoinWorld(final EntityJoinWorldEvent event) {
             if (event.getEntity() instanceof ServerPlayer) {
                 ServerPlayer player = (ServerPlayer) event.getEntity();
-                boolean hasDoubleJumped = player.getCapability(DOUBLE_JUMP_CAPABILITY).map(DoubleJumpCapability.IDoubleJump::hasDoubleJumped).orElse(false);
+                boolean hasDoubleJumped = player.getCapability(DoubleJumpCapability.DOUBLE_JUMP).map(DoubleJumpCapability.IDoubleJump::hasDoubleJumped).orElse(false);
                 if (hasDoubleJumped) {
                     DoubleJumpClientMessage message = new DoubleJumpClientMessage(player.getUUID(), true);
                     Main.NETWORK_CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), message);
