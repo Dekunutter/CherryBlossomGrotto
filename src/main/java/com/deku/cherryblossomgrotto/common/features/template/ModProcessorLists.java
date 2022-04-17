@@ -76,8 +76,8 @@ public class ModProcessorLists {
      * Registers processor lists for village random generation.
      */
     public static void register() {
-        STREET_CHERRY_BLOSSOM_GROTTO = BuiltinRegistries.register(BuiltinRegistries.PROCESSOR_LIST, new ResourceLocation(MOD_ID + "streets_cherry_blossom_grotto"), STREET_CHERRY_BLOSSOM_GROTTO_LIST);
-        KOI_POND_BOTTOM_GRAVEL_40_PERCENT = BuiltinRegistries.register(BuiltinRegistries.PROCESSOR_LIST, new ResourceLocation(MOD_ID + "koi_pond_bottom_gravel_40_percent"), KOI_POND_BOTTOM_GRAVEL_40_PERCENT_LIST);
-        STONE_BRICKS_CRACKED_20_PERCENT = BuiltinRegistries.register(BuiltinRegistries.PROCESSOR_LIST, new ResourceLocation(MOD_ID + "stone_bricks_cracked_20_percent"), STONE_BRICKS_CRACKED_20_PERCENT_LIST);
+        STREET_CHERRY_BLOSSOM_GROTTO = BuiltinRegistries.register(BuiltinRegistries.PROCESSOR_LIST, new ResourceLocation(MOD_ID, "streets_cherry_blossom_grotto"), STREET_CHERRY_BLOSSOM_GROTTO_LIST);
+        KOI_POND_BOTTOM_GRAVEL_40_PERCENT = BuiltinRegistries.register(BuiltinRegistries.PROCESSOR_LIST, new ResourceLocation(MOD_ID, "koi_pond_bottom_gravel_40_percent"), KOI_POND_BOTTOM_GRAVEL_40_PERCENT_LIST);
+        STONE_BRICKS_CRACKED_20_PERCENT = BuiltinRegistries.register(BuiltinRegistries.PROCESSOR_LIST, new ResourceLocation(MOD_ID, "stone_bricks_cracked_20_percent"), STONE_BRICKS_CRACKED_20_PERCENT_LIST);
     }
 }
