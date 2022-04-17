@@ -12,8 +12,6 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import static com.deku.cherryblossomgrotto.common.capabilities.ModCapabilities.DOUBLE_JUMP_CAPABILITY;
-
 public class DoubleJumpClientMessageHandler {
     /**
      * Handles a message containing information about a double jump performed by a player.
@@ -61,7 +59,7 @@ public class DoubleJumpClientMessageHandler {
      */
     private static void processMessage(Level level, DoubleJumpClientMessage message) {
         Player player = level.getPlayerByUUID(message.getPlayerId());
-        DoubleJumpCapability.IDoubleJump doubleJumpCapability = player.getCapability(DOUBLE_JUMP_CAPABILITY).orElse(null);
+        DoubleJumpCapability.IDoubleJump doubleJumpCapability = player.getCapability(DoubleJumpCapability.DOUBLE_JUMP).orElse(null);
         if (doubleJumpCapability != null) {
             doubleJumpCapability.setHasDoubleJumped(message.hasDoubleJumped());
         }
