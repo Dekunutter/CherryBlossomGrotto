@@ -30,30 +30,6 @@ public class ForgeReflection {
     }
 
     /**
-     * Gets a static final field from a class by a given name and sets it to a given value using reflection.
-     * Makes the field accessible, then changes its modifier to make it not final before setting the new value in place
-     * Expects the SRG name of the field to work around obfuscation.
-     *
-     * @param classToCheck The class containing the static final field we want to change
-     * @param fieldName The SRG name of the field we want to change the value of
-     * @param newValue The new value of the field
-     */
-    public static void setObfuscatedStaticFinalFieldToValue(Class classToCheck, String fieldName, Object newValue) {
-        try {
-            Field field = ObfuscationReflectionHelper.findField(classToCheck, fieldName);
-            field.setAccessible(true);
-            Field fieldModifier = Field.class.getDeclaredField("modifiers");
-            fieldModifier.setAccessible(true);
-            fieldModifier.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-            field.set(null, newValue);
-        } catch (ObfuscationReflectionHelper.UnableToFindFieldException | NoSuchFieldException e) {
-            Main.LOGGER.error("Failed to replace value of static final field " + fieldName + " on " + classToCheck.getName());
-        } catch (IllegalAccessException e) {
-            Main.LOGGER.error("Failed to access field " + fieldName + " on " + classToCheck.getName());
-        }
-    }
-
-    /**
      * Gets the value of a private field from a given class using reflection.
      * Call this version of the function if you only want to get the value of a privatized static field.
      * Expects the SRG name of the field to work around obfuscation.
@@ -80,28 +56,13 @@ public class ForgeReflection {
         try {
             Field field = ObfuscationReflectionHelper.findField(classToCheck, fieldName);
             field.setAccessible(true);
-
-            // TODO: Come up with a Java 16-friendly way of using reflection on final values (or swap to access transformers
-            //  This is not going to work, access transformers are needed for places trying to reflect a final field
-            MethodHandles.Lookup lookup = MethodHandles.privateLookupIn(Field.class, MethodHandles.lookup());
-            VarHandle modifierHandle = lookup.findVarHandle(Field.class, "modifiers", int.class);
-
-            int modifiers = field.getModifiers();
-            if (Modifier.isFinal(modifiers)) {
-                modifierHandle.set(field, modifiers & ~Modifier.FINAL);
-            }
-
-
-            //Field fieldModifier = Field.class.getDeclaredField("modifiers");
-            //fieldModifier.setAccessible(true);
-            //fieldModifier.setInt(field, field.getModifiers() & ~Modifier.FINAL);
             if (instance != null) {
                 return field.get(instance);
             } else {
                 return field.get(classToCheck);
             }
-        } catch (ObfuscationReflectionHelper.UnableToFindFieldException | IllegalAccessException | NoSuchFieldException e) {
-            Main.LOGGER.error("Failed to access field " + fieldName + " on " + classToCheck.getName());
+        } catch (ObfuscationReflectionHelper.UnableToFindFieldException | IllegalAccessException e) {
+            Main.LOGGER.error("Failed to access field " + fieldName + " on " + classToCheck.getName() + ": " + e.getMessage());
             return null;
         }
     }
