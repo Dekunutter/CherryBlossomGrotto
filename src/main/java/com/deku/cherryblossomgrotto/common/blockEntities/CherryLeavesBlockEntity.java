@@ -4,9 +4,9 @@ import com.deku.cherryblossomgrotto.common.blocks.CherryBlossomPetals;
 import com.deku.cherryblossomgrotto.common.blocks.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.dimension.DimensionDefaults;
 
 import java.util.Random;
 
@@ -20,7 +20,7 @@ public class CherryLeavesBlockEntity extends BlockEntity {
      * This entity is attached to an instance of a cherry blossom leaves block and traces downwards to see if piles of
      * petals should spawn.
      */
-    public static void tick(Level world, BlockPos position, BlockState state, BeehiveBlockEntity entity) {
+    public static void tick(Level world, BlockPos position, BlockState state, CherryLeavesBlockEntity entity) {
         if (!isValidTick(world)) {
             return;
         }
@@ -29,8 +29,7 @@ public class CherryLeavesBlockEntity extends BlockEntity {
         if (random.nextInt(500) == 0) {
             BlockPos belowPosition = position.below();
 
-            //TODO: Maybe put a height max on this rather than just tracing to 0. Plus more recent Minecraft versions go deeper, beyond 0 so need to adjust for that
-            while (belowPosition.getY() >= 0) {
+            while (belowPosition.getY() >= DimensionDefaults.OVERWORLD_MIN_Y) {
                 BlockState belowState = world.getBlockState(belowPosition);
                 if (!world.isEmptyBlock(belowPosition)) {
                     BlockPos spawningPosition = belowPosition.above();
