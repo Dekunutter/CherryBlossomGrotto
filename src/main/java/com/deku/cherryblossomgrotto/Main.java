@@ -720,7 +720,6 @@ public class Main
         public static void onPlayerTick(final TickEvent.PlayerTickEvent event) {
             if (event.phase == TickEvent.Phase.END) {
                 Player player = event.player;
-                // TODO: reflection here is no longer going to work since the field will have changed name or be final and need an access transformer instead
                 boolean isJumping = (boolean) ForgeReflection.getObfuscatedPrivatizedFieldValue(LivingEntity.class, "f_20899_", player);
                 int jumpCooldownTimer = (int) ForgeReflection.getObfuscatedPrivatizedFieldValue(LivingEntity.class, "f_20954_", player);
                 if (isJumping && jumpCooldownTimer <= 0) {
