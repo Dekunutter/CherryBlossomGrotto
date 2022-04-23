@@ -22,7 +22,7 @@ public class ModProcessorLists {
                     ),
                     new ProcessorRule(
                         new RandomBlockMatchTest(Blocks.DIRT_PATH, 0.1F),
-                            AlwaysTrueTest.INSTANCE,
+                        AlwaysTrueTest.INSTANCE,
                         Blocks.GRASS_BLOCK.defaultBlockState()
                     ),
                     new ProcessorRule(
@@ -46,7 +46,7 @@ public class ModProcessorLists {
                 ImmutableList.of(
                     new ProcessorRule(
                         new RandomBlockMatchTest(Blocks.SAND, 0.4F),
-                            AlwaysTrueTest.INSTANCE,
+                        AlwaysTrueTest.INSTANCE,
                         Blocks.GRAVEL.defaultBlockState()
                     )
                 )
@@ -60,7 +60,7 @@ public class ModProcessorLists {
                 ImmutableList.of(
                     new ProcessorRule(
                         new RandomBlockMatchTest(Blocks.STONE_BRICKS, 0.2F),
-                            AlwaysTrueTest.INSTANCE,
+                        AlwaysTrueTest.INSTANCE,
                         Blocks.CRACKED_STONE_BRICKS.defaultBlockState()
                     )
                 )

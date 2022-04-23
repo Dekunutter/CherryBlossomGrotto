@@ -3,6 +3,8 @@ package com.deku.cherryblossomgrotto.common.utils;
 import com.deku.cherryblossomgrotto.Main;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.VarHandle;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -78,9 +80,21 @@ public class ForgeReflection {
         try {
             Field field = ObfuscationReflectionHelper.findField(classToCheck, fieldName);
             field.setAccessible(true);
-            Field fieldModifier = Field.class.getDeclaredField("modifiers");
-            fieldModifier.setAccessible(true);
-            fieldModifier.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+
+            // TODO: Come up with a Java 16-friendly way of using reflection on final values (or swap to access transformers
+            //  This is not going to work, access transformers are needed for places trying to reflect a final field
+            MethodHandles.Lookup lookup = MethodHandles.privateLookupIn(Field.class, MethodHandles.lookup());
+            VarHandle modifierHandle = lookup.findVarHandle(Field.class, "modifiers", int.class);
+
+            int modifiers = field.getModifiers();
+            if (Modifier.isFinal(modifiers)) {
+                modifierHandle.set(field, modifiers & ~Modifier.FINAL);
+            }
+
+
+            //Field fieldModifier = Field.class.getDeclaredField("modifiers");
+            //fieldModifier.setAccessible(true);
+            //fieldModifier.setInt(field, field.getModifiers() & ~Modifier.FINAL);
             if (instance != null) {
                 return field.get(instance);
             } else {

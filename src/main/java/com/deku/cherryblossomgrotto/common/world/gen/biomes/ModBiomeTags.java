@@ -13,9 +13,9 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
 public class ModBiomeTags extends TagsProvider<Biome> {
-    public static final TagKey<Biome> HAS_GIANT_BUDDHA = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation("has_structure/giant_buddha"));
-    public static final TagKey<Biome> HAS_TORII_GATE = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation("has_structure/torii_gate"));
-    public static final TagKey<Biome> HAS_CHERRY_BLOSSOM_GROTTO_VILLAGE = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation("has_structure/village_cherry_blossom_grotto"));
+    public static final TagKey<Biome> HAS_GIANT_BUDDHA = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(MOD_ID, "has_structure/giant_buddha"));
+    public static final TagKey<Biome> HAS_TORII_GATE = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(MOD_ID, "has_structure/torii_gate"));
+    public static final TagKey<Biome> HAS_CHERRY_BLOSSOM_GROTTO_VILLAGE = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(MOD_ID, "has_structure/village_cherry_blossom_grotto"));
 
     public ModBiomeTags(DataGenerator generator, ExistingFileHelper helper) {
         super(generator, BuiltinRegistries.BIOME, MOD_ID, helper);

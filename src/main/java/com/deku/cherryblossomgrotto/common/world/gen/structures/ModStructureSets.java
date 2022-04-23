@@ -16,38 +16,43 @@ import java.util.List;
 import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
 public class ModStructureSets {
-    public static final Holder<StructureSet> GIANT_BUDDHAS = registerStructureSet(
-        ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation("giant_buddhas")),
-        new StructureSet(
-            ModConfiguredStructureInitializer.CONFIGURED_GIANT_BUDDHA,
-            new RandomSpreadStructurePlacement(100, 50, RandomSpreadType.LINEAR, 565423412)
-        )
-    );
-    public static final Holder<StructureSet> TORII_GATES = registerStructureSet(
-        ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation("torii_gates")),
-        new StructureSet(
-            ModConfiguredStructureInitializer.CONFIGURED_TORII_GATE,
-            new RandomSpreadStructurePlacement(10, 5, RandomSpreadType.LINEAR, 780292865)
-        )
-    );
+    public static Holder<StructureSet> GIANT_BUDDHAS;
+    public static Holder<StructureSet> TORII_GATES;
+
     // Overriding the structure set for the base-games villages
-    public static final Holder<StructureSet> CHERRY_BLOSSOM_GROTTO_VILLAGES = registerStructureSet(
-        BuiltinStructureSets.VILLAGES,
-        new StructureSet(
-            List.of(
-                StructureSet.entry(StructureFeatures.VILLAGE_PLAINS),
-                StructureSet.entry(StructureFeatures.VILLAGE_DESERT),
-                StructureSet.entry(StructureFeatures.VILLAGE_SAVANNA),
-                StructureSet.entry(StructureFeatures.VILLAGE_SNOWY),
-                StructureSet.entry(StructureFeatures.VILLAGE_TAIGA),
-                StructureSet.entry(ModConfiguredStructureInitializer.CONFIGURED_CHERRY_BLOSSOM_GROTTO_VILLAGE)
-            ),
-            new RandomSpreadStructurePlacement(34, 8, RandomSpreadType.LINEAR, 10387312)
-        )
-    );
+    public static Holder<StructureSet> CHERRY_BLOSSOM_GROTTO_VILLAGES;
 
-    public static void bootstrap() {
+    public static void register() {
+        GIANT_BUDDHAS = registerStructureSet(
+            ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation(MOD_ID, "giant_buddhas")),
+            new StructureSet(
+                ModConfiguredStructures.CONFIGURED_GIANT_BUDDHA,
+                new RandomSpreadStructurePlacement(100, 50, RandomSpreadType.LINEAR, 565423412)
+            )
+        );
 
+        TORII_GATES = registerStructureSet(
+            ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation(MOD_ID,"torii_gates")),
+            new StructureSet(
+                ModConfiguredStructures.CONFIGURED_TORII_GATE,
+                new RandomSpreadStructurePlacement(10, 5, RandomSpreadType.LINEAR, 780292865)
+            )
+        );
+
+        CHERRY_BLOSSOM_GROTTO_VILLAGES = registerStructureSet(
+            BuiltinStructureSets.VILLAGES,
+            new StructureSet(
+                List.of(
+                    StructureSet.entry(StructureFeatures.VILLAGE_PLAINS),
+                    StructureSet.entry(StructureFeatures.VILLAGE_DESERT),
+                    StructureSet.entry(StructureFeatures.VILLAGE_SAVANNA),
+                    StructureSet.entry(StructureFeatures.VILLAGE_SNOWY),
+                    StructureSet.entry(StructureFeatures.VILLAGE_TAIGA),
+                    StructureSet.entry(ModConfiguredStructures.CONFIGURED_CHERRY_BLOSSOM_GROTTO_VILLAGE)
+                ),
+                new RandomSpreadStructurePlacement(34, 8, RandomSpreadType.LINEAR, 10387312)
+            )
+        );
     }
 
     /**

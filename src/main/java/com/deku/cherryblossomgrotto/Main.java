@@ -15,6 +15,7 @@ import com.deku.cherryblossomgrotto.common.capabilities.DoubleJumpCapability;
 import com.deku.cherryblossomgrotto.common.enchantments.ModEnchantmentInitializer;
 import com.deku.cherryblossomgrotto.common.entity.EntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
+import com.deku.cherryblossomgrotto.common.entity.npc.ModVillagerTypes;
 import com.deku.cherryblossomgrotto.common.features.*;
 import com.deku.cherryblossomgrotto.common.features.template.ModProcessorLists;
 import com.deku.cherryblossomgrotto.common.items.*;
@@ -44,7 +45,6 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -196,14 +196,10 @@ public class Main
 
         event.enqueueWork(() -> {
             WoodType.register(ModWoodType.CHERRY_BLOSSOM);
-            ModProcessorLists.register();
-            ModConfiguredStructureInitializer.registerConfiguredStructures();
-            ModStructurePieceTypes.register();
-            ModStructureSets.bootstrap();
         });
 
-        // TODO: Do configured structure features in this way too (and structure sets). Maybe need to figure out a better place to put this stuff
-        //  But the queued work is not executing this early enough to register. Need to figure out the structures to unblock the custom biome generation
+        // TODO: Maybe need to figure out a better place to put this stuff
+        //  Queued work is not executing this early enough to register. Need to figure out the structures to unblock the custom biome generation
         ModTreeFeatures.register();
         ModTreePlacements.register();
 
@@ -216,7 +212,14 @@ public class Main
         ModMiscOverworldFeatures.register();
         ModMiscOverworldPlacements.register();
 
+        ModProcessorLists.register();
         ModVillagePlacements.register();
+        // TODO: Need to add the boat trade for the new villager type for this to work
+        ModVillagerTypes.register();
+
+        ModStructurePieceTypes.register();
+        ModConfiguredStructures.register();
+        ModStructureSets.register();
     }
 
     /**
@@ -717,6 +720,7 @@ public class Main
         public static void onPlayerTick(final TickEvent.PlayerTickEvent event) {
             if (event.phase == TickEvent.Phase.END) {
                 Player player = event.player;
+                // TODO: reflection here is no longer going to work since the field will have changed name or be final and need an access transformer instead
                 boolean isJumping = (boolean) ForgeReflection.getObfuscatedPrivatizedFieldValue(LivingEntity.class, "field_70703_bu", player);
                 int jumpCooldownTimer = (int) ForgeReflection.getObfuscatedPrivatizedFieldValue(LivingEntity.class, "field_70773_bE", player);
                 if (isJumping && jumpCooldownTimer <= 0) {

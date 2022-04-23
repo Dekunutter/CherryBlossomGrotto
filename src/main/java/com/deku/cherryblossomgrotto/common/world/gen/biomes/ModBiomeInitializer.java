@@ -1,5 +1,6 @@
 package com.deku.cherryblossomgrotto.common.world.gen.biomes;
 
+import com.deku.cherryblossomgrotto.Main;
 import net.minecraft.core.Registry;
 import net.minecraft.data.worldgen.biome.OverworldBiomes;
 import net.minecraft.resources.ResourceKey;
@@ -49,6 +50,9 @@ public class ModBiomeInitializer {
      * The weight determines the commonality of the biome.
      */
     public static void registerBiomes() {
+        Main.LOGGER.info("HELLO from Register Biomes");
+        Main.LOGGER.info(BiomeManager.getBiomes(BiomeManager.BiomeType.COOL));
         BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(CHERRY_BLOSSOM_GROTTO, 1));
+        Main.LOGGER.info(BiomeManager.getBiomes(BiomeManager.BiomeType.COOL).get(3));
     }
 }
