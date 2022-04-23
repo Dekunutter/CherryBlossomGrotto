@@ -14,6 +14,7 @@ import com.deku.cherryblossomgrotto.common.blocks.*;
 import com.deku.cherryblossomgrotto.common.capabilities.DoubleJumpCapability;
 import com.deku.cherryblossomgrotto.common.enchantments.ModEnchantmentInitializer;
 import com.deku.cherryblossomgrotto.common.entity.EntityTypeInitializer;
+import com.deku.cherryblossomgrotto.common.entity.ModBlockEntities;
 import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
 import com.deku.cherryblossomgrotto.common.entity.npc.ModVillagerTypes;
 import com.deku.cherryblossomgrotto.common.features.*;
@@ -41,6 +42,8 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -243,6 +246,8 @@ public class Main
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.POTTED_CHERRY_SAPLING, RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.RICE_PADDY, RenderType.cutoutMipped());
 
+        BlockEntityRenderers.register(ModBlockEntities.SIGN_ENTITY_TYPE, SignRenderer::new);
+
         event.enqueueWork(() -> {
             Sheets.addWoodType(ModWoodType.CHERRY_BLOSSOM);
         });
@@ -441,6 +446,20 @@ public class Main
 
             EntityTypeInitializer.KOI_ENTITY_TYPE.setRegistryName("koi_entity");
             entityRegistryEvent.getRegistry().register(EntityTypeInitializer.KOI_ENTITY_TYPE);
+        }
+
+        /**
+         * used to register block entities into the game using the mod event bus
+         * Associated blocks are assigned before registration
+         *
+         * @param blockEntityRegistryEvent The registry event with which block entities will be registered
+         */
+        @SubscribeEvent
+        public static void onBlockEntityRegistry(final RegistryEvent.Register<BlockEntityType<?>> blockEntityRegistryEvent) {
+            LOGGER.info("HELLO from Register Block Entity");
+
+            ModBlockEntities.SIGN_ENTITY_TYPE.setRegistryName("mod_sign_entity");
+            blockEntityRegistryEvent.getRegistry().register(ModBlockEntities.SIGN_ENTITY_TYPE);
         }
 
         /**
