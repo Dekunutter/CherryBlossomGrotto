@@ -21,7 +21,7 @@ public class NinjaRobesModel extends HumanoidModel<LivingEntity> {
 	 * - Open up a new project of the Minecraft Skin type
 	 * - Convert project to a Modded Entity from the File menu
 	 * - In the Project settings of the File menu (File > Project) change the export version to the correct
-	 *   version of Forge (1.16 in this case with Mojmap mappings) and update the texture size to match the
+	 *   version of Forge (1.18 in this case with Mojmap mappings) and update the texture size to match the
 	 *   size of the texture for this model (128 x 128 in this case)
 	 * - Add blocks and model the armour piece as intended. Make sure blocks are nested under their desired
 	 *   bone. (aka: a helmet needs to be nested under the head bone so that it has the same pivot point)
