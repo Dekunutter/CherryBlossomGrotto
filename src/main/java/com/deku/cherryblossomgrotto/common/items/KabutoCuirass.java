@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 
 public class KabutoCuirass extends ArmorItem implements IItemRenderProperties {
     public KabutoCuirass() {
-        super(ArmorMaterials.IRON, EquipmentSlot.CHEST, new Properties().tab(CreativeModeTab.TAB_COMBAT));
+        super(ArmorMaterials.IRON, EquipmentSlot.CHEST, new Properties().stacksTo(1).tab(CreativeModeTab.TAB_COMBAT));
         setRegistryName("kabuto_cuirass");
     }
 

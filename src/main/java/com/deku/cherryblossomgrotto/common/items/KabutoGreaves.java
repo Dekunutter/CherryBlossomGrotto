@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 
 public class KabutoGreaves extends ArmorItem implements IItemRenderProperties {
     public KabutoGreaves() {
-        super(ArmorMaterials.IRON, EquipmentSlot.LEGS, new Properties().tab(CreativeModeTab.TAB_COMBAT));
+        super(ArmorMaterials.IRON, EquipmentSlot.LEGS, new Properties().stacksTo(1).tab(CreativeModeTab.TAB_COMBAT));
         setRegistryName("kabuto_greaves");
     }
 

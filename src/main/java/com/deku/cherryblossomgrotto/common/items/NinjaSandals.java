@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 
 public class NinjaSandals extends ArmorItem {
     public NinjaSandals() {
-        super(ModArmorMaterials.WOOL, EquipmentSlot.FEET, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT));
+        super(ModArmorMaterials.WOOL, EquipmentSlot.FEET, new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_COMBAT));
         setRegistryName("ninja_sandals");
     }
 

@@ -8,29 +8,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 
 public class NinjaRobesModel extends HumanoidModel<LivingEntity> {
-	private ModelPart helmet;
-	private ModelPart tunic;
-	private ModelPart rightArmSleeve;
-	private ModelPart leftArmSleeve;
-	private ModelPart rightLegging;
-	private ModelPart leftLegging;
-	private ModelPart rightBoot;
-	private ModelPart leftBoot;
-
-	private String texture;
+	public ResourceLocation texture;
 
 	public NinjaRobesModel(ModelPart root) {
 		super(root);
-		texture = new ResourceLocation("cherryblossomgrotto:textures/model/ninja_suit.png").toString();
-
-		helmet = root.getChild("helmet");
-		tunic = root.getChild("tunic");
-		rightArmSleeve = root.getChild("rightArmSleeve");
-		leftArmSleeve = root.getChild("leftArmSleeve");
-		rightLegging = root.getChild("rightLegging");
-		leftLegging = root.getChild("leftLegging");
-		rightBoot = root.getChild("rightBoot");
-		leftBoot = root.getChild("leftBoot");
+		texture = new ResourceLocation("cherryblossomgrotto:textures/model/ninja_suit.png");
 	}
 
 	/**
@@ -57,7 +39,7 @@ public class NinjaRobesModel extends HumanoidModel<LivingEntity> {
 		MeshDefinition mesh = new MeshDefinition();
 		PartDefinition part = mesh.getRoot();
 
-		PartDefinition helmet = part.addOrReplaceChild("helmet", CubeListBuilder.create()
+		PartDefinition helmet = part.addOrReplaceChild("head", CubeListBuilder.create()
 				.texOffs(1, 92).addBox(-4.0F, -9.0F, -5.0F, 8.0F, 1.0F, 9.0F, new CubeDeformation(0.0F)).mirror(false)
 				.texOffs(13, 110).addBox(4.0F, -8.0F, -5.0F, 1.0F, 8.0F, 10.0F, new CubeDeformation(0.0F)).mirror(false)
 				.texOffs(1, 102).addBox(-5.0F, -8.0F, -5.0F, 1.0F, 8.0F, 10.0F, new CubeDeformation(0.0F)).mirror(false)
@@ -67,7 +49,12 @@ public class NinjaRobesModel extends HumanoidModel<LivingEntity> {
 			PartPose.offset(0.0F, 0.0F, 0.0F)
 		);
 
-		PartDefinition tunic = part.addOrReplaceChild("tunic", CubeListBuilder.create()
+		PartDefinition hat = part.addOrReplaceChild("hat", CubeListBuilder.create()
+				.texOffs(32, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F)),
+			PartPose.offset(0.0F, 0.0F, 0.0F));
+
+
+		PartDefinition tunic = part.addOrReplaceChild("body", CubeListBuilder.create()
 				.texOffs(75, 107).addBox(-4.0F, 0.0F, -3.0F, 8.0F, 13.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
 				.texOffs(57, 107).addBox(-4.0F, 0.0F, 2.0F, 8.0F, 13.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
 				.texOffs(71, 100).addBox(-4.0F, -1.0F, -3.0F, 8.0F, 1.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false)
@@ -78,79 +65,75 @@ public class NinjaRobesModel extends HumanoidModel<LivingEntity> {
 			PartPose.offset(0.0F, 0.0F, 0.0F)
 		);
 
-		PartDefinition rightArmSleeve = part.addOrReplaceChild("rightArmSleeve", CubeListBuilder.create()
+		PartDefinition rightArmSleeve = part.addOrReplaceChild("right_arm", CubeListBuilder.create()
 				.texOffs(40, 32).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)).mirror(false)
 				.texOffs(16, 82).addBox(-4.0F, -2.0F, -3.0F, 1.0F, 3.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false)
 				.texOffs(1, 78).addBox(-3.0F, -2.0F, 2.0F, 4.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
 				.texOffs(1, 78).addBox(-3.0F, -2.0F, -3.0F, 4.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false),
-			PartPose.offset(0.0F, 0.0F, 0.0F)
+			PartPose.offset(-5.0F, 2.0F, 0.0F)
 		);
 
-		PartDefinition leftArmSleeve = part.addOrReplaceChild("leftArmSleeve", CubeListBuilder.create()
+		PartDefinition leftArmSleeve = part.addOrReplaceChild("left_arm", CubeListBuilder.create()
 				.texOffs(48, 48).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)).mirror(false)
 				.texOffs(11, 73).addBox(3.0F, -2.0F, -3.0F, 1.0F, 3.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false)
 				.texOffs(0, 87).addBox(-1.0F, -2.0F, -3.0F, 4.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
 				.texOffs(1, 82).addBox(-1.0F, -2.0F, 2.0F, 4.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false),
-			PartPose.offset(0.0F, 0.0F, 0.0F)
+			PartPose.offset(5.0F, 2.0F, 0.0F)
 		);
 
-		PartDefinition rightLegging = part.addOrReplaceChild("rightLegging", CubeListBuilder.create()
+		PartDefinition rightLegging = part.addOrReplaceChild("right_leg", CubeListBuilder.create()
 				.texOffs(0, 32).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)).mirror(false),
-			PartPose.offset(0.0F, 0.0F, 0.0F)
+			PartPose.offset(-1.9F, 12.0F, 0.0F)
 		);
 
-		PartDefinition leftLegging = part.addOrReplaceChild("leftLegging", CubeListBuilder.create()
+		PartDefinition leftLegging = part.addOrReplaceChild("left_leg", CubeListBuilder.create()
 						.texOffs(0, 48).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)).mirror(false),
-				PartPose.offset(0.0F, 0.0F, 0.0F)
+				PartPose.offset(1.9F, 12.0F, 0.0F)
 		);
 
 		PartDefinition rightBoot = part.addOrReplaceChild("rightBoot", CubeListBuilder.create()
 				.texOffs(30, 84).addBox(-3.0F, 11.0F, -3.0F, 6.0F, 1.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false),
-			PartPose.offset(0.0F, 0.0F, 0.0F)
+			PartPose.offset(-1.9F, 12.0F, 0.0F)
 		);
 
 		PartDefinition leftBoot = part.addOrReplaceChild("leftBoot", CubeListBuilder.create()
 				.texOffs(54, 84).addBox(-3.0F, 11.0F, -3.0F, 6.0F, 1.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false),
-			PartPose.offset(0.0F, 0.0F, 0.0F)
+			PartPose.offset(1.9F, 12.0F, 0.0F)
 		);
 
-		return LayerDefinition.create(mesh, 64, 32);
+		return LayerDefinition.create(mesh, 128, 128);
 	}
 
 	/**
 	 * Getter for the resource location of the texture for this model
 	 *
-	 * @return The resource location of the texture of this model
+	 * @return The resource location of the texture of this model converted to a string
 	 */
 	public final String getTexture() {
-		return texture;
+		return texture.toString();
 	}
 
 	/**
 	 * Applies some basic stats to the entity on top of their default armor
+	 * Used in place of copyPropertiesTo like vanilla does (trying to avoid getting stuck in generics hell for now)
 	 *
 	 * @param defaultArmor Default armour model of the entity
 	 * @return This armour model
 	 */
 	public final NinjaRobesModel applyEntityStats(HumanoidModel<?> defaultArmor){
-		this.crouching = defaultArmor.crouching;
-		this.rightArmPose = defaultArmor.rightArmPose;
+		this.attackTime = defaultArmor.attackTime;
+		this.riding = defaultArmor.riding;
+		this.young = defaultArmor.young;
 		this.leftArmPose = defaultArmor.leftArmPose;
+		this.rightArmPose = defaultArmor.rightArmPose;
+		this.crouching = defaultArmor.crouching;
+		this.head.copyFrom(defaultArmor.head);
+		this.body.copyFrom(defaultArmor.body);
+		this.rightArm.copyFrom(defaultArmor.rightArm);
+		this.leftArm.copyFrom(defaultArmor.leftArm);
+		this.rightLeg.copyFrom(defaultArmor.rightLeg);
+		this.leftLeg.copyFrom(defaultArmor.leftLeg);
 
 		return this;
-	}
-
-	/**
-	 * Sets the rotation of the given model renderer
-	 *
-	 * @param part The part for the model we want to render
-	 * @param x Rotation on the X axis
-	 * @param y Rotation on the Y axis
-	 * @param z Rotation on the Z axis
-	 */
-	public void setRotationAngle(ModelPart part, float x, float y, float z) {
-		part.xRot = x;
-		part.yRot = y;
-		part.zRot = z;
 	}
 }

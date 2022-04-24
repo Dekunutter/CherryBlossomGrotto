@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 
 public class KabutoHelmet extends ArmorItem implements IItemRenderProperties {
     public KabutoHelmet() {
-        super(ArmorMaterials.IRON, EquipmentSlot.HEAD, new Properties().tab(CreativeModeTab.TAB_COMBAT));
+        super(ArmorMaterials.IRON, EquipmentSlot.HEAD, new Properties().stacksTo(1).tab(CreativeModeTab.TAB_COMBAT));
         setRegistryName("kabuto_helmet");
     }
 

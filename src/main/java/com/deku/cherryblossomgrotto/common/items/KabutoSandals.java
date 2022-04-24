@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 
 public class KabutoSandals extends ArmorItem implements IItemRenderProperties {
     public KabutoSandals() {
-        super(ArmorMaterials.IRON, EquipmentSlot.FEET, new Properties().tab(CreativeModeTab.TAB_COMBAT));
+        super(ArmorMaterials.IRON, EquipmentSlot.FEET, new Properties().stacksTo(1).tab(CreativeModeTab.TAB_COMBAT));
         setRegistryName("kabuto_sandals");
     }
 

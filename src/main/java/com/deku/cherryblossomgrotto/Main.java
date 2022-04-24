@@ -45,6 +45,8 @@ import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
+import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
@@ -487,18 +489,37 @@ public class Main
             registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.NINJA_ROBES, () -> ModLayerDefinitions.NINJA_ROBES_LAYER);
         }
 
+        /**
+         * Used to register new layers to existing entity renderers into the game using the mod event bus
+         * The will loop through all skin layers to get player layer renderers and find the biped armour layer to add custom armour layers
+         * NOTE: Layers cannot be added to a renderer while looping through skin layers, else it will cause a concurrency exception. Hence adding them outside of the loop
+         *
+         * @param registerAddedLayerEvent The registry event with which entity layer definitions will have new layers registered
+         */
         @SubscribeEvent
         public static void onEntityRendererRegistry(final EntityRenderersEvent.AddLayers registerAddedLayerEvent) {
             LOGGER.error("HELLO from Register Entity Renderer");
 
-            LivingEntityRenderer<LivingEntity, HumanoidModel<LivingEntity>> renderer = registerAddedLayerEvent.getRenderer(EntityType.PLAYER);
+            LivingEntityRenderer<Player, HumanoidModel<Player>> playerSkinRenderer = registerAddedLayerEvent.getSkin("default");
 
-            if (renderer != null) {
-                KabutoArmourLayer kabutoArmourLayer = new KabutoArmourLayer(renderer, registerAddedLayerEvent.getEntityModels());
-                renderer.addLayer(kabutoArmourLayer);
-                NinjaRobesLayer ninjaRobesLayer = new NinjaRobesLayer(renderer, registerAddedLayerEvent.getEntityModels());
-                renderer.addLayer(ninjaRobesLayer);
+            RenderLayer<Player, HumanoidModel<Player>> bipedArmorLayer = null;
+            for (RenderLayer<Player, HumanoidModel<Player>> layerRenderer : playerSkinRenderer.layers) {
+                if (layerRenderer != null) {
+                    if(layerRenderer.getClass() == HumanoidArmorLayer.class) {
+                        bipedArmorLayer = layerRenderer;
+                        break;
+                    }
+                }
             }
+
+            if(bipedArmorLayer != null) {
+                KabutoArmourLayer kabutoArmourLayer = new KabutoArmourLayer(playerSkinRenderer, registerAddedLayerEvent.getEntityModels());
+                playerSkinRenderer.addLayer(kabutoArmourLayer);
+                NinjaRobesLayer ninjaRobesLayer = new NinjaRobesLayer(playerSkinRenderer, registerAddedLayerEvent.getEntityModels());
+                playerSkinRenderer.addLayer(ninjaRobesLayer);
+            }
+
+            //TODO: Add custom armour layer to other entities that wear armour (like mobs using BipedArmorLayers)
         }
 
         /**

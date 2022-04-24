@@ -8,31 +8,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 
 public class KabutoArmourModel extends HumanoidModel<LivingEntity> {
-	private ModelPart helmet;
-	private ModelPart hat;
-	private ModelPart cuirass;
-	private ModelPart rightArmSleeve;
-	private ModelPart leftArmSleeve;
-	private ModelPart rightGreave;
-	private ModelPart leftGreave;
-	private ModelPart rightSandal;
-	private ModelPart leftSandal;
-
-	private String texture;
+	public ResourceLocation texture;
 
 	public KabutoArmourModel(ModelPart root) {
 		super(root);
-		texture = new ResourceLocation("cherryblossomgrotto:textures/model/kabuto_armour.png").toString();
-
-		helmet = root.getChild("head");
-		hat = root.getChild("hat");
-		cuirass = root.getChild("body");
-		rightArmSleeve = root.getChild("right_arm");
-		leftArmSleeve = root.getChild("left_arm");
-		rightGreave = root.getChild("right_leg");
-		leftGreave = root.getChild("left_leg");
-		rightSandal = root.getChild("right_foot");
-		leftSandal = root.getChild("left_foot");
+		texture = new ResourceLocation("cherryblossomgrotto:textures/model/kabuto_armour.png");
 	}
 
 	/**
@@ -147,7 +127,7 @@ public class KabutoArmourModel extends HumanoidModel<LivingEntity> {
 			PartPose.offset(0.0F, 0.0F, 0.0F)
 		);
 
-		return LayerDefinition.create(mesh, 64, 32);
+		return LayerDefinition.create(mesh, 128, 128);
 	}
 
 	/**
@@ -156,34 +136,30 @@ public class KabutoArmourModel extends HumanoidModel<LivingEntity> {
 	 * @return The resource location of the texture of this model
 	 */
 	public final String getTexture() {
-		return texture;
+		return texture.toString();
 	}
 
 	/**
 	 * Applies some basic stats to the entity on top of their default armor
+	 * Used in place of copyPropertiesTo like vanilla does (trying to avoid getting stuck in generics hell for now)
 	 *
 	 * @param defaultArmor Default armour model of the entity
 	 * @return This armour model
 	 */
 	public final KabutoArmourModel applyEntityStats(HumanoidModel<?> defaultArmor){
-		this.crouching = defaultArmor.crouching;
-		this.rightArmPose = defaultArmor.rightArmPose;
+		this.attackTime = defaultArmor.attackTime;
+		this.riding = defaultArmor.riding;
+		this.young = defaultArmor.young;
 		this.leftArmPose = defaultArmor.leftArmPose;
+		this.rightArmPose = defaultArmor.rightArmPose;
+		this.crouching = defaultArmor.crouching;
+		this.head.copyFrom(defaultArmor.head);
+		this.body.copyFrom(defaultArmor.body);
+		this.rightArm.copyFrom(defaultArmor.rightArm);
+		this.leftArm.copyFrom(defaultArmor.leftArm);
+		this.rightLeg.copyFrom(defaultArmor.rightLeg);
+		this.leftLeg.copyFrom(defaultArmor.leftLeg);
 
 		return this;
-	}
-
-	/**
-	 * Sets the rotation of the given model renderer
-	 *
-	 * @param part The part for the model we want to render
-	 * @param x Rotation on the X axis
-	 * @param y Rotation on the Y axis
-	 * @param z Rotation on the Z axis
-	 */
-	public void setRotationAngle(ModelPart part, float x, float y, float z) {
-		part.xRot = x;
-		part.yRot = y;
-		part.zRot = z;
 	}
 }
