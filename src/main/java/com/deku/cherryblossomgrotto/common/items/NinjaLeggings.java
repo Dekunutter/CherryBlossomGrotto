@@ -25,6 +25,7 @@ public class NinjaLeggings extends ArmorItem implements IItemRenderProperties {
         consumer.accept(new IItemRenderProperties() {
             /**
              * Gets the model for this piece of armour once it has been equipped
+             * Called by the Forge armour model hook during the humanoid armor layer render.
              *
              * @param entity The entity equipping this piece of armour
              * @param itemStack The item stack this item came from
@@ -35,7 +36,7 @@ public class NinjaLeggings extends ArmorItem implements IItemRenderProperties {
             @Nullable
             @Override
             public final HumanoidModel<?> getArmorModel(LivingEntity entity, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> defaultArmor) {
-                return NinjaRobesLayer.MODEL.applyEntityStats(defaultArmor);
+                return NinjaRobesLayer.INNER_MODEL;
             }
         });
     }
@@ -51,6 +52,6 @@ public class NinjaLeggings extends ArmorItem implements IItemRenderProperties {
      */
     @Override
     public final String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-        return NinjaRobesLayer.MODEL.getTexture();
+        return NinjaRobesLayer.INNER_MODEL.getTexture();
     }
 }

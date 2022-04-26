@@ -25,6 +25,7 @@ public class NinjaTunic extends ArmorItem {
         consumer.accept(new IItemRenderProperties() {
             /**
              * Gets the model for this piece of armour once it has been equipped
+             * Called by the Forge armour model hook during the humanoid armor layer render.
              *
              * @param entity The entity equipping this piece of armour
              * @param itemStack The item stack this item came from
@@ -35,7 +36,7 @@ public class NinjaTunic extends ArmorItem {
             @Nullable
             @Override
             public final HumanoidModel<?> getArmorModel(LivingEntity entity, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> defaultArmor) {
-                return NinjaRobesLayer.MODEL.applyEntityStats(defaultArmor);
+                return NinjaRobesLayer.MODEL;
             }
         });
     }

@@ -22,6 +22,7 @@ public class KabutoCuirass extends ArmorItem implements IItemRenderProperties {
         consumer.accept(new IItemRenderProperties() {
             /**
              * Gets the model for this piece of armour once it has been equipped
+             * Called by the Forge armour model hook during the humanoid armor layer render.
              *
              * @param entity The entity equipping this piece of armour
              * @param itemStack The item stack this item came from
@@ -32,7 +33,7 @@ public class KabutoCuirass extends ArmorItem implements IItemRenderProperties {
             @Nullable
             @Override
             public final HumanoidModel<?> getArmorModel(LivingEntity entity, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> defaultArmor) {
-                return KabutoArmourLayer.MODEL.applyEntityStats(defaultArmor);
+                return KabutoArmourLayer.MODEL;
             }
         });
     }
@@ -48,6 +49,6 @@ public class KabutoCuirass extends ArmorItem implements IItemRenderProperties {
      */
     @Override
     public final String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-        return KabutoArmourLayer.MODEL.getTexture();
+        return KabutoArmourLayer.INNER_MODEL.getTexture();
     }
 }

@@ -1,18 +1,14 @@
 package com.deku.cherryblossomgrotto.client.models;
 
-import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.LivingEntity;
 
-public class KabutoArmourModel extends HumanoidModel<LivingEntity> {
+public class KabutoArmourModel extends ModArmourModel {
 	public ResourceLocation texture;
-
 	public KabutoArmourModel(ModelPart root) {
-		super(root);
-		texture = new ResourceLocation("cherryblossomgrotto:textures/model/kabuto_armour.png");
+		super(root, "kabuto_armour");
 	}
 
 	/**
@@ -95,71 +91,16 @@ public class KabutoArmourModel extends HumanoidModel<LivingEntity> {
 			PartPose.offset(0.0F, 0.0F, 0.0F)
 		);
 
-		PartDefinition rightGreave = part.addOrReplaceChild("right_leg", CubeListBuilder.create()
-				.texOffs(0, 32).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)).mirror(false)
-				.texOffs(18, 94).addBox(-3.0F, 0.0F, -3.0F, 5.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
-				.texOffs(0, 100).addBox(-3.0F, 5.0F, -3.0F, 5.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
-				.texOffs(25, 95).addBox(-3.0F, 0.0F, -2.0F, 1.0F, 4.0F, 5.0F, new CubeDeformation(0.0F)).mirror(false)
-				.texOffs(19, 99).addBox(-2.0F, 0.0F, 2.0F, 2.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
-				.texOffs(0, 105).addBox(-2.0F, 5.0F, 2.0F, 2.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
-				.texOffs(7, 100).addBox(-3.0F, 5.0F, -2.0F, 1.0F, 4.0F, 5.0F, new CubeDeformation(0.0F)).mirror(false),
-			PartPose.offset(0.0F, 0.0F, 0.0F)
-		);
-
-		PartDefinition leftGreave = part.addOrReplaceChild("left_leg", CubeListBuilder.create()
-				.texOffs(0, 48).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)).mirror(false)
-				.texOffs(37, 99).addBox(-2.0F, 0.0F, -3.0F, 5.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
-				.texOffs(32, 104).addBox(-2.0F, 5.0F, -3.0F, 5.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
-				.texOffs(44, 99).addBox(2.0F, 0.0F, -2.0F, 1.0F, 4.0F, 5.0F, new CubeDeformation(0.0F)).mirror(false)
-				.texOffs(51, 99).addBox(0.0F, 0.0F, 2.0F, 2.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
-				.texOffs(37, 109).addBox(0.0F, 5.0F, 2.0F, 2.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
-				.texOffs(25, 104).addBox(2.0F, 5.0F, -2.0F, 1.0F, 4.0F, 5.0F, new CubeDeformation(0.0F)).mirror(false),
-			PartPose.offset(0.0F, 0.0F, 0.0F)
-		);
-
-		PartDefinition rightSandal = part.addOrReplaceChild("right_foot", CubeListBuilder.create()
+		PartDefinition rightSandal = part.addOrReplaceChild("right_leg", CubeListBuilder.create()
 				.texOffs(43, 108).addBox(-2.0F, 11.0F, -3.0F, 4.0F, 1.0F, 5.0F, new CubeDeformation(0.0F)).mirror(false),
 			PartPose.offset(0.0F, 0.0F, 0.0F)
 		);
 
-		PartDefinition leftSandal = part.addOrReplaceChild("left_foot", CubeListBuilder.create()
+		PartDefinition leftSandal = part.addOrReplaceChild("left_leg", CubeListBuilder.create()
 				.texOffs(61, 108).addBox(-2.0F, 11.0F, -3.0F, 4.0F, 1.0F, 5.0F, new CubeDeformation(0.0F)).mirror(false),
 			PartPose.offset(0.0F, 0.0F, 0.0F)
 		);
 
 		return LayerDefinition.create(mesh, 128, 128);
-	}
-
-	/**
-	 * Getter for the resource location of the texture for this model
-	 *
-	 * @return The resource location of the texture of this model
-	 */
-	public final String getTexture() {
-		return texture.toString();
-	}
-
-	/**
-	 * Applies some basic stats to the entity on top of their default armor
-	 * Used in place of copyPropertiesTo like vanilla does (trying to avoid getting stuck in generics hell for now)
-	 *
-	 * @param defaultArmor Default armour model of the entity
-	 * @return This armour model
-	 */
-	public final KabutoArmourModel applyEntityStats(HumanoidModel<?> defaultArmor){
-		this.attackTime = defaultArmor.attackTime;
-		this.riding = defaultArmor.riding;
-		this.young = defaultArmor.young;
-		this.leftArmPose = defaultArmor.leftArmPose;
-		this.rightArmPose = defaultArmor.rightArmPose;
-		this.crouching = defaultArmor.crouching;
-		this.head.copyFrom(defaultArmor.head);
-		this.body.copyFrom(defaultArmor.body);
-		this.rightArm.copyFrom(defaultArmor.rightArm);
-		this.leftArm.copyFrom(defaultArmor.leftArm);
-		this.rightLeg.copyFrom(defaultArmor.rightLeg);
-		this.leftLeg.copyFrom(defaultArmor.leftLeg);
-
-		return this;
 	}
 }

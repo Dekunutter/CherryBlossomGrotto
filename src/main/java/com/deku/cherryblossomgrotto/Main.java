@@ -39,14 +39,17 @@ import com.google.common.collect.ImmutableMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
@@ -479,6 +482,7 @@ public class Main
 
         /**
          * Used to register entity layer definitions into the game using the mod event bus
+         * All new entity layers need to be defined here to be loaded into the game, including those rendering for vanilla entities
          *
          * @param registerLayerDefinitionEvent The registry event with which entity layer definitions will be registered
          */
@@ -486,7 +490,9 @@ public class Main
         public static void onEntityRendererRegistry(final EntityRenderersEvent.RegisterLayerDefinitions registerLayerDefinitionEvent) {
             registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.KOI, () -> ModLayerDefinitions.KOI_LAYER);
             registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.KABUTO_ARMOUR, () -> ModLayerDefinitions.KABUTO_ARMOUR_LAYER);
+            registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.INNER_KABUTO_ARMOUR, () -> ModLayerDefinitions.INNER_KABUTO_ARMOUR_LAYER);
             registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.NINJA_ROBES, () -> ModLayerDefinitions.NINJA_ROBES_LAYER);
+            registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.INNER_NINJA_ROBES, () -> ModLayerDefinitions.INNER_NINJA_ROBES_LAYER);
         }
 
         /**
@@ -497,13 +503,34 @@ public class Main
          * @param registerAddedLayerEvent The registry event with which entity layer definitions will have new layers registered
          */
         @SubscribeEvent
-        public static void onEntityRendererRegistry(final EntityRenderersEvent.AddLayers registerAddedLayerEvent) {
+        public static <T extends LivingEntity, M extends HumanoidModel<T>> void onEntityRendererRegistry(final EntityRenderersEvent.AddLayers registerAddedLayerEvent) {
             LOGGER.error("HELLO from Register Entity Renderer");
 
-            LivingEntityRenderer<Player, HumanoidModel<Player>> playerSkinRenderer = registerAddedLayerEvent.getSkin("default");
+            PlayerRenderer playerSkinRenderer = registerAddedLayerEvent.getSkin("default");
 
-            RenderLayer<Player, HumanoidModel<Player>> bipedArmorLayer = null;
-            for (RenderLayer<Player, HumanoidModel<Player>> layerRenderer : playerSkinRenderer.layers) {
+            addLayerToEntityRenderer(playerSkinRenderer, registerAddedLayerEvent.getEntityModels());
+
+            for (Map.Entry<EntityType<?>, EntityRenderer<?>> entry : Minecraft.getInstance().getEntityRenderDispatcher().renderers.entrySet()) {
+                EntityRenderer<?> renderer = entry.getValue();
+                if (renderer instanceof LivingEntityRenderer) {
+                    LivingEntityRenderer<LivingEntity, HumanoidModel<LivingEntity>> livingEntityRenderer = (LivingEntityRenderer<LivingEntity, HumanoidModel<LivingEntity>>) renderer;
+
+                    addLayerToEntityRenderer(livingEntityRenderer, registerAddedLayerEvent.getEntityModels());
+                }
+            }
+        }
+
+        /**
+         * Adds all modded layers to the model set of the given entity
+         *
+         * @param renderer The renderer used to render this entity's layers
+         * @param modelSet The model set for the entity we want to add modded layers to
+         * @param <T> Generic representing the entity we are adding modded layers to
+         * @param <M> Generic representing the model of the entity we are adding modded layers to
+         */
+        private static <T extends LivingEntity, M extends HumanoidModel<T>> void addLayerToEntityRenderer(LivingEntityRenderer<T, M> renderer, EntityModelSet modelSet) {
+            RenderLayer<T, M> bipedArmorLayer = null;
+            for (RenderLayer<T, M> layerRenderer : renderer.layers) {
                 if (layerRenderer != null) {
                     if(layerRenderer.getClass() == HumanoidArmorLayer.class) {
                         bipedArmorLayer = layerRenderer;
@@ -513,13 +540,9 @@ public class Main
             }
 
             if(bipedArmorLayer != null) {
-                KabutoArmourLayer kabutoArmourLayer = new KabutoArmourLayer(playerSkinRenderer, registerAddedLayerEvent.getEntityModels());
-                playerSkinRenderer.addLayer(kabutoArmourLayer);
-                NinjaRobesLayer ninjaRobesLayer = new NinjaRobesLayer(playerSkinRenderer, registerAddedLayerEvent.getEntityModels());
-                playerSkinRenderer.addLayer(ninjaRobesLayer);
+                KabutoArmourLayer kabutoArmourLayer = new KabutoArmourLayer(renderer, modelSet);
+                NinjaRobesLayer ninjaRobesLayer = new NinjaRobesLayer(renderer, modelSet);
             }
-
-            //TODO: Add custom armour layer to other entities that wear armour (like mobs using BipedArmorLayers)
         }
 
         /**
