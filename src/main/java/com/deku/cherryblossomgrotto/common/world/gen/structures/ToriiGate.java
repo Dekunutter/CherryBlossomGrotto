@@ -38,7 +38,7 @@ public class ToriiGate extends StructureFeature<NoneFeatureConfiguration> {
      * @return Whether the structure can spawn in this chunk
      */
     protected static <C extends FeatureConfiguration> boolean checkLocation(PieceGeneratorSupplier.Context<C> generatorSupplier) {
-        BlockPos centerOfChunk = new BlockPos(generatorSupplier.chunkPos().getMinBlockX() * 16, 90, generatorSupplier.chunkPos().getMinBlockZ() * 16);
+        BlockPos centerOfChunk = new BlockPos(generatorSupplier.chunkPos().getMinBlockX(), 90, generatorSupplier.chunkPos().getMinBlockZ());
 
         int landHeight = generatorSupplier.chunkGenerator().getFirstOccupiedHeight(centerOfChunk.getX(), centerOfChunk.getZ(), Heightmap.Types.WORLD_SURFACE_WG, generatorSupplier.heightAccessor());
         return landHeight >= generatorSupplier.chunkGenerator().getSeaLevel();
@@ -54,10 +54,10 @@ public class ToriiGate extends StructureFeature<NoneFeatureConfiguration> {
      * @param generatorContext Context for the generator for the chunk the structure is being built within
      */
     public static void generatePieces(StructurePiecesBuilder pieceBuilder, PieceGenerator.Context<NoneFeatureConfiguration> generatorContext) {
-        BlockPos centerOfChunk = new BlockPos(generatorContext.chunkPos().getMinBlockX() * 16, 90, generatorContext.chunkPos().getMinBlockZ() * 16);
+        BlockPos centerOfChunk = new BlockPos(generatorContext.chunkPos().getMinBlockX(), 90, generatorContext.chunkPos().getMinBlockZ());
         int landHeight = generatorContext.chunkGenerator().getFirstOccupiedHeight(centerOfChunk.getX(), centerOfChunk.getZ(), Heightmap.Types.WORLD_SURFACE_WG, generatorContext.heightAccessor());
 
-        BlockPos position = new BlockPos(generatorContext.chunkPos().getMinBlockX() * 16, landHeight, generatorContext.chunkPos().getMinBlockZ() * 16);
+        BlockPos position = new BlockPos(generatorContext.chunkPos().getMinBlockX(), landHeight, generatorContext.chunkPos().getMinBlockZ());
         Rotation rotation = Rotation.getRandom(generatorContext.random());
         ToriiGatePieces.addPieces(generatorContext.structureManager(), position, rotation, pieceBuilder, generatorContext.random());
     }

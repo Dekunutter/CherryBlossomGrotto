@@ -53,6 +53,7 @@ public class ModConfiguredStructures {
 
         registerModdedVillageStructure();
 
+        // TODO: Pretty sure I got to plug this into vanilla villages instead of it coming up as its own structure in location commands but something to look into later
         CONFIGURED_CHERRY_BLOSSOM_GROTTO_VILLAGE = registerConfigured(
             ResourceKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY,
                 new ResourceLocation(MOD_ID, "village_cherry_blossom_grotto")

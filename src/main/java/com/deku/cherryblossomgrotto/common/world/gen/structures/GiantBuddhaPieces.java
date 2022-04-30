@@ -43,7 +43,7 @@ public class GiantBuddhaPieces {
      */
     public static class Piece extends TemplateStructurePiece {
         public Piece(StructureManager manager, ResourceLocation resourceLocation, BlockPos position, Rotation rotation, int offsetY) {
-            super(ModStructurePieceTypes.GIANT_BUDDHA_PIECE, 0, manager, resourceLocation, manager.toString(), loadTemplate(manager, resourceLocation, rotation), position.offset(0, -offsetY, 0));
+            super(ModStructurePieceTypes.GIANT_BUDDHA_PIECE, 0, manager, resourceLocation, resourceLocation.toString(), loadTemplate(manager, resourceLocation, rotation), position.offset(0, -offsetY, 0));
         }
 
         public Piece(StructurePieceSerializationContext serializationContext, CompoundTag compoundNBT) {
