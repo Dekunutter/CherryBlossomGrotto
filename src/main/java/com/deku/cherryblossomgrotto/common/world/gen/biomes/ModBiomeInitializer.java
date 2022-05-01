@@ -6,6 +6,7 @@ import net.minecraft.data.worldgen.biome.OverworldBiomes;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -51,8 +52,9 @@ public class ModBiomeInitializer {
      */
     public static void registerBiomes() {
         Main.LOGGER.info("HELLO from Register Biomes");
-        Main.LOGGER.info(BiomeManager.getBiomes(BiomeManager.BiomeType.COOL));
         BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(CHERRY_BLOSSOM_GROTTO, 1));
-        Main.LOGGER.info(BiomeManager.getBiomes(BiomeManager.BiomeType.COOL).get(3));
+        BiomeDictionary.addTypes(CHERRY_BLOSSOM_GROTTO, BiomeDictionary.Type.FOREST);
+        BiomeDictionary.addTypes(CHERRY_BLOSSOM_GROTTO, BiomeDictionary.Type.DENSE);
+        BiomeDictionary.addTypes(CHERRY_BLOSSOM_GROTTO, BiomeDictionary.Type.OVERWORLD);
     }
 }

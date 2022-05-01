@@ -25,6 +25,7 @@ import com.deku.cherryblossomgrotto.common.particles.ModParticles;
 import com.deku.cherryblossomgrotto.common.blockEntities.CherryLeavesBlockEntity;
 import com.deku.cherryblossomgrotto.common.utils.ForgeReflection;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeInitializer;
+import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeProvider;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeTags;
 import com.deku.cherryblossomgrotto.common.world.gen.blockstateprovider.CherryBlossomForestFlowerProviderType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.GrandCherryBlossomFoliagePlacerType;
@@ -107,6 +108,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import terrablender.api.Regions;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
@@ -204,6 +206,8 @@ public class Main
 
         event.enqueueWork(() -> {
             WoodType.register(ModWoodType.CHERRY_BLOSSOM);
+
+            Regions.register(new ModBiomeProvider());
         });
 
         // TODO: Maybe need to figure out a better place to put this stuff
