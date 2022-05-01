@@ -27,7 +27,7 @@ public class ModStructureSets {
             ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation(MOD_ID, "giant_buddhas")),
             new StructureSet(
                 ModConfiguredStructures.CONFIGURED_GIANT_BUDDHA,
-                new RandomSpreadStructurePlacement(100, 50, RandomSpreadType.LINEAR, 565423412)
+                new RandomSpreadStructurePlacement(32, 8, RandomSpreadType.LINEAR, 565423412)
             )
         );
 
@@ -35,7 +35,7 @@ public class ModStructureSets {
             ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation(MOD_ID,"torii_gates")),
             new StructureSet(
                 ModConfiguredStructures.CONFIGURED_TORII_GATE,
-                new RandomSpreadStructurePlacement(10, 5, RandomSpreadType.LINEAR, 780292865)
+                new RandomSpreadStructurePlacement(40, 15, RandomSpreadType.LINEAR, 780292865)
             )
         );
 
