@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.dimension.DimensionDefaults;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -39,7 +40,7 @@ public class CherryBlossomPetalCoverFeature extends Feature<NoneFeatureConfigura
                 int currentPositionX = position.getX() + chunkX;
                 int currentPositionZ = position.getZ() + chunkZ;
 
-                for (int chunkY = 256; chunkY >= 0; chunkY--) {
+                for (int chunkY = 256; chunkY >= DimensionDefaults.OVERWORLD_MIN_Y; chunkY--) {
                     int currentPositionY = position.getY() + chunkY;
 
                     mutablePosition.set(currentPositionX, currentPositionY, currentPositionZ);
@@ -69,7 +70,7 @@ public class CherryBlossomPetalCoverFeature extends Feature<NoneFeatureConfigura
         BlockPos.MutableBlockPos spawningPosition = new BlockPos.MutableBlockPos();
 
         // TODO: Could some of this logic be combined with the checks in CherryLeavesTileEntity?
-        for (int positionY = position.getY() - 1; positionY >= 0; positionY--) {
+        for (int positionY = position.getY() - 1; positionY >= DimensionDefaults.OVERWORLD_MIN_Y; positionY--) {
             belowPosition.set(position.getX(), positionY, position.getZ()).move(Direction.DOWN, 1);
             if (!levelGenerationReader.isEmptyBlock(belowPosition)) {
                 spawningPosition.set(belowPosition).move(Direction.UP, 1);
