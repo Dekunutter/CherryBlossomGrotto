@@ -20,13 +20,13 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.extensions.IForgeBlockState;
+import net.minecraftforge.common.extensions.IForgeBlock;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 import java.util.Random;
 
-public class CherryBlossomLeaves extends LeavesBlock implements IForgeBlockState, EntityBlock {
+public class CherryBlossomLeaves extends LeavesBlock implements IForgeBlock, EntityBlock {
     public CherryBlossomLeaves() {
         super(BlockBehaviour.Properties.of(Material.LEAVES, MaterialColor.COLOR_PINK).strength(0.2f).sound(SoundType.GRASS).noOcclusion().isValidSpawn(CherryBlossomLeaves::validSpawns).isSuffocating(CherryBlossomLeaves.never()).isViewBlocking(CherryBlossomLeaves.never()).randomTicks());
         setRegistryName("cherry_blossom_leaves");
@@ -77,28 +77,32 @@ public class CherryBlossomLeaves extends LeavesBlock implements IForgeBlockState
 
     /**
      * Determines the flammability of the block
+     * The higher the number the more likely it is to catch fire
      *
+     * @param state State of the block being burned
      * @param blockGetter Getter for the block being burned
      * @param position Position of the block being burned
      * @param face Face of the block that is being burned
      * @return The flammability of this block
      */
     @Override
-    public int getFlammability(BlockGetter blockGetter, BlockPos position, Direction face)
+    public int getFlammability(BlockState state, BlockGetter blockGetter, BlockPos position, Direction face)
     {
         return 5;
     }
 
     /**
      * Determines the likelihood that fire will spread to this block
+     * The higher the number the more likely it is to burn up.
      *
+     * @param state State of the block being burned
      * @param blockGetter Getter for the block being burned
      * @param position Position of the block being burned
      * @param face Face of the block that is being burned
      * @return The likelihood that fire will spread to this block
      */
     @Override
-    public int getFireSpreadSpeed(BlockGetter blockGetter, BlockPos position, Direction face)
+    public int getFireSpreadSpeed(BlockState state, BlockGetter blockGetter, BlockPos position, Direction face)
     {
         return 20;
     }
