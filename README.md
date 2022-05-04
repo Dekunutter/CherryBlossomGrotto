@@ -1,6 +1,6 @@
 # CherryBlossomGrotto
 WIP of a Minecraft mod using the 1.18.2 version of the MC Forge framework.
-Warning: This is still in the very early stages of porting. It cannot currently be compiled into a working mod!!
+Uses terrablender as a dependency for generating custom biomes.
 
 # Contents
 The main focus of this mod is the cherry blossom grotto that it adds to the Minecraft overworld.
