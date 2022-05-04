@@ -1,22 +1,26 @@
 package com.deku.cherryblossomgrotto.common.blocks;
 
-import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.DoubleBlockHalf;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -26,17 +30,17 @@ import java.util.Random;
 import static com.deku.cherryblossomgrotto.common.blocks.ModBlockStateProperties.HALF;
 
 public abstract class AbstractZenLantern extends Block {
-    protected static final VoxelShape UPPER_HALF_AABB = VoxelShapes.or(
+    protected static final VoxelShape UPPER_HALF_AABB = Shapes.or(
             Block.box(5.0D, 8.0D, 5.0D, 11.0D, 12.0D, 11.0D),
             Block.box(2.0D, 0.0D, 2.0D, 14.0D, 8.0D, 14.0D)
     );
-    protected static final VoxelShape LOWER_HALF_AABB = VoxelShapes.or(
+    protected static final VoxelShape LOWER_HALF_AABB = Shapes.or(
             Block.box(5.0D, 0.0D, 5.0D, 11.0D, 16.0D, 11.0D)
     );
-    protected final IParticleData flameParticle;
+    protected final ParticleOptions flameParticle;
 
-    public AbstractZenLantern(int lightLevel, IParticleData flameParticle) {
-        super(AbstractBlock.Properties.of(Material.DECORATION).lightLevel((level) -> {
+    public AbstractZenLantern(int lightLevel, ParticleOptions flameParticle) {
+        super(BlockBehaviour.Properties.of(Material.DECORATION).lightLevel((level) -> {
             return lightLevel;
         }).strength(2.0F, 6.0F).sound(SoundType.STONE));
         this.flameParticle = flameParticle;
@@ -50,10 +54,10 @@ public abstract class AbstractZenLantern extends Block {
      * @param blockState State of the block
      * @param blockReader Reader interface for the block
      * @param position Position of the block
-     * @param selectionContext Context for the block's selection
+     * @param collisionContext Context for the block's selection
      * @return A VoxelShape representing the current shape of the block
      */
-    public VoxelShape getShape(BlockState blockState, IBlockReader blockReader, BlockPos position, ISelectionContext selectionContext) {
+    public VoxelShape getShape(BlockState blockState, BlockGetter blockReader, BlockPos position, CollisionContext collisionContext) {
         if (blockState.getValue(HALF) == DoubleBlockHalf.UPPER) {
             return UPPER_HALF_AABB;
         } else {
@@ -69,15 +73,15 @@ public abstract class AbstractZenLantern extends Block {
      * @param blockState State of the block having its shape updated
      * @param direction Direction we are going to update the shape in
      * @param otherBlockState State of the other block in the check
-     * @param world World the block is being updated in
+     * @param levelAccessor Accessor for the level the block is being updated in
      * @param position Position of the block having its shape updated
      * @param otherPosition Position of the other block in the check
      * @return Updated block state of the current block
      */
-    public BlockState updateShape(BlockState blockState, Direction direction, BlockState otherBlockState, IWorld world, BlockPos position, BlockPos otherPosition) {
+    public BlockState updateShape(BlockState blockState, Direction direction, BlockState otherBlockState, LevelAccessor levelAccessor, BlockPos position, BlockPos otherPosition) {
         DoubleBlockHalf doubleblockhalf = blockState.getValue(HALF);
         if (direction.getAxis() != Direction.Axis.Y || doubleblockhalf == DoubleBlockHalf.LOWER != (direction == Direction.UP) || otherBlockState.is(this) && otherBlockState.getValue(HALF) != doubleblockhalf) {
-            return doubleblockhalf == DoubleBlockHalf.LOWER && direction == Direction.DOWN && !blockState.canSurvive(world, position) ? Blocks.AIR.defaultBlockState() : super.updateShape(blockState, direction, otherBlockState, world, position, otherPosition);
+            return doubleblockhalf == DoubleBlockHalf.LOWER && direction == Direction.DOWN && !blockState.canSurvive(levelAccessor, position) ? Blocks.AIR.defaultBlockState() : super.updateShape(blockState, direction, otherBlockState, levelAccessor, position, otherPosition);
         } else {
             return Blocks.AIR.defaultBlockState();
         }
@@ -91,7 +95,7 @@ public abstract class AbstractZenLantern extends Block {
      * @return Updated state of the block that was placed
      */
     @Nullable
-    public BlockState getStateForPlacement(BlockItemUseContext itemUseContext) {
+    public BlockState getStateForPlacement(BlockPlaceContext itemUseContext) {
         BlockPos position = itemUseContext.getClickedPos();
         if (position.getY() < 255 && itemUseContext.getLevel().getBlockState(position.above()).canBeReplaced(itemUseContext)) {
             return this.defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER);
@@ -109,7 +113,7 @@ public abstract class AbstractZenLantern extends Block {
      * @param entity The entity placing the block
      * @param itemStack The stack of items that the block may be originating from
      */
-    public void setPlacedBy(World world, BlockPos position, BlockState blockState, LivingEntity entity, ItemStack itemStack) {
+    public void setPlacedBy(Level world, BlockPos position, BlockState blockState, LivingEntity entity, ItemStack itemStack) {
         world.setBlock(position.above(), blockState.setValue(HALF, DoubleBlockHalf.UPPER), 3);
     }
 
@@ -123,7 +127,7 @@ public abstract class AbstractZenLantern extends Block {
      * @param position Position of the block being checked
      * @return Wheather the block can survive in its current position
      */
-    public boolean canSurvive(BlockState blockState, IWorldReader worldReader, BlockPos position) {
+    public boolean canSurvive(BlockState blockState, LevelReader worldReader, BlockPos position) {
         BlockPos blockpos = position.below();
         BlockState blockstate = worldReader.getBlockState(blockpos);
         return blockState.getValue(HALF) == DoubleBlockHalf.LOWER ? blockstate.isFaceSturdy(worldReader, blockpos, Direction.UP) : blockstate.is(this);
@@ -135,7 +139,7 @@ public abstract class AbstractZenLantern extends Block {
      *
      * @param builder The builder for the state container
      */
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(HALF);
     }
 
@@ -149,7 +153,7 @@ public abstract class AbstractZenLantern extends Block {
      * @param random A random number generator
      */
     @OnlyIn(Dist.CLIENT)
-    public void animateTick(BlockState blockState, World world, BlockPos position, Random random) {
+    public void animateTick(BlockState blockState, Level world, BlockPos position, Random random) {
         if (blockState.getValue(HALF) == DoubleBlockHalf.UPPER) {
             double positionX = (double) position.getX() + 0.5D;
             double positionY = (double) position.getY() + 0.3D;

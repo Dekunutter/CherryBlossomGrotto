@@ -1,22 +1,22 @@
 package com.deku.cherryblossomgrotto.common.entity.passive.fish;
 
 import com.deku.cherryblossomgrotto.common.items.ModItems;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.passive.fish.AbstractGroupFishEntity;
-import net.minecraft.entity.passive.fish.TropicalFishEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.*;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.animal.AbstractSchoolingFish;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -24,8 +24,8 @@ import javax.annotation.Nullable;
 
 import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
-public class KoiEntity extends AbstractGroupFishEntity {
-    private static final DataParameter<Integer> DATA_ID_TYPE_VARIANT = EntityDataManager.defineId(TropicalFishEntity.class, DataSerializers.INT);
+public class KoiEntity extends AbstractSchoolingFish {
+    private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT = SynchedEntityData.defineId(KoiEntity.class, EntityDataSerializers.INT);
     private static final ResourceLocation[] PATTERN_TEXTURE_LOCATIONS = new ResourceLocation[] {
             new ResourceLocation(MOD_ID,"textures/entity/fish/koi_pattern_1.png"),
             new ResourceLocation(MOD_ID,"textures/entity/fish/koi_pattern_2.png"),
@@ -34,8 +34,8 @@ public class KoiEntity extends AbstractGroupFishEntity {
             new ResourceLocation(MOD_ID,"textures/entity/fish/koi_pattern_5.png")
     };
 
-    public KoiEntity(EntityType<? extends KoiEntity> entityType, World world) {
-        super(entityType, world);
+    public KoiEntity(EntityType<? extends KoiEntity> entityType, Level level) {
+        super(entityType, level);
     }
 
     /**
@@ -53,7 +53,7 @@ public class KoiEntity extends AbstractGroupFishEntity {
      * @return The itemstack that spawns this entity
      */
     @Override
-    protected ItemStack getBucketItemStack() {
+    public ItemStack getBucketItemStack() {
         return new ItemStack(ModItems.KOI_BUCKET);
     }
 
@@ -62,9 +62,9 @@ public class KoiEntity extends AbstractGroupFishEntity {
      *
      * @param itemStack The bucket item stack used to bucket this fish entity
      */
-    protected void saveToBucketTag(ItemStack itemStack) {
+    public void saveToBucketTag(ItemStack itemStack) {
         super.saveToBucketTag(itemStack);
-        CompoundNBT compoundnbt = itemStack.getOrCreateTag();
+        CompoundTag compoundnbt = itemStack.getOrCreateTag();
         compoundnbt.putInt("BucketVariantTag", this.getVariant());
     }
 
@@ -133,7 +133,7 @@ public class KoiEntity extends AbstractGroupFishEntity {
      *
      * @param compoundNBT The NBT that we are putting additional information into
      */
-    public void addAdditionalSaveData(CompoundNBT compoundNBT) {
+    public void addAdditionalSaveData(CompoundTag compoundNBT) {
         super.addAdditionalSaveData(compoundNBT);
         compoundNBT.putInt("Variant", this.getVariant());
     }
@@ -144,7 +144,7 @@ public class KoiEntity extends AbstractGroupFishEntity {
      *
      * @param compoundNBT The NBT that we are reading additional information into
      */
-    public void readAdditionalSaveData(CompoundNBT compoundNBT) {
+    public void readAdditionalSaveData(CompoundTag compoundNBT) {
         super.readAdditionalSaveData(compoundNBT);
         this.setVariant(compoundNBT.getInt("Variant"));
     }
@@ -172,32 +172,32 @@ public class KoiEntity extends AbstractGroupFishEntity {
      * If this is a fresh spawn we will generate a random pattern ID for this fish entity.
      * If this is not a fresh spawn (e.g: spawning from a bucket which already has an associated pattern ID) then we will associate that same pattern ID to this new spawn of the entity
      *
-     * @param world The world this entity is spawning into
+     * @param levelAccessor The level this entity is spawning into
      * @param difficulty The difficulty that this game world is currently set to
-     * @param spawnReason The reason that this entity is spawning
-     * @param entityData Data associated with this entity
+     * @param spawnType The reason that this entity is spawning
+     * @param spawnData Data associated with this entity spawn
      * @param compoundNBT The NBT data for this entity
      *
      * @return The updated entity data for this entity having finished initializing for spawning into the world
      */
     @Nullable
-    public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason spawnReason, @Nullable ILivingEntityData entityData, @Nullable CompoundNBT compoundNBT) {
-        entityData = super.finalizeSpawn(world, difficulty, spawnReason, entityData, compoundNBT);
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag compoundNBT) {
+        spawnData = super.finalizeSpawn(levelAccessor, difficulty, spawnType, spawnData, compoundNBT);
         if (compoundNBT != null && compoundNBT.contains("BucketVariantTag", 3)) {
             this.setVariant(compoundNBT.getInt("BucketVariantTag"));
         } else {
             int randomPattern = random.nextInt(5);
             setVariant(randomPattern);
-            entityData = new KoiEntity.KoiData(this, randomPattern);
+            spawnData = new KoiEntity.KoiData(this, randomPattern);
         }
-        return entityData;
+        return spawnData;
     }
 
     /**
      * Inner static class outlining the structure of data tied to this entity.
      * Currently this is just the pattern ID for the given entity.
      */
-    static class KoiData extends AbstractGroupFishEntity.GroupData {
+    static class KoiData extends AbstractSchoolingFish.SchoolSpawnGroupData {
         private final int patternId;
 
         private KoiData(KoiEntity entity, int patternId) {

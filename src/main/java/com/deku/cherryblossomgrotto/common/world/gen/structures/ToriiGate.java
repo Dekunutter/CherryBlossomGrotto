@@ -1,38 +1,23 @@
 package com.deku.cherryblossomgrotto.common.world.gen.structures;
 
-import net.minecraft.util.Rotation;
-import net.minecraft.util.SharedSeedRandom;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.util.registry.DynamicRegistries;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.MobSpawnInfo;
-import net.minecraft.world.biome.provider.BiomeProvider;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.feature.structure.StructureStart;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
+import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 
-import java.util.Collections;
-import java.util.List;
+public class ToriiGate extends StructureFeature<NoneFeatureConfiguration> {
+    public static final WeightedRandomList<MobSpawnSettings.SpawnerData> TORII_GATE_ENEMIES = WeightedRandomList.create();
 
-public class ToriiGate extends Structure<NoFeatureConfig> {
     public ToriiGate() {
-        super(NoFeatureConfig.CODEC);
-    }
-
-    /**
-     * Getter for the start factory of this structure
-     *
-     * @return An instance of the start factory for this structure
-     */
-    @Override
-    public IStartFactory<NoFeatureConfig> getStartFactory() {
-        return ToriiGate.Start::new;
+        super(NoneFeatureConfiguration.CODEC, PieceGeneratorSupplier.simple(ToriiGate::checkLocation, ToriiGate::generatePieces));
     }
 
     /**
@@ -41,85 +26,39 @@ public class ToriiGate extends Structure<NoFeatureConfig> {
      * @return The generation step type of this structure
      */
     @Override
-    public GenerationStage.Decoration step() {
-        return GenerationStage.Decoration.SURFACE_STRUCTURES;
-    }
-
-    /**
-     * The default spawn list for entities within this structure
-     *
-     * @return The list of entities that can spawn in this structure
-     */
-    @Override
-    public List<MobSpawnInfo.Spawners> getDefaultSpawnList() {
-        return Collections.emptyList();
-    }
-
-    /**
-     * The default spawn list for monsters within this structure
-     *
-     * @return The list of monsters that can spawn in this structure
-     */
-    @Override
-    public List<MobSpawnInfo.Spawners> getDefaultCreatureSpawnList() {
-        return Collections.emptyList();
+    public GenerationStep.Decoration step() {
+        return GenerationStep.Decoration.SURFACE_STRUCTURES;
     }
 
     /**
      * Performs some basic checks on the current chunk to see if the structure can be spawned here.
      * For this structure we just check that the current chunk has a height above bedrock
      *
-     * @param chunkGenerator The generator generating the current chunk
-     * @param biomeSource The provider of the chunk's biome
-     * @param seed The seed generating the chunk
-     * @param chunkRandom A shared random seed
-     * @param chunkX Position of the structure within the chunk on the X axis
-     * @param chunkZ Position of the structure within the chunk on the Z axis
-     * @param biome The biome that the chunk is within
-     * @param chunkPos The position of the chunk within the world
-     * @param featureConfig Configuration of the structure
+     * @param generatorSupplier The generator supplying the current chunk
      * @return Whether the structure can spawn in this chunk
      */
-    @Override
-    protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeProvider biomeSource, long seed, SharedSeedRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, NoFeatureConfig featureConfig) {
-        BlockPos centerOfChunk = new BlockPos(chunkX * 16, 0, chunkZ * 16);
+    protected static <C extends FeatureConfiguration> boolean checkLocation(PieceGeneratorSupplier.Context<C> generatorSupplier) {
+        BlockPos centerOfChunk = new BlockPos(generatorSupplier.chunkPos().getMinBlockX(), 90, generatorSupplier.chunkPos().getMinBlockZ());
 
-        int landHeight = chunkGenerator.getFirstOccupiedHeight(centerOfChunk.getX(), centerOfChunk.getZ(), Heightmap.Type.WORLD_SURFACE_WG);
-        return landHeight > 0;
+        int landHeight = generatorSupplier.chunkGenerator().getFirstOccupiedHeight(centerOfChunk.getX(), centerOfChunk.getZ(), Heightmap.Types.WORLD_SURFACE_WG, generatorSupplier.heightAccessor());
+        return landHeight >= generatorSupplier.chunkGenerator().getSeaLevel();
     }
 
     /**
-     * Inner class which contains the start factory for this structure.
-     * Begins the generation of the structure from individual pieces.
+     * Generates the structure from its individual pieces.
+     * Generates the structure near the middle of the chunk at whatever is the land height of that position.
+     * Provides the structure with a random orientation.
+     * Generates the structures bounding box.
+     *
+     * @param pieceBuilder The builder for all the structure's pieces
+     * @param generatorContext Context for the generator for the chunk the structure is being built within
      */
-    public static class Start extends StructureStart<NoFeatureConfig> {
-        public Start(Structure<NoFeatureConfig> structure, int chunkX, int chunkZ, MutableBoundingBox boundingBox, int references, long seeder) {
-            super(structure, chunkX, chunkZ, boundingBox, references, seeder);
-        }
+    public static void generatePieces(StructurePiecesBuilder pieceBuilder, PieceGenerator.Context<NoneFeatureConfiguration> generatorContext) {
+        BlockPos centerOfChunk = new BlockPos(generatorContext.chunkPos().getMinBlockX(), 90, generatorContext.chunkPos().getMinBlockZ());
+        int landHeight = generatorContext.chunkGenerator().getFirstOccupiedHeight(centerOfChunk.getX(), centerOfChunk.getZ(), Heightmap.Types.WORLD_SURFACE_WG, generatorContext.heightAccessor());
 
-        /**
-         * Generates the structure from its individual pieces.
-         * Generates the structure near the middle of the chunk at whatever is the land height of that position.
-         * Provides the structure with a random orientation.
-         * Generates the structures bounding box.
-         *
-         * @param registries The dynamic registries for this structure
-         * @param chunkGenerator The generator for the chunk the structure is being built within
-         * @param templateManager Manager for loading templates
-         * @param chunkX Position of the structure within the chunk on the X axis
-         * @param chunkZ Position of the structure within the chunk on the Z axis
-         * @param biome The biome that the chunk is within
-         * @param config Configuration of the structure
-         */
-        @Override
-        public void generatePieces(DynamicRegistries registries, ChunkGenerator chunkGenerator, TemplateManager templateManager, int chunkX, int chunkZ, Biome biome, NoFeatureConfig config) {
-            BlockPos centerOfChunk = new BlockPos(chunkX * 16, 0, chunkZ * 16);
-            int landHeight = chunkGenerator.getFirstOccupiedHeight(centerOfChunk.getX(), centerOfChunk.getZ(), Heightmap.Type.WORLD_SURFACE_WG);
-
-            BlockPos position = new BlockPos(chunkX * 16, landHeight, chunkZ * 16);
-            Rotation rotation = Rotation.getRandom(this.random);
-            ToriiGatePieces.addPieces(templateManager, position, rotation, this.pieces, this.random);
-            this.calculateBoundingBox();
-        }
+        BlockPos position = new BlockPos(generatorContext.chunkPos().getMinBlockX(), landHeight, generatorContext.chunkPos().getMinBlockZ());
+        Rotation rotation = Rotation.getRandom(generatorContext.random());
+        ToriiGatePieces.addPieces(generatorContext.structureManager(), position, rotation, pieceBuilder, generatorContext.random());
     }
 }

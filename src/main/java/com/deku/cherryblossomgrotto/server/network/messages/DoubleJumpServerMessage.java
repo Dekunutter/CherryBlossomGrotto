@@ -1,7 +1,7 @@
 package com.deku.cherryblossomgrotto.server.network.messages;
 
 import com.deku.cherryblossomgrotto.Main;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 
 public class DoubleJumpServerMessage {
     public static final int MESSAGE_ID = 35;
@@ -44,7 +44,7 @@ public class DoubleJumpServerMessage {
      * @param buffer The buffer for reading network packet information into a message object
      * @return The server message decoded from the packet buffer
      */
-    public static DoubleJumpServerMessage decode(PacketBuffer buffer) {
+    public static DoubleJumpServerMessage decode(FriendlyByteBuf buffer) {
         DoubleJumpServerMessage message = new DoubleJumpServerMessage();
         try {
             message.hasDoubleJumped = buffer.readBoolean();
@@ -62,7 +62,7 @@ public class DoubleJumpServerMessage {
      *
      * @param buffer The network packet buffer we are writing this message's instance values to
      */
-    public void encode(PacketBuffer buffer) {
+    public void encode(FriendlyByteBuf buffer) {
         if (!isValid) {
             return;
         }

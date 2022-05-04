@@ -39,6 +39,11 @@ public class LogFilter extends AbstractFilter implements Filter {
         return Result.NEUTRAL;
     }
 
+    /**
+     * Sets the minimum log level
+     *
+     * @param level Level to set the logger to
+     */
     public void setMinimumLevel(Level level) {
         minimumLevel = level;
     }

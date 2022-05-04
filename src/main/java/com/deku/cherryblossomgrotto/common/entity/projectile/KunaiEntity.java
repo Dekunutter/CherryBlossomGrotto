@@ -2,35 +2,35 @@ package com.deku.cherryblossomgrotto.common.entity.projectile;
 
 import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
 import com.deku.cherryblossomgrotto.common.items.ModItems;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fml.network.FMLPlayMessages;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PlayMessages;
 
-public class KunaiEntity extends AbstractArrowEntity implements IEntityAdditionalSpawnData {
-    public KunaiEntity(EntityType<Entity> entityType, World world) {
-        super(ModEntityData.KUNAI_DATA, world);
+public class KunaiEntity extends AbstractArrow implements IEntityAdditionalSpawnData {
+    public KunaiEntity(EntityType<Entity> entityType, Level level) {
+        super(ModEntityData.KUNAI_DATA, level);
         setBaseDamage(2.0D);
     }
 
-    public KunaiEntity(LivingEntity livingEntity, World world) {
-        super(ModEntityData.KUNAI_DATA, livingEntity, world);
+    public KunaiEntity(LivingEntity livingEntity, Level level) {
+        super(ModEntityData.KUNAI_DATA, livingEntity, level);
         setBaseDamage(2.0D);
     }
 
-    public KunaiEntity(FMLPlayMessages.SpawnEntity spawnEntity, World world) {
-        super(ModEntityData.KUNAI_DATA, world);
+    public KunaiEntity(PlayMessages.SpawnEntity spawnEntity, Level level) {
+        super(ModEntityData.KUNAI_DATA, level);
         setBaseDamage(2.0D);
     }
 
@@ -51,7 +51,7 @@ public class KunaiEntity extends AbstractArrowEntity implements IEntityAdditiona
      * @return The network packet for spawning the entity
      */
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -61,8 +61,8 @@ public class KunaiEntity extends AbstractArrowEntity implements IEntityAdditiona
      * @param buffer The buffer for writing the NBT data to the network packet
      */
     @Override
-    public void writeSpawnData(PacketBuffer buffer) {
-        CompoundNBT compoundNBT = new CompoundNBT();
+    public void writeSpawnData(FriendlyByteBuf buffer) {
+        CompoundTag compoundNBT = new CompoundTag();
         buffer.writeNbt(compoundNBT);
     }
 
@@ -72,8 +72,8 @@ public class KunaiEntity extends AbstractArrowEntity implements IEntityAdditiona
      * @param additionalData NBT data stored in a network packet buffer
      */
     @Override
-    public void readSpawnData(PacketBuffer additionalData) {
-        CompoundNBT compoundNBT = additionalData.readNbt();
+    public void readSpawnData(FriendlyByteBuf additionalData) {
+        CompoundTag compoundNBT = additionalData.readNbt();
     }
 
     /**
@@ -93,9 +93,9 @@ public class KunaiEntity extends AbstractArrowEntity implements IEntityAdditiona
      * @param rayTraceResult Result of the ray trace to the colliding block
      */
     @Override
-    protected void onHitBlock(BlockRayTraceResult rayTraceResult) {
+    protected void onHitBlock(BlockHitResult rayTraceResult) {
         super.onHitBlock(rayTraceResult);
         shakeTime = 3;
-        this.setSoundEvent(SoundEvents.CHAIN_HIT);
+        setSoundEvent(SoundEvents.CHAIN_HIT);
     }
 }

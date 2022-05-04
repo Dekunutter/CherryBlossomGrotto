@@ -4,16 +4,14 @@ import com.deku.cherryblossomgrotto.Main;
 import com.deku.cherryblossomgrotto.client.network.messages.DoubleJumpClientMessage;
 import com.deku.cherryblossomgrotto.common.capabilities.DoubleJumpCapability;
 import com.deku.cherryblossomgrotto.server.network.messages.DoubleJumpServerMessage;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.world.World;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.util.function.Supplier;
-
-import static com.deku.cherryblossomgrotto.common.capabilities.ModCapabilitiesInitializer.DOUBLE_JUMP_CAPABILITY;
 
 public class DoubleJumpServerMessageHandler {
     /**
@@ -40,7 +38,7 @@ public class DoubleJumpServerMessageHandler {
             return;
         }
 
-        final ServerPlayerEntity sendingPlayer = context.getSender();
+        final ServerPlayer sendingPlayer = context.getSender();
         if (sendingPlayer == null) {
             Main.LOGGER.error("Sending player was null when double jump message was received");
         }
@@ -59,11 +57,11 @@ public class DoubleJumpServerMessageHandler {
      * @param message
      * @param player
      */
-    public static void processMessage(DoubleJumpServerMessage message, ServerPlayerEntity player) {
+    public static void processMessage(DoubleJumpServerMessage message, ServerPlayer player) {
         DoubleJumpClientMessage clientMessage = new DoubleJumpClientMessage(player.getUUID(), message.hasDoubleJumped());
-        RegistryKey<World> playerDimension = player.getCommandSenderWorld().dimension();
+        ResourceKey<Level> playerDimension = player.getCommandSenderWorld().dimension();
 
-        DoubleJumpCapability.IDoubleJump doubleJumpCapability = player.getCapability(DOUBLE_JUMP_CAPABILITY).orElse(null);
+        DoubleJumpCapability.IDoubleJump doubleJumpCapability = player.getCapability(DoubleJumpCapability.DOUBLE_JUMP).orElse(null);
         if (doubleJumpCapability != null) {
             doubleJumpCapability.setHasDoubleJumped(message.hasDoubleJumped());
         }

@@ -1,18 +1,18 @@
 package com.deku.cherryblossomgrotto.client.renderers;
 
 import com.deku.cherryblossomgrotto.common.entity.projectile.KunaiEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Matrix3f;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3f;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Matrix3f;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -23,8 +23,8 @@ public class KunaiRenderer extends EntityRenderer<KunaiEntity> {
     private static final float RENDERED_SCALE = 0.05625F;
     private static final double RENDERED_LENGTH_X = 4;
 
-    public KunaiRenderer(EntityRendererManager renderManager) {
-        super(renderManager);
+    public KunaiRenderer(EntityRendererProvider.Context renderContext) {
+        super(renderContext);
     }
 
     /**
@@ -46,34 +46,34 @@ public class KunaiRenderer extends EntityRenderer<KunaiEntity> {
      * @param entity The kunai entity to be rendered
      * @param yaw Rotation of the entity around the yaw axis
      * @param partialTicks The time through the current tick of the entity
-     * @param matrixStack The rendering stack that holds the rendering co-ordinates of the entity
+     * @param poseStack The rendering stack that holds the pose information of the entity
      * @param buffer Render buffer
      * @param packedLight Light affecting the entity
      */
     @Override
-    public void render(KunaiEntity entity, float yaw, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int packedLight) {
-        matrixStack.pushPose();
+    public void render(KunaiEntity entity, float yaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+        poseStack.pushPose();
 
-        renderShakingAnimation(entity, partialTicks, matrixStack);
+        renderShakingAnimation(entity, partialTicks, poseStack);
 
-        matrixStack.mulPose(Vector3f.XP.rotationDegrees(45.0F));
-        matrixStack.scale(RENDERED_SCALE, RENDERED_SCALE, RENDERED_SCALE);
-        matrixStack.translate(-RENDERED_LENGTH_X, 0.0D, 0.0D);
-        IVertexBuilder vertexBuilder = buffer.getBuffer(RenderType.entityCutout(this.getTextureLocation(entity)));
-        MatrixStack.Entry stackEntry = matrixStack.last();
+        poseStack.mulPose(Vector3f.XP.rotationDegrees(45.0F));
+        poseStack.scale(RENDERED_SCALE, RENDERED_SCALE, RENDERED_SCALE);
+        poseStack.translate(-RENDERED_LENGTH_X, 0.0D, 0.0D);
+        VertexConsumer vertexBuilder = buffer.getBuffer(RenderType.entityCutout(this.getTextureLocation(entity)));
+        PoseStack.Pose stackEntry = poseStack.last();
         Matrix4f positionMatrix = stackEntry.pose();
         Matrix3f normalMatrix = stackEntry.normal();
 
         renderRightSideFace(positionMatrix, normalMatrix, vertexBuilder, packedLight);
         renderLeftSideFace(positionMatrix, normalMatrix, vertexBuilder, packedLight);
 
-        repositionForCrossRender(matrixStack);
+        repositionForCrossRender(poseStack);
 
         renderRightSideFace(positionMatrix, normalMatrix, vertexBuilder, packedLight);
         renderLeftSideFace(positionMatrix, normalMatrix, vertexBuilder, packedLight);
 
-        matrixStack.popPose();
-        super.render(entity, yaw, partialTicks, matrixStack, buffer, packedLight);
+        poseStack.popPose();
+        super.render(entity, yaw, partialTicks, poseStack, buffer, packedLight);
     }
 
     /**
@@ -81,15 +81,15 @@ public class KunaiRenderer extends EntityRenderer<KunaiEntity> {
      *
      * @param entity The entity we are rendering
      * @param partialTicks The time through the current tick of the entity
-     * @param matrixStack The rendering stack that holds the rendering co-ordinates of the entity
+     * @param poseStack The rendering stack that holds the pose information of the entity
      */
-    private void renderShakingAnimation(KunaiEntity entity, float partialTicks, MatrixStack matrixStack) {
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entity.yRotO, entity.yRot) - 90.0F));
-        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(MathHelper.lerp(partialTicks, entity.xRotO, entity.xRot)));
+    private void renderShakingAnimation(KunaiEntity entity, float partialTicks, PoseStack poseStack) {
+        poseStack.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(partialTicks, entity.yRotO, entity.getYRot()) - 90.0F));
+        poseStack.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(partialTicks, entity.xRotO, entity.getXRot())));
         float f9 = (float)entity.shakeTime - partialTicks;
         if (f9 > 0.0F) {
-            float f10 = -MathHelper.sin(f9 * 3.0F) * f9;
-            matrixStack.mulPose(Vector3f.ZP.rotationDegrees(f10));
+            float f10 = -Mth.sin(f9 * 3.0F) * f9;
+            poseStack.mulPose(Vector3f.ZP.rotationDegrees(f10));
         }
     }
 
@@ -97,11 +97,11 @@ public class KunaiRenderer extends EntityRenderer<KunaiEntity> {
      * Turns the rendering stack 90 degrees on the X axis pivot and translates downwards by half of the rendered entity's body
      * length on the Y and Z axises so that further rendering can result in a cross-style rendered 3D texture.
      *
-     * @param matrixStack The rendering stack that holds the rendering co-ordinates of the entity
+     * @param poseStack The rendering stack that holds the pose information of the entity
      */
-    private void repositionForCrossRender(MatrixStack matrixStack) {
-        matrixStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
-        matrixStack.translate(0.0D, -(RENDERED_LENGTH_X / 2), -(RENDERED_LENGTH_X / 2));
+    private void repositionForCrossRender(PoseStack poseStack) {
+        poseStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
+        poseStack.translate(0.0D, -(RENDERED_LENGTH_X / 2), -(RENDERED_LENGTH_X / 2));
     }
 
     /**
@@ -112,7 +112,7 @@ public class KunaiRenderer extends EntityRenderer<KunaiEntity> {
      * @param vertexBuilder Builder for the vertices
      * @param packedLight Light affecting the entity
      */
-    private void renderRightSideFace(Matrix4f positionMatrix, Matrix3f normalMatrix, IVertexBuilder vertexBuilder, int packedLight) {
+    private void renderRightSideFace(Matrix4f positionMatrix, Matrix3f normalMatrix, VertexConsumer vertexBuilder, int packedLight) {
         vertex(positionMatrix, normalMatrix, vertexBuilder, -4, 0, 0, 0.0F, 0.0F, 0, 1, 0, packedLight);
         vertex(positionMatrix, normalMatrix, vertexBuilder, 4, 0, 0, 1.0F, 0.0F, 0, 1, 0, packedLight);
         vertex(positionMatrix, normalMatrix, vertexBuilder, 4, 4, 0, 1.0F, 0.625F, 0, 1, 0, packedLight);
@@ -127,7 +127,7 @@ public class KunaiRenderer extends EntityRenderer<KunaiEntity> {
      * @param vertexBuilder Builder for the vertices
      * @param packedLight Light affecting the entity
      */
-    private void renderLeftSideFace(Matrix4f positionMatrix, Matrix3f normalMatrix, IVertexBuilder vertexBuilder, int packedLight) {
+    private void renderLeftSideFace(Matrix4f positionMatrix, Matrix3f normalMatrix, VertexConsumer vertexBuilder, int packedLight) {
         vertex(positionMatrix, normalMatrix, vertexBuilder, -4, 4, 0, 0.0F, 0.0F, 0, -1, 0, packedLight);
         vertex(positionMatrix, normalMatrix, vertexBuilder, 4, 4, 0, 1.0F, 0.0F, 0, -1, 0, packedLight);
         vertex(positionMatrix, normalMatrix, vertexBuilder, 4, 0, 0, 1.0F, 0.625F, 0, -1, 0, packedLight);
@@ -150,7 +150,7 @@ public class KunaiRenderer extends EntityRenderer<KunaiEntity> {
      * @param normalZ The normal value for the Z axis
      * @param lightingUV Value for mapping lighting data to the vertex
      */
-    public void vertex(Matrix4f positionMatrix, Matrix3f normalMatrix, IVertexBuilder vertexBuilder, int positionX, int positionY, int positionZ, float horizontalUV, float verticalUV, int normalX, int normalY, int normalZ, int lightingUV) {
+    public void vertex(Matrix4f positionMatrix, Matrix3f normalMatrix, VertexConsumer vertexBuilder, int positionX, int positionY, int positionZ, float horizontalUV, float verticalUV, int normalX, int normalY, int normalZ, int lightingUV) {
         vertexBuilder.vertex(positionMatrix, (float)positionX, (float)positionY, (float)positionZ).color(255, 255, 255, 255).uv(horizontalUV, verticalUV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lightingUV).normal(normalMatrix, (float)normalX, (float)normalZ, (float)normalY).endVertex();
     }
 }

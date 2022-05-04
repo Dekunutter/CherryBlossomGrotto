@@ -1,8 +1,8 @@
 package com.deku.cherryblossomgrotto.common.utils;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
+import com.mojang.math.Vector3d;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 
 public class BlockPosUtils {
     /**
@@ -13,7 +13,7 @@ public class BlockPosUtils {
      * @return The magnitude of the given vector.
      */
     public static double getLengthOfVector(BlockPos vector) {
-        return MathHelper.sqrt((vector.getX() * vector.getX()) + (vector.getY() * vector.getY()) + (vector.getZ() * vector.getZ()));
+        return Mth.sqrt((vector.getX() * vector.getX()) + (vector.getY() * vector.getY()) + (vector.getZ() * vector.getZ()));
     }
 
     /**

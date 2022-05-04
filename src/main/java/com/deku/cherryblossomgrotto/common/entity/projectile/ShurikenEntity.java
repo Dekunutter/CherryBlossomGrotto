@@ -2,36 +2,36 @@ package com.deku.cherryblossomgrotto.common.entity.projectile;
 
 import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
 import com.deku.cherryblossomgrotto.common.items.ModItems;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fml.network.FMLPlayMessages;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PlayMessages;
 
-public class ShurikenEntity extends AbstractArrowEntity implements IEntityAdditionalSpawnData {
+public class ShurikenEntity extends AbstractArrow implements IEntityAdditionalSpawnData {
     public float spin = 0.0f;
 
-    public ShurikenEntity(EntityType<Entity> entityType, World world) {
-        super(ModEntityData.SHURIKEN_DATA, world);
+    public ShurikenEntity(EntityType<Entity> entityType, Level level) {
+        super(ModEntityData.SHURIKEN_DATA, level);
     }
 
-    public ShurikenEntity(LivingEntity livingEntity, World world) {
-        super(ModEntityData.SHURIKEN_DATA, livingEntity, world);
+    public ShurikenEntity(LivingEntity livingEntity, Level level) {
+        super(ModEntityData.SHURIKEN_DATA, livingEntity, level);
         setBaseDamage(0.1D);
     }
 
-    public ShurikenEntity(FMLPlayMessages.SpawnEntity spawnEntity, World world) {
-        super(ModEntityData.SHURIKEN_DATA, world);
+    public ShurikenEntity(PlayMessages.SpawnEntity spawnEntity, Level level) {
+        super(ModEntityData.SHURIKEN_DATA, level);
         setBaseDamage(0.1D);
     }
 
@@ -52,7 +52,7 @@ public class ShurikenEntity extends AbstractArrowEntity implements IEntityAdditi
      * @return The network packet for spawning the entity
      */
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -62,8 +62,8 @@ public class ShurikenEntity extends AbstractArrowEntity implements IEntityAdditi
      * @param buffer The buffer for writing the NBT data to the network packet
      */
     @Override
-    public void writeSpawnData(PacketBuffer buffer) {
-        CompoundNBT compoundNBT = new CompoundNBT();
+    public void writeSpawnData(FriendlyByteBuf buffer) {
+        CompoundTag compoundNBT = new CompoundTag();
         buffer.writeNbt(compoundNBT);
     }
 
@@ -73,8 +73,8 @@ public class ShurikenEntity extends AbstractArrowEntity implements IEntityAdditi
      * @param additionalData NBT data stored in a network packet buffer
      */
     @Override
-    public void readSpawnData(PacketBuffer additionalData) {
-        CompoundNBT compoundNBT = additionalData.readNbt();
+    public void readSpawnData(FriendlyByteBuf additionalData) {
+        CompoundTag compoundNBT = additionalData.readNbt();
     }
 
     /**
@@ -108,7 +108,7 @@ public class ShurikenEntity extends AbstractArrowEntity implements IEntityAdditi
      * @param rayTraceResult Result of the ray trace to the colliding block
      */
     @Override
-    protected void onHitBlock(BlockRayTraceResult rayTraceResult) {
+    protected void onHitBlock(BlockHitResult rayTraceResult) {
         super.onHitBlock(rayTraceResult);
         shakeTime = 0;
         this.setSoundEvent(SoundEvents.CHAIN_HIT);

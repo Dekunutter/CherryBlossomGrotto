@@ -3,10 +3,13 @@
   "depth": 0.125,
   "scale": 0.05,
   "temperature": 0.8,
+  "temperature_modifier": "none",
   "downfall": 0.8,
   "precipitation": "rain",
   "category": "forest",
   "player_spawn_friendly": true,
+  "creature_spawn_friendly": true,
+  "creature_spawn_probability": 0.5,
   "effects": {
     "sky_color": 7907327,
     "fog_color": 12638463,
@@ -22,12 +25,6 @@
       "offset": 2
     }
   },
-  "starts": [
-    "cherryblossomgrotto:village_cherry_blossom_grotto",
-    "minecraft:ruined_portal",
-    "cherryblossomgrotto:configured_giant_buddha",
-    "cherryblossomgrotto:configured_torii_gate"
-  ],
   "spawners": {
     "monster": [
       {
@@ -121,9 +118,13 @@
     ],
     "water_creature": [
     ],
+    "underground_water_creature": [
+    ],
     "water_ambient": [
     ],
     "misc": [
+    ],
+    "axolotls": [
     ]
   },
   "spawn_costs": {
@@ -132,18 +133,24 @@
     "air": [
       "minecraft:cave",
       "minecraft:canyon"
+    ],
+    "liquid": [
     ]
   },
   "features": [
     [
     ],
     [
-      "minecraft:lake_water"
     ],
     [
+      "minecraft:amethyst_geode",
+      "minecraft:forest_rock"
     ],
     [
-      "minecraft:monster_room"
+      "minecraft:fossil_upper",
+      "minecraft:fossil_lower",
+      "minecraft:monster_room",
+      "minecraft:monster_room_deep"
     ],
     [
     ],
@@ -152,35 +159,48 @@
     [
       "minecraft:ore_dirt",
       "minecraft:ore_gravel",
-      "minecraft:ore_granite",
-      "minecraft:ore_diorite",
-      "minecraft:ore_andesite",
-      "minecraft:ore_coal",
+      "minecraft:ore_granite_upper",
+      "minecraft:ore_granite_lower",
+      "minecraft:ore_diorite_upper",
+      "minecraft:ore_diorite_lower",
+      "minecraft:ore_andesite_upper",
+      "minecraft:ore_andesite_lower",
+      "minecraft:ore_tuff",
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_coal_lower",
       "cherryblossomgrotto:ore_iron_sparse",
+      "cherryblossomgrotto:ore_iron_sparse_upper",
       "minecraft:ore_gold",
+      "minecraft:ore_gold_lower",
       "minecraft:ore_redstone",
+      "minecraft:ore_redstone_lower",
       "minecraft:ore_diamond",
+      "minecraft:ore_diamond_large",
+      "minecraft:ore_diamond_buried",
       "minecraft:ore_lapis",
+      "minecraft:ore_lapis_buried",
+      "minecraft:ore_copper_large",
+      "minecraft:underwater_magma",
       "minecraft:disk_sand",
       "minecraft:disk_clay",
       "minecraft:disk_gravel"
     ],
     [
+      "minecraft:spring_water",
+      "minecraft:spring_lava"
     ],
     [
       "minecraft:patch_tall_grass_2",
       "minecraft:patch_grass_forest",
       "minecraft:brown_mushroom_normal",
       "minecraft:patch_sugar_cane",
-      "minecraft:spring_water",
-      "minecraft:spring_lava",
-      "minecraft:forest_rock",
-      "minecraft:patch_waterlilly",
-      "cherryblossomgrotto:cherry_blossom_forest",
-      "cherryblossomgrotto:cherry_blossom_forest_flowers"
+      "minecraft:patch_berry_rare",
+      "minecraft:patch_waterlily",
+      "cherryblossomgrotto:trees_cherry_blossom_grotto",
+      "cherryblossomgrotto:cherry_blossom_grotto_flowers"
     ],
     [
-      "cherryblossomgrotto:cherry_blossom_petal_ground_cover"
+      "cherryblossomgrotto:cherry_blossom_petals_top_layer"
     ]
   ]
 }

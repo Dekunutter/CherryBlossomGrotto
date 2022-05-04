@@ -1,14 +1,14 @@
 package com.deku.cherryblossomgrotto.common.blocks;
 
-import com.deku.cherryblossomgrotto.common.world.gen.trees.CherryBlossomTree;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.SaplingBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
+import com.deku.cherryblossomgrotto.common.world.level.block.grower.CherryBlossomTreeGrower;
+import net.minecraft.world.level.block.SaplingBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.Material;
 
 public class CherryBlossomSapling extends SaplingBlock {
     public CherryBlossomSapling() {
-        super(new CherryBlossomTree(), AbstractBlock.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.GRASS));
+        super(new CherryBlossomTreeGrower(), BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.GRASS));
         setRegistryName("cherry_blossom_sapling");
     }
 }

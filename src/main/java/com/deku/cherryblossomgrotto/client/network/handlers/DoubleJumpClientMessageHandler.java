@@ -3,16 +3,14 @@ package com.deku.cherryblossomgrotto.client.network.handlers;
 import com.deku.cherryblossomgrotto.Main;
 import com.deku.cherryblossomgrotto.client.network.messages.DoubleJumpClientMessage;
 import com.deku.cherryblossomgrotto.common.capabilities.DoubleJumpCapability;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.common.util.LogicalSidedProvider;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.LogicalSidedProvider;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.Optional;
 import java.util.function.Supplier;
-
-import static com.deku.cherryblossomgrotto.common.capabilities.ModCapabilitiesInitializer.DOUBLE_JUMP_CAPABILITY;
 
 public class DoubleJumpClientMessageHandler {
     /**
@@ -39,13 +37,13 @@ public class DoubleJumpClientMessageHandler {
             return;
         }
 
-        Optional<ClientWorld> clientWorld = LogicalSidedProvider.CLIENTWORLD.get(sideReceived);
-        if (!clientWorld.isPresent()) {
+        Optional<Level> level = LogicalSidedProvider.CLIENTWORLD.get(sideReceived);
+        if (!level.isPresent()) {
             Main.LOGGER.error("DoubleJumpClientMessage context could not provide a client world");
             return;
         }
 
-        context.enqueueWork(() -> processMessage(clientWorld.get(), message));
+        context.enqueueWork(() -> processMessage(level.get(), message));
     }
 
     /**
@@ -56,12 +54,12 @@ public class DoubleJumpClientMessageHandler {
      * their associated double jump capability and sets their double jump state to match the state passed in by
      * the message. This is then written to the client's double jump capability for this player as NBT data.
      *
-     * @param clientWorld The world that the message was received for
+     * @param level The level that the message was received for
      * @param message The message received by the client
      */
-    private static void processMessage(ClientWorld clientWorld, DoubleJumpClientMessage message) {
-        PlayerEntity player = clientWorld.getPlayerByUUID(message.getPlayerId());
-        DoubleJumpCapability.IDoubleJump doubleJumpCapability = player.getCapability(DOUBLE_JUMP_CAPABILITY).orElse(null);
+    private static void processMessage(Level level, DoubleJumpClientMessage message) {
+        Player player = level.getPlayerByUUID(message.getPlayerId());
+        DoubleJumpCapability.IDoubleJump doubleJumpCapability = player.getCapability(DoubleJumpCapability.DOUBLE_JUMP).orElse(null);
         if (doubleJumpCapability != null) {
             doubleJumpCapability.setHasDoubleJumped(message.hasDoubleJumped());
         }

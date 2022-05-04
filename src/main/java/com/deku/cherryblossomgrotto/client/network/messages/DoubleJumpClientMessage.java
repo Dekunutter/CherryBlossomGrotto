@@ -1,7 +1,7 @@
 package com.deku.cherryblossomgrotto.client.network.messages;
 
 import com.deku.cherryblossomgrotto.Main;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 
 import java.util.UUID;
 
@@ -86,7 +86,7 @@ public class DoubleJumpClientMessage {
      * @param buffer The buffer for reading network packet information into a message object
      * @return The client message decoded from the packet buffer
      */
-    public static DoubleJumpClientMessage decode(PacketBuffer buffer) {
+    public static DoubleJumpClientMessage decode(FriendlyByteBuf buffer) {
         DoubleJumpClientMessage message = new DoubleJumpClientMessage();
         try {
             UUID playerId = buffer.readUUID();
@@ -108,7 +108,7 @@ public class DoubleJumpClientMessage {
      *
      * @param buffer The network packet buffer we are writing this message's instance values to
      */
-    public void encode(PacketBuffer buffer) {
+    public void encode(FriendlyByteBuf buffer) {
         if (!isValid) {
             return;
         }

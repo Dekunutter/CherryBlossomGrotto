@@ -1,33 +1,49 @@
 package com.deku.cherryblossomgrotto.common.items;
 
-import com.deku.cherryblossomgrotto.client.models.NinjaSuitModel;
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.*;
+import com.deku.cherryblossomgrotto.client.renderers.layers.NinjaRobesLayer;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.client.IItemRenderProperties;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Consumer;
 
 public class NinjaSandals extends ArmorItem {
-    private NinjaSuitModel armorModel;
-
     public NinjaSandals() {
-        super(ModArmorMaterial.WOOL, EquipmentSlotType.FEET, new Item.Properties().tab(ItemGroup.TAB_COMBAT));
+        super(ModArmorMaterials.WOOL, EquipmentSlot.FEET, new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_COMBAT));
         setRegistryName("ninja_sandals");
-        armorModel = new NinjaSuitModel();
     }
 
     /**
-     * Gets the model for this piece of armour once it has been equipped
+     * Ensures that the client renders the current model for this piece of armour
      *
-     * @param entity The entity equipping this piece of armour
-     * @param itemStack The item stack this item came from
-     * @param armorSlot The slot the armour is being equipped in
-     * @param defaultArmor The default armour model for this entity
-     * @return The armour model of the equipped piece of armour
+     * @param consumer The consumer containing render properties for this item
      */
     @Override
-    public final BipedModel getArmorModel(LivingEntity entity, ItemStack itemStack, EquipmentSlotType armorSlot, BipedModel defaultArmor) {
-        return armorModel.applyEntityStats(defaultArmor).applySlot(armorSlot);
+    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+        consumer.accept(new IItemRenderProperties() {
+            /**
+             * Gets the model for this piece of armour once it has been equipped
+             * Called by the Forge armour model hook during the humanoid armor layer render.
+             *
+             * @param entity The entity equipping this piece of armour
+             * @param itemStack The item stack this item came from
+             * @param armorSlot The slot the armour is being equipped in
+             * @param defaultArmor The default armour model for this entity
+             * @return The armour model of the equipped piece of armour
+             */
+            @Nullable
+            @Override
+            public final HumanoidModel<?> getArmorModel(LivingEntity entity, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> defaultArmor) {
+                return NinjaRobesLayer.MODEL;
+            }
+        });
     }
 
     /**
@@ -40,7 +56,7 @@ public class NinjaSandals extends ArmorItem {
      * @return The resource location for this texture
      */
     @Override
-    public final String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        return armorModel.getTexture();
+    public final String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
+        return NinjaRobesLayer.MODEL.getTexture();
     }
 }

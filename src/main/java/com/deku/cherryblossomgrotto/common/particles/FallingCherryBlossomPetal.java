@@ -1,17 +1,17 @@
 package com.deku.cherryblossomgrotto.common.particles;
 
-import net.minecraft.client.particle.IAnimatedSprite;
-import net.minecraft.client.particle.IParticleRenderType;
-import net.minecraft.client.particle.SpriteTexturedParticle;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.particle.TextureSheetParticle;
 
 import java.awt.*;
 
-public class FallingCherryBlossomPetal extends SpriteTexturedParticle {
-    private final IAnimatedSprite sprites;
+public class FallingCherryBlossomPetal extends TextureSheetParticle {
+    private final SpriteSet sprites;
     private int despawnTimer = 0;
 
-    public FallingCherryBlossomPetal(ClientWorld world, Color color, double diameter, IAnimatedSprite sprites, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+    public FallingCherryBlossomPetal(ClientLevel world, Color color, double diameter, SpriteSet sprites, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
         super(world, x, y, z, xSpeed, ySpeed, zSpeed);
 
         setColor(color.getRed()/255.0f, color.getGreen()/255.0f, color.getBlue()/255.0f);
@@ -38,8 +38,8 @@ public class FallingCherryBlossomPetal extends SpriteTexturedParticle {
      * @return The rendering type for this particle
      */
     @Override
-    public IParticleRenderType getRenderType() {
-        return IParticleRenderType.PARTICLE_SHEET_OPAQUE;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
     }
 
     /**

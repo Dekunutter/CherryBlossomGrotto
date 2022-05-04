@@ -2,23 +2,23 @@ package com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.gen.IWorldGenerationReader;
-import net.minecraft.world.gen.feature.BaseTreeFeatureConfig;
-import net.minecraft.world.gen.feature.FeatureSpread;
-import net.minecraft.world.gen.foliageplacer.FoliagePlacer;
-import net.minecraft.world.gen.foliageplacer.FoliagePlacerType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.world.level.LevelSimulatedReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 
 import java.util.Random;
-import java.util.Set;
+import java.util.function.BiConsumer;
 
 public class CherryBlossomFoliagePlacer extends FoliagePlacer {
     public static final Codec<CherryBlossomFoliagePlacer> CODEC = RecordCodecBuilder.create((instance) ->
         foliagePlacerParts(instance).apply(instance, CherryBlossomFoliagePlacer::new)
     );
 
-    public CherryBlossomFoliagePlacer(FeatureSpread radius, FeatureSpread heightOffset) {
+    public CherryBlossomFoliagePlacer(IntProvider radius, IntProvider heightOffset) {
         super(radius, heightOffset);
     }
 
@@ -37,26 +37,25 @@ public class CherryBlossomFoliagePlacer extends FoliagePlacer {
      * This will generate three rows of foliage where applicable, starting with the largest row, which is flush with the top of the trunk.
      * The following rows will overwrite each other with a low radius as the top of the tree if foliage height is low.
      *
-     * @param worldGenReader Instance of the world generator
+     * @param levelReader Reader for the level the foliage is being generated in
+     * @param blockConsumer Consumer for block position and state
      * @param random A random number generator
      * @param treeConfig Configuration class for getting the state of the placed blocks
      * @param trunkLength Length of the current tree's trunk
      * @param foliage Foliage settings for this foliage placer
      * @param foliageHeight Height of the foliage to be created at this foliage point
      * @param foliageRadius The radius of the foliage
-     * @param placedBlockPositions The position of all blocks placed into the world by this foliage generation
      * @param offsetY The offset on the Y-axis to start the placement position
-     * @param boundingBox Bounding limitations of the generator
      */
     @Override
-    protected void createFoliage(IWorldGenerationReader worldGenReader, Random random, BaseTreeFeatureConfig treeConfig, int trunkLength, Foliage foliage, int foliageHeight, int foliageRadius, Set<BlockPos> placedBlockPositions, int offsetY, MutableBoundingBox boundingBox) {
+    protected void createFoliage(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, Random random, TreeConfiguration treeConfig, int trunkLength, FoliagePlacer.FoliageAttachment foliage, int foliageHeight, int foliageRadius, int offsetY) {
         boolean isDoubleTrunk = foliage.doubleTrunk();
-        BlockPos foliageStartPosition = foliage.foliagePos().above(offsetY);
-        this.placeLeavesRow(worldGenReader, random, treeConfig, foliageStartPosition, foliageRadius + foliage.radiusOffset(), placedBlockPositions, -1 - foliageHeight, isDoubleTrunk, boundingBox);
-        this.placeLeavesRow(worldGenReader, random, treeConfig, foliageStartPosition, foliageRadius - 1, placedBlockPositions, -foliageHeight, isDoubleTrunk, boundingBox);
+        BlockPos foliageStartPosition = foliage.pos().above(offsetY);
+        this.placeLeavesRow(levelReader, blockConsumer, random, treeConfig, foliageStartPosition, foliageRadius + foliage.radiusOffset(), -1 - foliageHeight, isDoubleTrunk);
+        this.placeLeavesRow(levelReader, blockConsumer, random, treeConfig, foliageStartPosition, foliageRadius - 1, -foliageHeight, isDoubleTrunk);
 
         if (random.nextInt(2) == 1) {
-            this.placeLeavesRow(worldGenReader, random, treeConfig, foliageStartPosition, foliageRadius + foliage.radiusOffset() - 1, placedBlockPositions, -2 - foliageHeight, isDoubleTrunk, boundingBox);
+            this.placeLeavesRow(levelReader, blockConsumer, random, treeConfig, foliageStartPosition, foliageRadius + foliage.radiusOffset() - 1, -2 - foliageHeight, isDoubleTrunk);
         }
     }
 
@@ -70,7 +69,7 @@ public class CherryBlossomFoliagePlacer extends FoliagePlacer {
      * @return The height of the foliage for this tree
      */
     @Override
-    public int foliageHeight(Random random, int trunkLength, BaseTreeFeatureConfig treeConfig) {
+    public int foliageHeight(Random random, int trunkLength, TreeConfiguration treeConfig) {
         return 0;
     }
 

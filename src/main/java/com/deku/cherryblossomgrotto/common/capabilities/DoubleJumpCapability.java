@@ -1,20 +1,21 @@
 package com.deku.cherryblossomgrotto.common.capabilities;
 
-import com.deku.cherryblossomgrotto.Main;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.util.Direction;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraftforge.common.capabilities.*;
+import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import static com.deku.cherryblossomgrotto.common.capabilities.ModCapabilitiesInitializer.DOUBLE_JUMP_CAPABILITY;
+public class DoubleJumpCapability implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+    public static Capability<DoubleJump> DOUBLE_JUMP = CapabilityManager.get(new CapabilityToken<>() {
+    });
 
-public class DoubleJumpCapability implements ICapabilitySerializable<CompoundNBT> {
     private DoubleJump doubleJump = createDefaultInstance();
+
+    private String DOUBLE_JUMP_STORAGE_NAME = "hasDoubleJumped";
 
     /**
      * Creates a default instance for this capabilities.
@@ -23,6 +24,7 @@ public class DoubleJumpCapability implements ICapabilitySerializable<CompoundNBT
      *
      * @return The default instance of this capability.
      */
+    @Nonnull
     public static DoubleJump createDefaultInstance() {
         return new DoubleJump();
     }
@@ -33,8 +35,10 @@ public class DoubleJumpCapability implements ICapabilitySerializable<CompoundNBT
      * @return The compound NBT storing this capability's data
      */
     @Override
-    public CompoundNBT serializeNBT() {
-        return (CompoundNBT) DOUBLE_JUMP_CAPABILITY.writeNBT(doubleJump, null);
+    public CompoundTag serializeNBT() {
+        CompoundTag nbt = new CompoundTag();
+        nbt.putBoolean(DOUBLE_JUMP_STORAGE_NAME, doubleJump.hasDoubleJumped());
+        return nbt;
     }
 
     /**
@@ -43,8 +47,8 @@ public class DoubleJumpCapability implements ICapabilitySerializable<CompoundNBT
      * @param compoundNBT The compound NBT holding all of this capability's data
      */
     @Override
-    public void deserializeNBT(CompoundNBT compoundNBT) {
-        DOUBLE_JUMP_CAPABILITY.readNBT(doubleJump, null, compoundNBT);
+    public void deserializeNBT(CompoundTag compoundNBT) {
+        doubleJump.setHasDoubleJumped(compoundNBT.getBoolean(DOUBLE_JUMP_STORAGE_NAME));
     }
 
     /**
@@ -60,7 +64,7 @@ public class DoubleJumpCapability implements ICapabilitySerializable<CompoundNBT
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction side) {
-        return (LazyOptional<T>) LazyOptional.of(() -> doubleJump);
+        return getCapability(capability);
     }
 
     /**
@@ -73,7 +77,8 @@ public class DoubleJumpCapability implements ICapabilitySerializable<CompoundNBT
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability) {
-        return ICapabilitySerializable.super.getCapability(capability);
+        return (LazyOptional<T>) LazyOptional.of(() -> doubleJump);
+
     }
 
     /**
@@ -106,44 +111,6 @@ public class DoubleJumpCapability implements ICapabilitySerializable<CompoundNBT
          */
         public void setHasDoubleJumped(boolean value) {
             hasDoubleJumped = value;
-        }
-    }
-
-    /**
-     * Inner class which handles all the necessary functions for reading and writing the capability's data
-     */
-    public static class DoubleJumpStorage implements Capability.IStorage<IDoubleJump> {
-        /**
-         * Writes this capability's data to NBT
-         *
-         * @param capability Type of the capability at play here
-         * @param instance Instance of the capability that we are reading the data from
-         * @param side The directional information attached to this capability
-         * @return NBT data of all our capability's information
-         */
-        @Nullable
-        @Override
-        public INBT writeNBT(Capability<IDoubleJump> capability, IDoubleJump instance, Direction side) {
-            CompoundNBT compoundNBT = new CompoundNBT();
-            compoundNBT.putBoolean("hasDoubleJumped", instance.hasDoubleJumped());
-            return compoundNBT;
-        }
-
-        /**
-         * Reads data from NBT to populate this capability's instance
-         *
-         * @param capability Type of the capability at play
-         * @param instance Instance of the capability we want to populate with the information stored in NBT
-         * @param side The directional information attached to this capability
-         * @param nbt NBT that we are reading from
-         */
-        public void readNBT(Capability<IDoubleJump> capability, IDoubleJump instance, Direction side, INBT nbt) {
-            if (instance instanceof DoubleJump) {
-                CompoundNBT compoundNBT = (CompoundNBT) nbt;
-                instance.setHasDoubleJumped(compoundNBT.getBoolean("hasDoubleJumped"));
-            } else {
-                throw new IllegalArgumentException("Cannot deserialize to an instance that isn't the default implementation");
-            }
         }
     }
 }

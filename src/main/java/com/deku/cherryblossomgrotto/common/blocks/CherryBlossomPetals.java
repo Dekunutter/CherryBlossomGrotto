@@ -1,25 +1,29 @@
 package com.deku.cherryblossomgrotto.common.blocks;
 
-import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import static com.deku.cherryblossomgrotto.common.blocks.ModBlockStateProperties.HALF_LAYERS;
 
 public class CherryBlossomPetals extends Block {
     private static final int MAX_LAYERS = 4;
     protected static final VoxelShape[] SHAPE_BY_LAYER = new VoxelShape[]{
-            VoxelShapes.empty(),
+            Shapes.empty(),
             Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D),
             Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D),
             Block.box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D),
@@ -27,7 +31,7 @@ public class CherryBlossomPetals extends Block {
     };
 
     public CherryBlossomPetals() {
-        super(AbstractBlock.Properties.of(Material.LEAVES).strength(0.1f).sound(SoundType.GRASS).noOcclusion());
+        super(BlockBehaviour.Properties.of(Material.LEAVES).strength(0.1f).sound(SoundType.GRASS).noOcclusion());
         setRegistryName("cherry_blossom_petals");
         this.registerDefaultState(this.defaultBlockState().setValue(HALF_LAYERS, 1));
     }
@@ -38,11 +42,11 @@ public class CherryBlossomPetals extends Block {
      * @param state State of the block
      * @param reader Reader interface for the block
      * @param position Position of the block
-     * @param selectionContext Context for the block's selection
+     * @param collisionContext Context for the block's selection
      * @return A VoxelShape representing the current shape of the block
      */
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader reader, BlockPos position, ISelectionContext selectionContext) {
+    public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos position, CollisionContext collisionContext) {
         return SHAPE_BY_LAYER[state.getValue(HALF_LAYERS)];
     }
 
@@ -52,11 +56,11 @@ public class CherryBlossomPetals extends Block {
      * @param state State of the block
      * @param reader Reader interface for the block
      * @param position Position of the block
-     * @param selectionContext Context for the block's selection
+     * @param collisionContext Context for the block's selection
      * @return A VoxelShape representing the current collision shape of the block
      */
     @Override
-    public VoxelShape getCollisionShape(BlockState state, IBlockReader reader, BlockPos position, ISelectionContext selectionContext) {
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter reader, BlockPos position, CollisionContext collisionContext) {
         return SHAPE_BY_LAYER[state.getValue(HALF_LAYERS) - 1];
     }
 
@@ -69,7 +73,7 @@ public class CherryBlossomPetals extends Block {
      * @return A VoxelShape representing the current supporting chape of the block
      */
     @Override
-    public VoxelShape getBlockSupportShape(BlockState state, IBlockReader reader, BlockPos position) {
+    public VoxelShape getBlockSupportShape(BlockState state, BlockGetter reader, BlockPos position) {
         return SHAPE_BY_LAYER[state.getValue(HALF_LAYERS)];
     }
 
@@ -79,11 +83,11 @@ public class CherryBlossomPetals extends Block {
      * @param state State of the block
      * @param reader Reader interface for the block
      * @param position Position of the block
-     * @param selectionContext Context for the block's selection
+     * @param collisionContext Context for the block's selection
      * @return A VoxelShape representing the current visual shape of the block
      */
     @Override
-    public VoxelShape getVisualShape(BlockState state, IBlockReader reader, BlockPos position, ISelectionContext selectionContext) {
+    public VoxelShape getVisualShape(BlockState state, BlockGetter reader, BlockPos position, CollisionContext collisionContext) {
         return SHAPE_BY_LAYER[state.getValue(HALF_LAYERS) -1];
     }
 
@@ -107,7 +111,7 @@ public class CherryBlossomPetals extends Block {
      * @return Whether the block can survive in its current position
      */
     @Override
-    public boolean canSurvive(BlockState state, IWorldReader world, BlockPos position) {
+    public boolean canSurvive(BlockState state, LevelReader world, BlockPos position) {
         BlockState belowState = world.getBlockState(position.below());
         return Block.isFaceFull(belowState.getCollisionShape(world, position.below()), Direction.UP) || belowState.getBlock() == this && belowState.getValue(HALF_LAYERS) == MAX_LAYERS;
     }
@@ -125,7 +129,7 @@ public class CherryBlossomPetals extends Block {
      * @return Updated block state of the current block
      */
     @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState otherState, IWorld world, BlockPos position, BlockPos otherPosition) {
+    public BlockState updateShape(BlockState state, Direction direction, BlockState otherState, LevelAccessor world, BlockPos position, BlockPos otherPosition) {
         return !state.canSurvive(world, position) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, direction, otherState, world, position, otherPosition);
     }
 
@@ -137,7 +141,7 @@ public class CherryBlossomPetals extends Block {
      * @return Whether the block can be replaced by the item being used
      */
     @Override
-    public boolean canBeReplaced(BlockState state, BlockItemUseContext itemContext) {
+    public boolean canBeReplaced(BlockState state, BlockPlaceContext itemContext) {
         int layers = state.getValue(HALF_LAYERS);
         if (itemContext.getItemInHand().getItem() == this.asItem() && layers < MAX_LAYERS) {
             if (itemContext.replacingClickedOnBlock()) {
@@ -158,7 +162,7 @@ public class CherryBlossomPetals extends Block {
      * @return Updated state of the block that was placed
      */
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext itemContext) {
+    public BlockState getStateForPlacement(BlockPlaceContext itemContext) {
         BlockState state = itemContext.getLevel().getBlockState(itemContext.getClickedPos());
         if (state.is(this)) {
             int layers = state.getValue(HALF_LAYERS);
@@ -174,7 +178,7 @@ public class CherryBlossomPetals extends Block {
      * @param position Position of the block
      * @param world The world containing the block
      */
-    public void updateLayerState(BlockPos position, World world) {
+    public void updateLayerState(BlockPos position, Level world) {
         BlockState state = world.getBlockState(position);
         if (state.is(this)) {
             int layers = state.getValue(HALF_LAYERS);
@@ -189,7 +193,7 @@ public class CherryBlossomPetals extends Block {
      * @param builder The builder for the state container
      */
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(HALF_LAYERS);
     }
 
@@ -201,7 +205,7 @@ public class CherryBlossomPetals extends Block {
      * @param state State of the block being checked
      * @return Whether the block is "free" for replacement by cherry blossom petals or not
      */
-    public static boolean isFree(BlockState state, IWorld world, BlockPos position) {
+    public static boolean isFree(BlockState state, Level world, BlockPos position) {
         Material material = state.getMaterial();
         return state.isAir() || material.isLiquid() || material.isReplaceable();
     }
@@ -216,7 +220,7 @@ public class CherryBlossomPetals extends Block {
      * @return The flammability value of the block given its position in the world and the face being set alight
      */
     @Override
-    public int getFlammability(BlockState state, IBlockReader world, BlockPos pos, Direction face)
+    public int getFlammability(BlockState state, BlockGetter world, BlockPos pos, Direction face)
     {
         return 60;
     }
@@ -231,7 +235,7 @@ public class CherryBlossomPetals extends Block {
      * @return The likelihood that this burning block will be destroyed by the fire
      */
     @Override
-    public int getFireSpreadSpeed(BlockState state, IBlockReader world, BlockPos pos, Direction face)
+    public int getFireSpreadSpeed(BlockState state, BlockGetter world, BlockPos pos, Direction face)
     {
         return 100;
     }

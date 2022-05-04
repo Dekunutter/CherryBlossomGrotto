@@ -1,12 +1,13 @@
 package com.deku.cherryblossomgrotto.common.blocks;
 
-import com.deku.cherryblossomgrotto.common.tileEntities.CherryBlossomSignTileEntity;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.WallSignBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.IBlockReader;
+import com.deku.cherryblossomgrotto.common.entity.sign.ModSignBlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.WallSignBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 
 public class CherryBlossomWallSign extends WallSignBlock {
     public CherryBlossomWallSign() {
@@ -15,13 +16,14 @@ public class CherryBlossomWallSign extends WallSignBlock {
     }
 
     /**
-     * Assigns the corresponding tile entity to this sign
+     * Gets the sign block entity for this sign
      *
-     * @param reader Reader interface for the block
-     * @return The tile entity associated with this sign block
+     * @param position Position of the sign in the level
+     * @param blockState State of the sign
+     * @return The block entity for this sign
      */
     @Override
-    public TileEntity newBlockEntity(IBlockReader reader) {
-        return new CherryBlossomSignTileEntity();
+    public BlockEntity newBlockEntity(BlockPos position, BlockState blockState) {
+        return new ModSignBlockEntity(position, blockState);
     }
 }
