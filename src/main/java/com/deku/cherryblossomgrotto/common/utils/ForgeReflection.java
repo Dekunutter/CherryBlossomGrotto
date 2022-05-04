@@ -3,8 +3,6 @@ package com.deku.cherryblossomgrotto.common.utils;
 import com.deku.cherryblossomgrotto.Main;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
-import java.lang.invoke.MethodHandles;
-import java.lang.invoke.VarHandle;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -30,19 +28,6 @@ public class ForgeReflection {
     }
 
     /**
-     * Gets the value of a private field from a given class using reflection.
-     * Call this version of the function if you only want to get the value of a privatized static field.
-     * Expects the SRG name of the field to work around obfuscation.
-     *
-     * @param classToCheck Class that contains the field we want to extract a value from
-     * @param fieldName SRG Name of the field we want to extract a value from
-     * @return The value in the field we want to read from, or null if nothing could be read
-     */
-    public static Object getObfuscatedPrivatizedFieldValue(Class classToCheck, String fieldName) {
-        return getObfuscatedPrivatizedFieldValue(classToCheck, fieldName, null);
-    }
-
-    /**
      * Overloaded version of the privatized field getter that works on an object instance. If no object instance
      * was provided then this assumes the field is static, otherwise an instance value can be fetched.
      * Expects the SRG name of the field to work around obfuscation.
@@ -65,19 +50,6 @@ public class ForgeReflection {
             Main.LOGGER.error("Failed to access field " + fieldName + " on " + classToCheck.getName() + ": " + e.getMessage());
             return null;
         }
-    }
-
-    /**
-     * Sets the privatized field on a class to the given value.
-     * Call this version of the function if you know the value you want to update is a privatized static field.
-     * Expects the SRG name of the field to work around obfuscation.
-     *
-     * @param classToCheck Class we want to update the value on
-     * @param fieldName The SRG name of the variable we want to update
-     * @param newValue The value we want to set the variable to.
-     */
-    public static void setObfuscatedPrivatizedFieldToValue(Class classToCheck, String fieldName, Object newValue) {
-        setObfuscatedPrivatizedFieldToValue(classToCheck, fieldName, newValue, null);
     }
 
     /**

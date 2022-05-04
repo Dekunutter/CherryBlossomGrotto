@@ -32,6 +32,11 @@ public class ModTreeFeatures {
     public static ConfiguredFeature<TreeConfiguration, ?> FANCY_CHERRY_BLOSSOM_BEES_05;
     public static ConfiguredFeature<TreeConfiguration, ?> GRAND_CHERRY_BLOSSOM;
 
+    /**
+     * Configures a cherry blossom tree
+     *
+     * @return The configuration for a cherry blossom tree
+     */
     private static TreeConfiguration.TreeConfigurationBuilder createCherryBlossomTree() {
         return new TreeConfiguration.TreeConfigurationBuilder(
             BlockStateProvider.simple(ModBlocks.CHERRY_LOG.defaultBlockState()),
@@ -42,6 +47,11 @@ public class ModTreeFeatures {
         ).ignoreVines();
     }
 
+    /**
+     * Configures a fancy cherry blossom tree
+     *
+     * @return The configuration for a fancy cherry blossom tree
+     */
     private static TreeConfiguration.TreeConfigurationBuilder createFancyCherryBlossomTree() {
         return new TreeConfiguration.TreeConfigurationBuilder(
             BlockStateProvider.simple(ModBlocks.CHERRY_LOG.defaultBlockState()),
@@ -52,6 +62,11 @@ public class ModTreeFeatures {
         ).ignoreVines();
     }
 
+    /**
+     * Configures a grand cherry blossom tree
+     *
+     * @return The configuration for a grand cherry blossom tree
+     */
     private static TreeConfiguration.TreeConfigurationBuilder createGrandCherryBlossomTree() {
         return new TreeConfiguration.TreeConfigurationBuilder(
             BlockStateProvider.simple(ModBlocks.CHERRY_LOG.defaultBlockState()),
@@ -62,6 +77,9 @@ public class ModTreeFeatures {
         ).ignoreVines();
     }
 
+    /**
+     * Registers all tree configurations into the game via the configured feature registry
+     */
     public static void register() {
         CHERRY_BLOSSOM = Registry.register(
             BuiltinRegistries.CONFIGURED_FEATURE,

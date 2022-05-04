@@ -11,6 +11,13 @@ import java.util.Random;
 
 public class CherryBlossomTreeGrower extends AbstractMegaTreeGrower {
 
+    /**
+     * Gets the configured feature that is spawned from this grower
+     *
+     * @param random Random number generator
+     * @param hasBees Whether the grown feature has bees
+     * @return A holder containing the configured feature spawned by this grower
+     */
     @Nullable
     protected Holder<? extends ConfiguredFeature<?, ?>> getConfiguredFeature(Random random, boolean hasBees) {
         if (random.nextInt(10) < 5) {
@@ -20,6 +27,12 @@ public class CherryBlossomTreeGrower extends AbstractMegaTreeGrower {
         }
     }
 
+    /**
+     * Gets the configured mega feature that is spawned from this grower
+     *
+     * @param random Random number generator
+     * @return A holder containing the configured mega feature spawned by this grower
+     */
     @Nullable
     protected Holder<? extends ConfiguredFeature<?, ?>> getConfiguredMegaFeature(Random random) {
         return Holder.direct(ModTreeFeatures.GRAND_CHERRY_BLOSSOM);

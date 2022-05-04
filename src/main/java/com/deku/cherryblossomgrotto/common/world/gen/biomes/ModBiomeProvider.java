@@ -23,6 +23,13 @@ public class ModBiomeProvider extends Region {
         super(new ResourceLocation(MOD_ID, "biome_provider"), RegionType.OVERWORLD, 1);
     }
 
+    /**
+     * Adds biomes to a new region for this world
+     * Ensures the new region is filled with vanilla biomes before effectively replacing flower forests with cherry blossom grottos
+     *
+     * @param registry Registry that the biome is registered with
+     * @param mapper Pairs of climate parameters mapped to biome resource keys
+     */
     @Override
     public void addBiomes(Registry<Biome> registry, Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> mapper)
     {

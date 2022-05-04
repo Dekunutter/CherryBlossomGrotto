@@ -20,6 +20,11 @@ public class KabutoGreaves extends ArmorItem implements IItemRenderProperties {
         setRegistryName("kabuto_greaves");
     }
 
+    /**
+     * Ensures that the client renders the current model for this piece of armour
+     *
+     * @param consumer The consumer containing render properties for this item
+     */
     @Override
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
         consumer.accept(new IItemRenderProperties() {

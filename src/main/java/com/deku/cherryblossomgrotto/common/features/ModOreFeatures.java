@@ -13,10 +13,18 @@ import static net.minecraft.data.worldgen.features.OreFeatures.*;
 public class ModOreFeatures {
     public static ConfiguredFeature<OreConfiguration, ?> ORE_IRON_SPARSE;
 
+    /**
+     * Creates an ore configuration for sparse iron
+     *
+     * @return The ore configuration for sparse iron
+     */
     private static OreConfiguration createSparseIronOre() {
         return new OreConfiguration(ORE_IRON_TARGET_LIST, 2, 0.2F);
     }
 
+    /**
+     * Registers all ore configurations into the game via the configured feature registry
+     */
     public static void register() {
         ORE_IRON_SPARSE = Registry.register(
             BuiltinRegistries.CONFIGURED_FEATURE,

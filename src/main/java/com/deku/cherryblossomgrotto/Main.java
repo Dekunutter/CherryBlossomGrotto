@@ -190,10 +190,15 @@ public class Main
     /**
      * Sets up logic that is common to both the client and server
      *
-     * In this case we are registering our custom network messages to the simple network channel.
-     * Then we register our custom wood types so that we can use associated resources.
-     * Then we initialize all our modded structures.
-     * Finally, we initialize all our modded capabilities.
+     * In this case we are:
+     * - Registering our custom network messages to the simple network channel.
+     * - Registering our custom wood types so that we can use associated resources.
+     * - Registering all our terrablender regions
+     * - Registering all our different features (trees, vegetation, ores, miscellaneous)
+     * - Registering all our placements (ensuring village placements register after the processor lists)
+     * - Registering all our processor lists
+     * - Registering our custom villager types
+     * - Initializing all our modded structures, their pieces and the structure sets that they belong to.
      *
      * @param event The setup event
      */
@@ -562,6 +567,11 @@ public class Main
             //TODO: Should I register configured features in here after the feature registration has run? Right now they register at the global level spread across a few new classes and sit in holders. This might not be the right stage to be registering them...
         }
 
+        /**
+         * Used to register block state provider types into the game using the mod event bus
+         *
+         * @param blockStateProviderRegistryEvent The registry event with which block state provider types will be registered
+         */
         @SubscribeEvent
         public static void onBlockStateProviderTypeRegistry(final RegistryEvent.Register<BlockStateProviderType<?>> blockStateProviderRegistryEvent) {
             LOGGER.info("HELLO from Register Block State Provider Type");
@@ -633,6 +643,11 @@ public class Main
             //blockColors.register(GrassBlockColor.instance, ModBlocks.GRASS);
         }
 
+        /**
+         * Used to register capabilities into the game using the mod event bus
+         *
+         * @param capabilityRegistryEvent The registry event with which capabilities will be registered
+         */
         @SubscribeEvent
         public static void onCapabilityRegistration(RegisterCapabilitiesEvent capabilityRegistryEvent) {
             Main.LOGGER.info("HELLO from Register Capability");
@@ -640,6 +655,12 @@ public class Main
             capabilityRegistryEvent.register(DoubleJumpCapability.DoubleJump.class);
         }
 
+        /**
+         * used to register data generators into the game using the mod event bus
+         * Data generators include things like tag providers
+         *
+         * @param event The registry event with which data generators will be registered
+         */
         @SubscribeEvent
         public static void onDataGeneratorRegistration(GatherDataEvent event) {
             LOGGER.info("HELLO from Register Data Generator");

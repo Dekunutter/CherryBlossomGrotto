@@ -13,6 +13,11 @@ public class ModVillagePlacements {
     public static Holder<PlacedFeature> CHERRY_BLOSSOM_TREE_VILLAGE;
     public static Holder<PlacedFeature> FLOWER_FOREST_VILLAGE;
 
+    /**
+     * Registers village placements into the game via the placed features registry.
+     *
+     * Village placements are just features intended spoecifically for use in villages as decorations
+     */
     public static void register() {
         CHERRY_BLOSSOM_TREE_VILLAGE = PlacementUtils.register(
             MOD_ID + ":cherry_blossom",

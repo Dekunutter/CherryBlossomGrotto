@@ -22,6 +22,10 @@ public class ModBiomeTags extends TagsProvider<Biome> {
     }
 
     // TODO: Do the new has_structure json files make all this redundant? Same for configured structure features. If we declare those in json do we need any of this logic or the logic in that initializer that uses these tags?
+
+    /**
+     * Adds biomes to all the biome tags defined
+     */
     @Override
     protected void addTags() {
         tag(HAS_GIANT_BUDDHA).add(Biomes.BAMBOO_JUNGLE).add(Biomes.JUNGLE).add(Biomes.SPARSE_JUNGLE).add(Biomes.SNOWY_SLOPES).add(Biomes.SNOWY_TAIGA).add(Biomes.OLD_GROWTH_SPRUCE_TAIGA).add(ModBiomeInitializer.CHERRY_BLOSSOM_GROTTO);
@@ -29,6 +33,11 @@ public class ModBiomeTags extends TagsProvider<Biome> {
         tag(HAS_CHERRY_BLOSSOM_GROTTO_VILLAGE).add(ModBiomeInitializer.CHERRY_BLOSSOM_GROTTO);
     }
 
+    /**
+     * Gets the name of this tag provider
+     *
+     * @return Name of this tag provider
+     */
     @Override
     public String getName() {
         return "CherryBlossomGrotto Tags";

@@ -22,6 +22,9 @@ public class ModVegetationFeatures {
     public static ConfiguredFeature<RandomFeatureConfiguration, ?> TREES_CHERY_BLOSSOM_GROTTO;
     public static ConfiguredFeature<SimpleRandomFeatureConfiguration, ?> CHERY_BLOSSOM_GROTTO_FLOWERS;
 
+    /**
+     * Registers all vegatation features into the game via the configured feature registry
+     */
     public static void register() {
         TREES_CHERY_BLOSSOM_GROTTO = Registry.register(
             BuiltinRegistries.CONFIGURED_FEATURE,

@@ -22,6 +22,11 @@ public class ModStructureSets {
     // Overriding the structure set for the base-games villages
     public static Holder<StructureSet> CHERRY_BLOSSOM_GROTTO_VILLAGES;
 
+    /**
+     * Registers all structure sets into the game via the structure set registry.
+     *
+     * Structure sets are collections of structures, grouped by a commonality (e.g: all villages being in the village structure set)
+     */
     public static void register() {
         GIANT_BUDDHAS = registerStructureSet(
             ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation(MOD_ID, "giant_buddhas")),

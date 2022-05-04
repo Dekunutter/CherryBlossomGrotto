@@ -12,6 +12,9 @@ import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 public class ModMiscOverworldFeatures {
     public static ConfiguredFeature<NoneFeatureConfiguration, ?> CHERRY_BLOSSOM_PETAL_GROUND_COVER;
 
+    /**
+     * Registers all miscellaneous overworld features into the game via the configured feature registry
+     */
     public static void register() {
         CHERRY_BLOSSOM_PETAL_GROUND_COVER = Registry.register(
             BuiltinRegistries.CONFIGURED_FEATURE,

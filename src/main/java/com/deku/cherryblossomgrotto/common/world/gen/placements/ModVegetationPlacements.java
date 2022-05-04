@@ -14,6 +14,9 @@ public class ModVegetationPlacements {
     public static Holder<PlacedFeature> TREES_CHERRY_BLOSSOM_GROTTO;
     public static Holder<PlacedFeature> CHERRY_BLOSSOM_GROTTO_FLOWERS;
 
+    /**
+     * Registers vegetation placements into the game via the placed features registry
+     */
     public static void register() {
         TREES_CHERRY_BLOSSOM_GROTTO = PlacementUtils.register(
             MOD_ID + ":trees_cherry_blossom_grotto",

@@ -17,6 +17,9 @@ public class ModTreePlacements {
     public static Holder<PlacedFeature> FANCY_CHERRY_BLOSSOM_BEES_05;
     public static Holder<PlacedFeature> GRAND_CHERRY_BLOSSOM_CHECKED;
 
+    /**
+     * Registers tree placements into the game via the placed features registry
+     */
     public static void register() {
         CHERRY_BLOSSOM_CHECKED = PlacementUtils.register(
             MOD_ID + ":cherry_blossom_checked",

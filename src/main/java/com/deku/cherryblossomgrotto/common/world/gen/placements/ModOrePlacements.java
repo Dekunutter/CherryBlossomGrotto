@@ -14,6 +14,9 @@ public class ModOrePlacements {
     public static Holder<PlacedFeature> ORE_IRON_SPARSE;
     public static Holder<PlacedFeature> ORE_IRON_SPARSE_UPPER;
 
+    /**
+     * Registers ore placements into the game via the placed features registry
+     */
     public static void register() {
         ORE_IRON_SPARSE = PlacementUtils.register(
             MOD_ID + ":ore_iron_sparse",
