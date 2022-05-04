@@ -8,6 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -72,15 +73,15 @@ public abstract class AbstractZenLantern extends Block {
      * @param blockState State of the block having its shape updated
      * @param direction Direction we are going to update the shape in
      * @param otherBlockState State of the other block in the check
-     * @param world World the block is being updated in
+     * @param levelAccessor Accessor for the level the block is being updated in
      * @param position Position of the block having its shape updated
      * @param otherPosition Position of the other block in the check
      * @return Updated block state of the current block
      */
-    public BlockState updateShape(BlockState blockState, Direction direction, BlockState otherBlockState, Level world, BlockPos position, BlockPos otherPosition) {
+    public BlockState updateShape(BlockState blockState, Direction direction, BlockState otherBlockState, LevelAccessor levelAccessor, BlockPos position, BlockPos otherPosition) {
         DoubleBlockHalf doubleblockhalf = blockState.getValue(HALF);
         if (direction.getAxis() != Direction.Axis.Y || doubleblockhalf == DoubleBlockHalf.LOWER != (direction == Direction.UP) || otherBlockState.is(this) && otherBlockState.getValue(HALF) != doubleblockhalf) {
-            return doubleblockhalf == DoubleBlockHalf.LOWER && direction == Direction.DOWN && !blockState.canSurvive(world, position) ? Blocks.AIR.defaultBlockState() : super.updateShape(blockState, direction, otherBlockState, world, position, otherPosition);
+            return doubleblockhalf == DoubleBlockHalf.LOWER && direction == Direction.DOWN && !blockState.canSurvive(levelAccessor, position) ? Blocks.AIR.defaultBlockState() : super.updateShape(blockState, direction, otherBlockState, levelAccessor, position, otherPosition);
         } else {
             return Blocks.AIR.defaultBlockState();
         }
