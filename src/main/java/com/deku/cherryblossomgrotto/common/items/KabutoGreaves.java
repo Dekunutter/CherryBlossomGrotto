@@ -11,12 +11,9 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
 public class KabutoGreaves extends ArmorItem {
-    private KabutoArmourModel armorModel;
-
     public KabutoGreaves() {
         super(ArmorMaterial.IRON, EquipmentSlotType.LEGS, new Properties().tab(ItemGroup.TAB_COMBAT));
         setRegistryName("kabuto_greaves");
-        armorModel = new KabutoArmourModel();
     }
 
     /**
@@ -30,6 +27,7 @@ public class KabutoGreaves extends ArmorItem {
      */
     @Override
     public final BipedModel getArmorModel(LivingEntity entity, ItemStack itemStack, EquipmentSlotType armorSlot, BipedModel defaultArmor) {
+        KabutoArmourModel armorModel = new KabutoArmourModel();
         return armorModel.applyEntityStats(defaultArmor).applySlot(armorSlot);
     }
 
@@ -44,6 +42,6 @@ public class KabutoGreaves extends ArmorItem {
      */
     @Override
     public final String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        return armorModel.getTexture();
+        return "cherryblossomgrotto:textures/model/kabuto_armour.png";
     }
 }

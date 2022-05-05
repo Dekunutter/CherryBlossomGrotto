@@ -11,12 +11,10 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
 public class KabutoHelmet extends ArmorItem {
-    private KabutoArmourModel armorModel;
 
     public KabutoHelmet() {
         super(ArmorMaterial.IRON, EquipmentSlotType.HEAD, new Properties().tab(ItemGroup.TAB_COMBAT));
         setRegistryName("kabuto_helmet");
-        armorModel = new KabutoArmourModel();
     }
 
     /**
@@ -30,6 +28,7 @@ public class KabutoHelmet extends ArmorItem {
      */
     @Override
     public final BipedModel getArmorModel(LivingEntity entity, ItemStack itemStack, EquipmentSlotType armorSlot, BipedModel defaultArmor) {
+        KabutoArmourModel armorModel = new KabutoArmourModel();
         return armorModel.applyEntityStats(defaultArmor).applySlot(armorSlot);
     }
 
@@ -44,6 +43,6 @@ public class KabutoHelmet extends ArmorItem {
      */
     @Override
     public final String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        return armorModel.getTexture();
+        return "cherryblossomgrotto:textures/model/kabuto_armour.png";
     }
 }

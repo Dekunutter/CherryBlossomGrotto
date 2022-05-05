@@ -8,12 +8,10 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 
 public class NinjaTunic extends ArmorItem {
-    private NinjaSuitModel armorModel;
 
     public NinjaTunic() {
         super(ModArmorMaterial.WOOL, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT));
         setRegistryName("ninja_tunic");
-        armorModel = new NinjaSuitModel();
     }
 
     /**
@@ -27,6 +25,7 @@ public class NinjaTunic extends ArmorItem {
      */
     @Override
     public final BipedModel getArmorModel(LivingEntity entity, ItemStack itemStack, EquipmentSlotType armorSlot, BipedModel defaultArmor) {
+        NinjaSuitModel armorModel = new NinjaSuitModel();
         return armorModel.applyEntityStats(defaultArmor).applySlot(armorSlot);
     }
 
@@ -41,6 +40,6 @@ public class NinjaTunic extends ArmorItem {
      */
     @Override
     public final String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        return armorModel.getTexture();
+        return "cherryblossomgrotto:textures/model/ninja_suit.png";
     }
 }

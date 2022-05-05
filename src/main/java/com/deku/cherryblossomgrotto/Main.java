@@ -2,16 +2,11 @@ package com.deku.cherryblossomgrotto;
 
 import com.deku.cherryblossomgrotto.client.network.handlers.DoubleJumpClientMessageHandler;
 import com.deku.cherryblossomgrotto.client.network.messages.DoubleJumpClientMessage;
-import com.deku.cherryblossomgrotto.client.renderers.KoiRenderer;
-import com.deku.cherryblossomgrotto.client.renderers.KunaiRenderer;
-import com.deku.cherryblossomgrotto.client.renderers.ModBoatRenderer;
-import com.deku.cherryblossomgrotto.client.renderers.ShurikenRenderer;
 import com.deku.cherryblossomgrotto.common.blocks.*;
 import com.deku.cherryblossomgrotto.common.capabilities.DoubleJumpCapability;
 import com.deku.cherryblossomgrotto.common.capabilities.ModCapabilitiesInitializer;
 import com.deku.cherryblossomgrotto.common.enchantments.ModEnchantmentInitializer;
 import com.deku.cherryblossomgrotto.common.entity.EntityTypeInitializer;
-import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
 import com.deku.cherryblossomgrotto.common.features.*;
 import com.deku.cherryblossomgrotto.common.features.template.ModProcessorLists;
 import com.deku.cherryblossomgrotto.common.items.*;
@@ -20,7 +15,6 @@ import com.deku.cherryblossomgrotto.common.particles.ModParticles;
 import com.deku.cherryblossomgrotto.common.recipes.FoldingRecipe;
 import com.deku.cherryblossomgrotto.common.tileEntities.CherryBlossomSignTileEntity;
 import com.deku.cherryblossomgrotto.common.tileEntities.CherryLeavesTileEntity;
-import com.deku.cherryblossomgrotto.common.tileEntities.ModTileEntityData;
 import com.deku.cherryblossomgrotto.common.utils.ForgeReflection;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeInitializer;
 import com.deku.cherryblossomgrotto.common.world.gen.blockstateprovider.CherryBlossomForestFlowerProviderType;
@@ -36,11 +30,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Atlases;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.client.renderer.color.BlockColors;
-import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -76,10 +65,7 @@ import net.minecraft.world.gen.settings.DimensionStructuresSettings;
 import net.minecraft.world.gen.trunkplacer.TrunkPlacerType;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
-import net.minecraftforge.client.event.RenderHandEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.*;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -94,10 +80,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
@@ -178,8 +161,6 @@ public class Main
         eventBus.addListener(this::enqueueIMC);
         // Register the processIMC method for modloading
         eventBus.addListener(this::processIMC);
-        // Register the doClientStuff method for modloading
-        eventBus.addListener(this::doClientStuff);
 
         ClientOnlyRegistrar clientOnlyRegistrar = new ClientOnlyRegistrar(eventBus);
 
@@ -218,39 +199,6 @@ public class Main
             ModProcessorLists.register();
             ModConfiguredStructureInitializer.registerConfiguredStructures();
             ModCapabilitiesInitializer.registerCapabilities();
-        });
-    }
-
-    /**
-     * Sets up client specific logic, such as rendering types.
-     *
-     * In this case we are performing the following:
-     * - adding the cut-out render type to our custom grass block so that overlays display properly on that block.
-     * - Rendering some textures as cutout mipmaps so that opacity is adhered to
-     * - Binding the sign renderer to our custom sign tile entity.
-     * - Adding our custom wood types to the atlas, which enables them to be valid sign materials.
-     *
-     * @param event The client setup event
-     */
-    private void doClientStuff(final FMLClientSetupEvent event) {
-        // do something that can only be done on the client
-        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
-
-        RenderingRegistry.registerEntityRenderingHandler(ModEntityData.MOD_BOAT_DATA, ModBoatRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntityData.KUNAI_DATA, KunaiRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntityData.SHURIKEN_DATA, ShurikenRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntityData.KOI_DATA, KoiRenderer::new);
-
-        //RenderTypeLookup.setRenderLayer(ModBlocks.GRASS, RenderType.cutout());
-        RenderTypeLookup.setRenderLayer(ModBlocks.CHERRY_PETALS, RenderType.cutoutMipped());
-        RenderTypeLookup.setRenderLayer(ModBlocks.CHERRY_SAPLING, RenderType.cutoutMipped());
-        RenderTypeLookup.setRenderLayer(ModBlocks.POTTED_CHERRY_SAPLING, RenderType.cutoutMipped());
-        RenderTypeLookup.setRenderLayer(ModBlocks.RICE_PADDY, RenderType.cutoutMipped());
-
-        ClientRegistry.bindTileEntityRenderer(ModTileEntityData.CHERRY_SIGN_TILE_DATA, SignTileEntityRenderer::new);
-
-        event.enqueueWork(() -> {
-            Atlases.addWoodType(ModWoodType.CHERRY_BLOSSOM);
         });
     }
 
@@ -612,19 +560,6 @@ public class Main
 
             Minecraft.getInstance().particleEngine.register(ModParticles.CHERRY_PETAL, FallingCherryBlossomPetalFactory::new);
         }
-
-        /**
-         * Used to register block color handlers into the game using the mod event bus
-         *
-         * @param event The registry event with which block color handlers will be registered
-         */
-        @SubscribeEvent
-        public static void onBlockColorHandlerRegistration(ColorHandlerEvent.Block event) {
-            LOGGER.info("HELLO from Register Block Color Handler");
-
-            BlockColors blockColors = event.getBlockColors();
-            //blockColors.register(GrassBlockColor.instance, ModBlocks.GRASS);
-        }
     }
 
     /**
@@ -727,24 +662,6 @@ public class Main
                     world.setBlock(position, block.defaultBlockState().setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS)), 11);
                     event.getItemStack().hurtAndBreak(1, player, (p_220036_0_) -> p_220036_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
                 }
-            }
-        }
-
-        @SubscribeEvent
-        public static void onRenderPlayerEvent(RenderPlayerEvent.Pre event) {
-            // TODO: Try manipulating the player arm in here (or in the POST event) to perform an action
-            event.getRenderer().getModel().rightArm.visible = true;
-        }
-
-        @SubscribeEvent
-        public static void onRenderPlayerEvent(RenderPlayerEvent.Post event) {
-            //event.getRenderer().getModel().rightArm.translateAndRotate();
-            event.getRenderer().getModel().rightArm.visible = true;
-        }
-
-        @SubscribeEvent
-        public static void onRenderPlayerEvent(RenderHandEvent event) {
-            if (event.getItemStack().getItem() == ModItems.SHURIKEN) {
             }
         }
 
