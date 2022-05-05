@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
-public class KabutoHelmet extends ArmorItem implements IItemRenderProperties {
+public class KabutoHelmet extends ArmorItem {
     public KabutoHelmet() {
         super(ArmorMaterials.IRON, EquipmentSlot.HEAD, new Properties().stacksTo(1).tab(CreativeModeTab.TAB_COMBAT));
         setRegistryName("kabuto_helmet");

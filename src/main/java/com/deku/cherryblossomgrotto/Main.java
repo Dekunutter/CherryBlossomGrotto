@@ -1,21 +1,12 @@
 package com.deku.cherryblossomgrotto;
 
-import com.deku.cherryblossomgrotto.client.models.geom.ModLayerDefinitions;
-import com.deku.cherryblossomgrotto.client.models.geom.ModModelLayerLocations;
 import com.deku.cherryblossomgrotto.client.network.handlers.DoubleJumpClientMessageHandler;
 import com.deku.cherryblossomgrotto.client.network.messages.DoubleJumpClientMessage;
-import com.deku.cherryblossomgrotto.client.renderers.KoiRenderer;
-import com.deku.cherryblossomgrotto.client.renderers.KunaiRenderer;
-import com.deku.cherryblossomgrotto.client.renderers.ModBoatRenderer;
-import com.deku.cherryblossomgrotto.client.renderers.ShurikenRenderer;
-import com.deku.cherryblossomgrotto.client.renderers.layers.KabutoArmourLayer;
-import com.deku.cherryblossomgrotto.client.renderers.layers.NinjaRobesLayer;
 import com.deku.cherryblossomgrotto.common.blocks.*;
 import com.deku.cherryblossomgrotto.common.capabilities.DoubleJumpCapability;
 import com.deku.cherryblossomgrotto.common.enchantments.ModEnchantmentInitializer;
 import com.deku.cherryblossomgrotto.common.entity.EntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ModBlockEntities;
-import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
 import com.deku.cherryblossomgrotto.common.entity.npc.ModVillagerTypes;
 import com.deku.cherryblossomgrotto.common.features.*;
 import com.deku.cherryblossomgrotto.common.features.template.ModProcessorLists;
@@ -38,19 +29,6 @@ import com.deku.cherryblossomgrotto.server.network.messages.DoubleJumpServerMess
 import com.deku.cherryblossomgrotto.utils.LogTweaker;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.color.block.BlockColors;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.Sheets;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.client.renderer.blockentity.SignRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
@@ -96,7 +74,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
@@ -175,10 +152,9 @@ public class Main
         eventBus.addListener(this::enqueueIMC);
         // Register the processIMC method for modloading
         eventBus.addListener(this::processIMC);
-        // Register the doClientStuff method for modloading
-        eventBus.addListener(this::doClientStuff);
 
         ClientOnlyRegistrar clientOnlyRegistrar = new ClientOnlyRegistrar(eventBus);
+        //clientOnlyRegistrar.registerClientOnlyEvents();
 
         // Register ourselves for server and other game events we are interested in
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
@@ -237,34 +213,6 @@ public class Main
         ModStructurePieceTypes.register();
         ModConfiguredStructures.register();
         ModStructureSets.register();
-    }
-
-    /**
-     * Sets up client specific logic, such as rendering types.
-     *
-     * In this case we are performing the following:
-     * - adding the cut-out render type to our custom grass block so that overlays display properly on that block.
-     * - Rendering some textures as cutout mipmaps so that opacity is adhered to
-     * - Binding the sign renderer to our custom sign tile entity.
-     * - Adding our custom wood types to the atlas, which enables them to be valid sign materials.
-     *
-     * @param event The client setup event
-     */
-    private void doClientStuff(final FMLClientSetupEvent event) {
-        // do something that can only be done on the client
-        LOGGER.info("Got game settings {}", Minecraft.getInstance().options);
-
-        //RenderTypeLookup.setRenderLayer(ModBlocks.GRASS, RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.CHERRY_PETALS, RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.CHERRY_SAPLING, RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.POTTED_CHERRY_SAPLING, RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.RICE_PADDY, RenderType.cutoutMipped());
-
-        BlockEntityRenderers.register(ModBlockEntities.SIGN_ENTITY_TYPE, SignRenderer::new);
-
-        event.enqueueWork(() -> {
-            Sheets.addWoodType(ModWoodType.CHERRY_BLOSSOM);
-        });
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
@@ -477,84 +425,6 @@ public class Main
         }
 
         /**
-         * Used to register entity renderers into the game using the mod event bus
-         *
-         * @param registerEntityEvent The registry event with which entity renderers will be registered
-         */
-        @SubscribeEvent
-        public static void onEntityRendererRegistry(final EntityRenderersEvent.RegisterRenderers registerEntityEvent) {
-            registerEntityEvent.registerEntityRenderer(ModEntityData.MOD_BOAT_DATA, ModBoatRenderer::new);
-            registerEntityEvent.registerEntityRenderer(ModEntityData.KOI_DATA, KoiRenderer::new);
-            registerEntityEvent.registerEntityRenderer(ModEntityData.KUNAI_DATA, KunaiRenderer::new);
-            registerEntityEvent.registerEntityRenderer(ModEntityData.SHURIKEN_DATA, ShurikenRenderer::new);
-        }
-
-        /**
-         * Used to register entity layer definitions into the game using the mod event bus
-         * All new entity layers need to be defined here to be loaded into the game, including those rendering for vanilla entities
-         *
-         * @param registerLayerDefinitionEvent The registry event with which entity layer definitions will be registered
-         */
-        @SubscribeEvent
-        public static void onEntityRendererRegistry(final EntityRenderersEvent.RegisterLayerDefinitions registerLayerDefinitionEvent) {
-            registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.KOI, () -> ModLayerDefinitions.KOI_LAYER);
-            registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.KABUTO_ARMOUR, () -> ModLayerDefinitions.KABUTO_ARMOUR_LAYER);
-            registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.INNER_KABUTO_ARMOUR, () -> ModLayerDefinitions.INNER_KABUTO_ARMOUR_LAYER);
-            registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.NINJA_ROBES, () -> ModLayerDefinitions.NINJA_ROBES_LAYER);
-            registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.INNER_NINJA_ROBES, () -> ModLayerDefinitions.INNER_NINJA_ROBES_LAYER);
-        }
-
-        /**
-         * Used to register new layers to existing entity renderers into the game using the mod event bus
-         * The will loop through all skin layers to get player layer renderers and find the biped armour layer to add custom armour layers
-         * NOTE: Layers cannot be added to a renderer while looping through skin layers, else it will cause a concurrency exception. Hence adding them outside of the loop
-         *
-         * @param registerAddedLayerEvent The registry event with which entity layer definitions will have new layers registered
-         */
-        @SubscribeEvent
-        public static <T extends LivingEntity, M extends HumanoidModel<T>> void onEntityRendererRegistry(final EntityRenderersEvent.AddLayers registerAddedLayerEvent) {
-            LOGGER.error("HELLO from Register Entity Renderer");
-
-            PlayerRenderer playerSkinRenderer = registerAddedLayerEvent.getSkin("default");
-
-            addLayerToEntityRenderer(playerSkinRenderer, registerAddedLayerEvent.getEntityModels());
-
-            for (Map.Entry<EntityType<?>, EntityRenderer<?>> entry : Minecraft.getInstance().getEntityRenderDispatcher().renderers.entrySet()) {
-                EntityRenderer<?> renderer = entry.getValue();
-                if (renderer instanceof LivingEntityRenderer) {
-                    LivingEntityRenderer<LivingEntity, HumanoidModel<LivingEntity>> livingEntityRenderer = (LivingEntityRenderer<LivingEntity, HumanoidModel<LivingEntity>>) renderer;
-
-                    addLayerToEntityRenderer(livingEntityRenderer, registerAddedLayerEvent.getEntityModels());
-                }
-            }
-        }
-
-        /**
-         * Adds all modded layers to the model set of the given entity
-         *
-         * @param renderer The renderer used to render this entity's layers
-         * @param modelSet The model set for the entity we want to add modded layers to
-         * @param <T> Generic representing the entity we are adding modded layers to
-         * @param <M> Generic representing the model of the entity we are adding modded layers to
-         */
-        private static <T extends LivingEntity, M extends HumanoidModel<T>> void addLayerToEntityRenderer(LivingEntityRenderer<T, M> renderer, EntityModelSet modelSet) {
-            RenderLayer<T, M> bipedArmorLayer = null;
-            for (RenderLayer<T, M> layerRenderer : renderer.layers) {
-                if (layerRenderer != null) {
-                    if(layerRenderer.getClass() == HumanoidArmorLayer.class) {
-                        bipedArmorLayer = layerRenderer;
-                        break;
-                    }
-                }
-            }
-
-            if(bipedArmorLayer != null) {
-                KabutoArmourLayer kabutoArmourLayer = new KabutoArmourLayer(renderer, modelSet);
-                NinjaRobesLayer ninjaRobesLayer = new NinjaRobesLayer(renderer, modelSet);
-            }
-        }
-
-        /**
          * Used to register features into the game using the mod event bus
          *
          * @param featureRegistryEvent The registry event with which features will be registered
@@ -628,19 +498,6 @@ public class Main
             Main.LOGGER.info("HELLO from Register Particle Factory");
 
             Minecraft.getInstance().particleEngine.register(ModParticles.CHERRY_PETAL, FallingCherryBlossomPetalProvider::new);
-        }
-
-        /**
-         * Used to register block color handlers into the game using the mod event bus
-         *
-         * @param event The registry event with which block color handlers will be registered
-         */
-        @SubscribeEvent
-        public static void onBlockColorHandlerRegistration(ColorHandlerEvent.Block event) {
-            LOGGER.info("HELLO from Register Block Color Handler");
-
-            BlockColors blockColors = event.getBlockColors();
-            //blockColors.register(GrassBlockColor.instance, ModBlocks.GRASS);
         }
 
         /**
@@ -775,24 +632,6 @@ public class Main
                     level.setBlock(position, block.defaultBlockState().setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS)), 11);
                     event.getItemStack().hurtAndBreak(1, player, (p_220036_0_) -> p_220036_0_.broadcastBreakEvent(EquipmentSlot.MAINHAND));
                 }
-            }
-        }
-
-        @SubscribeEvent
-        public static void onRenderPlayerEvent(RenderPlayerEvent.Pre event) {
-            // TODO: Try manipulating the player arm in here (or in the POST event) to perform an action
-            event.getRenderer().getModel().rightArm.visible = true;
-        }
-
-        @SubscribeEvent
-        public static void onRenderPlayerEvent(RenderPlayerEvent.Post event) {
-            //event.getRenderer().getModel().rightArm.translateAndRotate();
-            event.getRenderer().getModel().rightArm.visible = true;
-        }
-
-        @SubscribeEvent
-        public static void onRenderPlayerEvent(RenderHandEvent event) {
-            if (event.getItemStack().getItem() == ModItems.SHURIKEN) {
             }
         }
 
