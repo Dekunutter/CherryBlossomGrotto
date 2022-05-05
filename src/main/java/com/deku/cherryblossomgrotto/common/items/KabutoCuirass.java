@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
-public class KabutoCuirass extends ArmorItem implements IItemRenderProperties {
+public class KabutoCuirass extends ArmorItem {
     public KabutoCuirass() {
         super(ArmorMaterials.IRON, EquipmentSlot.CHEST, new Properties().stacksTo(1).tab(CreativeModeTab.TAB_COMBAT));
         setRegistryName("kabuto_cuirass");
