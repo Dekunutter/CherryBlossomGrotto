@@ -60,7 +60,10 @@ public class DoubleJumpCapability implements ICapabilitySerializable<CompoundNBT
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction side) {
-        return (LazyOptional<T>) LazyOptional.of(() -> doubleJump);
+        if (capability == DOUBLE_JUMP_CAPABILITY) {
+            return (LazyOptional<T>) LazyOptional.of(() -> doubleJump);
+        }
+        return LazyOptional.empty();
     }
 
     /**
