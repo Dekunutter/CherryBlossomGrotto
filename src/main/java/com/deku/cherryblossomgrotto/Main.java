@@ -154,7 +154,6 @@ public class Main
         eventBus.addListener(this::processIMC);
 
         ClientOnlyRegistrar clientOnlyRegistrar = new ClientOnlyRegistrar(eventBus);
-        //clientOnlyRegistrar.registerClientOnlyEvents();
 
         // Register ourselves for server and other game events we are interested in
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;

@@ -77,8 +77,10 @@ public class DoubleJumpCapability implements ICapabilityProvider, INBTSerializab
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability) {
-        return (LazyOptional<T>) LazyOptional.of(() -> doubleJump);
-
+        if (capability == DOUBLE_JUMP) {
+            return (LazyOptional<T>) LazyOptional.of(() -> doubleJump);
+        }
+        return LazyOptional.empty();
     }
 
     /**
