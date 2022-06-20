@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:bamboo_jungle",
+    "minecraft:jungle",
+    "minecraft:sparse_jungle",
+    "minecraft:snowy_slopes",
+    "minecraft:snowy_taiga",
+    "minecraft:old_growth_spruce_taiga",
+    "cherryblossomgrotto:cherry_blossom_grotto"
+  ]
+}

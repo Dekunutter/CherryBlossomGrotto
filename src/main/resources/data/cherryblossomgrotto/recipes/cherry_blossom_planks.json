@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "cherryblossomgrotto:cherry_blossom_wood_blocks"
+    }
+  ],
+  "result": {
+    "item": "cherryblossomgrotto:cherry_blossom_planks",
+    "count": 4
+  }
+}
