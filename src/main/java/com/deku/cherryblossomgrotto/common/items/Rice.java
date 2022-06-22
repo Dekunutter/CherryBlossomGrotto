@@ -9,6 +9,5 @@ import net.minecraft.world.item.ItemNameBlockItem;
 public class Rice extends ItemNameBlockItem {
     public Rice() {
         super(ModBlocks.RICE_PADDY, new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(ModFoods.RICE));
-        setRegistryName("rice");
     }
 }

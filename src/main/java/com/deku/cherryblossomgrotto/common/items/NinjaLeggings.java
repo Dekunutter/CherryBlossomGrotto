@@ -17,7 +17,6 @@ import java.util.function.Consumer;
 public class NinjaLeggings extends ArmorItem {
     public NinjaLeggings() {
         super(ModArmorMaterials.WOOL, EquipmentSlot.LEGS, new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_COMBAT));
-        setRegistryName("ninja_leggings");
     }
 
     /**

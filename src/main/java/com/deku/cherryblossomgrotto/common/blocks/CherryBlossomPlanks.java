@@ -14,7 +14,6 @@ import net.minecraftforge.common.extensions.IForgeBlock;
 public class CherryBlossomPlanks extends Block implements IForgeBlock {
     public CherryBlossomPlanks() {
         super(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.TERRACOTTA_RED).strength(2.0f, 3.0f).sound(SoundType.WOOD));
-        setRegistryName("cherry_blossom_planks");
     }
 
     /**

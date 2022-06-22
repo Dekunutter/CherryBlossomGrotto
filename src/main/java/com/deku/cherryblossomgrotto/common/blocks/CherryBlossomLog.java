@@ -18,7 +18,6 @@ public class CherryBlossomLog extends RotatedPillarBlock implements IForgeBlock 
                 determineMaterialColour.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? MaterialColor.TERRACOTTA_RED : MaterialColor.WOOD
             ).strength(2.0f).sound(SoundType.WOOD)
         );
-        setRegistryName("cherry_blossom_log");
     }
 
     /**

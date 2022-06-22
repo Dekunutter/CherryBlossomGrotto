@@ -2,29 +2,31 @@ package com.deku.cherryblossomgrotto.common.items;
 
 import net.minecraftforge.registries.ObjectHolder;
 
-@ObjectHolder("cherryblossomgrotto")
+import static com.deku.cherryblossomgrotto.Main.MOD_ID;
+
 public class ModItems {
-    @ObjectHolder("cherry_blossom_petal")
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_petal")
     public static CherryBlossomPetal CHERRY_PETAL;
 
-    @ObjectHolder("cherry_blossom_boat")
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_boat")
     public static CherryBlossomBoat CHERRY_BOAT;
 
-    @ObjectHolder("katana")
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":katana")
+
     public static Katana KATANA;
 
-    @ObjectHolder("kunai")
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":kunai")
     public static Kunai KUNAI;
 
-    @ObjectHolder("shuriken")
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":shuriken")
     public static Shuriken SHURIKEN;
 
-    @ObjectHolder("rice")
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":rice")
     public static Rice RICE;
 
-    @ObjectHolder("onigiri")
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":onigiri")
     public static Onigiri ONIGIRI;
 
-    @ObjectHolder("koi_bucket")
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":koi_bucket")
     public static KoiBucket KOI_BUCKET;
 }

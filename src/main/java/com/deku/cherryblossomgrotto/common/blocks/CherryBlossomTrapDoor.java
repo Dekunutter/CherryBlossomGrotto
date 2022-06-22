@@ -9,6 +9,5 @@ import net.minecraft.world.level.material.MaterialColor;
 public class CherryBlossomTrapDoor extends TrapDoorBlock {
     public CherryBlossomTrapDoor() {
         super(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.TERRACOTTA_RED).strength(3.0f).sound(SoundType.WOOD).noOcclusion());
-        setRegistryName("cherry_blossom_trapdoor");
     }
 }

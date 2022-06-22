@@ -9,6 +9,5 @@ import net.minecraft.world.level.material.Material;
 public class CherryBlossomSapling extends SaplingBlock {
     public CherryBlossomSapling() {
         super(new CherryBlossomTreeGrower(), BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.GRASS));
-        setRegistryName("cherry_blossom_sapling");
     }
 }

@@ -14,7 +14,6 @@ import net.minecraftforge.common.extensions.IForgeBlock;
 public class CherryBlossomWood extends RotatedPillarBlock implements IForgeBlock {
     public CherryBlossomWood() {
         super(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.TERRACOTTA_RED).strength(2.0f).sound(SoundType.WOOD));
-        setRegistryName("cherry_blossom_wood");
     }
 
     /**

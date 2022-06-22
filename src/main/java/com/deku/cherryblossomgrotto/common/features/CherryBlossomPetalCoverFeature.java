@@ -18,7 +18,6 @@ import static com.deku.cherryblossomgrotto.common.blocks.ModBlockStateProperties
 public class CherryBlossomPetalCoverFeature extends Feature<NoneFeatureConfiguration> {
     public CherryBlossomPetalCoverFeature() {
         super(NoneFeatureConfiguration.CODEC);
-        setRegistryName("cherry_blossom_petal_ground_cover");
     }
 
     /**

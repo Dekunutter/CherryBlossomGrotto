@@ -9,6 +9,5 @@ import net.minecraft.world.level.material.MaterialColor;
 public class CherryBlossomFenceGate extends FenceGateBlock {
     public CherryBlossomFenceGate() {
         super(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.TERRACOTTA_RED).strength(2.0f, 3.0f).sound(SoundType.WOOD));
-        setRegistryName("cherry_blossom_fence_gate");
     }
 }

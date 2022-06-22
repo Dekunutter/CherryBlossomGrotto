@@ -29,7 +29,6 @@ import java.util.Random;
 public class CherryBlossomLeaves extends LeavesBlock implements IForgeBlock, EntityBlock {
     public CherryBlossomLeaves() {
         super(BlockBehaviour.Properties.of(Material.LEAVES, MaterialColor.COLOR_PINK).strength(0.2f).sound(SoundType.GRASS).noOcclusion().isValidSpawn(CherryBlossomLeaves::validSpawns).isSuffocating(CherryBlossomLeaves.never()).isViewBlocking(CherryBlossomLeaves.never()).randomTicks());
-        setRegistryName("cherry_blossom_leaves");
     }
 
     /**

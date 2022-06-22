@@ -31,20 +31,17 @@ import com.google.common.collect.ImmutableMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
-import net.minecraft.core.particles.ParticleType;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RepairItemRecipe;
 import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -53,9 +50,6 @@ import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
-import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProviderType;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
@@ -82,6 +76,8 @@ import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -242,135 +238,157 @@ public class Main
         /**
          * Used to register blocks into the game using the mod event bus
          *
-         * @param blockRegistryEvent The registry event with which blocks will be registered
+         * @param registryEvent The register event with which blocks will be registered
          */
         @SubscribeEvent
-        public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
+        public static void onBlocksRegistry(final RegisterEvent registryEvent) {
             LOGGER.info("HELLO from Register Block");
 
-            blockRegistryEvent.getRegistry().register(new CherryBlossomLog());
-            blockRegistryEvent.getRegistry().register(new StrippedCherryBlossomLog());
-            blockRegistryEvent.getRegistry().register(new CherryBlossomWood());
-            blockRegistryEvent.getRegistry().register(new StrippedCherryBlossomWood());
-            blockRegistryEvent.getRegistry().register(new CherryBlossomPlanks());
-            blockRegistryEvent.getRegistry().register(new CherryBlossomSlab());
-            blockRegistryEvent.getRegistry().register(new CherryBlossomStairs());
-            blockRegistryEvent.getRegistry().register(new CherryBlossomButton());
-            blockRegistryEvent.getRegistry().register(new CherryBlossomFence());
-            blockRegistryEvent.getRegistry().register(new CherryBlossomFenceGate());
-            blockRegistryEvent.getRegistry().register(new CherryBlossomPressurePlate());
-            blockRegistryEvent.getRegistry().register(new CherryBlossomSign());
-            blockRegistryEvent.getRegistry().register(new CherryBlossomWallSign());
-            blockRegistryEvent.getRegistry().register(new CherryBlossomDoor());
-            blockRegistryEvent.getRegistry().register(new CherryBlossomTrapDoor());
+            registryEvent.register(ForgeRegistries.Keys.BLOCKS, registrar -> {
+                // All cherry blossom wood blocks
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_log"), new CherryBlossomLog());
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_cherry_blossom_log"), new StrippedCherryBlossomLog());
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_wood"), new CherryBlossomWood());
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_cherry_blossom_wood"), new StrippedCherryBlossomWood());
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_planks"), new CherryBlossomPlanks());
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_slab"), new CherryBlossomSlab());
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_stairs"), new CherryBlossomStairs());
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_button"), new CherryBlossomButton());
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_fence"), new CherryBlossomFence());
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_fence_gate"), new CherryBlossomFenceGate());
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_pressure_plate"), new CherryBlossomPressurePlate());
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_sign"), new CherryBlossomSign());
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_wall_sign"), new CherryBlossomWallSign());
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_door"), new CherryBlossomDoor());
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_trapdoor"), new CherryBlossomTrapDoor());
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_planks_trapdoor"), new CherryBlossomPlanksTrapdoor());
 
-            blockRegistryEvent.getRegistry().register(new CherryBlossomLeaves());
+                // All cherry blossom tree blocks
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_leaves"), new CherryBlossomLeaves());
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_petals"), new CherryBlossomPetals());
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_sapling"), new CherryBlossomSapling());
+                registrar.register(new ResourceLocation(MOD_ID, "potted_cherry_blossom_sapling"), new PottedCherryBlossomSapling());
 
-            blockRegistryEvent.getRegistry().register(new CherryBlossomPetals());
+                // All shoji screens
+                registrar.register(new ResourceLocation(MOD_ID, "shoji_screen"), new ShojiScreen());
 
-            blockRegistryEvent.getRegistry().register(new CherryBlossomSapling());
-            blockRegistryEvent.getRegistry().register(new PottedCherryBlossomSapling());
+                // All farm crops
+                registrar.register(new ResourceLocation(MOD_ID, "rice_paddy"), new RicePaddy());
 
-            blockRegistryEvent.getRegistry().register(new ShojiScreen());
+                // All lanterns
+                registrar.register(new ResourceLocation(MOD_ID, "zen_lantern"), new ZenLantern());
+                registrar.register(new ResourceLocation(MOD_ID, "soul_zen_lantern"), new SoulZenLantern());
 
-            blockRegistryEvent.getRegistry().register(new RicePaddy());
-
-            blockRegistryEvent.getRegistry().register(new ZenLantern());
-            blockRegistryEvent.getRegistry().register(new SoulZenLantern());
-
-            blockRegistryEvent.getRegistry().register(new StoneTrapdoor());
-            blockRegistryEvent.getRegistry().register(new SmoothStoneTrapdoor());
-            blockRegistryEvent.getRegistry().register(new CobblestoneTrapdoor());
-            blockRegistryEvent.getRegistry().register(new OakPlanksTrapdoor());
-            blockRegistryEvent.getRegistry().register(new DarkOakPlanksTrapdoor());
-            blockRegistryEvent.getRegistry().register(new AcaciaPlanksTrapdoor());
-            blockRegistryEvent.getRegistry().register(new JunglePlanksTrapdoor());
-            blockRegistryEvent.getRegistry().register(new SprucePlanksTrapdoor());
-            blockRegistryEvent.getRegistry().register(new BirchPlanksTrapdoor());
-            blockRegistryEvent.getRegistry().register(new CherryBlossomPlanksTrapdoor());
+                // All vanilla block trapdoors
+                registrar.register(new ResourceLocation(MOD_ID, "stone_trapdoor"), new StoneTrapdoor());
+                registrar.register(new ResourceLocation(MOD_ID, "smooth_stone_trapdoor"), new SmoothStoneTrapdoor());
+                registrar.register(new ResourceLocation(MOD_ID, "cobblestone_trapdoor"), new CobblestoneTrapdoor());
+                registrar.register(new ResourceLocation(MOD_ID, "oak_planks_trapdoor"), new OakPlanksTrapdoor());
+                registrar.register(new ResourceLocation(MOD_ID, "dark_oak_planks_trapdoor"), new DarkOakPlanksTrapdoor());
+                registrar.register(new ResourceLocation(MOD_ID, "acacia_planks_trapdoor"), new AcaciaPlanksTrapdoor());
+                registrar.register(new ResourceLocation(MOD_ID, "jungle_planks_trapdoor"), new JunglePlanksTrapdoor());
+                registrar.register(new ResourceLocation(MOD_ID, "spruce_planks_trapdoor"), new SprucePlanksTrapdoor());
+                registrar.register(new ResourceLocation(MOD_ID, "birch_planks_trapdoor"), new BirchPlanksTrapdoor());
+            });
         }
 
         /**
          * Used to register tile entities into the game using the mod event bus
          * Associated entity tile data is assigned before registration
          *
-         * @param tileEntityRegistryEvent The registry event with which tile entities will be registered
+         * @param registerEvent The register event with which tile entities will be registered
          */
         @SubscribeEvent
-        public static void onTileEntityRegistry(final RegistryEvent.Register<BlockEntityType<?>> tileEntityRegistryEvent) {
-            BlockEntityType<CherryLeavesBlockEntity> cherryLeavesDataType = BlockEntityType.Builder.of(CherryLeavesBlockEntity::new, ModBlocks.CHERRY_LEAVES).build(null);
-            cherryLeavesDataType.setRegistryName("cherryblossomgrotto:cherry_leaves_tile_entity");
-            tileEntityRegistryEvent.getRegistry().register(cherryLeavesDataType);
+        public static void onTileEntityRegistry(final RegisterEvent registerEvent) {
+            LOGGER.info("HELLO from Register Block Entity Type");
+            
+            registerEvent.register(ForgeRegistries.Keys.BLOCK_ENTITY_TYPES, registrar -> {
+                // All cherry blossom tree block entities
+                BlockEntityType<CherryLeavesBlockEntity> cherryLeavesDataType = BlockEntityType.Builder.of(CherryLeavesBlockEntity::new, ModBlocks.CHERRY_LEAVES).build(null);
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_leaves_tile_entity"), cherryLeavesDataType);
+
+                // All sign block entities
+                registrar.register(new ResourceLocation(MOD_ID, "mod_sign_entity"), ModBlockEntities.SIGN_ENTITY_TYPE);
+            });
         }
 
         /**
          * Used to register items into the game using the mod event bus
          *
-         * @param itemRegistryEvent The registry event with which items will be registered
+         * @param registerEvent The register event with which items will be registered
          */
         @SubscribeEvent
-        public static void onItemsRegistry(final RegistryEvent.Register<Item> itemRegistryEvent) {
+        public static void onItemsRegistry(final RegisterEvent registerEvent) {
             LOGGER.info("HELLO from Register Item");
 
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_LOG, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_log"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.STRIPPED_CHERRY_LOG, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)).setRegistryName("stripped_cherry_blossom_log"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_WOOD, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_wood"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.STRIPPED_CHERRY_WOOD, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)).setRegistryName("stripped_cherry_blossom_wood"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PLANKS, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_planks"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_SLAB, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_slab"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_STAIRS, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)).setRegistryName("cherry_blossom_stairs"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_BUTTON, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("cherry_blossom_button"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_FENCE, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)).setRegistryName("cherry_blossom_fence"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_FENCE_GATE, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("cherry_blossom_fence_gate"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PRESSURE_PLATE, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("cherry_blossom_pressure_plate"));
-            itemRegistryEvent.getRegistry().register(new SignItem(new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS), ModBlocks.CHERRY_SIGN, ModBlocks.CHERRY_WALL_SIGN).setRegistryName("cherry_blossom_sign"));
-            itemRegistryEvent.getRegistry().register(new DoubleHighBlockItem(ModBlocks.CHERRY_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("cherry_blossom_door"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("cherry_blossom_trapdoor"));
-            itemRegistryEvent.getRegistry().register(new CherryBlossomBoat());
+            registerEvent.register(ForgeRegistries.Keys.ITEMS, registrar -> {
+                // All cherry blossom wood items
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_log"), new BlockItem(ModBlocks.CHERRY_LOG, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_cherry_blossom_log"), new BlockItem(ModBlocks.STRIPPED_CHERRY_LOG, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_wood"), new BlockItem(ModBlocks.CHERRY_WOOD, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_cherry_blossom_wood"), new BlockItem(ModBlocks.STRIPPED_CHERRY_WOOD, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_planks"), new BlockItem(ModBlocks.CHERRY_PLANKS, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_slab"), new BlockItem(ModBlocks.CHERRY_SLAB, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_stairs"), new BlockItem(ModBlocks.CHERRY_STAIRS, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_button"), new BlockItem(ModBlocks.CHERRY_BUTTON, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_fence"), new BlockItem(ModBlocks.CHERRY_FENCE, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_fence_gate"), new BlockItem(ModBlocks.CHERRY_FENCE_GATE, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_pressure_plate"), new BlockItem(ModBlocks.CHERRY_PRESSURE_PLATE, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_sign"), new SignItem(new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS), ModBlocks.CHERRY_SIGN, ModBlocks.CHERRY_WALL_SIGN));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_door"), new BlockItem(ModBlocks.CHERRY_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_trapdoor"), new BlockItem(ModBlocks.CHERRY_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_planks_trapdoor"), new BlockItem(ModBlocks.CHERRY_BLOSSOM_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_boat"), new CherryBlossomBoat());
 
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_LEAVES, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)).setRegistryName("cherry_blossom_leaves"));
+                // All cherry blossom tree items
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_leaves"), new BlockItem(ModBlocks.CHERRY_LEAVES, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_petals"), new BlockItem(ModBlocks.CHERRY_PETALS, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_petal"), new CherryBlossomPetal());
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_sapling"), new BlockItem(ModBlocks.CHERRY_SAPLING, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
 
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_PETALS, new Item.Properties().tab(CreativeModeTab.TAB_MISC)).setRegistryName("cherry_blossom_petals"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_SAPLING, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)).setRegistryName("cherry_blossom_sapling"));
+                // All lantern items
+                registrar.register(new ResourceLocation(MOD_ID, "zen_lantern"), new DoubleHighBlockItem(ModBlocks.ZEN_LANTERN, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+                registrar.register(new ResourceLocation(MOD_ID, "soul_zen_lantern"), new DoubleHighBlockItem(ModBlocks.SOUL_ZEN_LANTERN, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
 
-            itemRegistryEvent.getRegistry().register(new DoubleHighBlockItem(ModBlocks.ZEN_LANTERN, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)).setRegistryName("zen_lantern"));
-            itemRegistryEvent.getRegistry().register(new DoubleHighBlockItem(ModBlocks.SOUL_ZEN_LANTERN, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)).setRegistryName("soul_zen_lantern"));
+                // All shoji screen items
+                registrar.register(new ResourceLocation(MOD_ID, "shoji_screen"), new BlockItem(ModBlocks.SHOJI_SCREEN, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
 
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.SHOJI_SCREEN, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)).setRegistryName("shoji_screen"));
+                // All bucket items
+                registrar.register(new ResourceLocation(MOD_ID, "koi_bucket"), new KoiBucket(EntityTypeInitializer.KOI_ENTITY_TYPE));
 
-            itemRegistryEvent.getRegistry().register(new KoiBucket(EntityTypeInitializer.KOI_ENTITY_TYPE));
+                // TODO: Find a way to add these to the composter
+                // All food items
+                registrar.register(new ResourceLocation(MOD_ID, "koi"), new Koi());
+                registrar.register(new ResourceLocation(MOD_ID, "cooked_koi"), new CookedKoi());
+                registrar.register(new ResourceLocation(MOD_ID, "rice"), new Rice());
+                registrar.register(new ResourceLocation(MOD_ID, "onigiri"), new Onigiri());
 
-            // TODO: Find a way to add these to the composter
-            itemRegistryEvent.getRegistry().register(new Koi());
-            itemRegistryEvent.getRegistry().register(new CookedKoi());
-            itemRegistryEvent.getRegistry().register(new Rice());
-            itemRegistryEvent.getRegistry().register(new Onigiri());
+                // All weapon items
+                registrar.register(new ResourceLocation(MOD_ID, "katana"), new Katana());
+                registrar.register(new ResourceLocation(MOD_ID, "kunai"), new Kunai());
+                registrar.register(new ResourceLocation(MOD_ID, "shuriken"), new Shuriken());
 
-            itemRegistryEvent.getRegistry().register(new CherryBlossomPetal());
+                // All armour items
+                registrar.register(new ResourceLocation(MOD_ID, "ninja_mask"), new NinjaMask());
+                registrar.register(new ResourceLocation(MOD_ID, "ninja_tunic"), new NinjaTunic());
+                registrar.register(new ResourceLocation(MOD_ID, "ninja_leggings"), new NinjaLeggings());
+                registrar.register(new ResourceLocation(MOD_ID, "ninja_sandals"), new NinjaSandals());
+                registrar.register(new ResourceLocation(MOD_ID, "kabuto_helmet"), new KabutoHelmet());
+                registrar.register(new ResourceLocation(MOD_ID, "kabuto_cuirass"), new KabutoCuirass());
+                registrar.register(new ResourceLocation(MOD_ID, "kabuto_greaves"), new KabutoGreaves());
+                registrar.register(new ResourceLocation(MOD_ID, "kabuto_sandals"), new KabutoSandals());
 
-            itemRegistryEvent.getRegistry().register(new Katana());
-            itemRegistryEvent.getRegistry().register(new Kunai());
-            itemRegistryEvent.getRegistry().register(new Shuriken());
-
-            itemRegistryEvent.getRegistry().register(new NinjaMask());
-            itemRegistryEvent.getRegistry().register(new NinjaTunic());
-            itemRegistryEvent.getRegistry().register(new NinjaLeggings());
-            itemRegistryEvent.getRegistry().register(new NinjaSandals());
-            itemRegistryEvent.getRegistry().register(new KabutoHelmet());
-            itemRegistryEvent.getRegistry().register(new KabutoCuirass());
-            itemRegistryEvent.getRegistry().register(new KabutoGreaves());
-            itemRegistryEvent.getRegistry().register(new KabutoSandals());
-
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.ACACIA_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("acacia_planks_trapdoor"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.BIRCH_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("birch_planks_trapdoor"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.DARK_OAK_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("dark_oak_planks_trapdoor"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.JUNGLE_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("jungle_planks_trapdoor"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.OAK_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("oak_planks_trapdoor"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.SPRUCE_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("spruce_planks_trapdoor"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.CHERRY_BLOSSOM_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("cherry_blossom_planks_trapdoor"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.SMOOTH_STONE_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("smooth_stone_trapdoor"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.STONE_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("stone_trapdoor"));
-            itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.COBBLESTONE_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)).setRegistryName("cobblestone_trapdoor"));
+                // All vanilla block trapdoor items
+                registrar.register(new ResourceLocation(MOD_ID, "acacia_planks_trapdoor"), new BlockItem(ModBlocks.ACACIA_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+                registrar.register(new ResourceLocation(MOD_ID, "birch_planks_trapdoor"), new BlockItem(ModBlocks.BIRCH_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+                registrar.register(new ResourceLocation(MOD_ID, "dark_oak_planks_trapdoor"), new BlockItem(ModBlocks.DARK_OAK_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+                registrar.register(new ResourceLocation(MOD_ID, "jungle_planks_trapdoor"), new BlockItem(ModBlocks.JUNGLE_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+                registrar.register(new ResourceLocation(MOD_ID, "oak_planks_trapdoor"), new BlockItem(ModBlocks.OAK_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+                registrar.register(new ResourceLocation(MOD_ID, "spruce_planks_trapdoor"), new BlockItem(ModBlocks.SPRUCE_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+                registrar.register(new ResourceLocation(MOD_ID, "smooth_stone_trapdoor"), new BlockItem(ModBlocks.SMOOTH_STONE_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+                registrar.register(new ResourceLocation(MOD_ID, "stone_trapdoor"), new BlockItem(ModBlocks.STONE_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+                registrar.register(new ResourceLocation(MOD_ID, "cobblestone_trapdoor"), new BlockItem(ModBlocks.COBBLESTONE_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+            });
         }
 
         /**
@@ -390,101 +408,103 @@ public class Main
          * Used to register entities into the game using the mod event bus
          * Associated entity data is assigned before registration
          *
-         * @param entityRegistryEvent The registry event with which entities will be registered
+         * @param registerEvent The register event with which entities will be registered
          */
         @SubscribeEvent
-        public static void onEntityRegistry(final RegistryEvent.Register<EntityType<?>> entityRegistryEvent) {
+        public static void onEntityRegistry(final RegisterEvent registerEvent) {
             LOGGER.info("HELLO from Register Entity");
 
-            EntityTypeInitializer.BOAT_ENTITY_TYPE.setRegistryName("mod_boat_entity");
-            entityRegistryEvent.getRegistry().register(EntityTypeInitializer.BOAT_ENTITY_TYPE);
+            registerEvent.register(ForgeRegistries.Keys.ENTITY_TYPES, registrar -> {
+                // All vehicle entities
+                registrar.register(new ResourceLocation(MOD_ID,"mod_boat_entity"), EntityTypeInitializer.BOAT_ENTITY_TYPE);
 
-            EntityTypeInitializer.KUNAI_ENTITY_TYPE.setRegistryName("kunai_entity");
-            entityRegistryEvent.getRegistry().register(EntityTypeInitializer.KUNAI_ENTITY_TYPE);
+                // All weapon entities
+                registrar.register(new ResourceLocation(MOD_ID,"kunai_entity"), EntityTypeInitializer.KUNAI_ENTITY_TYPE);
+                registrar.register(new ResourceLocation(MOD_ID,"shuriken_entity"), EntityTypeInitializer.SHURIKEN_ENTITY_TYPE);
 
-            EntityTypeInitializer.SHURIKEN_ENTITY_TYPE.setRegistryName("shuriken_entity");
-            entityRegistryEvent.getRegistry().register(EntityTypeInitializer.SHURIKEN_ENTITY_TYPE);
-
-            EntityTypeInitializer.KOI_ENTITY_TYPE.setRegistryName("koi_entity");
-            entityRegistryEvent.getRegistry().register(EntityTypeInitializer.KOI_ENTITY_TYPE);
-        }
-
-        /**
-         * used to register block entities into the game using the mod event bus
-         * Associated blocks are assigned before registration
-         *
-         * @param blockEntityRegistryEvent The registry event with which block entities will be registered
-         */
-        @SubscribeEvent
-        public static void onBlockEntityRegistry(final RegistryEvent.Register<BlockEntityType<?>> blockEntityRegistryEvent) {
-            LOGGER.info("HELLO from Register Block Entity");
-
-            ModBlockEntities.SIGN_ENTITY_TYPE.setRegistryName("mod_sign_entity");
-            blockEntityRegistryEvent.getRegistry().register(ModBlockEntities.SIGN_ENTITY_TYPE);
+                // All living entities
+                registrar.register(new ResourceLocation(MOD_ID,"koi_entity"), EntityTypeInitializer.KOI_ENTITY_TYPE);
+            });
         }
 
         /**
          * Used to register features into the game using the mod event bus
          *
-         * @param featureRegistryEvent The registry event with which features will be registered
+         * @param registerEvent The register event with which features will be registered
          */
         @SubscribeEvent
-        public static void onFeaturesRegistry(final RegistryEvent.Register<Feature<?>> featureRegistryEvent) {
+        public static void onFeaturesRegistry(final RegisterEvent registerEvent) {
             LOGGER.info("HELLO from Register Feature");
 
-            featureRegistryEvent.getRegistry().register(new CherryBlossomPetalCoverFeature());
+            registerEvent.register(ForgeRegistries.Keys.FEATURES, registrar -> {
+                // All cherry blossom tree features
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_petal_ground_cover"), new CherryBlossomPetalCoverFeature());
+            });
+
             //TODO: Should I register configured features in here after the feature registration has run? Right now they register at the global level spread across a few new classes and sit in holders. This might not be the right stage to be registering them...
         }
 
         /**
          * Used to register block state provider types into the game using the mod event bus
          *
-         * @param blockStateProviderRegistryEvent The registry event with which block state provider types will be registered
+         * @param registerEvent The register event with which block state provider types will be registered
          */
         @SubscribeEvent
-        public static void onBlockStateProviderTypeRegistry(final RegistryEvent.Register<BlockStateProviderType<?>> blockStateProviderRegistryEvent) {
+        public static void onBlockStateProviderTypeRegistry(final RegisterEvent registerEvent) {
             LOGGER.info("HELLO from Register Block State Provider Type");
 
-            blockStateProviderRegistryEvent.getRegistry().register(new CherryBlossomForestFlowerProviderType());
+            registerEvent.register(ForgeRegistries.Keys.BLOCK_STATE_PROVIDER_TYPES, registrar -> {
+                // All biome feature blockstate provider types
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_forest_flower_provider"), new CherryBlossomForestFlowerProviderType());
+            });
         }
 
         /**
          * Used to register recipe serializers into the game using the mod event bus
          *
-         * @param recipeSerializerRegistryEvent The registry event with which recipe serializers will be registered
+         * @param registerEvent The registry event with which recipe serializers will be registered
          */
         @SubscribeEvent
-        public static void onRecipeRegistry(final RegistryEvent.Register<RecipeSerializer<?>> recipeSerializerRegistryEvent) {
+        public static void onRecipeRegistry(final RegisterEvent registerEvent) {
             LOGGER.info("HELLO from Register Recipe Serializer");
 
-            SimpleRecipeSerializer<?> foldingSerializer = new SimpleRecipeSerializer<>(RepairItemRecipe::new);
-            foldingSerializer.setRegistryName(new ResourceLocation(MOD_ID,"folding"));
-            recipeSerializerRegistryEvent.getRegistry().register(foldingSerializer);
+            registerEvent.register(ForgeRegistries.Keys.RECIPE_SERIALIZERS, registrar -> {
+                // All special weapon recipe serializers
+                registrar.register(new ResourceLocation(MOD_ID, "folding"), new SimpleRecipeSerializer<>(RepairItemRecipe::new));
+            });
         }
 
         /**
          * Used to register foliage placers into the game using the mod event bus
          *
-         * @param foliagePlacerRegistryEvent The registry event with which foliage placers will be registered
+         * @param registerEvent The registry event with which foliage placers will be registered
          */
         @SubscribeEvent
-        public static void onFoliagePlacerRegistry(final RegistryEvent.Register<FoliagePlacerType<?>> foliagePlacerRegistryEvent) {
+        public static void onFoliagePlacerRegistry(final RegisterEvent registerEvent) {
             LOGGER.info("HELLO from Register Foliage Placer");
 
-            foliagePlacerRegistryEvent.getRegistry().register(new CherryBlossomFoliagePlacerType());
-            foliagePlacerRegistryEvent.getRegistry().register(new GrandCherryBlossomFoliagePlacerType());
+            registerEvent.register(ForgeRegistries.Keys.FOLIAGE_PLACER_TYPES, registrar -> {
+                // All cherry blossom tree foliage placer types
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_tree_foliage_placer"), new CherryBlossomFoliagePlacerType());
+                registrar.register(new ResourceLocation(MOD_ID, "big_cherry_blossom_tree_foliage_placer"), new GrandCherryBlossomFoliagePlacerType());
+
+            });
         }
 
         /**
          * Used to register particle types into the game using the mod event bus
          *
-         * @param particleTypeRegistryEvent The registry event with which particle types will be registered
+         * @param registerEvent The registry event with which particle types will be registered
          */
         @SubscribeEvent
-        public static void onParticleTypeRegistry(final RegistryEvent.Register<ParticleType<?>> particleTypeRegistryEvent) {
+        public static void onParticleTypeRegistry(final RegisterEvent registerEvent) {
             LOGGER.info("HELLO from Register Particle Type");
 
-            particleTypeRegistryEvent.getRegistry().register(ModParticles.CHERRY_PETAL.setRegistryName("cherry_blossom_petal"));
+            registerEvent.register(ForgeRegistries.Keys.PARTICLE_TYPES, registrar -> {
+                // All cherry blossom tree particle types
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_petal"), ModParticles.CHERRY_PETAL);
+
+            });
         }
 
         /**

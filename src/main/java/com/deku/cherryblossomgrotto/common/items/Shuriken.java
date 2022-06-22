@@ -18,7 +18,6 @@ public class Shuriken extends ProjectileWeaponItem implements Vanishable {
 
     public Shuriken() {
         super(new Item.Properties().stacksTo(16).tab(CreativeModeTab.TAB_COMBAT));
-        setRegistryName("shuriken");
     }
 
     /**

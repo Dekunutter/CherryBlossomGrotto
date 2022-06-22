@@ -8,6 +8,5 @@ import net.minecraft.world.level.material.MaterialColor;
 public class JunglePlanksTrapdoor extends TrapDoorBlock {
     public JunglePlanksTrapdoor() {
         super(Properties.of(Material.WOOD, MaterialColor.DIRT).strength(2.0f, 3.0f).sound(SoundType.WOOD));
-        setRegistryName("jungle_planks_trapdoor");
     }
 }

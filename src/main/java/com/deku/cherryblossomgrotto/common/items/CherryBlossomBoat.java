@@ -27,7 +27,6 @@ public class CherryBlossomBoat extends Item {
 
     public CherryBlossomBoat() {
         super(new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_TRANSPORTATION));
-        setRegistryName("cherry_blossom_boat");
         type = ModBoatEntity.ModType.CHERRY;
     }
 
