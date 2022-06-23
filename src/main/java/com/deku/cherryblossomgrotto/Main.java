@@ -543,7 +543,7 @@ public class Main
 
             DataGenerator generator = event.getGenerator();
             if(event.includeServer()) {
-                generator.addProvider(new ModBiomeTags(generator, event.getExistingFileHelper()));
+                generator.addProvider(true, new ModBiomeTags(generator, event.getExistingFileHelper()));
             }
         }
     }
