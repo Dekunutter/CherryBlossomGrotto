@@ -66,6 +66,6 @@ public class GiantBuddha extends Structure {
      */
     @Override
     public StructureType<?> type() {
-        return ModStructureInitializer.GIANT_BUDDHA.get();
+        return ModStructureTypeInitializer.GIANT_BUDDHA.get();
     }
 }

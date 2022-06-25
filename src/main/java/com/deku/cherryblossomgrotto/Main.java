@@ -137,7 +137,7 @@ public class Main
         ModBiomeInitializer.registerBiomes();
 
         // Structure logic
-        ModStructureInitializer.STRUCTURES.register(eventBus);
+        ModStructureTypeInitializer.STRUCTURE_TYPES.register(eventBus);
 
         // Enchantment logic
         ModEnchantmentInitializer.ENCHANTMENTS.register(eventBus);
@@ -206,7 +206,7 @@ public class Main
         ModVillagerTypes.register();
 
         ModStructurePieceTypes.register();
-        ModConfiguredStructures.register();
+        ModStructures.register();
         ModStructureSets.register();
     }
 

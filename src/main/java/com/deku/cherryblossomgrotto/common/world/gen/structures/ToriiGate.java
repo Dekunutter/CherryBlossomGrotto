@@ -7,10 +7,8 @@ import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
-import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 
 import java.util.Optional;
@@ -48,20 +46,6 @@ public class ToriiGate extends Structure {
     }
 
     /**
-     * Performs some basic checks on the current chunk to see if the structure can be spawned here.
-     * For this structure we just check that the current chunk has a height above bedrock
-     *
-     * @param generatorSupplier The generator supplying the current chunk
-     * @return Whether the structure can spawn in this chunk
-     */
-    protected static <C extends FeatureConfiguration> boolean checkLocation(PieceGeneratorSupplier.Context<C> generatorSupplier) {
-        BlockPos centerOfChunk = new BlockPos(generatorSupplier.chunkPos().getMinBlockX(), 90, generatorSupplier.chunkPos().getMinBlockZ());
-
-        int landHeight = generatorSupplier.chunkGenerator().getFirstOccupiedHeight(centerOfChunk.getX(), centerOfChunk.getZ(), Heightmap.Types.WORLD_SURFACE_WG, generatorSupplier.heightAccessor());
-        return landHeight >= generatorSupplier.chunkGenerator().getSeaLevel();
-    }
-
-    /**
      * Generates the structure from its individual pieces.
      * Generates the structure near the middle of the chunk at whatever is the land height of that position.
      * Provides the structure with a random orientation.
@@ -82,6 +66,6 @@ public class ToriiGate extends Structure {
      */
     @Override
     public StructureType<?> type() {
-        return ModStructureInitializer.TORII_GATE.get();
+        return ModStructureTypeInitializer.TORII_GATE.get();
     }
 }
