@@ -4,6 +4,7 @@ import com.deku.cherryblossomgrotto.common.loot_tables.ModLootTables;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
@@ -14,11 +15,10 @@ import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
-import java.util.Random;
 
 import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
@@ -34,7 +34,7 @@ public class GiantBuddhaPieces {
      * @param pieceAccessor Accessor for the array of individual pieces we want to append to so that the structure generate all pieces during generation
      * @param random A random number generator
      */
-    public static void addPieces(StructureManager manager, BlockPos position, Rotation rotation, StructurePieceAccessor pieceAccessor, Random random) {
+    public static void addPieces(StructureTemplateManager manager, BlockPos position, Rotation rotation, StructurePieceAccessor pieceAccessor, RandomSource random) {
         pieceAccessor.addPiece(new GiantBuddhaPieces.Piece(manager, GIANT_BUDDHA_COMPLETE, position, rotation, 0));
     }
 
@@ -42,15 +42,15 @@ public class GiantBuddhaPieces {
      * Inner class that represents an individual piece of the structure
      */
     public static class Piece extends TemplateStructurePiece {
-        public Piece(StructureManager manager, ResourceLocation resourceLocation, BlockPos position, Rotation rotation, int offsetY) {
+        public Piece(StructureTemplateManager manager, ResourceLocation resourceLocation, BlockPos position, Rotation rotation, int offsetY) {
             super(ModStructurePieceTypes.GIANT_BUDDHA_PIECE, 0, manager, resourceLocation, resourceLocation.toString(), loadTemplate(manager, resourceLocation, rotation), position.offset(0, -offsetY, 0));
         }
 
         public Piece(StructurePieceSerializationContext serializationContext, CompoundTag compoundNBT) {
-            super(ModStructurePieceTypes.GIANT_BUDDHA_PIECE, compoundNBT, serializationContext.structureManager(), (placementSettings) -> {
+            super(ModStructurePieceTypes.GIANT_BUDDHA_PIECE, compoundNBT, serializationContext.structureTemplateManager(), (placementSettings) -> {
                 ResourceLocation templateLocation = new ResourceLocation(compoundNBT.getString("Template"));
                 Rotation rotation = Rotation.valueOf(compoundNBT.getString("Rot"));
-                return loadTemplate(serializationContext.structureManager(), templateLocation, rotation);
+                return loadTemplate(serializationContext.structureTemplateManager(), templateLocation, rotation);
             });
         }
 
@@ -62,7 +62,7 @@ public class GiantBuddhaPieces {
          * @param resourceLocation Location in resources containing the structure piece config
          * @param rotation Rotation of the structure
          */
-        private static StructurePlaceSettings loadTemplate(StructureManager manager, ResourceLocation resourceLocation, Rotation rotation) {
+        private static StructurePlaceSettings loadTemplate(StructureTemplateManager manager, ResourceLocation resourceLocation, Rotation rotation) {
             StructureTemplate template = manager.getOrCreate(resourceLocation);
 
             BlockPos pivot = new BlockPos(template.getSize().getX() / 2, 0, template.getSize().getZ() / 2);
@@ -93,7 +93,7 @@ public class GiantBuddhaPieces {
          * @param boundingBox The bounding box of the structure piece
          */
         @Override
-        protected void handleDataMarker(String dataMarker, BlockPos position, ServerLevelAccessor levelAccessor, Random random, BoundingBox boundingBox) {
+        protected void handleDataMarker(String dataMarker, BlockPos position, ServerLevelAccessor levelAccessor, RandomSource random, BoundingBox boundingBox) {
             if ("false_chest".equals(dataMarker)) {
                 levelAccessor.setBlock(position, Blocks.AIR.defaultBlockState(), 3);
                 ChestBlockEntity.setLootTable(levelAccessor, random, position.below(), ModLootTables.GIANT_BUDDHA_FAKE_CHEST_LOOT_TABLE);

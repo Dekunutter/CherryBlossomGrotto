@@ -1,23 +1,27 @@
 package com.deku.cherryblossomgrotto.common.world.gen.structures;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 
-public class ToriiGate extends StructureFeature<NoneFeatureConfiguration> {
+import java.util.Optional;
+
+public class ToriiGate extends Structure {
+    public static final Codec<GiantBuddha> CODEC = simpleCodec(GiantBuddha::new);
+
     public static final WeightedRandomList<MobSpawnSettings.SpawnerData> TORII_GATE_ENEMIES = WeightedRandomList.create();
 
-    public ToriiGate() {
-        super(NoneFeatureConfiguration.CODEC, PieceGeneratorSupplier.simple(ToriiGate::checkLocation, ToriiGate::generatePieces));
+    public ToriiGate(Structure.StructureSettings structureSettings) {
+        super(structureSettings);
     }
 
     /**
@@ -28,6 +32,19 @@ public class ToriiGate extends StructureFeature<NoneFeatureConfiguration> {
     @Override
     public GenerationStep.Decoration step() {
         return GenerationStep.Decoration.SURFACE_STRUCTURES;
+    }
+
+    /**
+     * Finds the point at which the structure will generate and starts generating its pieces if a place is find.
+     *
+     * @param generationContext Context of the generator for the chunk the structure is being built within
+     * @return The generation stub where the structure begins to generate its first piece from
+     */
+    @Override
+    public Optional<GenerationStub> findGenerationPoint(GenerationContext generationContext) {
+        return onTopOfChunkCenter(generationContext, Heightmap.Types.WORLD_SURFACE_WG, (builder) -> {
+            generatePieces(builder, generationContext);
+        });
     }
 
     /**
@@ -53,12 +70,18 @@ public class ToriiGate extends StructureFeature<NoneFeatureConfiguration> {
      * @param pieceBuilder The builder for all the structure's pieces
      * @param generatorContext Context for the generator for the chunk the structure is being built within
      */
-    public static void generatePieces(StructurePiecesBuilder pieceBuilder, PieceGenerator.Context<NoneFeatureConfiguration> generatorContext) {
-        BlockPos centerOfChunk = new BlockPos(generatorContext.chunkPos().getMinBlockX(), 90, generatorContext.chunkPos().getMinBlockZ());
-        int landHeight = generatorContext.chunkGenerator().getFirstOccupiedHeight(centerOfChunk.getX(), centerOfChunk.getZ(), Heightmap.Types.WORLD_SURFACE_WG, generatorContext.heightAccessor());
-
-        BlockPos position = new BlockPos(generatorContext.chunkPos().getMinBlockX(), landHeight, generatorContext.chunkPos().getMinBlockZ());
+    public static void generatePieces(StructurePiecesBuilder pieceBuilder, Structure.GenerationContext generatorContext) {
+        BlockPos chunkPos = new BlockPos(generatorContext.chunkPos().getMinBlockX(), 90, generatorContext.chunkPos().getMinBlockZ());
         Rotation rotation = Rotation.getRandom(generatorContext.random());
-        ToriiGatePieces.addPieces(generatorContext.structureManager(), position, rotation, pieceBuilder, generatorContext.random());
+        ToriiGatePieces.addPieces(generatorContext.structureTemplateManager(), chunkPos, rotation, pieceBuilder, generatorContext.random());
+    }
+
+    /**
+     * Gets the structure type of this structure
+     * @return The structure type for this structure
+     */
+    @Override
+    public StructureType<?> type() {
+        return ModStructureInitializer.TORII_GATE.get();
     }
 }
