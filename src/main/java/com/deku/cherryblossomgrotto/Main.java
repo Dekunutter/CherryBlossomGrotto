@@ -339,6 +339,7 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_trapdoor"), new BlockItem(ModBlocks.CHERRY_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_planks_trapdoor"), new BlockItem(ModBlocks.CHERRY_BLOSSOM_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_boat"), new CherryBlossomBoat());
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_chest_boat"), new CherryBlossomChestBoat());
 
                 // All cherry blossom tree items
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_leaves"), new BlockItem(ModBlocks.CHERRY_LEAVES, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
@@ -417,6 +418,7 @@ public class Main
             registerEvent.register(ForgeRegistries.Keys.ENTITY_TYPES, registrar -> {
                 // All vehicle entities
                 registrar.register(new ResourceLocation(MOD_ID,"mod_boat_entity"), EntityTypeInitializer.BOAT_ENTITY_TYPE);
+                registrar.register(new ResourceLocation(MOD_ID,"mod_chest_boat_entity"), EntityTypeInitializer.CHEST_BOAT_ENTITY_TYPE);
 
                 // All weapon entities
                 registrar.register(new ResourceLocation(MOD_ID,"kunai_entity"), EntityTypeInitializer.KUNAI_ENTITY_TYPE);

@@ -2,10 +2,7 @@ package com.deku.cherryblossomgrotto;
 
 import com.deku.cherryblossomgrotto.client.models.geom.ModLayerDefinitions;
 import com.deku.cherryblossomgrotto.client.models.geom.ModModelLayerLocations;
-import com.deku.cherryblossomgrotto.client.renderers.KoiRenderer;
-import com.deku.cherryblossomgrotto.client.renderers.KunaiRenderer;
-import com.deku.cherryblossomgrotto.client.renderers.ModBoatRenderer;
-import com.deku.cherryblossomgrotto.client.renderers.ShurikenRenderer;
+import com.deku.cherryblossomgrotto.client.renderers.*;
 import com.deku.cherryblossomgrotto.client.renderers.layers.KabutoArmourLayer;
 import com.deku.cherryblossomgrotto.client.renderers.layers.NinjaRobesLayer;
 import com.deku.cherryblossomgrotto.common.blocks.ModBlocks;
@@ -150,6 +147,7 @@ public class ClientOnlyRegistrar {
         @SubscribeEvent
         public static void onEntityRendererRegistry(final EntityRenderersEvent.RegisterRenderers registerEntityEvent) {
             registerEntityEvent.registerEntityRenderer(ModEntityData.MOD_BOAT_DATA, ModBoatRenderer::new);
+            registerEntityEvent.registerEntityRenderer(ModEntityData.MOD_CHEST_BOAT_DATA, ModChestBoatRenderer::new);
             registerEntityEvent.registerEntityRenderer(ModEntityData.KOI_DATA, KoiRenderer::new);
             registerEntityEvent.registerEntityRenderer(ModEntityData.KUNAI_DATA, KunaiRenderer::new);
             registerEntityEvent.registerEntityRenderer(ModEntityData.SHURIKEN_DATA, ShurikenRenderer::new);

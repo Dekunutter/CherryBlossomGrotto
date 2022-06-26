@@ -1,6 +1,7 @@
 package com.deku.cherryblossomgrotto.client.renderers;
 
 import com.deku.cherryblossomgrotto.common.entity.vehicle.ModBoatEntity;
+import com.deku.cherryblossomgrotto.common.entity.vehicle.ModBoatTypes;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.model.BoatModel;
@@ -19,14 +20,14 @@ import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
 @OnlyIn(Dist.CLIENT)
 public class ModBoatRenderer extends BoatRenderer {
-    private final Map<ModBoatEntity.ModType, Pair<ResourceLocation, BoatModel>> modBoatResources;
+    private final Map<ModBoatTypes, Pair<ResourceLocation, BoatModel>> modBoatResources;
 
-    public ModBoatRenderer(EntityRendererProvider.Context renderContext) {
-        super(renderContext);
+    public ModBoatRenderer(EntityRendererProvider.Context renderContext, boolean isChestBoot) {
+        super(renderContext, isChestBoot);
 
         // NOTE: Basically a copy of how we build boat resources but using our modded type enums since there's no easy way to add to the vanilla types
         //  Also note that I am using the standard oak boat vanilla model and just applying the cherry blossom wood texture over it
-        modBoatResources = Stream.of(ModBoatEntity.ModType.values()).collect(ImmutableMap.toImmutableMap((boatType) -> {
+        modBoatResources = Stream.of(ModBoatTypes.values()).collect(ImmutableMap.toImmutableMap((boatType) -> {
             return boatType;
         }, (boatType) -> {
             return Pair.of(
@@ -36,9 +37,13 @@ public class ModBoatRenderer extends BoatRenderer {
                         new ResourceLocation("boat/oak"),
                         "main"
                     )
-                ))
+                ), isChestBoot)
             );
         }));
+    }
+
+    public ModBoatRenderer(EntityRendererProvider.Context renderContext) {
+        this(renderContext, false);
     }
 
     /**

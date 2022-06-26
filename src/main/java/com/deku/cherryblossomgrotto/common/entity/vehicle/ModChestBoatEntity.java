@@ -10,21 +10,22 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.entity.vehicle.ChestBoat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 
-public class ModBoatEntity extends Boat {
-    private static final EntityDataAccessor<Integer> MOD_BOAT_TYPE = SynchedEntityData.defineId(ModBoatEntity.class, EntityDataSerializers.INT);
+public class ModChestBoatEntity extends ChestBoat {
+    private static final EntityDataAccessor<Integer> MOD_CHEST_BOAT_TYPE = SynchedEntityData.defineId(ModChestBoatEntity.class, EntityDataSerializers.INT);
 
-    public ModBoatEntity(EntityType<? extends Entity> entityType, Level level) {
-        super(ModEntityData.MOD_BOAT_DATA, level);
+    public ModChestBoatEntity(EntityType<? extends Entity> entityType, Level level) {
+        super(ModEntityData.MOD_CHEST_BOAT_DATA, level);
     }
 
-    public ModBoatEntity(Level level, double positionX, double positionY, double positionZ) {
-        super(ModEntityData.MOD_BOAT_DATA, level);
+    public ModChestBoatEntity(Level level, double positionX, double positionY, double positionZ) {
+        super(ModEntityData.MOD_CHEST_BOAT_DATA, level);
         this.setPos(positionX, positionY, positionZ);
         this.setDeltaMovement(Vec3.ZERO);
         this.xo = positionX;
@@ -33,12 +34,12 @@ public class ModBoatEntity extends Boat {
 
     }
 
-    public ModBoatEntity(PlayMessages.SpawnEntity spawnEntity, Level level) {
-        this(ModEntityData.MOD_BOAT_DATA, level);
+    public ModChestBoatEntity(PlayMessages.SpawnEntity spawnEntity, Level level) {
+        this(ModEntityData.MOD_CHEST_BOAT_DATA, level);
     }
 
     /**
-     * Ensures that our custom boat type is added as additional save data to any modded boat instance
+     * Ensures that our custom chest boat type is added as additional save data to any modded boat instance
      *
      * @param compound The object the custom boat type is being saved to
      */
@@ -47,11 +48,11 @@ public class ModBoatEntity extends Boat {
     {
         super.addAdditionalSaveData(compound);
 
-        compound.putString("ModType", this.getModBoatType().getName());
+        compound.putString("ModType", this.getModChestBoatType().getName());
     }
 
     /**
-     * Ensures that our custom boat type is read from save data when the object is an instance of our custom
+     * Ensures that our custom chest boat type is read from save data when the object is an instance of our custom
      * boat.
      *
      * @param compound The object the custom boat type is being read from
@@ -62,7 +63,7 @@ public class ModBoatEntity extends Boat {
         super.readAdditionalSaveData(compound);
 
         if (compound.contains("ModType", 8))
-            this.setModBoatType(ModBoatTypes.byName(compound.getString("ModType")));
+            this.setModChestBoatType(ModBoatTypes.byName(compound.getString("ModType")));
     }
 
     /**
@@ -72,7 +73,7 @@ public class ModBoatEntity extends Boat {
     protected void defineSynchedData()
     {
         super.defineSynchedData();
-        this.entityData.define(MOD_BOAT_TYPE, ModBoatTypes.CHERRY.ordinal());
+        this.entityData.define(MOD_CHEST_BOAT_TYPE, ModBoatTypes.CHERRY.ordinal());
     }
 
     /**
@@ -89,19 +90,19 @@ public class ModBoatEntity extends Boat {
     /**
      * Sets the type of the boat using our custom modded boat type
      *
-     * @param type The mod type we want to assign this boat
+     * @param type The mod type we want to assign this chest boat
      */
-    public void setModBoatType(ModBoatTypes type) {
-        this.entityData.set(MOD_BOAT_TYPE, type.ordinal());
+    public void setModChestBoatType(ModBoatTypes type) {
+        this.entityData.set(MOD_CHEST_BOAT_TYPE, type.ordinal());
     }
 
     /**
-     * Gets the current type of the boat according to our custom modded boat type
+     * Gets the current type of the chest boat according to our custom modded boat type
      *
-     * @return The mod type currently assigned to this boat
+     * @return The mod type currently assigned to this chest boat
      */
-    public ModBoatTypes getModBoatType() {
-        return ModBoatTypes.byId(this.entityData.get(MOD_BOAT_TYPE));
+    public ModBoatTypes getModChestBoatType() {
+        return ModBoatTypes.byId(this.entityData.get(MOD_CHEST_BOAT_TYPE));
     }
 
     /**
@@ -119,7 +120,7 @@ public class ModBoatEntity extends Boat {
     }
 
     /**
-     * Ensures that we can't change the vanilla boat type
+     * Ensures that we can't change the vanilla chest boat type
      *
      * @param boatType The boat type we would be changing to, if we allowed it.
      */
@@ -129,13 +130,13 @@ public class ModBoatEntity extends Boat {
     }
 
     /**
-     * Determines what item drops down this boat is broken
+     * Determines what item drops down this chest boat is broken
      *
      * @return The item to be dropped
      */
     @Override
     public Item getDropItem() {
-        switch(this.getModBoatType()) {
+        switch(this.getModChestBoatType()) {
             case CHERRY:
             default:
                 return ModItems.CHERRY_BOAT;
