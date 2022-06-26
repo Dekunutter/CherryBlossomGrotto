@@ -5,6 +5,7 @@ import com.deku.cherryblossomgrotto.common.blockEntities.CherryLeavesBlockEntity
 import com.deku.cherryblossomgrotto.common.blockEntities.ModBlockEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -24,7 +25,6 @@ import net.minecraftforge.common.extensions.IForgeBlock;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
-import java.util.Random;
 
 public class CherryBlossomLeaves extends LeavesBlock implements IForgeBlock, EntityBlock {
     public CherryBlossomLeaves() {
@@ -66,7 +66,7 @@ public class CherryBlossomLeaves extends LeavesBlock implements IForgeBlock, Ent
      */
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void animateTick(BlockState state, Level world, BlockPos position, Random random) {
+    public void animateTick(BlockState state, Level world, BlockPos position, RandomSource random) {
         super.animateTick(state, world, position, random);
         if (random.nextInt(16) == 0) {
             FallingCherryBlossomPetalOptions cherryBlossomPetal = new FallingCherryBlossomPetalOptions(new Color(255, 255, 255, 255), 1.0f);
