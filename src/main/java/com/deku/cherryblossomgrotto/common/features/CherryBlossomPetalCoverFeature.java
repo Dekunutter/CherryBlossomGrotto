@@ -4,6 +4,7 @@ import com.deku.cherryblossomgrotto.common.blocks.ModBlocks;
 import com.deku.cherryblossomgrotto.common.utils.Randomizer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.dimension.DimensionDefaults;
@@ -64,7 +65,7 @@ public class CherryBlossomPetalCoverFeature extends Feature<NoneFeatureConfigura
      * @param position Position that we are going to start scanning for ground cover from
      * @return The position along the Y axis that we spawned some petals on
      */
-    private int spawnCherryPetals(WorldGenLevel levelGenerationReader, Random random, BlockPos position) {
+    private int spawnCherryPetals(WorldGenLevel levelGenerationReader, RandomSource random, BlockPos position) {
         BlockPos.MutableBlockPos belowPosition = new BlockPos.MutableBlockPos();
         BlockPos.MutableBlockPos spawningPosition = new BlockPos.MutableBlockPos();
 
