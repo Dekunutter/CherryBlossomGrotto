@@ -4,6 +4,7 @@ import com.deku.cherryblossomgrotto.common.utils.Randomizer;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.state.BlockState;
@@ -49,7 +50,7 @@ public class GrandCherryBlossomFoliagePlacer extends FoliagePlacer {
      * @param offsetY The offset on the Y-axis to start the placement position
      */
     @Override
-    protected void createFoliage(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, Random random, TreeConfiguration treeConfig, int trunkLength, FoliagePlacer.FoliageAttachment foliage, int foliageHeight, int foliageRadius, int offsetY) {
+    protected void createFoliage(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, RandomSource random, TreeConfiguration treeConfig, int trunkLength, FoliagePlacer.FoliageAttachment foliage, int foliageHeight, int foliageRadius, int offsetY) {
         if (foliage.doubleTrunk()) {
             // Places the base row which is a cross of leaves and at the top level of logs
             this.placeLeavesRow(levelReader, blockConsumer, random, treeConfig, foliage.pos(), foliageRadius - 2, -1, true);
@@ -80,7 +81,7 @@ public class GrandCherryBlossomFoliagePlacer extends FoliagePlacer {
      * @param foliageHeight Height of the foliage to be created at this foliage point
      * @param foliageRadius The radius of the foliage
      */
-    private void generateCanopy(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, Random random, TreeConfiguration treeConfig, FoliagePlacer.FoliageAttachment foliage, int foliageHeight, int foliageRadius) {
+    private void generateCanopy(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, RandomSource random, TreeConfiguration treeConfig, FoliagePlacer.FoliageAttachment foliage, int foliageHeight, int foliageRadius) {
         for (int positionY = foliageHeight; positionY > -1; positionY--) {
             int radius = Math.max(foliageRadius + foliage.radiusOffset() - positionY, 0);
             this.placeLeavesRow(levelReader, blockConsumer, random, treeConfig, foliage.pos(), radius, positionY, foliage.doubleTrunk());
@@ -97,7 +98,7 @@ public class GrandCherryBlossomFoliagePlacer extends FoliagePlacer {
      * @return The height of the foliage for this tree
      */
     @Override
-    public int foliageHeight(Random random, int trunkHeight, TreeConfiguration treeConfig) {
+    public int foliageHeight(RandomSource random, int trunkHeight, TreeConfiguration treeConfig) {
         return Randomizer.getRandomNumberWithinBounds(random, 3, 4);
     }
 
@@ -116,7 +117,7 @@ public class GrandCherryBlossomFoliagePlacer extends FoliagePlacer {
      * @return Whether the placer should skip the current location
      */
     @Override
-    protected boolean shouldSkipLocation(Random random, int relativePositionX, int relativePositionY, int relativePositionZ, int radius, boolean hasDoubleTrunk) {
+    protected boolean shouldSkipLocation(RandomSource random, int relativePositionX, int relativePositionY, int relativePositionZ, int radius, boolean hasDoubleTrunk) {
         if (relativePositionY == -1) {
             return (relativePositionX > 1 || relativePositionZ > 1) && relativePositionX != 0 && relativePositionZ != 0;
         } else {

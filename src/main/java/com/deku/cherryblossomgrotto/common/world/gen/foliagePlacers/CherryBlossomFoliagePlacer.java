@@ -3,6 +3,7 @@ package com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.state.BlockState;
@@ -48,7 +49,7 @@ public class CherryBlossomFoliagePlacer extends FoliagePlacer {
      * @param offsetY The offset on the Y-axis to start the placement position
      */
     @Override
-    protected void createFoliage(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, Random random, TreeConfiguration treeConfig, int trunkLength, FoliagePlacer.FoliageAttachment foliage, int foliageHeight, int foliageRadius, int offsetY) {
+    protected void createFoliage(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, RandomSource random, TreeConfiguration treeConfig, int trunkLength, FoliagePlacer.FoliageAttachment foliage, int foliageHeight, int foliageRadius, int offsetY) {
         boolean isDoubleTrunk = foliage.doubleTrunk();
         BlockPos foliageStartPosition = foliage.pos().above(offsetY);
         this.placeLeavesRow(levelReader, blockConsumer, random, treeConfig, foliageStartPosition, foliageRadius + foliage.radiusOffset(), -1 - foliageHeight, isDoubleTrunk);
@@ -69,7 +70,7 @@ public class CherryBlossomFoliagePlacer extends FoliagePlacer {
      * @return The height of the foliage for this tree
      */
     @Override
-    public int foliageHeight(Random random, int trunkLength, TreeConfiguration treeConfig) {
+    public int foliageHeight(RandomSource random, int trunkLength, TreeConfiguration treeConfig) {
         return 0;
     }
 
@@ -88,7 +89,7 @@ public class CherryBlossomFoliagePlacer extends FoliagePlacer {
      * @return Whether the placer should skip the current location
      */
     @Override
-    protected boolean shouldSkipLocation(Random random, int relativePositionX, int relativePositionY, int relativePositionZ, int radius, boolean hasDoubleTrunk) {
+    protected boolean shouldSkipLocation(RandomSource random, int relativePositionX, int relativePositionY, int relativePositionZ, int radius, boolean hasDoubleTrunk) {
         if (relativePositionY == 0) {
             if (relativePositionX >= 1 && relativePositionZ >= 1) {
                 return true;
