@@ -14,7 +14,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilde
 import java.util.Optional;
 
 public class ToriiGate extends Structure {
-    public static final Codec<GiantBuddha> CODEC = simpleCodec(GiantBuddha::new);
+    public static final Codec<ToriiGate> CODEC = simpleCodec(ToriiGate::new);
 
     public static final WeightedRandomList<MobSpawnSettings.SpawnerData> TORII_GATE_ENEMIES = WeightedRandomList.create();
 

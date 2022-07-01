@@ -16,7 +16,7 @@ public class ModVillagePlacements {
     /**
      * Registers village placements into the game via the placed features registry.
      *
-     * Village placements are just features intended spoecifically for use in villages as decorations
+     * Village placements are just features intended specifically for use in villages as decorations
      */
     public static void register() {
         CHERRY_BLOSSOM_TREE_VILLAGE = PlacementUtils.register(
