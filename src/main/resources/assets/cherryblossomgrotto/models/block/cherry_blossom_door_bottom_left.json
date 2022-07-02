@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_left",
+  "textures": {
+    "bottom": "cherryblossomgrotto:block/cherry_blossom_door_bottom",
+    "top": "cherryblossomgrotto:block/cherry_blossom_door_top"
+  }
+}
