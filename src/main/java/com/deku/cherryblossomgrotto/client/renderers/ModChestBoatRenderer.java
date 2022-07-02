@@ -2,6 +2,7 @@ package com.deku.cherryblossomgrotto.client.renderers;
 
 import com.deku.cherryblossomgrotto.common.entity.vehicle.ModBoatEntity;
 import com.deku.cherryblossomgrotto.common.entity.vehicle.ModBoatTypes;
+import com.deku.cherryblossomgrotto.common.entity.vehicle.ModChestBoatEntity;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.model.BoatModel;
@@ -52,7 +53,7 @@ public class ModChestBoatRenderer extends BoatRenderer {
      */
     @Override
     public Pair<ResourceLocation, BoatModel> getModelWithLocation(Boat boat) {
-        ModBoatEntity moddedBoat = (ModBoatEntity) boat;
-        return modChestBoatResources.get(moddedBoat.getModBoatType());
+        ModChestBoatEntity moddedBoat = (ModChestBoatEntity) boat;
+        return modChestBoatResources.get(moddedBoat.getModChestBoatType());
     }
 }
