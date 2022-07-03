@@ -40,7 +40,7 @@ public class ToriiGatePieces {
      */
     public static class Piece extends TemplateStructurePiece {
         public Piece(StructureTemplateManager manager, ResourceLocation resourceLocation, BlockPos position, Rotation rotation, int offsetY) {
-            super(ModStructurePieceTypes.TORII_GATE_PIECE, 0, manager, resourceLocation, resourceLocation.toString(), loadTemplate(manager, resourceLocation, rotation), position.offset(0, -offsetY, 0));
+            super(ModStructurePieceTypes.TORII_GATE_PIECE, 0, manager, resourceLocation, resourceLocation.toString(), loadTemplate(manager, resourceLocation, rotation), position.offset(BlockPos.ZERO).below(offsetY));
         }
 
         public Piece(StructurePieceSerializationContext serializationContext, CompoundTag compoundNBT) {
@@ -75,7 +75,6 @@ public class ToriiGatePieces {
         @Override
         protected void addAdditionalSaveData(StructurePieceSerializationContext serializationContext, CompoundTag compoundNBT) {
             super.addAdditionalSaveData(serializationContext, compoundNBT);
-            compoundNBT.putString("Template", this.templateName);
             compoundNBT.putString("Rot", this.placeSettings.getRotation().name());
         }
 

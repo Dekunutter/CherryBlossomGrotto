@@ -41,7 +41,7 @@ public class GiantBuddha extends Structure {
     @Override
     public Optional<GenerationStub> findGenerationPoint(GenerationContext generationContext) {
         return onTopOfChunkCenter(generationContext, Heightmap.Types.WORLD_SURFACE_WG, (builder) -> {
-            generatePieces(builder, generationContext);
+            this.generatePieces(builder, generationContext);
         });
     }
 
@@ -54,10 +54,14 @@ public class GiantBuddha extends Structure {
      * @param pieceBuilder The builder for all the structure's pieces
      * @param generatorContext Context of the generator for the chunk the structure is being built within
      */
-    public static void generatePieces(StructurePiecesBuilder pieceBuilder, Structure.GenerationContext generatorContext) {
+    public void generatePieces(StructurePiecesBuilder pieceBuilder, Structure.GenerationContext generatorContext) {
         BlockPos chunkPos = new BlockPos(generatorContext.chunkPos().getMinBlockX(), 90, generatorContext.chunkPos().getMinBlockZ());
+
+        int landHeight = generatorContext.chunkGenerator().getFirstOccupiedHeight(chunkPos.getX(), chunkPos.getZ(), Heightmap.Types.WORLD_SURFACE_WG, generatorContext.heightAccessor(), generatorContext.randomState());
+
+        BlockPos position = new BlockPos(generatorContext.chunkPos().getMinBlockX(), landHeight + 1, generatorContext.chunkPos().getMinBlockZ());
         Rotation rotation = Rotation.getRandom(generatorContext.random());
-        GiantBuddhaPieces.addPieces(generatorContext.structureTemplateManager(), chunkPos, rotation, pieceBuilder, generatorContext.random());
+        GiantBuddhaPieces.addPieces(generatorContext.structureTemplateManager(), position, rotation, pieceBuilder, generatorContext.random());
     }
 
     /**
