@@ -96,6 +96,9 @@ public class ModBlocks {
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":spruce_planks_trapdoor")
     public static SprucePlanksTrapdoor SPRUCE_PLANKS_TRAP_DOOR;
 
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":mangrove_planks_trapdoor")
+    public static MangrovePlanksTrapdoor MANGROVE_PLANKS_TRAP_DOOR;
+
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":smooth_stone_trapdoor")
     public static SmoothStoneTrapdoor SMOOTH_STONE_TRAP_DOOR;
 
