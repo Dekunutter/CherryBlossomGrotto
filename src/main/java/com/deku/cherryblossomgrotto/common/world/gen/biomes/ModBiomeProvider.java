@@ -20,7 +20,7 @@ import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
 public class ModBiomeProvider extends Region {
     public ModBiomeProvider() {
-        super(new ResourceLocation(MOD_ID, "biome_provider"), RegionType.OVERWORLD, 1);
+        super(new ResourceLocation(MOD_ID, "biome_provider"), RegionType.OVERWORLD, 10);
     }
 
     /**
