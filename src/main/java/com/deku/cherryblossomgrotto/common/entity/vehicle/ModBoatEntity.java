@@ -1,6 +1,5 @@
 package com.deku.cherryblossomgrotto.common.entity.vehicle;
 
-import com.deku.cherryblossomgrotto.common.blocks.ModBlocks;
 import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
 import com.deku.cherryblossomgrotto.common.items.ModItems;
 import net.minecraft.nbt.CompoundTag;
@@ -13,7 +12,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
@@ -64,7 +62,7 @@ public class ModBoatEntity extends Boat {
         super.readAdditionalSaveData(compound);
 
         if (compound.contains("ModType", 8))
-            this.setModBoatType(ModBoatEntity.ModType.byName(compound.getString("ModType")));
+            this.setModBoatType(ModBoatTypes.byName(compound.getString("ModType")));
     }
 
     /**
@@ -74,7 +72,7 @@ public class ModBoatEntity extends Boat {
     protected void defineSynchedData()
     {
         super.defineSynchedData();
-        this.entityData.define(MOD_BOAT_TYPE, ModBoatEntity.ModType.CHERRY.ordinal());
+        this.entityData.define(MOD_BOAT_TYPE, ModBoatTypes.CHERRY.ordinal());
     }
 
     /**
@@ -93,7 +91,7 @@ public class ModBoatEntity extends Boat {
      *
      * @param type The mod type we want to assign this boat
      */
-    public void setModBoatType(ModBoatEntity.ModType type) {
+    public void setModBoatType(ModBoatTypes type) {
         this.entityData.set(MOD_BOAT_TYPE, type.ordinal());
     }
 
@@ -102,8 +100,8 @@ public class ModBoatEntity extends Boat {
      *
      * @return The mod type currently assigned to this boat
      */
-    public ModBoatEntity.ModType getModBoatType() {
-        return ModBoatEntity.ModType.byId(this.entityData.get(MOD_BOAT_TYPE));
+    public ModBoatTypes getModBoatType() {
+        return ModBoatTypes.byId(this.entityData.get(MOD_BOAT_TYPE));
     }
 
     /**
@@ -141,82 +139,6 @@ public class ModBoatEntity extends Boat {
             case CHERRY:
             default:
                 return ModItems.CHERRY_BOAT;
-        }
-    }
-
-    /**
-     * An enum containing possible boat types associated with this mod.
-     * We use a new type since the types that are possible in vanilla cannot be overridden or extended directly.
-     */
-    public enum ModType {
-        CHERRY(ModBlocks.CHERRY_PLANKS, "cherry_blossom");
-
-        private final String name;
-        private final Block planks;
-
-        ModType(Block planks, String name) {
-            this.name = name;
-            this.planks = planks;
-        }
-
-        /**
-         * Gets the name of the boat type
-         *
-         * @return Name of the boat type
-         */
-        public String getName() {
-            return this.name;
-        }
-
-        /**
-         * Gets the planks block that corresponds to the same wood type of this boat
-         *
-         * @return The planks block of the same wood type as this boat
-         */
-        public Block getPlanks() {
-            return this.planks;
-        }
-
-        /**
-         * Converts this enum value to a string
-         *
-         * @return The name of the boat type
-         */
-        public String toString() {
-            return this.name;
-        }
-
-        /**
-         * Gets the enum value for this boat type by its ID
-         *
-         * @param id The ID we want the boat type for
-         * @return The boat type with the given ID
-         */
-        public static ModBoatEntity.ModType byId(int id) {
-            ModBoatEntity.ModType[] boatEntityType = values();
-            if (id < 0 || id >= boatEntityType.length) {
-                id = 0;
-            }
-
-            return boatEntityType[id];
-        }
-
-        /**
-         * Gets the enum value for this boat type by its name
-         *
-         * @param name The name of the boat type we want
-         * @return The boat type with the given name
-         */
-        public static ModBoatEntity.ModType byName(String name) {
-            ModBoatEntity.ModType[] boatEntityType = values();
-
-            for(int i = 0; i < boatEntityType.length; ++i) {
-                if (boatEntityType[i].getName().equals(name)) {
-                    return boatEntityType[i];
-                }
-            }
-
-            return boatEntityType[0];
         }
     }
 }

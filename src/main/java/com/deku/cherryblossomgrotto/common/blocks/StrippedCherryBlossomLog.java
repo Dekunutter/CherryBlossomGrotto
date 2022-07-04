@@ -13,7 +13,6 @@ import net.minecraft.world.level.material.MaterialColor;
 public class StrippedCherryBlossomLog extends RotatedPillarBlock {
     public StrippedCherryBlossomLog() {
         super(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.TERRACOTTA_RED).strength(2.0f).sound(SoundType.WOOD) );
-        setRegistryName("stripped_cherry_blossom_log");
     }
 
     /**

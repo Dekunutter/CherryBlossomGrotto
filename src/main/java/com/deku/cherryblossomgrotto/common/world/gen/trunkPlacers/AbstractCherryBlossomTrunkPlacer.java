@@ -3,6 +3,7 @@ package com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers;
 import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -11,7 +12,6 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 
 import java.util.List;
-import java.util.Random;
 import java.util.function.BiConsumer;
 
 public abstract class AbstractCherryBlossomTrunkPlacer extends TrunkPlacer {
@@ -77,7 +77,7 @@ public abstract class AbstractCherryBlossomTrunkPlacer extends TrunkPlacer {
      * @return List of all points in the world where we will want to begin our foliage spawns
      */
     @Override
-    public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, Random random, int trunkLength, BlockPos startingPosition, TreeConfiguration treeConfig) {
+    public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, RandomSource random, int trunkLength, BlockPos startingPosition, TreeConfiguration treeConfig) {
         setDirtAt(levelReader, blockConsumer, random, startingPosition.below(), treeConfig);
 
         List<FoliagePlacer.FoliageAttachment> foliageList = Lists.newArrayList();
@@ -138,7 +138,7 @@ public abstract class AbstractCherryBlossomTrunkPlacer extends TrunkPlacer {
      * @param treeConfig Configuration class for getting the state of the placed blocks
      * @param foliageList List of all foliage spawning points for this tree
      */
-    protected void generateBranch(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, Random random, int trunkLength, BlockPos branchingPosition, Direction trunkDirection, int trunkCurvingPoint, TreeConfiguration treeConfig, List<FoliagePlacer.FoliageAttachment> foliageList) {
+    protected void generateBranch(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, RandomSource random, int trunkLength, BlockPos branchingPosition, Direction trunkDirection, int trunkCurvingPoint, TreeConfiguration treeConfig, List<FoliagePlacer.FoliageAttachment> foliageList) {
         int placementPositionX = branchingPosition.getX();
         int placementPositionY = branchingPosition.getY();
         int placementPositionZ = branchingPosition.getZ();
@@ -186,7 +186,7 @@ public abstract class AbstractCherryBlossomTrunkPlacer extends TrunkPlacer {
      * @param trunkLength The generalized length of the trunk
      * @return The point along the trunk that the curve will begin
      */
-    private int calculateTrunkCurvingPoint(Random random, int trunkLength) {
+    private int calculateTrunkCurvingPoint(RandomSource random, int trunkLength) {
         return trunkLength - random.nextInt(trunkCurvingOffset) - 1;
     }
 
@@ -196,7 +196,7 @@ public abstract class AbstractCherryBlossomTrunkPlacer extends TrunkPlacer {
      * @param random A random number generator
      * @return The length that the curve will generate for
      */
-    private int calculateTrunkCurvingLength(Random random) {
+    private int calculateTrunkCurvingLength(RandomSource random) {
         return trunkCurvingLengthMax - random.nextInt(trunkCurvingLengthMax);
     }
 
@@ -221,7 +221,7 @@ public abstract class AbstractCherryBlossomTrunkPlacer extends TrunkPlacer {
      * @param trunkLength The generalized length of the trunk
      * @return Whether the trunk is at a point where it is capable of generating branches near its canopy
      */
-    private boolean isCanopyBranchingCapable(Random random, int currentPosition, int trunkLength) {
+    private boolean isCanopyBranchingCapable(RandomSource random, int currentPosition, int trunkLength) {
         if (branchingType == BranchingType.CANOPY && random.nextInt(10) >= 1) {
             return (currentPosition > 3) && (currentPosition <= trunkLength - 2);
         }
@@ -252,7 +252,7 @@ public abstract class AbstractCherryBlossomTrunkPlacer extends TrunkPlacer {
      * @param trunkCurvingPoint The point along the trunk where the curve begins
      * @return The point along the trunk where a branch will begin.
      */
-    private int calculateBranchingPoint(Random random, int trunkCurvingPoint) {
+    private int calculateBranchingPoint(RandomSource random, int trunkCurvingPoint) {
         return trunkCurvingPoint - random.nextInt(BRANCH_START_OFFSET) - 1;
     }
 
@@ -262,7 +262,7 @@ public abstract class AbstractCherryBlossomTrunkPlacer extends TrunkPlacer {
      * @param random A random number generator.
      * @return The length we want the branch to be
      */
-    private int calculateBranchLength(Random random) {
+    private int calculateBranchLength(RandomSource random) {
         return 1 + random.nextInt(BRANCH_MAX_LENGTH);
     }
 
@@ -272,7 +272,7 @@ public abstract class AbstractCherryBlossomTrunkPlacer extends TrunkPlacer {
      * @param random A random number generator.
      * @return Whether the branch is going to spawn in an upward diagonal direction
      */
-    protected boolean isBranchDiagonal(Random random) {
+    protected boolean isBranchDiagonal(RandomSource random) {
         return random.nextInt(9) <= 1;
     }
 

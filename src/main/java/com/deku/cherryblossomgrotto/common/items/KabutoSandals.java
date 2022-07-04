@@ -17,7 +17,6 @@ import java.util.function.Consumer;
 public class KabutoSandals extends ArmorItem {
     public KabutoSandals() {
         super(ArmorMaterials.IRON, EquipmentSlot.FEET, new Properties().stacksTo(1).tab(CreativeModeTab.TAB_COMBAT));
-        setRegistryName("kabuto_sandals");
     }
 
     /**

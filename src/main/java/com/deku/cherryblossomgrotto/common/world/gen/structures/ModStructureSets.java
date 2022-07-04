@@ -3,7 +3,7 @@ package com.deku.cherryblossomgrotto.common.world.gen.structures;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.data.worldgen.StructureFeatures;
+import net.minecraft.data.worldgen.Structures;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.structure.BuiltinStructureSets;
@@ -31,7 +31,7 @@ public class ModStructureSets {
         GIANT_BUDDHAS = registerStructureSet(
             ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation(MOD_ID, "giant_buddhas")),
             new StructureSet(
-                ModConfiguredStructures.CONFIGURED_GIANT_BUDDHA,
+                ModStructures.GIANT_BUDDHA,
                 new RandomSpreadStructurePlacement(32, 8, RandomSpreadType.LINEAR, 565423412)
             )
         );
@@ -39,7 +39,7 @@ public class ModStructureSets {
         TORII_GATES = registerStructureSet(
             ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation(MOD_ID,"torii_gates")),
             new StructureSet(
-                ModConfiguredStructures.CONFIGURED_TORII_GATE,
+                ModStructures.TORII_GATE,
                 new RandomSpreadStructurePlacement(40, 15, RandomSpreadType.LINEAR, 780292865)
             )
         );
@@ -48,12 +48,12 @@ public class ModStructureSets {
             BuiltinStructureSets.VILLAGES,
             new StructureSet(
                 List.of(
-                    StructureSet.entry(StructureFeatures.VILLAGE_PLAINS),
-                    StructureSet.entry(StructureFeatures.VILLAGE_DESERT),
-                    StructureSet.entry(StructureFeatures.VILLAGE_SAVANNA),
-                    StructureSet.entry(StructureFeatures.VILLAGE_SNOWY),
-                    StructureSet.entry(StructureFeatures.VILLAGE_TAIGA),
-                    StructureSet.entry(ModConfiguredStructures.CONFIGURED_CHERRY_BLOSSOM_GROTTO_VILLAGE)
+                    StructureSet.entry(Structures.VILLAGE_PLAINS),
+                    StructureSet.entry(Structures.VILLAGE_DESERT),
+                    StructureSet.entry(Structures.VILLAGE_SAVANNA),
+                    StructureSet.entry(Structures.VILLAGE_SNOWY),
+                    StructureSet.entry(Structures.VILLAGE_TAIGA),
+                    StructureSet.entry(ModStructures.CHERRY_BLOSSOM_GROTTO_VILLAGE)
                 ),
                 new RandomSpreadStructurePlacement(34, 8, RandomSpreadType.LINEAR, 10387312)
             )

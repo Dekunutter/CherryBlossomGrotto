@@ -6,7 +6,6 @@
   "temperature_modifier": "none",
   "downfall": 0.8,
   "precipitation": "rain",
-  "category": "forest",
   "player_spawn_friendly": true,
   "creature_spawn_friendly": true,
   "creature_spawn_probability": 0.5,

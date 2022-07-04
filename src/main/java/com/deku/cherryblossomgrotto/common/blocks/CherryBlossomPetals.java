@@ -32,7 +32,6 @@ public class CherryBlossomPetals extends Block {
 
     public CherryBlossomPetals() {
         super(BlockBehaviour.Properties.of(Material.LEAVES).strength(0.1f).sound(SoundType.GRASS).noOcclusion());
-        setRegistryName("cherry_blossom_petals");
         this.registerDefaultState(this.defaultBlockState().setValue(HALF_LAYERS, 1));
     }
 

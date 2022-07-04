@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_trapdoor",
+  "pattern": [
+    "XXX",
+    "###",
+    "###"
+  ],
+  "key": {
+    "X": {
+      "item": "cherryblossomgrotto:cherry_blossom_petal"
+    },
+    "#": {
+      "item": "minecraft:mangrove_planks"
+    }
+  },
+  "result": {
+    "item": "cherryblossomgrotto:mangrove_planks_trapdoor",
+    "count": 2
+  }
+}

@@ -8,8 +8,7 @@ import net.minecraft.world.level.material.Material;
 
 public class PottedCherryBlossomSapling extends FlowerPotBlock {
     public PottedCherryBlossomSapling() {
-        super(() -> (FlowerPotBlock) Blocks.FLOWER_POT.delegate.get(), () -> ModBlocks.CHERRY_SAPLING.delegate.get(), BlockBehaviour.Properties.of(Material.DECORATION).instabreak().noOcclusion());
-        setRegistryName("potted_cherry_blossom_sapling");
+        super(ModBlocks.CHERRY_SAPLING, BlockBehaviour.Properties.of(Material.DECORATION).instabreak().noOcclusion());
         ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(new ResourceLocation("cherryblossomgrotto:cherry_blossom_sapling"), () -> this);
     }
 }

@@ -27,7 +27,6 @@ public class Kunai extends ProjectileWeaponItem implements Vanishable {
 
     public Kunai() {
         super(new Item.Properties().stacksTo(16).tab(CreativeModeTab.TAB_COMBAT));
-        setRegistryName("kunai");
 
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", 2.0D, AttributeModifier.Operation.ADDITION));

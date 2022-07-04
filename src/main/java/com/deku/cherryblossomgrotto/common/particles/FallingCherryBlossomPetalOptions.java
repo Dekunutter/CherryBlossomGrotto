@@ -4,6 +4,7 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
@@ -74,7 +75,7 @@ public class FallingCherryBlossomPetalOptions implements ParticleOptions {
      */
     @Override
     public String writeToString() {
-        return String.format(Locale.ROOT, "%s %.2f %i %i %i", this.getType().getRegistryName(), diameter, tint.getRed(), tint.getGreen(), tint.getBlue());
+        return String.format(Locale.ROOT, "%s %.2f %i %i %i", Registry.PARTICLE_TYPE.getKey(this.getType()), diameter, tint.getRed(), tint.getGreen(), tint.getBlue());
     }
 
     /**

@@ -11,7 +11,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
-import net.minecraft.world.level.ClipBlockStateContext;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,7 +22,6 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
-import java.util.Random;
 import java.util.function.BiConsumer;
 
 import static com.deku.cherryblossomgrotto.Main.TrunkPlacerRegistryEventHandler.GRAND_CHERRY_TREE_TRUNK_PLACER;
@@ -58,7 +57,7 @@ public class GrandCherryBlossomTrunkPlacer extends GiantTrunkPlacer {
      * @return List of all points in the world where we will want to begin our foliage spawns
      */
     @Override
-    public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, Random random, int trunkLength, BlockPos startingPosition, TreeConfiguration treeConfig) {
+    public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, RandomSource random, int trunkLength, BlockPos startingPosition, TreeConfiguration treeConfig) {
         setDirtAtBase(levelReader, blockConsumer, random, startingPosition, treeConfig);
 
         List<FoliagePlacer.FoliageAttachment> foliageList = Lists.newArrayList();
@@ -77,7 +76,7 @@ public class GrandCherryBlossomTrunkPlacer extends GiantTrunkPlacer {
      * @param random A random number generator
      * @param startingPosition Position of the starting block in the world
      */
-    private void setDirtAtBase(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, Random random, BlockPos startingPosition, TreeConfiguration treeConfig) {
+    private void setDirtAtBase(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, RandomSource random, BlockPos startingPosition, TreeConfiguration treeConfig) {
         setDirtAt(levelReader, blockConsumer, random, startingPosition.below(), treeConfig);
         setDirtAt(levelReader, blockConsumer, random, startingPosition.below().east(), treeConfig);
         setDirtAt(levelReader, blockConsumer, random, startingPosition.below().south(), treeConfig);
@@ -95,7 +94,7 @@ public class GrandCherryBlossomTrunkPlacer extends GiantTrunkPlacer {
      * @param treeConfig Configuration class for getting the state of the placed blocks
      * @return List of all points in the world where we will want to begin our foliage spawns
      */
-    private List<FoliagePlacer.FoliageAttachment> generateTrunk(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, Random random, int trunkLength, BlockPos startingPosition, TreeConfiguration treeConfig) {
+    private List<FoliagePlacer.FoliageAttachment> generateTrunk(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, RandomSource random, int trunkLength, BlockPos startingPosition, TreeConfiguration treeConfig) {
         List<FoliagePlacer.FoliageAttachment> trunkEnds = Lists.newArrayList();
         BlockPos.MutableBlockPos mutableBlockPosition = new BlockPos.MutableBlockPos();
         FoliagePlacer.FoliageAttachment foliageSpawn;
@@ -138,7 +137,7 @@ public class GrandCherryBlossomTrunkPlacer extends GiantTrunkPlacer {
      * @param offsetZ The offset on the Z axis from the starting position that the log should spawn
      * @return The possible foliage placer position, assuming that this last placed block will be the top of the trunk, or null
      */
-    private FoliagePlacer.FoliageAttachment placeTrunkLog(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, Random random, int trunkLength, BlockPos startingPosition, TreeConfiguration treeConfig, BlockPos.MutableBlockPos mutableBlockPosition, int offsetX, int offsetY, int offsetZ) {
+    private FoliagePlacer.FoliageAttachment placeTrunkLog(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, RandomSource random, int trunkLength, BlockPos startingPosition, TreeConfiguration treeConfig, BlockPos.MutableBlockPos mutableBlockPosition, int offsetX, int offsetY, int offsetZ) {
         mutableBlockPosition.setWithOffset(startingPosition, offsetX, offsetY, offsetZ);
         placeLogIfFree(levelReader, blockConsumer, random, mutableBlockPosition, treeConfig);
         if (offsetY == trunkLength - 1) {
@@ -158,7 +157,7 @@ public class GrandCherryBlossomTrunkPlacer extends GiantTrunkPlacer {
      * @param treeConfig Configuration class for getting the state of the placed blocks
      * @return All foliage spawning points along the tertiary branches
      */
-    private List<FoliagePlacer.FoliageAttachment> generateTertiaryBranches(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, Random random, List<FoliagePlacer.FoliageAttachment> foliageList, TreeConfiguration treeConfig) {
+    private List<FoliagePlacer.FoliageAttachment> generateTertiaryBranches(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, RandomSource random, List<FoliagePlacer.FoliageAttachment> foliageList, TreeConfiguration treeConfig) {
         foliageList.addAll(generateGreedierTertiaryBranch(levelReader, blockConsumer, random, treeConfig, foliageList.get(0).pos(), Direction.EAST, Direction.NORTH));
         foliageList.addAll(generateGreedierTertiaryBranch(levelReader, blockConsumer, random, treeConfig, foliageList.get(1).pos(), Direction.WEST, Direction.NORTH));
         foliageList.addAll(generateGreedierTertiaryBranch(levelReader, blockConsumer, random, treeConfig, foliageList.get(2).pos(), Direction.WEST, Direction.SOUTH));
@@ -183,7 +182,7 @@ public class GrandCherryBlossomTrunkPlacer extends GiantTrunkPlacer {
      * @param directionZ The direction on the Z axis in which this branch is being generated
      * @return All foliage placer points generated along the branch
      */
-    private List<FoliagePlacer.FoliageAttachment> generateTertiaryBranch(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, Random random, TreeConfiguration treeConfig, BlockPos startingPosition, Direction directionX, Direction directionZ) {
+    private List<FoliagePlacer.FoliageAttachment> generateTertiaryBranch(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, RandomSource random, TreeConfiguration treeConfig, BlockPos startingPosition, Direction directionX, Direction directionZ) {
         int branchStartOffset = Randomizer.getRandomNumberWithinBounds(random, 0, 2);
         int branchLengthX = Randomizer.getRandomNumberWithinBounds(random, 6, 8);
         int branchLengthY = Randomizer.getRandomNumberWithinBounds(random, 2, 3);
@@ -238,7 +237,7 @@ public class GrandCherryBlossomTrunkPlacer extends GiantTrunkPlacer {
      * @param directionZ The direction on the Z axis in which this branch is being generated
      * @return All foliage placer points generated along the branch
      */
-    private List<FoliagePlacer.FoliageAttachment> generateGreedierTertiaryBranch(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, Random random, TreeConfiguration treeConfig, BlockPos startingPosition, Direction directionX, Direction directionZ) {
+    private List<FoliagePlacer.FoliageAttachment> generateGreedierTertiaryBranch(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, RandomSource random, TreeConfiguration treeConfig, BlockPos startingPosition, Direction directionX, Direction directionZ) {
         List<BlockPos> greedyPoints = Lists.newArrayList();
 
         int branchStartOffset = Randomizer.getRandomNumberWithinBounds(random, 0, 2);
@@ -310,7 +309,7 @@ public class GrandCherryBlossomTrunkPlacer extends GiantTrunkPlacer {
      * @param directionZ The direction on the Z axis in which this branch is being generated
      * @return All foliage placer points generated along the branch
      */
-    private List<FoliagePlacer.FoliageAttachment> generateGreediestTertiaryBranch(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, Random random, TreeConfiguration treeConfig, BlockPos startingPosition, Direction directionX, Direction directionZ) {
+    private List<FoliagePlacer.FoliageAttachment> generateGreediestTertiaryBranch(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, RandomSource random, TreeConfiguration treeConfig, BlockPos startingPosition, Direction directionX, Direction directionZ) {
         int branchLengthX = Randomizer.getRandomNumberWithinBounds(random, 3, 4);
         int branchLengthY = Randomizer.getRandomNumberWithinBounds(random, 3, 5);
         int branchLengthZ = Randomizer.getRandomNumberWithinBounds(random, 3, 4);
@@ -340,7 +339,7 @@ public class GrandCherryBlossomTrunkPlacer extends GiantTrunkPlacer {
      * @param startingPosition Position of the starting block in the world
      * @param positionsToBePlaced The positions of all blocks that we want to place into the world
      */
-    private void placeLogsAtGivenPositions(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, Random random, TreeConfiguration treeConfig, BlockPos startingPosition, List<BlockPos> positionsToBePlaced) {
+    private void placeLogsAtGivenPositions(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, RandomSource random, TreeConfiguration treeConfig, BlockPos startingPosition, List<BlockPos> positionsToBePlaced) {
         BlockPos.MutableBlockPos mutableBlockPosition = new BlockPos.MutableBlockPos();
         for(BlockPos branchPoint : positionsToBePlaced) {
             BlockPos currentOffset = branchPoint.subtract(startingPosition);

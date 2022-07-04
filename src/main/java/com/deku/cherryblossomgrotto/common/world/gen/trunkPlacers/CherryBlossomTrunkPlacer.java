@@ -3,9 +3,9 @@ package com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 
-import java.util.Random;
 
 import static com.deku.cherryblossomgrotto.Main.TrunkPlacerRegistryEventHandler.CHERRY_TREE_TRUNK_PLACER;
 
@@ -56,7 +56,7 @@ public class CherryBlossomTrunkPlacer extends AbstractCherryBlossomTrunkPlacer {
      * @return Returns true since all branches generate diagonally on this trunk type
      */
     @Override
-    protected boolean isBranchDiagonal(Random random) {
+    protected boolean isBranchDiagonal(RandomSource random) {
         return true;
     }
 }

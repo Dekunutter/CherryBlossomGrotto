@@ -3,13 +3,12 @@ package com.deku.cherryblossomgrotto.common.world.gen.blockstateprovider;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProviderType;
-
-import java.util.Random;
 
 public class CherryBlossomGrottoFlowerBlockStateProvider extends BlockStateProvider {
     public static final Codec<CherryBlossomGrottoFlowerBlockStateProvider> CODEC;
@@ -33,7 +32,7 @@ public class CherryBlossomGrottoFlowerBlockStateProvider extends BlockStateProvi
      * @param position The position that we are setting block state for
      * @return The block state returned by the provider
      */
-    public BlockState getState(Random random, BlockPos position) {
+    public BlockState getState(RandomSource random, BlockPos position) {
         double randomFlowerChoice = Mth.clamp((1.0d + Biome.BIOME_INFO_NOISE.getValue((double) position.getX() / 48.0d, (double) position.getZ() / 48.0d, false)) / 2.0d, 0.0d, 0.9999d);
         return FLOWERS[(int) (randomFlowerChoice * (double) FLOWERS.length)];
     }

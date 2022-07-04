@@ -1,5 +1,5 @@
 # CherryBlossomGrotto
-WIP of a Minecraft mod using the 1.18.2 version of the MC Forge framework.
+WIP of a Minecraft mod using the 1.19.0 version of the MC Forge framework.
 Uses terrablender as a dependency for generating custom biomes.
 
 # Contents

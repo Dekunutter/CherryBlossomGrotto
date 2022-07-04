@@ -1,6 +1,7 @@
 package com.deku.cherryblossomgrotto.common.items;
 
 import com.deku.cherryblossomgrotto.common.entity.vehicle.ModBoatEntity;
+import com.deku.cherryblossomgrotto.common.entity.vehicle.ModBoatTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -23,12 +24,11 @@ import java.util.function.Predicate;
 
 public class CherryBlossomBoat extends Item {
     private static final Predicate<Entity> ENTITY_PREDICATE = EntitySelector.NO_SPECTATORS.and(Entity::isPickable);
-    private final ModBoatEntity.ModType type;
+    private final ModBoatTypes type;
 
     public CherryBlossomBoat() {
         super(new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_TRANSPORTATION));
-        setRegistryName("cherry_blossom_boat");
-        type = ModBoatEntity.ModType.CHERRY;
+        type = ModBoatTypes.CHERRY;
     }
 
     /**

@@ -7,6 +7,5 @@ import net.minecraft.world.item.Item;
 public class CookedKoi extends Item {
     public CookedKoi() {
         super((new Item.Properties()).tab(CreativeModeTab.TAB_FOOD).food(ModFoods.COOKED_KOI));
-        setRegistryName("cooked_koi");
     }
 }

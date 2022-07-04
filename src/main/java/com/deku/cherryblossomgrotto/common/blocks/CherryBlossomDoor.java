@@ -10,6 +10,5 @@ public class CherryBlossomDoor extends DoorBlock
 {
     public CherryBlossomDoor() {
         super(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.TERRACOTTA_RED).strength(3.0f).sound(SoundType.WOOD).noOcclusion());
-        setRegistryName("cherry_blossom_door");
     }
 }

@@ -5,6 +5,5 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvi
 public class CherryBlossomForestFlowerProviderType extends BlockStateProviderType<CherryBlossomGrottoFlowerBlockStateProvider> {
     public CherryBlossomForestFlowerProviderType() {
         super(CherryBlossomGrottoFlowerBlockStateProvider.CODEC);
-        setRegistryName("cherry_blossom_forest_flower_provider");
     }
 }

@@ -8,6 +8,5 @@ import net.minecraft.world.level.material.Material;
 public class CherryBlossomButton extends WoodButtonBlock {
     public CherryBlossomButton() {
         super(BlockBehaviour.Properties.of(Material.DECORATION).noCollission().strength(0.5f).sound(SoundType.WOOD));
-        setRegistryName("cherry_blossom_button");
     }
 }

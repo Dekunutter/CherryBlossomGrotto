@@ -10,6 +10,5 @@ import net.minecraft.world.level.material.Fluids;
 public class KoiBucket extends MobBucketItem {
     public KoiBucket(EntityType<?> entityType) {
         super(entityType, Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, (new Item.Properties()).stacksTo(1).tab(CreativeModeTab.TAB_MISC));
-        setRegistryName("koi_bucket");
     }
 }

@@ -5,6 +5,5 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerTy
 public class CherryBlossomFoliagePlacerType extends FoliagePlacerType {
     public CherryBlossomFoliagePlacerType() {
         super(CherryBlossomFoliagePlacer.CODEC);
-        setRegistryName("cherry_blossom_tree_foliage_placer");
     }
 }

@@ -14,7 +14,6 @@ import net.minecraftforge.common.extensions.IForgeBlock;
 public class CherryBlossomStairs extends StairBlock implements IForgeBlock {
     public CherryBlossomStairs() {
         super(() -> ModBlocks.CHERRY_PLANKS.defaultBlockState(), BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.TERRACOTTA_RED).strength(2.0f, 3.0f).sound(SoundType.WOOD));
-        setRegistryName("cherry_blossom_stairs");
     }
 
     /**

@@ -7,6 +7,5 @@ public class ZenLantern extends AbstractZenLantern {
 
     public ZenLantern() {
         super(LIGHT_LEVEL, ParticleTypes.FLAME);
-        setRegistryName("zen_lantern");
     }
 }

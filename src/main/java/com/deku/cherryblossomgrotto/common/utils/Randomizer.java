@@ -1,6 +1,6 @@
 package com.deku.cherryblossomgrotto.common.utils;
 
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 
 public class Randomizer {
     /**
@@ -11,7 +11,7 @@ public class Randomizer {
      * @param max
      * @return
      */
-    public static int getRandomNumberWithinBounds(Random random, int min, int max) {
+    public static int getRandomNumberWithinBounds(RandomSource random, int min, int max) {
         if (min == max) {
             return min;
         }

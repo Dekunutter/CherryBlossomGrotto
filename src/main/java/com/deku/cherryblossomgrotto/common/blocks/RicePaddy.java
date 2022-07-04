@@ -33,7 +33,6 @@ public class RicePaddy extends CropBlock implements LiquidBlockContainer {
 
     public RicePaddy() {
         super(BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP));
-        setRegistryName("rice_paddy");
     }
 
     /**
