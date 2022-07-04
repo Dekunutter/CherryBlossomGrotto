@@ -3,6 +3,7 @@ package com.deku.cherryblossomgrotto.common.blocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -25,7 +26,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 import static com.deku.cherryblossomgrotto.common.blocks.ModBlockStateProperties.HALF;
 
@@ -153,7 +153,7 @@ public abstract class AbstractZenLantern extends Block {
      * @param random A random number generator
      */
     @OnlyIn(Dist.CLIENT)
-    public void animateTick(BlockState blockState, Level world, BlockPos position, Random random) {
+    public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
         if (blockState.getValue(HALF) == DoubleBlockHalf.UPPER) {
             double positionX = (double) position.getX() + 0.5D;
             double positionY = (double) position.getY() + 0.3D;
