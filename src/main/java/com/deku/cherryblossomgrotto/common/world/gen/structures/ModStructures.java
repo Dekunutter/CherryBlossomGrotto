@@ -38,7 +38,7 @@ public class ModStructures {
                     BuiltinRegistries.BIOME.getOrCreateTag(ModBiomeTags.HAS_GIANT_BUDDHA),
                     Map.of(MobCategory.MONSTER, new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.PIECE, GiantBuddha.GIANT_BUDDHA_ENEMIES)),
                     GenerationStep.Decoration.SURFACE_STRUCTURES,
-                    TerrainAdjustment.NONE
+                    TerrainAdjustment.BURY
                 )
             )
         );
@@ -56,6 +56,27 @@ public class ModStructures {
                 )
             )
         );
+
+        // NOTE: Keeping this in code as an option since I may want to convert the structure to a jigsaw structure in the future,
+        //  but for now I'm keeping it as a multi-piece structure instead of a jigsaw structure so that I have more control over the pre-spawning checks
+        /*TORII_GATE_JIGSAW = registerStructure(
+            ResourceKey.create(Registry.STRUCTURE_REGISTRY,
+                new ResourceLocation(MOD_ID, "torii_gate")
+            ),
+            new JigsawStructure(
+                new Structure.StructureSettings(
+                    BuiltinRegistries.BIOME.getOrCreateTag(ModBiomeTags.HAS_TORII_GATE),
+                    Map.of(MobCategory.MONSTER, new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, ToriiGate.TORII_GATE_ENEMIES)),
+                    GenerationStep.Decoration.SURFACE_STRUCTURES,
+                    TerrainAdjustment.NONE
+                ),
+                ToriiGatePools.START,
+                2,
+                ConstantHeight.of(VerticalAnchor.absolute(1)),
+                true,
+                Heightmap.Types.WORLD_SURFACE_WG
+            )
+        );*/
 
         registerModdedVillageStructure();
 
