@@ -17,7 +17,6 @@ import com.deku.cherryblossomgrotto.common.blockEntities.CherryLeavesBlockEntity
 import com.deku.cherryblossomgrotto.common.utils.ForgeReflection;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeInitializer;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeProvider;
-import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeTags;
 import com.deku.cherryblossomgrotto.common.world.gen.blockstateprovider.CherryBlossomForestFlowerProviderType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.GrandCherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.CherryBlossomFoliagePlacerType;
@@ -31,7 +30,6 @@ import com.google.common.collect.ImmutableMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -72,7 +70,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -534,22 +531,6 @@ public class Main
             Main.LOGGER.info("HELLO from Register Capability");
 
             capabilityRegistryEvent.register(DoubleJumpCapability.DoubleJump.class);
-        }
-
-        /**
-         * used to register data generators into the game using the mod event bus
-         * Data generators include things like tag providers
-         *
-         * @param event The registry event with which data generators will be registered
-         */
-        @SubscribeEvent
-        public static void onDataGeneratorRegistration(GatherDataEvent event) {
-            LOGGER.info("HELLO from Register Data Generator");
-
-            DataGenerator generator = event.getGenerator();
-            if(event.includeServer()) {
-                generator.addProvider(true, new ModBiomeTags(generator, event.getExistingFileHelper()));
-            }
         }
     }
 
