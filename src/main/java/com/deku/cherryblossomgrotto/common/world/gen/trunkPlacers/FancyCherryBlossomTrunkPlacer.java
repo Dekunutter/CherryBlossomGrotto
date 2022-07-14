@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 
-import static com.deku.cherryblossomgrotto.Main.TrunkPlacerRegistryEventHandler.FANCY_CHERRY_TREE_TRUNK_PLACER;
+import static com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.ModTrunkPlacerTypes.FANCY_CHERRY_TREE_TRUNK_PLACER;
 
 public class FancyCherryBlossomTrunkPlacer extends AbstractCherryBlossomTrunkPlacer {
     public static final Codec<FancyCherryBlossomTrunkPlacer> CODEC = RecordCodecBuilder.create((instance) ->
@@ -25,6 +25,6 @@ public class FancyCherryBlossomTrunkPlacer extends AbstractCherryBlossomTrunkPla
      */
     @Override
     protected TrunkPlacerType<?> type() {
-        return FANCY_CHERRY_TREE_TRUNK_PLACER;
+        return FANCY_CHERRY_TREE_TRUNK_PLACER.get();
     }
 }
