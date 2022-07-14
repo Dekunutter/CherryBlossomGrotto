@@ -24,7 +24,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-import static com.deku.cherryblossomgrotto.Main.TrunkPlacerRegistryEventHandler.GRAND_CHERRY_TREE_TRUNK_PLACER;
+import static com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.ModTrunkPlacerTypes.GRAND_CHERRY_TREE_TRUNK_PLACER;
 
 public class GrandCherryBlossomTrunkPlacer extends GiantTrunkPlacer {
     public static final Codec<GrandCherryBlossomTrunkPlacer> CODEC = RecordCodecBuilder.create((instance) ->
@@ -41,7 +41,7 @@ public class GrandCherryBlossomTrunkPlacer extends GiantTrunkPlacer {
      * @return The trunk placer type
      */
     protected TrunkPlacerType<?> type() {
-        return GRAND_CHERRY_TREE_TRUNK_PLACER;
+        return GRAND_CHERRY_TREE_TRUNK_PLACER.get();
     }
 
     /**

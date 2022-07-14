@@ -3,8 +3,10 @@ package com.deku.cherryblossomgrotto.common.world.gen.structures;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -57,11 +59,15 @@ public class ToriiGate extends Structure {
     public void generatePieces(StructurePiecesBuilder pieceBuilder, Structure.GenerationContext generatorContext) {
         BlockPos chunkPos = new BlockPos(generatorContext.chunkPos().getMinBlockX(), 90, generatorContext.chunkPos().getMinBlockZ());
 
+        NoiseColumn columnOfBlocks = generatorContext.chunkGenerator().getBaseColumn(chunkPos.getX(), chunkPos.getZ(), generatorContext.heightAccessor(), generatorContext.randomState());
         int landHeight = generatorContext.chunkGenerator().getFirstOccupiedHeight(chunkPos.getX(), chunkPos.getZ(), Heightmap.Types.WORLD_SURFACE_WG, generatorContext.heightAccessor(), generatorContext.randomState());
+        BlockState topBlockState = columnOfBlocks.getBlock(landHeight);
+        ToriiGatePieces.isBlockValidForStructure(topBlockState);
 
-        BlockPos position = new BlockPos(generatorContext.chunkPos().getMinBlockX(), landHeight + 1, generatorContext.chunkPos().getMinBlockZ());
+        BlockPos position = new BlockPos(chunkPos.getX(), landHeight + 1, chunkPos.getZ());
         Rotation rotation = Rotation.getRandom(generatorContext.random());
-        ToriiGatePieces.addPieces(generatorContext.structureTemplateManager(), position, rotation, pieceBuilder, generatorContext.random());
+
+        ToriiGatePieces.addPieces(generatorContext.structureTemplateManager(), position, rotation, pieceBuilder, generatorContext);
     }
 
     /**

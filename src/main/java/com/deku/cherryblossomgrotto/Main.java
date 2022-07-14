@@ -17,7 +17,6 @@ import com.deku.cherryblossomgrotto.common.blockEntities.CherryLeavesBlockEntity
 import com.deku.cherryblossomgrotto.common.utils.ForgeReflection;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeInitializer;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeProvider;
-import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeTags;
 import com.deku.cherryblossomgrotto.common.world.gen.blockstateprovider.CherryBlossomForestFlowerProviderType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.GrandCherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.CherryBlossomFoliagePlacerType;
@@ -30,8 +29,6 @@ import com.deku.cherryblossomgrotto.utils.LogTweaker;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -50,7 +47,6 @@ import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.common.MinecraftForge;
@@ -72,7 +68,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -83,7 +78,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import terrablender.api.Regions;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -141,6 +135,9 @@ public class Main
 
         // Enchantment logic
         ModEnchantmentInitializer.ENCHANTMENTS.register(eventBus);
+
+        // Trunk Placer Types
+        ModTrunkPlacerTypes.TRUNK_PLACER_TYPES.register(eventBus);
 
         // Register the setup method for modloading
         eventBus.addListener(this::setup);
@@ -534,45 +531,6 @@ public class Main
             Main.LOGGER.info("HELLO from Register Capability");
 
             capabilityRegistryEvent.register(DoubleJumpCapability.DoubleJump.class);
-        }
-
-        /**
-         * used to register data generators into the game using the mod event bus
-         * Data generators include things like tag providers
-         *
-         * @param event The registry event with which data generators will be registered
-         */
-        @SubscribeEvent
-        public static void onDataGeneratorRegistration(GatherDataEvent event) {
-            LOGGER.info("HELLO from Register Data Generator");
-
-            DataGenerator generator = event.getGenerator();
-            if(event.includeServer()) {
-                generator.addProvider(true, new ModBiomeTags(generator, event.getExistingFileHelper()));
-            }
-        }
-    }
-
-    /**
-     * Inner class for different event registers used by the mod for world generation
-     */
-    @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-    public static class TrunkPlacerRegistryEventHandler {
-        public static TrunkPlacerType<CherryBlossomTrunkPlacer> CHERRY_TREE_TRUNK_PLACER;
-        public static TrunkPlacerType<FancyCherryBlossomTrunkPlacer> FANCY_CHERRY_TREE_TRUNK_PLACER;
-        public static TrunkPlacerType<GrandCherryBlossomTrunkPlacer> GRAND_CHERRY_TREE_TRUNK_PLACER;
-
-        //TODO: Move all this initialization logic into the main FMLCommonSetupEvent work queue
-        @SubscribeEvent
-        public static void setup(FMLCommonSetupEvent event) throws InvocationTargetException, InstantiationException, IllegalAccessException {
-            TrunkPlacerType<CherryBlossomTrunkPlacer> cherryBlossomTrunkPlacerType = CherryBlossomTrunkPlacerType.createTrunkPlacerType(CherryBlossomTrunkPlacer.CODEC);
-            CHERRY_TREE_TRUNK_PLACER = Registry.register(Registry.TRUNK_PLACER_TYPES, MOD_ID + ":cherry_blossom_tree_trunk_placer", cherryBlossomTrunkPlacerType);
-
-            TrunkPlacerType<FancyCherryBlossomTrunkPlacer> fancyCherryBlossomTrunkPlacerType = FancyCherryBlossomTrunkPlacerType.createTrunkPlacerType(FancyCherryBlossomTrunkPlacer.CODEC);
-            FANCY_CHERRY_TREE_TRUNK_PLACER = Registry.register(Registry.TRUNK_PLACER_TYPES, MOD_ID + ":fancy_cherry_blossom_tree_trunk_placer", fancyCherryBlossomTrunkPlacerType);
-
-            TrunkPlacerType<GrandCherryBlossomTrunkPlacer> grandCherryBlossomTrunkPlacerType = GrandCherryBlossomTrunkPlacerType.createTrunkPlacerType(GrandCherryBlossomTrunkPlacer.CODEC);
-            GRAND_CHERRY_TREE_TRUNK_PLACER = Registry.register(Registry.TRUNK_PLACER_TYPES, MOD_ID + ":big_cherry_blossom_tree_trunk_placer", grandCherryBlossomTrunkPlacerType);
         }
     }
 

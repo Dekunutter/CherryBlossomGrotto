@@ -6,8 +6,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 
+import static com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.ModTrunkPlacerTypes.CHERRY_TREE_TRUNK_PLACER;
 
-import static com.deku.cherryblossomgrotto.Main.TrunkPlacerRegistryEventHandler.CHERRY_TREE_TRUNK_PLACER;
 
 public class CherryBlossomTrunkPlacer extends AbstractCherryBlossomTrunkPlacer {
     public static final Codec<CherryBlossomTrunkPlacer> CODEC = RecordCodecBuilder.create((instance) ->
@@ -28,7 +28,7 @@ public class CherryBlossomTrunkPlacer extends AbstractCherryBlossomTrunkPlacer {
      */
     @Override
     protected TrunkPlacerType<?> type() {
-        return CHERRY_TREE_TRUNK_PLACER;
+        return CHERRY_TREE_TRUNK_PLACER.get();
     }
 
     /**
