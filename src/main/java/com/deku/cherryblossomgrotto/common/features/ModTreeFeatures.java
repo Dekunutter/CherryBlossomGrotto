@@ -10,6 +10,8 @@ import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
@@ -17,6 +19,8 @@ import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSi
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FancyFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.treedecorators.BeehiveDecorator;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.BendingTrunkPlacer;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.GiantTrunkPlacer;
 
 import java.util.List;
 import java.util.OptionalInt;
@@ -40,7 +44,7 @@ public class ModTreeFeatures {
     private static TreeConfiguration.TreeConfigurationBuilder createCherryBlossomTree() {
         return new TreeConfiguration.TreeConfigurationBuilder(
             BlockStateProvider.simple(ModBlocks.CHERRY_LOG.defaultBlockState()),
-            new CherryBlossomTrunkPlacer(4, 2, 0),
+            new BendingTrunkPlacer(4, 2, 0, 4, UniformInt.of(1, 2)),
             BlockStateProvider.simple(ModBlocks.CHERRY_LEAVES.defaultBlockState()),
             new CherryBlossomFoliagePlacer(ConstantInt.of(2), ConstantInt.of(1)),
             new TwoLayersFeatureSize(1, 0, 2)
@@ -55,7 +59,7 @@ public class ModTreeFeatures {
     private static TreeConfiguration.TreeConfigurationBuilder createFancyCherryBlossomTree() {
         return new TreeConfiguration.TreeConfigurationBuilder(
             BlockStateProvider.simple(ModBlocks.CHERRY_LOG.defaultBlockState()),
-            new FancyCherryBlossomTrunkPlacer(5, 3, 1),
+            new BendingTrunkPlacer(5, 3, 1, 4, UniformInt.of(1, 2)),
             BlockStateProvider.simple(ModBlocks.CHERRY_LEAVES.defaultBlockState()),
             new FancyFoliagePlacer(ConstantInt.of(3), ConstantInt.of(2), 2),
             new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4))
@@ -70,7 +74,7 @@ public class ModTreeFeatures {
     private static TreeConfiguration.TreeConfigurationBuilder createGrandCherryBlossomTree() {
         return new TreeConfiguration.TreeConfigurationBuilder(
             BlockStateProvider.simple(ModBlocks.CHERRY_LOG.defaultBlockState()),
-            new GrandCherryBlossomTrunkPlacer(9, 2, 3),
+            new GiantTrunkPlacer(9, 2, 3),
             BlockStateProvider.simple(ModBlocks.CHERRY_LEAVES.defaultBlockState()),
             new GrandCherryBlossomFoliagePlacer(ConstantInt.of(5), ConstantInt.of(0)),
             new TwoLayersFeatureSize(1, 0, 2)
