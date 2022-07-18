@@ -11,7 +11,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
-import net.minecraft.world.level.ClipBlockStateContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,7 +24,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.BiConsumer;
 
-import static com.deku.cherryblossomgrotto.Main.TrunkPlacerRegistryEventHandler.GRAND_CHERRY_TREE_TRUNK_PLACER;
+import static net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType.BENDING_TRUNK_PLACER;
 
 public class GrandCherryBlossomTrunkPlacer extends GiantTrunkPlacer {
     public static final Codec<GrandCherryBlossomTrunkPlacer> CODEC = RecordCodecBuilder.create((instance) ->
@@ -42,7 +41,7 @@ public class GrandCherryBlossomTrunkPlacer extends GiantTrunkPlacer {
      * @return The trunk placer type
      */
     protected TrunkPlacerType<?> type() {
-        return GRAND_CHERRY_TREE_TRUNK_PLACER;
+        return BENDING_TRUNK_PLACER;
     }
 
     /**
