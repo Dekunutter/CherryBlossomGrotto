@@ -59,7 +59,7 @@ public class ModTreeFeatures {
     private static TreeConfiguration.TreeConfigurationBuilder createFancyCherryBlossomTree() {
         return new TreeConfiguration.TreeConfigurationBuilder(
             BlockStateProvider.simple(ModBlocks.CHERRY_LOG.defaultBlockState()),
-            new BendingTrunkPlacer(5, 3, 1, 4, UniformInt.of(1, 2)),
+            new BendingTrunkPlacer(5, 3, 1, 6, UniformInt.of(1, 2)),
             BlockStateProvider.simple(ModBlocks.CHERRY_LEAVES.defaultBlockState()),
             new FancyFoliagePlacer(ConstantInt.of(3), ConstantInt.of(2), 2),
             new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4))
