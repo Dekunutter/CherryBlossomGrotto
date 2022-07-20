@@ -19,7 +19,7 @@ plugins {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 
-version = '0.5.2'
+version = '0.5.3'
 group = 'com.deku.cherryblossomgrotto' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'cherryblossomgrotto'
 
@@ -148,7 +148,7 @@ dependencies {
     // Specify the version of Minecraft to use. If this is any group other than 'net.minecraft', it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.19-41.0.63'
+    minecraft 'net.minecraftforge:forge:1.19-41.0.100'
 
     // Real mod deobf dependency examples - these get remapped to your current mappings
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
@@ -162,7 +162,7 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
-    implementation fg.deobf('com.github.glitchfiend:TerraBlender-forge:1.19-2.0.0.118')
+    implementation fg.deobf('com.github.glitchfiend:TerraBlender-forge:1.19-2.0.0.120')
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

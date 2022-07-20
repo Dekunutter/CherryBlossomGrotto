@@ -9,7 +9,7 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
@@ -25,8 +25,8 @@ public class NinjaMask extends ArmorItem {
      * @param consumer The consumer containing render properties for this item
      */
     @Override
-    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
-        consumer.accept(new IItemRenderProperties() {
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+        consumer.accept(new IClientItemExtensions() {
             /**
              * Gets the model for this piece of armour once it has been equipped
              * Called by the Forge armour model hook during the humanoid armor layer render.
@@ -39,7 +39,7 @@ public class NinjaMask extends ArmorItem {
              */
             @Nullable
             @Override
-            public final HumanoidModel<?> getArmorModel(LivingEntity entity, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> defaultArmor) {
+            public HumanoidModel<?> getHumanoidArmorModel(LivingEntity entity, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> defaultArmor) {
                 return NinjaRobesLayer.MODEL;
             }
         });

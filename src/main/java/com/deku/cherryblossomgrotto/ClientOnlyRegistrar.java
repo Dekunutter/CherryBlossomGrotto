@@ -5,7 +5,6 @@ import com.deku.cherryblossomgrotto.client.models.geom.ModModelLayerLocations;
 import com.deku.cherryblossomgrotto.client.renderers.*;
 import com.deku.cherryblossomgrotto.client.renderers.layers.KabutoArmourLayer;
 import com.deku.cherryblossomgrotto.client.renderers.layers.NinjaRobesLayer;
-import com.deku.cherryblossomgrotto.common.blocks.ModBlocks;
 import com.deku.cherryblossomgrotto.common.blocks.ModWoodType;
 import com.deku.cherryblossomgrotto.common.entity.ModBlockEntities;
 import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
@@ -14,8 +13,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
@@ -27,8 +24,8 @@ import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -72,12 +69,6 @@ public class ClientOnlyRegistrar {
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
         LOGGER.info("Got game settings {}", Minecraft.getInstance().options);
-
-        //RenderTypeLookup.setRenderLayer(ModBlocks.GRASS, RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.CHERRY_PETALS, RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.CHERRY_SAPLING, RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.POTTED_CHERRY_SAPLING, RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.RICE_PADDY, RenderType.cutoutMipped());
 
         BlockEntityRenderers.register(ModBlockEntities.SIGN_ENTITY_TYPE, SignRenderer::new);
 
@@ -174,7 +165,7 @@ public class ClientOnlyRegistrar {
          * @param event The registry event with which block color handlers will be registered
          */
         @SubscribeEvent
-        public static void onBlockColorHandlerRegistration(ColorHandlerEvent.Block event) {
+        public static void onBlockColorHandlerRegistration(RegisterColorHandlersEvent.Block event) {
             LOGGER.info("HELLO from Register Block Color Handler");
 
             BlockColors blockColors = event.getBlockColors();
