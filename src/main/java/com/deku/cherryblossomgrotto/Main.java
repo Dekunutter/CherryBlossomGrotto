@@ -53,16 +53,17 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.*;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
@@ -515,7 +516,7 @@ public class Main
          * @param particleFactoryRegistryEvent The registry event with which particle factories will be registered
          */
         @SubscribeEvent
-        public static void onParticleFactoryRegistry(final ParticleFactoryRegisterEvent particleFactoryRegistryEvent) {
+        public static void onParticleFactoryRegistry(final RegisterParticleProvidersEvent particleFactoryRegistryEvent) {
             Main.LOGGER.info("HELLO from Register Particle Factory");
 
             Minecraft.getInstance().particleEngine.register(ModParticles.CHERRY_PETAL, FallingCherryBlossomPetalProvider::new);
@@ -603,13 +604,13 @@ public class Main
             final Map<Block, Block> BLOCK_STRIPPING_MAP = (new ImmutableMap.Builder<Block, Block>().put(ModBlocks.CHERRY_LOG, ModBlocks.STRIPPED_CHERRY_LOG).put(ModBlocks.CHERRY_WOOD, ModBlocks.STRIPPED_CHERRY_WOOD)).build();
 
             if (event.getItemStack().getItem() instanceof AxeItem) {
-                net.minecraft.world.level.Level level = event.getWorld();
+                net.minecraft.world.level.Level level = event.getLevel();
                 BlockPos position = event.getPos();
                 BlockState state = level.getBlockState(position);
                 Block block = BLOCK_STRIPPING_MAP.get(state.getBlock());
                 if (block != null) {
                     LOGGER.info("STRIP EVENT occurred due to right-click");
-                    Player player = event.getPlayer();
+                    Player player = event.getEntity();
                     level.playSound(player, position, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0f, 1.0f);
                     level.setBlock(position, block.defaultBlockState().setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS)), 11);
                     event.getItemStack().hurtAndBreak(1, player, (p_220036_0_) -> p_220036_0_.broadcastBreakEvent(EquipmentSlot.MAINHAND));
@@ -680,9 +681,8 @@ public class Main
          * @param event The event triggered by an entity joining the world
          */
         @SubscribeEvent(priority = EventPriority.HIGHEST)
-        public static void onEntityJoinWorld(final EntityJoinWorldEvent event) {
-            if (event.getEntity() instanceof ServerPlayer) {
-                ServerPlayer player = (ServerPlayer) event.getEntity();
+        public static void onEntityJoinWorld(final EntityJoinLevelEvent event) {
+            if (event.getEntity() instanceof ServerPlayer player) {
                 boolean hasDoubleJumped = player.getCapability(DoubleJumpCapability.DOUBLE_JUMP).map(DoubleJumpCapability.IDoubleJump::hasDoubleJumped).orElse(false);
                 if (hasDoubleJumped) {
                     DoubleJumpClientMessage message = new DoubleJumpClientMessage(player.getUUID(), true);
