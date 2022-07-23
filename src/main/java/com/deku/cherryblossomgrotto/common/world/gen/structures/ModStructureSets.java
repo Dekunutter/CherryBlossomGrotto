@@ -22,6 +22,8 @@ public class ModStructureSets {
     // Overriding the structure set for the base-games villages
     public static Holder<StructureSet> CHERRY_BLOSSOM_GROTTO_VILLAGES;
 
+    public static Holder<StructureSet> RUINED_TORII_PORTALS;
+
     /**
      * Registers all structure sets into the game via the structure set registry.
      *
@@ -44,6 +46,7 @@ public class ModStructureSets {
             )
         );
 
+        // TODO: This may not be compatible with other mods if its overwriting other village structure sets
         CHERRY_BLOSSOM_GROTTO_VILLAGES = registerStructureSet(
             BuiltinStructureSets.VILLAGES,
             new StructureSet(
@@ -56,6 +59,14 @@ public class ModStructureSets {
                     StructureSet.entry(ModStructures.CHERRY_BLOSSOM_GROTTO_VILLAGE)
                 ),
                 new RandomSpreadStructurePlacement(34, 8, RandomSpreadType.LINEAR, 10387312)
+            )
+        );
+
+        RUINED_TORII_PORTALS = registerStructureSet(
+            ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation(MOD_ID,"ruined_torii_portals")),
+            new StructureSet(
+                ModStructures.RUINED_TORII_PORTAL,
+                new RandomSpreadStructurePlacement(40, 15, RandomSpreadType.LINEAR, 106574789)
             )
         );
     }

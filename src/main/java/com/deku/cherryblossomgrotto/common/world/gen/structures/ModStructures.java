@@ -18,6 +18,7 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSpawnOverride;
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
 import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
+import net.minecraft.world.level.levelgen.structure.structures.RuinedPortalPiece;
 
 import java.util.Map;
 
@@ -27,6 +28,8 @@ public class ModStructures {
     public static Holder<Structure> GIANT_BUDDHA;
     public static Holder<Structure> TORII_GATE;
     public static Holder<Structure> CHERRY_BLOSSOM_GROTTO_VILLAGE;
+
+    public static Holder<Structure> RUINED_TORII_PORTAL;
 
     public static void register() {
         GIANT_BUDDHA = registerStructure(
@@ -98,6 +101,21 @@ public class ModStructures {
                 ConstantHeight.of(VerticalAnchor.absolute(0)),
                 true,
                 Heightmap.Types.WORLD_SURFACE_WG
+            )
+        );
+
+        RUINED_TORII_PORTAL = registerStructure(
+            ResourceKey.create(Registry.STRUCTURE_REGISTRY,
+                new ResourceLocation(MOD_ID, "ruined_torii_portal")
+            ),
+            new RuinedToriiPortal(
+                new Structure.StructureSettings(
+                    BuiltinRegistries.BIOME.getOrCreateTag(ModBiomeTags.HAS_RUINED_TORII_PORTAL),
+                    Map.of(),
+                    GenerationStep.Decoration.SURFACE_STRUCTURES,
+                    TerrainAdjustment.NONE
+                ),
+                new RuinedToriiPortal.Setup(RuinedPortalPiece.VerticalPlacement.ON_LAND_SURFACE, 0.5F, 0.0F, false, false, false, false, 1.0F)
             )
         );
     }
