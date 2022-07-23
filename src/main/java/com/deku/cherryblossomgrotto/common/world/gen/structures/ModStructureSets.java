@@ -44,6 +44,7 @@ public class ModStructureSets {
             )
         );
 
+        // TODO: This may not be compatible with other mods if its overwriting other village structure sets
         CHERRY_BLOSSOM_GROTTO_VILLAGES = registerStructureSet(
             BuiltinStructureSets.VILLAGES,
             new StructureSet(
