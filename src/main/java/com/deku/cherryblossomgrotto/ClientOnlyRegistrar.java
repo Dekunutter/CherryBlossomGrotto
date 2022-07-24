@@ -67,9 +67,6 @@ public class ClientOnlyRegistrar {
      * @param event The client setup event
      */
     private void doClientStuff(final FMLClientSetupEvent event) {
-        // do something that can only be done on the client
-        LOGGER.info("Got game settings {}", Minecraft.getInstance().options);
-
         BlockEntityRenderers.register(ModBlockEntities.SIGN_ENTITY_TYPE, SignRenderer::new);
 
         event.enqueueWork(() -> {
@@ -89,8 +86,6 @@ public class ClientOnlyRegistrar {
          */
         @SubscribeEvent
         public static <T extends LivingEntity, M extends HumanoidModel<T>> void onEntityRendererRegistry(final EntityRenderersEvent.AddLayers registerAddedLayerEvent) {
-            LOGGER.error("HELLO from Register Entity Renderer");
-
             PlayerRenderer playerSkinRenderer = registerAddedLayerEvent.getSkin("default");
 
             addLayerToEntityRenderer(playerSkinRenderer, registerAddedLayerEvent.getEntityModels());
@@ -166,8 +161,6 @@ public class ClientOnlyRegistrar {
          */
         @SubscribeEvent
         public static void onBlockColorHandlerRegistration(RegisterColorHandlersEvent.Block event) {
-            LOGGER.info("HELLO from Register Block Color Handler");
-
             BlockColors blockColors = event.getBlockColors();
             //blockColors.register(GrassBlockColor.instance, ModBlocks.GRASS);
         }

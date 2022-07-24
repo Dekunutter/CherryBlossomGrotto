@@ -20,9 +20,11 @@ public class ModBiomeInitializer {
 
     static {
         createBiome("cherry_blossom_grotto", OverworldBiomes::theVoid);
+        createBiome("stone_forest", OverworldBiomes::theVoid);
     }
 
     public static ResourceKey<Biome> CHERRY_BLOSSOM_GROTTO = registerBiome("cherry_blossom_grotto");
+    public static ResourceKey<Biome> STONE_FOREST = registerBiome("stone_forest");
 
     /**
      * Registers the biome into the vanilla game by the biome registry
@@ -50,7 +52,7 @@ public class ModBiomeInitializer {
      * The weight determines the commonality of the biome.
      */
     public static void registerBiomes() {
-        Main.LOGGER.info("HELLO from Register Biomes");
         BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(CHERRY_BLOSSOM_GROTTO, 1));
+        BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(STONE_FOREST, 1));
     }
 }
