@@ -101,7 +101,8 @@ public class ShojiScreen extends Block {
     @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
         BlockPos position = blockPlaceContext.getClickedPos();
-        if (position.getY() < 255 && blockPlaceContext.getLevel().getBlockState(position.above()).canBeReplaced(blockPlaceContext)) {
+        Level level = blockPlaceContext.getLevel();
+        if (position.getY() < level.getMaxBuildHeight() - 1 && blockPlaceContext.getLevel().getBlockState(position.above()).canBeReplaced(blockPlaceContext)) {
             return this.defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER).setValue(FACING, blockPlaceContext.getHorizontalDirection());
         } else {
             return null;

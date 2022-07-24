@@ -97,7 +97,8 @@ public abstract class AbstractZenLantern extends Block {
     @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext itemUseContext) {
         BlockPos position = itemUseContext.getClickedPos();
-        if (position.getY() < 255 && itemUseContext.getLevel().getBlockState(position.above()).canBeReplaced(itemUseContext)) {
+        Level level = itemUseContext.getLevel();
+        if (position.getY() < level.getMaxBuildHeight() - 1 && itemUseContext.getLevel().getBlockState(position.above()).canBeReplaced(itemUseContext)) {
             return this.defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER);
         } else {
             return null;
