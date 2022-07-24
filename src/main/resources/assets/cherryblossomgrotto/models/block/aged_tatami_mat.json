@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/carpet",
+  "textures": {
+    "wool": "cherryblossomgrotto:block/aged_tatami_mat"
+  }
+}
