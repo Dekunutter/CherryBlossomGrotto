@@ -266,8 +266,12 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_sapling"), new CherryBlossomSapling());
                 registrar.register(new ResourceLocation(MOD_ID, "potted_cherry_blossom_sapling"), new PottedCherryBlossomSapling());
 
-                // All shoji screens
+                // All architectural blocks
                 registrar.register(new ResourceLocation(MOD_ID, "shoji_screen"), new ShojiScreen());
+                registrar.register(new ResourceLocation(MOD_ID, "tatami_mat"), new TatamiMat());
+                registrar.register(new ResourceLocation(MOD_ID, "long_tatami_mat"), new LongTatamiMat());
+                registrar.register(new ResourceLocation(MOD_ID, "aged_tatami_mat"), new AgedTatamiMat());
+                registrar.register(new ResourceLocation(MOD_ID, "long_aged_tatami_mat"), new LongAgedTatamiMat());
 
                 // All farm crops
                 registrar.register(new ResourceLocation(MOD_ID, "rice_paddy"), new RicePaddy());
@@ -350,8 +354,12 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "zen_lantern"), new DoubleHighBlockItem(ModBlocks.ZEN_LANTERN, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
                 registrar.register(new ResourceLocation(MOD_ID, "soul_zen_lantern"), new DoubleHighBlockItem(ModBlocks.SOUL_ZEN_LANTERN, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
 
-                // All shoji screen items
+                // All architectural items
                 registrar.register(new ResourceLocation(MOD_ID, "shoji_screen"), new BlockItem(ModBlocks.SHOJI_SCREEN, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+                registrar.register(new ResourceLocation(MOD_ID, "tatami_mat"), new BlockItem(ModBlocks.TATAMI_MAT, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+                registrar.register(new ResourceLocation(MOD_ID, "long_tatami_mat"), new BlockItem(ModBlocks.LONG_TATAMI_MAT, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+                registrar.register(new ResourceLocation(MOD_ID, "aged_tatami_mat"), new BlockItem(ModBlocks.AGED_TATAMI_MAT, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+                registrar.register(new ResourceLocation(MOD_ID, "long_aged_tatami_mat"), new BlockItem(ModBlocks.LONG_AGED_TATAMI_MAT, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
 
                 // All bucket items
                 registrar.register(new ResourceLocation(MOD_ID, "koi_bucket"), new KoiBucket(EntityTypeInitializer.KOI_ENTITY_TYPE));
