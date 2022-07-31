@@ -136,12 +136,12 @@ public class CherryBlossomGrottoVillagePools {
         );
         Pools.register(
             new StructureTemplatePool(
-                new ResourceLocation("village/plains/villagers"),
+                new ResourceLocation("village/cherry_blossom_grotto/villagers"),
                 new ResourceLocation("empty"),
                 ImmutableList.of(
-                    Pair.of(StructurePoolElement.legacy("village/plains/villagers/nitwit"), 1),
-                    Pair.of(StructurePoolElement.legacy("village/plains/villagers/baby"), 1),
-                    Pair.of(StructurePoolElement.legacy("village/plains/villagers/unemployed"), 10)
+                    Pair.of(StructurePoolElement.legacy("village/cherry_blossom_grotto/villagers/nitwit"), 1),
+                    Pair.of(StructurePoolElement.legacy("village/cherry_blossom_grotto/villagers/baby"), 1),
+                    Pair.of(StructurePoolElement.legacy("village/cherry_blossom_grotto/villagers/unemployed"), 10)
                 ),
                 StructureTemplatePool.Projection.RIGID
             )
