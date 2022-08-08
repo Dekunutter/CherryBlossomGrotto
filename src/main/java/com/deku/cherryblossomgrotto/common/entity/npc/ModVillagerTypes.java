@@ -19,8 +19,6 @@ public class ModVillagerTypes {
     public static VillagerType CHERRY_BLOSSOM_GROTTO_VILLAGER_TYPE;
 
     public static void register() {
-        Main.LOGGER.info("HELLO from Register Villager Type");
-
         bootstrapVillagerTrades();
 
         CHERRY_BLOSSOM_GROTTO_VILLAGER_TYPE = Registry.register(Registry.VILLAGER_TYPE, new ResourceLocation(MOD_ID, "cherry_blossom_grotto"), new VillagerType("cherry_blossom_grotto"));

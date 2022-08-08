@@ -7,7 +7,9 @@ import com.deku.cherryblossomgrotto.common.capabilities.DoubleJumpCapability;
 import com.deku.cherryblossomgrotto.common.enchantments.ModEnchantmentInitializer;
 import com.deku.cherryblossomgrotto.common.entity.EntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ModBlockEntities;
+import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
 import com.deku.cherryblossomgrotto.common.entity.npc.ModVillagerTypes;
+import com.deku.cherryblossomgrotto.common.entity.passive.fish.KoiEntity;
 import com.deku.cherryblossomgrotto.common.features.*;
 import com.deku.cherryblossomgrotto.common.features.template.ModProcessorLists;
 import com.deku.cherryblossomgrotto.common.items.*;
@@ -34,6 +36,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
@@ -49,6 +52,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.*;
@@ -117,8 +121,6 @@ public class Main
      *      - Adds additional forge event listeners for biome and world loading events
      */
     public Main() {
-        LOGGER.info("HELLO FROM MAIN");
-
         NETWORK_CHANNEL = NetworkRegistry.newSimpleChannel(new ResourceLocation(MOD_ID, "cherryblossomgrottochannel"), () -> NETWORK_PROTOCOL_VERSION, DoubleJumpClientMessageHandler::isProtocolAcceptedOnClient, DoubleJumpServerMessageHandler::isProtocolAcceptedOnServer);
 
         if (HIDE_CONSOLE_NOISE) {
@@ -171,9 +173,6 @@ public class Main
      * @param event The setup event
      */
     private void setup(final FMLCommonSetupEvent event) {
-        // some preinit code
-        LOGGER.info("HELLO FROM PREINIT COMMON");
-
         NETWORK_CHANNEL.registerMessage(DoubleJumpServerMessage.MESSAGE_ID, DoubleJumpServerMessage.class, DoubleJumpServerMessage::encode, DoubleJumpServerMessage::decode, DoubleJumpServerMessageHandler::onMessageReceived, Optional.of(PLAY_TO_SERVER));
         NETWORK_CHANNEL.registerMessage(DoubleJumpClientMessage.MESSAGE_ID, DoubleJumpClientMessage.class, DoubleJumpClientMessage::encode, DoubleJumpClientMessage::decode, DoubleJumpClientMessageHandler::onMessageReceived, Optional.of(PLAY_TO_CLIENT));
 
@@ -210,13 +209,13 @@ public class Main
     private void enqueueIMC(final InterModEnqueueEvent event)
     {
         // some example code to dispatch IMC to another mod
-        InterModComms.sendTo("cherryblossomgrotto", "helloworld", () -> { LOGGER.info("Hello world from the MDK"); return "Hello world";});
+        InterModComms.sendTo("cherryblossomgrotto", "helloworld", () -> { LOGGER.debug("Hello world from the MDK"); return "Hello world";});
     }
 
     private void processIMC(final InterModProcessEvent event)
     {
         // some example code to receive and process InterModComms from other mods
-        LOGGER.info("Got IMC {}", event.getIMCStream().
+        LOGGER.debug("Got IMC {}", event.getIMCStream().
                 map(m->m.getMessageSupplier().get()).
                 collect(Collectors.toList()));
     }
@@ -224,7 +223,6 @@ public class Main
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         // do something when the server starts
-        LOGGER.info("HELLO from server starting");
     }
 
     /**
@@ -239,8 +237,6 @@ public class Main
          */
         @SubscribeEvent
         public static void onBlocksRegistry(final RegisterEvent registryEvent) {
-            LOGGER.info("HELLO from Register Block");
-
             registryEvent.register(ForgeRegistries.Keys.BLOCKS, registrar -> {
                 // All cherry blossom wood blocks
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_log"), new CherryBlossomLog());
@@ -266,8 +262,12 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_sapling"), new CherryBlossomSapling());
                 registrar.register(new ResourceLocation(MOD_ID, "potted_cherry_blossom_sapling"), new PottedCherryBlossomSapling());
 
-                // All shoji screens
+                // All architectural blocks
                 registrar.register(new ResourceLocation(MOD_ID, "shoji_screen"), new ShojiScreen());
+                registrar.register(new ResourceLocation(MOD_ID, "tatami_mat"), new TatamiMat());
+                registrar.register(new ResourceLocation(MOD_ID, "long_tatami_mat"), new LongTatamiMat());
+                registrar.register(new ResourceLocation(MOD_ID, "aged_tatami_mat"), new AgedTatamiMat());
+                registrar.register(new ResourceLocation(MOD_ID, "long_aged_tatami_mat"), new LongAgedTatamiMat());
 
                 // All farm crops
                 registrar.register(new ResourceLocation(MOD_ID, "rice_paddy"), new RicePaddy());
@@ -299,8 +299,6 @@ public class Main
          */
         @SubscribeEvent
         public static void onTileEntityRegistry(final RegisterEvent registerEvent) {
-            LOGGER.info("HELLO from Register Block Entity Type");
-            
             registerEvent.register(ForgeRegistries.Keys.BLOCK_ENTITY_TYPES, registrar -> {
                 // All cherry blossom tree block entities
                 BlockEntityType<CherryLeavesBlockEntity> cherryLeavesDataType = BlockEntityType.Builder.of(CherryLeavesBlockEntity::new, ModBlocks.CHERRY_LEAVES).build(null);
@@ -318,8 +316,6 @@ public class Main
          */
         @SubscribeEvent
         public static void onItemsRegistry(final RegisterEvent registerEvent) {
-            LOGGER.info("HELLO from Register Item");
-
             registerEvent.register(ForgeRegistries.Keys.ITEMS, registrar -> {
                 // All cherry blossom wood items
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_log"), new BlockItem(ModBlocks.CHERRY_LOG, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
@@ -350,8 +346,12 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "zen_lantern"), new DoubleHighBlockItem(ModBlocks.ZEN_LANTERN, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
                 registrar.register(new ResourceLocation(MOD_ID, "soul_zen_lantern"), new DoubleHighBlockItem(ModBlocks.SOUL_ZEN_LANTERN, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
 
-                // All shoji screen items
+                // All architectural items
                 registrar.register(new ResourceLocation(MOD_ID, "shoji_screen"), new BlockItem(ModBlocks.SHOJI_SCREEN, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+                registrar.register(new ResourceLocation(MOD_ID, "tatami_mat"), new BlockItem(ModBlocks.TATAMI_MAT, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+                registrar.register(new ResourceLocation(MOD_ID, "long_tatami_mat"), new BlockItem(ModBlocks.LONG_TATAMI_MAT, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+                registrar.register(new ResourceLocation(MOD_ID, "aged_tatami_mat"), new BlockItem(ModBlocks.AGED_TATAMI_MAT, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+                registrar.register(new ResourceLocation(MOD_ID, "long_aged_tatami_mat"), new BlockItem(ModBlocks.LONG_AGED_TATAMI_MAT, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
 
                 // All bucket items
                 registrar.register(new ResourceLocation(MOD_ID, "koi_bucket"), new KoiBucket(EntityTypeInitializer.KOI_ENTITY_TYPE));
@@ -389,6 +389,9 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "smooth_stone_trapdoor"), new BlockItem(ModBlocks.SMOOTH_STONE_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
                 registrar.register(new ResourceLocation(MOD_ID, "stone_trapdoor"), new BlockItem(ModBlocks.STONE_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
                 registrar.register(new ResourceLocation(MOD_ID, "cobblestone_trapdoor"), new BlockItem(ModBlocks.COBBLESTONE_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+
+                // All spawn eggs
+                registrar.register(new ResourceLocation(MOD_ID, "koi_spawn_egg"), new ForgeSpawnEggItem(() -> EntityTypeInitializer.KOI_ENTITY_TYPE, 15724527, 16030538, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
             });
         }
 
@@ -400,8 +403,6 @@ public class Main
          */
         @SubscribeEvent
         public static void onEntityAttributeRegistration(final EntityAttributeCreationEvent event) {
-            LOGGER.info("HELLO from Register Entity Attribute");
-
             event.put(EntityTypeInitializer.KOI_ENTITY_TYPE, AbstractSchoolingFish.createAttributes().build());
         }
 
@@ -413,8 +414,6 @@ public class Main
          */
         @SubscribeEvent
         public static void onEntityRegistry(final RegisterEvent registerEvent) {
-            LOGGER.info("HELLO from Register Entity");
-
             registerEvent.register(ForgeRegistries.Keys.ENTITY_TYPES, registrar -> {
                 // All vehicle entities
                 registrar.register(new ResourceLocation(MOD_ID,"mod_boat_entity"), EntityTypeInitializer.BOAT_ENTITY_TYPE);
@@ -436,8 +435,6 @@ public class Main
          */
         @SubscribeEvent
         public static void onFeaturesRegistry(final RegisterEvent registerEvent) {
-            LOGGER.info("HELLO from Register Feature");
-
             registerEvent.register(ForgeRegistries.Keys.FEATURES, registrar -> {
                 // All cherry blossom tree features
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_petal_ground_cover"), new CherryBlossomPetalCoverFeature());
@@ -453,8 +450,6 @@ public class Main
          */
         @SubscribeEvent
         public static void onBlockStateProviderTypeRegistry(final RegisterEvent registerEvent) {
-            LOGGER.info("HELLO from Register Block State Provider Type");
-
             registerEvent.register(ForgeRegistries.Keys.BLOCK_STATE_PROVIDER_TYPES, registrar -> {
                 // All biome feature blockstate provider types
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_forest_flower_provider"), new CherryBlossomForestFlowerProviderType());
@@ -468,8 +463,6 @@ public class Main
          */
         @SubscribeEvent
         public static void onRecipeRegistry(final RegisterEvent registerEvent) {
-            LOGGER.info("HELLO from Register Recipe Serializer");
-
             registerEvent.register(ForgeRegistries.Keys.RECIPE_SERIALIZERS, registrar -> {
                 // All special weapon recipe serializers
                 registrar.register(new ResourceLocation(MOD_ID, "folding"), new SimpleRecipeSerializer<>(RepairItemRecipe::new));
@@ -483,8 +476,6 @@ public class Main
          */
         @SubscribeEvent
         public static void onFoliagePlacerRegistry(final RegisterEvent registerEvent) {
-            LOGGER.info("HELLO from Register Foliage Placer");
-
             registerEvent.register(ForgeRegistries.Keys.FOLIAGE_PLACER_TYPES, registrar -> {
                 // All cherry blossom tree foliage placer types
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_tree_foliage_placer"), new CherryBlossomFoliagePlacerType());
@@ -500,8 +491,6 @@ public class Main
          */
         @SubscribeEvent
         public static void onParticleTypeRegistry(final RegisterEvent registerEvent) {
-            LOGGER.info("HELLO from Register Particle Type");
-
             registerEvent.register(ForgeRegistries.Keys.PARTICLE_TYPES, registrar -> {
                 // All cherry blossom tree particle types
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_petal"), ModParticles.CHERRY_PETAL);
@@ -516,8 +505,6 @@ public class Main
          */
         @SubscribeEvent
         public static void onParticleFactoryRegistry(final RegisterParticleProvidersEvent particleFactoryRegistryEvent) {
-            Main.LOGGER.info("HELLO from Register Particle Factory");
-
             Minecraft.getInstance().particleEngine.register(ModParticles.CHERRY_PETAL, FallingCherryBlossomPetalProvider::new);
         }
 
@@ -528,8 +515,6 @@ public class Main
          */
         @SubscribeEvent
         public static void onCapabilityRegistration(RegisterCapabilitiesEvent capabilityRegistryEvent) {
-            Main.LOGGER.info("HELLO from Register Capability");
-
             capabilityRegistryEvent.register(DoubleJumpCapability.DoubleJump.class);
         }
     }
@@ -608,7 +593,6 @@ public class Main
                 BlockState state = level.getBlockState(position);
                 Block block = BLOCK_STRIPPING_MAP.get(state.getBlock());
                 if (block != null) {
-                    LOGGER.info("STRIP EVENT occurred due to right-click");
                     Player player = event.getEntity();
                     level.playSound(player, position, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0f, 1.0f);
                     level.setBlock(position, block.defaultBlockState().setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS)), 11);

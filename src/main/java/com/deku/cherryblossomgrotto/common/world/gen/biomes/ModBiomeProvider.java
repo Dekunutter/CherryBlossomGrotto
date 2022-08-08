@@ -64,7 +64,6 @@ public class ModBiomeProvider extends Region {
 
         addModifiedVanillaOverworldBiomes(mapper, builder -> {
             List<Climate.ParameterPoint> flowerForestPoints = RegionUtils.getVanillaParameterPoints(Biomes.FLOWER_FOREST).stream().collect(ImmutableList.toImmutableList());
-
             flowerForestPoints.forEach(point -> builder.replaceBiome(point, ModBiomeInitializer.CHERRY_BLOSSOM_GROTTO));
         });
     }

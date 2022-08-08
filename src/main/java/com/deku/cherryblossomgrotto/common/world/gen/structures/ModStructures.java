@@ -41,7 +41,7 @@ public class ModStructures {
                     BuiltinRegistries.BIOME.getOrCreateTag(ModBiomeTags.HAS_GIANT_BUDDHA),
                     Map.of(MobCategory.MONSTER, new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.PIECE, GiantBuddha.GIANT_BUDDHA_ENEMIES)),
                     GenerationStep.Decoration.SURFACE_STRUCTURES,
-                    TerrainAdjustment.BURY
+                    TerrainAdjustment.BEARD_THIN
                 )
             )
         );

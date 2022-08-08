@@ -50,7 +50,6 @@ public class ModBiomeInitializer {
      * The weight determines the commonality of the biome.
      */
     public static void registerBiomes() {
-        Main.LOGGER.info("HELLO from Register Biomes");
         BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(CHERRY_BLOSSOM_GROTTO, 1));
     }
 }

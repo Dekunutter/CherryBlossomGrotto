@@ -75,6 +75,18 @@ public class ModBlocks {
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":shoji_screen")
     public static ShojiScreen SHOJI_SCREEN;
 
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":tatami_mat")
+    public static TatamiMat TATAMI_MAT;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":long_tatami_mat")
+    public static LongTatamiMat LONG_TATAMI_MAT;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":aged_tatami_mat")
+    public static AgedTatamiMat AGED_TATAMI_MAT;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":long_aged_tatami_mat")
+    public static LongAgedTatamiMat LONG_AGED_TATAMI_MAT;
+
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":rice_paddy")
     public static RicePaddy RICE_PADDY;
 

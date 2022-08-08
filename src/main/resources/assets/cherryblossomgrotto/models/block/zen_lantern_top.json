@@ -2,6 +2,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
+		"particle": "cherryblossomgrotto:block/zen_lantern_bottom",
 		"texture": "cherryblossomgrotto:block/zen_lantern_top"
 	},
 	"elements": [

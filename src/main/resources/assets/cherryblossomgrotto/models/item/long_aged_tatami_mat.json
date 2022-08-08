@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "cherryblossomgrotto:item/long_aged_tatami_mat"
+  }
+}
