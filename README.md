@@ -1,5 +1,5 @@
 # CherryBlossomGrotto
-WIP of a Minecraft mod using the 1.19.0 version of the MC Forge framework.
+Beta of a Minecraft mod using the 1.19.2 version of the MC Forge framework.
 Uses terrablender as a dependency for generating custom biomes.
 
 # Contents
@@ -8,7 +8,8 @@ This biome includes a new type of cherry blossom tree and a new style of village
 Iron ore generates much more sparcely in this new biome.
 Mossy cobblestone generates naturally in this biome as well, similar to how it does in some vanilla biomes.
 There are also torii gates and giant buddha statues that generate in multiple vanilla biomes as well as the cherry blossom grotto biome.
-Cherry blossom grotto villages are the one place where the new koi fish entity can be found.
+Cherry Blossom Grotoos have their own variant of the ruined nether portal structure which is designed to looked like a ruined portal inside of a torii gate.
+Cherry blossom grotto villages are the one place where the new koi fish entity can be found. Villagers in these villages will also have new looks!
 
 # Items
 - Cherry Blossom Log
@@ -135,6 +136,18 @@ Cherry blossom grotto villages are the one place where the new koi fish entity c
     Ninja-styled boots that provide a new style to leather armour.
     When worn with all over Ninja armour pieces, grants access to the double jump capability without needing to enchant.
     Crafted with black wool.
+- Tatami Mat
+    New carpet block designed to look like a traditional tatami mat.
+    Crafted from bamboo and string.
+- Long Tatami Mat
+    A long 2x1 carpet block which provides an alternative shape to the tatami mat that provides additional decorating options.
+    Crafted from bamboo and string.
+- Aged Tatami Mat
+    Aged tatami mats lose their green hue as the fibres age. These mats are a variation of the standard tatami mats that provide a light brown/tan colouration to the texture.
+    Created from wheat and string.
+  - Long Aged Tatami Mat
+    A long 2x1 variant to the aged tatami mat that provides additional decorating options.
+    Crafted from wheat and string.
 
 # Enchantments
 Theres one new enchantment in the game, which enables the double jumping capability for the player
