@@ -10,6 +10,8 @@ import com.deku.cherryblossomgrotto.common.entity.EntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ModBlockEntities;
 import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
 import com.deku.cherryblossomgrotto.common.items.ModItems;
+import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalProvider;
+import com.deku.cherryblossomgrotto.common.particles.ModParticles;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.model.HumanoidModel;
@@ -25,10 +27,7 @@ import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.client.event.RenderHandEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -164,6 +163,16 @@ public class ClientOnlyRegistrar {
         public static void onBlockColorHandlerRegistration(RegisterColorHandlersEvent.Block event) {
             BlockColors blockColors = event.getBlockColors();
             //blockColors.register(GrassBlockColor.instance, ModBlocks.GRASS);
+        }
+
+        /**
+         * Used to register particle factories into the game using the mod event bus
+         *
+         * @param particleFactoryRegistryEvent The registry event with which particle factories will be registered
+         */
+        @SubscribeEvent
+        public static void onParticleFactoryRegistry(final RegisterParticleProvidersEvent particleFactoryRegistryEvent) {
+            Minecraft.getInstance().particleEngine.register(ModParticles.CHERRY_PETAL, FallingCherryBlossomPetalProvider::new);
         }
 
         @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)

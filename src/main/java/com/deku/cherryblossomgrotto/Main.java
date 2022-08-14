@@ -7,13 +7,10 @@ import com.deku.cherryblossomgrotto.common.capabilities.DoubleJumpCapability;
 import com.deku.cherryblossomgrotto.common.enchantments.ModEnchantmentInitializer;
 import com.deku.cherryblossomgrotto.common.entity.EntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ModBlockEntities;
-import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
 import com.deku.cherryblossomgrotto.common.entity.npc.ModVillagerTypes;
-import com.deku.cherryblossomgrotto.common.entity.passive.fish.KoiEntity;
 import com.deku.cherryblossomgrotto.common.features.*;
 import com.deku.cherryblossomgrotto.common.features.template.ModProcessorLists;
 import com.deku.cherryblossomgrotto.common.items.*;
-import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalProvider;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
 import com.deku.cherryblossomgrotto.common.blockEntities.CherryLeavesBlockEntity;
 import com.deku.cherryblossomgrotto.common.utils.ForgeReflection;
@@ -29,14 +26,12 @@ import com.deku.cherryblossomgrotto.server.network.handlers.DoubleJumpServerMess
 import com.deku.cherryblossomgrotto.server.network.messages.DoubleJumpServerMessage;
 import com.deku.cherryblossomgrotto.utils.LogTweaker;
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
@@ -51,7 +46,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.*;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
@@ -496,16 +490,6 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_petal"), ModParticles.CHERRY_PETAL);
 
             });
-        }
-
-        /**
-         * Used to register particle factories into the game using the mod event bus
-         *
-         * @param particleFactoryRegistryEvent The registry event with which particle factories will be registered
-         */
-        @SubscribeEvent
-        public static void onParticleFactoryRegistry(final RegisterParticleProvidersEvent particleFactoryRegistryEvent) {
-            Minecraft.getInstance().particleEngine.register(ModParticles.CHERRY_PETAL, FallingCherryBlossomPetalProvider::new);
         }
 
         /**
