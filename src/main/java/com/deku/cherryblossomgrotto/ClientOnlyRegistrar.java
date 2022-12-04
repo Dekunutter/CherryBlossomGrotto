@@ -67,8 +67,6 @@ public class ClientOnlyRegistrar {
      * @param event The client setup event
      */
     private void doClientStuff(final FMLClientSetupEvent event) {
-        BlockEntityRenderers.register(ModBlockEntities.SIGN_ENTITY_TYPE, SignRenderer::new);
-
         event.enqueueWork(() -> {
             Sheets.addWoodType(ModWoodType.CHERRY_BLOSSOM);
         });
@@ -137,6 +135,8 @@ public class ClientOnlyRegistrar {
             registerEntityEvent.registerEntityRenderer(EntityTypeInitializer.KOI_ENTITY_TYPE, KoiRenderer::new);
             registerEntityEvent.registerEntityRenderer(ModEntityData.KUNAI_DATA, KunaiRenderer::new);
             registerEntityEvent.registerEntityRenderer(ModEntityData.SHURIKEN_DATA, ShurikenRenderer::new);
+
+            registerEntityEvent.registerBlockEntityRenderer(ModBlockEntities.SIGN_ENTITY_TYPE, SignRenderer::new);
         }
 
         /**

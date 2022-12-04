@@ -12,7 +12,7 @@ import com.deku.cherryblossomgrotto.common.features.*;
 import com.deku.cherryblossomgrotto.common.features.template.ModProcessorLists;
 import com.deku.cherryblossomgrotto.common.items.*;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
-import com.deku.cherryblossomgrotto.common.blockEntities.CherryLeavesBlockEntity;
+import com.deku.cherryblossomgrotto.common.recipes.ModRecipeSerializerInitializer;
 import com.deku.cherryblossomgrotto.common.utils.ForgeReflection;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeInitializer;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeProvider;
@@ -37,12 +37,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.crafting.RepairItemRecipe;
-import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -134,6 +131,9 @@ public class Main
 
         // Trunk Placer Types
         ModTrunkPlacerTypes.TRUNK_PLACER_TYPES.register(eventBus);
+
+        // Custom recipe serializers
+        ModRecipeSerializerInitializer.RECIPE_SERIALIZERS.register(eventBus);
 
         // Register the setup method for modloading
         eventBus.addListener(this::setup);
@@ -295,8 +295,7 @@ public class Main
         public static void onTileEntityRegistry(final RegisterEvent registerEvent) {
             registerEvent.register(ForgeRegistries.Keys.BLOCK_ENTITY_TYPES, registrar -> {
                 // All cherry blossom tree block entities
-                BlockEntityType<CherryLeavesBlockEntity> cherryLeavesDataType = BlockEntityType.Builder.of(CherryLeavesBlockEntity::new, ModBlocks.CHERRY_LEAVES).build(null);
-                registrar.register(new ResourceLocation(MOD_ID, "cherry_leaves_tile_entity"), cherryLeavesDataType);
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_leaves_tile_entity"), ModBlockEntities.CHERRY_LEAVES_TYPE);
 
                 // All sign block entities
                 registrar.register(new ResourceLocation(MOD_ID, "mod_sign_entity"), ModBlockEntities.SIGN_ENTITY_TYPE);
@@ -447,19 +446,6 @@ public class Main
             registerEvent.register(ForgeRegistries.Keys.BLOCK_STATE_PROVIDER_TYPES, registrar -> {
                 // All biome feature blockstate provider types
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_forest_flower_provider"), new CherryBlossomForestFlowerProviderType());
-            });
-        }
-
-        /**
-         * Used to register recipe serializers into the game using the mod event bus
-         *
-         * @param registerEvent The registry event with which recipe serializers will be registered
-         */
-        @SubscribeEvent
-        public static void onRecipeRegistry(final RegisterEvent registerEvent) {
-            registerEvent.register(ForgeRegistries.Keys.RECIPE_SERIALIZERS, registrar -> {
-                // All special weapon recipe serializers
-                registrar.register(new ResourceLocation(MOD_ID, "folding"), new SimpleRecipeSerializer<>(RepairItemRecipe::new));
             });
         }
 
