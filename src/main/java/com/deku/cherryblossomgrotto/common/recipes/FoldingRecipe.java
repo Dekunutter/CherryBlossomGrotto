@@ -135,7 +135,7 @@ public class FoldingRecipe extends CustomRecipe {
      */
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return ModRecipeData.FOLDING_DATA;
+        return ModRecipeSerializerInitializer.FOLDING_SERIALIZER.get();
     }
 }
 
