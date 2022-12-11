@@ -1,6 +1,6 @@
 # CherryBlossomGrotto
-Beta of a Minecraft mod using the 1.19.2 version of the MC Forge framework.
-Uses terrablender as a dependency for generating custom biomes.
+A Minecraft mod using the 1.19.2 version of the MC Forge framework.
+Uses [Terrablender](https://www.curseforge.com/minecraft/mc-mods/terrablender) as a dependency for generating custom biomes.
 
 # Contents
 The main focus of this mod is the cherry blossom grotto that it adds to the Minecraft overworld.
@@ -8,10 +8,10 @@ This biome includes a new type of cherry blossom tree and a new style of village
 Iron ore generates much more sparcely in this new biome.
 Mossy cobblestone generates naturally in this biome as well, similar to how it does in some vanilla biomes.
 There are also torii gates and giant buddha statues that generate in multiple vanilla biomes as well as the cherry blossom grotto biome.
-Cherry Blossom Grotoos have their own variant of the ruined nether portal structure which is designed to looked like a ruined portal inside of a torii gate.
+Cherry Blossom Grottos have their own variant of the ruined nether portal structure which is designed to looked like a ruined portal inside of a torii gate.
 Cherry blossom grotto villages are the one place where the new koi fish entity can be found. Villagers in these villages will also have new looks!
 
-# Items
+### Items
 - Cherry Blossom Log
     Harvested from cherry blossom trees. Acts like any other log block in the game.
 - Cherry Blossom Wood
@@ -149,5 +149,20 @@ Cherry blossom grotto villages are the one place where the new koi fish entity c
     A long 2x1 variant to the aged tatami mat that provides additional decorating options.
     Crafted from wheat and string.
 
-# Enchantments
+### Enchantments
 Theres one new enchantment in the game, which enables the double jumping capability for the player
+
+
+
+# Extra Support
+### Motschen's Better Leaves support
+For adding support for cherry blossom leaves with [Motschen's Better Leaves](https://www.curseforge.com/minecraft/texture-packs/motschens-better-leaves) - follow the instructions [here](https://github.com/Dekunutter/cherryblossomgrotto-betterleaves).
+
+### BSL shaders waving leaves support
+If you want to see the cherry blossom leave blocks wave like other leave blocks when the [BSL shaderpack's](https://www.curseforge.com/minecraft/customization/bsl-shaders) waving leaves option is enabled, you'll need to make a small edit to the shaderpack manually.
+Assuming you already have BSL shaders installed and working, navigate to your shaderpacks folder in your Minecraft installation directory and follow through to:
+1. BSL_vX.X.XX > shaders > block.properties
+2. Open **block.properties** in a text editor.
+3. Look for the line containing _"block.10105= \"_ and you'll see the following line contains a list of all leave blocks from vanilla minecraft that the shaderpack recognizes.
+4. On this line, add a space to the end and enter _"cherryblossomgrotto:cherry_blossom_leaves"_ to add the cherry blossom leaves block to the list of leave blocks recognized by the shaderpack. 
+5. You should now be able to launch Minecraft with BSL shaders and see the cherry blossom leave blocks waving alongside vanilla Minecraft leave blocks.
