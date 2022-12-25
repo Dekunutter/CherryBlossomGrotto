@@ -1,8 +1,8 @@
 package com.deku.cherryblossomgrotto.common.utils;
 
-import com.mojang.math.Vector3d;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import org.joml.Vector3d;
 
 public class BlockPosUtils {
     /**

@@ -17,7 +17,7 @@ public class Shuriken extends ProjectileWeaponItem implements Vanishable {
     private static final float VARIATION = 0.0f;
 
     public Shuriken() {
-        super(new Item.Properties().stacksTo(16).tab(CreativeModeTab.TAB_COMBAT));
+        super(new Item.Properties().stacksTo(16));
     }
 
     /**

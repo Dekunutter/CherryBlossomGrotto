@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 106574789,
+    "separation": 15,
+    "spacing": 40
+  },
+  "structures": [
+    {
+      "structure": "cherryblossomgrotto:ruined_torii_portal",
+      "weight": 1
+    }
+  ]
+}

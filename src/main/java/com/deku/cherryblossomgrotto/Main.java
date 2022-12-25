@@ -9,7 +9,6 @@ import com.deku.cherryblossomgrotto.common.entity.EntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ModBlockEntities;
 import com.deku.cherryblossomgrotto.common.entity.npc.ModVillagerTypes;
 import com.deku.cherryblossomgrotto.common.features.*;
-import com.deku.cherryblossomgrotto.common.features.template.ModProcessorLists;
 import com.deku.cherryblossomgrotto.common.items.*;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
 import com.deku.cherryblossomgrotto.common.recipes.ModRecipeSerializerInitializer;
@@ -19,14 +18,26 @@ import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeProvider;
 import com.deku.cherryblossomgrotto.common.world.gen.blockstateprovider.CherryBlossomForestFlowerProviderType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.GrandCherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.CherryBlossomFoliagePlacerType;
-import com.deku.cherryblossomgrotto.common.world.gen.placements.*;
+import com.deku.cherryblossomgrotto.common.world.gen.placements.ModPlacements;
 import com.deku.cherryblossomgrotto.common.world.gen.structures.*;
 import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.*;
 import com.deku.cherryblossomgrotto.server.network.handlers.DoubleJumpServerMessageHandler;
 import com.deku.cherryblossomgrotto.server.network.messages.DoubleJumpServerMessage;
 import com.deku.cherryblossomgrotto.utils.LogTweaker;
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.JsonElement;
+import com.mojang.serialization.JsonOps;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.registries.VanillaRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -46,6 +57,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.util.MutableHashedLinkedMap;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.*;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -112,6 +126,7 @@ public class Main
      *      - Adds additional forge event listeners for biome and world loading events
      */
     public Main() {
+        System.out.println("STARTING EXECUTION");
         NETWORK_CHANNEL = NetworkRegistry.newSimpleChannel(new ResourceLocation(MOD_ID, "cherryblossomgrottochannel"), () -> NETWORK_PROTOCOL_VERSION, DoubleJumpClientMessageHandler::isProtocolAcceptedOnClient, DoubleJumpServerMessageHandler::isProtocolAcceptedOnServer);
 
         if (HIDE_CONSOLE_NOISE) {
@@ -124,6 +139,7 @@ public class Main
         ModBiomeInitializer.registerBiomes();
 
         // Structure logic
+        System.out.println("REGISTER STRUCTURE TYPES");
         ModStructureTypeInitializer.STRUCTURE_TYPES.register(eventBus);
 
         // Enchantment logic
@@ -176,28 +192,10 @@ public class Main
             Regions.register(new ModBiomeProvider());
         });
 
-        // TODO: Maybe need to figure out a better place to put this stuff
-        //  Queued work is not executing this early enough to register. Need to figure out the structures to unblock the custom biome generation
-        ModTreeFeatures.register();
-        ModTreePlacements.register();
-
-        ModVegetationFeatures.register();
-        ModVegetationPlacements.register();
-
-        ModOreFeatures.register();
-        ModOrePlacements.register();
-
-        ModMiscOverworldFeatures.register();
-        ModMiscOverworldPlacements.register();
-
-        ModProcessorLists.register();
-        ModVillagePlacements.register();
         // TODO: Need to add the boat trade for the new villager type for this to work
         ModVillagerTypes.register();
 
         ModStructurePieceTypes.register();
-        ModStructures.register();
-        ModStructureSets.register();
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
@@ -246,6 +244,8 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_pressure_plate"), new CherryBlossomPressurePlate());
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_sign"), new CherryBlossomSign());
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_wall_sign"), new CherryBlossomWallSign());
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_hanging_sign"), new CherryBlossomHangingSign());
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_wall_hanging_sign"), new CherryBlossomWallHangingSign());
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_door"), new CherryBlossomDoor());
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_trapdoor"), new CherryBlossomTrapDoor());
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_planks_trapdoor"), new CherryBlossomPlanksTrapdoor());
@@ -281,7 +281,6 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "spruce_planks_trapdoor"), new SprucePlanksTrapdoor());
                 registrar.register(new ResourceLocation(MOD_ID, "birch_planks_trapdoor"), new BirchPlanksTrapdoor());
                 registrar.register(new ResourceLocation(MOD_ID, "mangrove_planks_trapdoor"), new MangrovePlanksTrapdoor());
-
             });
         }
 
@@ -299,6 +298,7 @@ public class Main
 
                 // All sign block entities
                 registrar.register(new ResourceLocation(MOD_ID, "mod_sign_entity"), ModBlockEntities.SIGN_ENTITY_TYPE);
+                registrar.register(new ResourceLocation(MOD_ID, "mod_hanging_sign_entity"), ModBlockEntities.HANGING_SIGN_ENTITY_TYPE);
             });
         }
 
@@ -311,40 +311,41 @@ public class Main
         public static void onItemsRegistry(final RegisterEvent registerEvent) {
             registerEvent.register(ForgeRegistries.Keys.ITEMS, registrar -> {
                 // All cherry blossom wood items
-                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_log"), new BlockItem(ModBlocks.CHERRY_LOG, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
-                registrar.register(new ResourceLocation(MOD_ID, "stripped_cherry_blossom_log"), new BlockItem(ModBlocks.STRIPPED_CHERRY_LOG, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
-                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_wood"), new BlockItem(ModBlocks.CHERRY_WOOD, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
-                registrar.register(new ResourceLocation(MOD_ID, "stripped_cherry_blossom_wood"), new BlockItem(ModBlocks.STRIPPED_CHERRY_WOOD, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
-                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_planks"), new BlockItem(ModBlocks.CHERRY_PLANKS, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
-                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_slab"), new BlockItem(ModBlocks.CHERRY_SLAB, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
-                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_stairs"), new BlockItem(ModBlocks.CHERRY_STAIRS, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
-                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_button"), new BlockItem(ModBlocks.CHERRY_BUTTON, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
-                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_fence"), new BlockItem(ModBlocks.CHERRY_FENCE, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
-                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_fence_gate"), new BlockItem(ModBlocks.CHERRY_FENCE_GATE, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
-                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_pressure_plate"), new BlockItem(ModBlocks.CHERRY_PRESSURE_PLATE, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
-                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_sign"), new SignItem(new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS), ModBlocks.CHERRY_SIGN, ModBlocks.CHERRY_WALL_SIGN));
-                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_door"), new BlockItem(ModBlocks.CHERRY_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
-                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_trapdoor"), new BlockItem(ModBlocks.CHERRY_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
-                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_planks_trapdoor"), new BlockItem(ModBlocks.CHERRY_BLOSSOM_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_log"), new BlockItem(ModBlocks.CHERRY_LOG, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_cherry_blossom_log"), new BlockItem(ModBlocks.STRIPPED_CHERRY_LOG, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_wood"), new BlockItem(ModBlocks.CHERRY_WOOD, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_cherry_blossom_wood"), new BlockItem(ModBlocks.STRIPPED_CHERRY_WOOD, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_planks"), new BlockItem(ModBlocks.CHERRY_PLANKS, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_slab"), new BlockItem(ModBlocks.CHERRY_SLAB, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_stairs"), new BlockItem(ModBlocks.CHERRY_STAIRS, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_button"), new BlockItem(ModBlocks.CHERRY_BUTTON, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_fence"), new BlockItem(ModBlocks.CHERRY_FENCE, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_fence_gate"), new BlockItem(ModBlocks.CHERRY_FENCE_GATE, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_pressure_plate"), new BlockItem(ModBlocks.CHERRY_PRESSURE_PLATE, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_sign"), new SignItem(new Item.Properties().stacksTo(16), ModBlocks.CHERRY_SIGN, ModBlocks.CHERRY_WALL_SIGN));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_hanging_sign"), new HangingSignItem(ModBlocks.CHERRY_HANGING_SIGN, ModBlocks.CHERRY_WALL_HANGING_SIGN, new Item.Properties().stacksTo(16)));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_door"), new DoubleHighBlockItem(ModBlocks.CHERRY_DOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_trapdoor"), new BlockItem(ModBlocks.CHERRY_TRAPDOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_planks_trapdoor"), new BlockItem(ModBlocks.CHERRY_BLOSSOM_PLANKS_TRAP_DOOR, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_boat"), new CherryBlossomBoat());
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_chest_boat"), new CherryBlossomChestBoat());
 
                 // All cherry blossom tree items
-                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_leaves"), new BlockItem(ModBlocks.CHERRY_LEAVES, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
-                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_petals"), new BlockItem(ModBlocks.CHERRY_PETALS, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_leaves"), new BlockItem(ModBlocks.CHERRY_LEAVES, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_petals"), new BlockItem(ModBlocks.CHERRY_PETALS, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_petal"), new CherryBlossomPetal());
-                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_sapling"), new BlockItem(ModBlocks.CHERRY_SAPLING, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+                registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_sapling"), new BlockItem(ModBlocks.CHERRY_SAPLING, new Item.Properties()));
 
                 // All lantern items
-                registrar.register(new ResourceLocation(MOD_ID, "zen_lantern"), new DoubleHighBlockItem(ModBlocks.ZEN_LANTERN, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
-                registrar.register(new ResourceLocation(MOD_ID, "soul_zen_lantern"), new DoubleHighBlockItem(ModBlocks.SOUL_ZEN_LANTERN, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+                registrar.register(new ResourceLocation(MOD_ID, "zen_lantern"), new DoubleHighBlockItem(ModBlocks.ZEN_LANTERN, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "soul_zen_lantern"), new DoubleHighBlockItem(ModBlocks.SOUL_ZEN_LANTERN, new Item.Properties()));
 
                 // All architectural items
-                registrar.register(new ResourceLocation(MOD_ID, "shoji_screen"), new BlockItem(ModBlocks.SHOJI_SCREEN, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
-                registrar.register(new ResourceLocation(MOD_ID, "tatami_mat"), new BlockItem(ModBlocks.TATAMI_MAT, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
-                registrar.register(new ResourceLocation(MOD_ID, "long_tatami_mat"), new BlockItem(ModBlocks.LONG_TATAMI_MAT, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
-                registrar.register(new ResourceLocation(MOD_ID, "aged_tatami_mat"), new BlockItem(ModBlocks.AGED_TATAMI_MAT, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
-                registrar.register(new ResourceLocation(MOD_ID, "long_aged_tatami_mat"), new BlockItem(ModBlocks.LONG_AGED_TATAMI_MAT, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+                registrar.register(new ResourceLocation(MOD_ID, "shoji_screen"), new DoubleHighBlockItem(ModBlocks.SHOJI_SCREEN, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "tatami_mat"), new BlockItem(ModBlocks.TATAMI_MAT, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "long_tatami_mat"), new BlockItem(ModBlocks.LONG_TATAMI_MAT, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "aged_tatami_mat"), new BlockItem(ModBlocks.AGED_TATAMI_MAT, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "long_aged_tatami_mat"), new BlockItem(ModBlocks.LONG_AGED_TATAMI_MAT, new Item.Properties()));
 
                 // All bucket items
                 registrar.register(new ResourceLocation(MOD_ID, "koi_bucket"), new KoiBucket(EntityTypeInitializer.KOI_ENTITY_TYPE));
@@ -372,19 +373,19 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "kabuto_sandals"), new KabutoSandals());
 
                 // All vanilla block trapdoor items
-                registrar.register(new ResourceLocation(MOD_ID, "acacia_planks_trapdoor"), new BlockItem(ModBlocks.ACACIA_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
-                registrar.register(new ResourceLocation(MOD_ID, "birch_planks_trapdoor"), new BlockItem(ModBlocks.BIRCH_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
-                registrar.register(new ResourceLocation(MOD_ID, "dark_oak_planks_trapdoor"), new BlockItem(ModBlocks.DARK_OAK_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
-                registrar.register(new ResourceLocation(MOD_ID, "jungle_planks_trapdoor"), new BlockItem(ModBlocks.JUNGLE_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
-                registrar.register(new ResourceLocation(MOD_ID, "oak_planks_trapdoor"), new BlockItem(ModBlocks.OAK_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
-                registrar.register(new ResourceLocation(MOD_ID, "spruce_planks_trapdoor"), new BlockItem(ModBlocks.SPRUCE_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
-                registrar.register(new ResourceLocation(MOD_ID, "mangrove_planks_trapdoor"), new BlockItem(ModBlocks.MANGROVE_PLANKS_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
-                registrar.register(new ResourceLocation(MOD_ID, "smooth_stone_trapdoor"), new BlockItem(ModBlocks.SMOOTH_STONE_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
-                registrar.register(new ResourceLocation(MOD_ID, "stone_trapdoor"), new BlockItem(ModBlocks.STONE_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
-                registrar.register(new ResourceLocation(MOD_ID, "cobblestone_trapdoor"), new BlockItem(ModBlocks.COBBLESTONE_TRAP_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+                registrar.register(new ResourceLocation(MOD_ID, "acacia_planks_trapdoor"), new BlockItem(ModBlocks.ACACIA_PLANKS_TRAP_DOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "birch_planks_trapdoor"), new BlockItem(ModBlocks.BIRCH_PLANKS_TRAP_DOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "dark_oak_planks_trapdoor"), new BlockItem(ModBlocks.DARK_OAK_PLANKS_TRAP_DOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "jungle_planks_trapdoor"), new BlockItem(ModBlocks.JUNGLE_PLANKS_TRAP_DOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "oak_planks_trapdoor"), new BlockItem(ModBlocks.OAK_PLANKS_TRAP_DOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "spruce_planks_trapdoor"), new BlockItem(ModBlocks.SPRUCE_PLANKS_TRAP_DOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "mangrove_planks_trapdoor"), new BlockItem(ModBlocks.MANGROVE_PLANKS_TRAP_DOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "smooth_stone_trapdoor"), new BlockItem(ModBlocks.SMOOTH_STONE_TRAP_DOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "stone_trapdoor"), new BlockItem(ModBlocks.STONE_TRAP_DOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "cobblestone_trapdoor"), new BlockItem(ModBlocks.COBBLESTONE_TRAP_DOOR, new Item.Properties()));
 
                 // All spawn eggs
-                registrar.register(new ResourceLocation(MOD_ID, "koi_spawn_egg"), new ForgeSpawnEggItem(() -> EntityTypeInitializer.KOI_ENTITY_TYPE, 15724527, 16030538, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+                registrar.register(new ResourceLocation(MOD_ID, "koi_spawn_egg"), new ForgeSpawnEggItem(() -> EntityTypeInitializer.KOI_ENTITY_TYPE, 15724527, 16030538, new Item.Properties()));
             });
         }
 
@@ -450,6 +451,28 @@ public class Main
         }
 
         /**
+         * Used to register datapacks into the game using the mod event bus
+         *
+         * @param gatherEvent The register event with which datapacks will be registered
+         */
+        @SubscribeEvent
+        public static void onGatherDataRegistry(final GatherDataEvent gatherEvent) {
+            DataGenerator generator = gatherEvent.getGenerator();
+            PackOutput packOutput = generator.getPackOutput();
+            ExistingFileHelper fileHelper = gatherEvent.getExistingFileHelper();
+
+            HolderLookup.Provider lookupProvider = new RegistrySetBuilder()
+                    .add(Registries.CONFIGURED_FEATURE, (RegistrySetBuilder.RegistryBootstrap) ModConfiguredFeatures::bootstrap)
+                    .add(Registries.PLACED_FEATURE, (RegistrySetBuilder.RegistryBootstrap) ModPlacements::bootstrap)
+                    //.add(Registries.FOLIAGE_PLACER_TYPE, (RegistrySetBuilder.RegistryBootstrap) ModFoliagePlacers::bootstrap)
+                    //.add(Registries.PROCESSOR_LIST, ())
+                    //.add(Registries.STRUCTURE_SET, ())
+                    //.add(Registries.TEMPLATE_POOL, ())
+                    .add(Registries.BIOME, ModBiomeInitializer::bootstrap)
+                    .buildPatch(RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY), VanillaRegistries.createLookup());
+        }
+
+        /**
          * Used to register foliage placers into the game using the mod event bus
          *
          * @param registerEvent The registry event with which foliage placers will be registered
@@ -486,6 +509,201 @@ public class Main
         @SubscribeEvent
         public static void onCapabilityRegistration(RegisterCapabilitiesEvent capabilityRegistryEvent) {
             capabilityRegistryEvent.register(DoubleJumpCapability.DoubleJump.class);
+        }
+
+        /**
+         * Used to register a new custom creative mode tab to the creative mode UI using the mod event bus
+         *
+         * @param creativeTabBuildRegistryEvent The registry event with which new creative mode tabs are created and populated with items
+         */
+        @SubscribeEvent
+        public static void onCreativeModeTabRegister(CreativeModeTabEvent.Register creativeTabBuildRegistryEvent) {
+            creativeTabBuildRegistryEvent.registerCreativeModeTab(new ResourceLocation(MOD_ID, "cherry_blossom_grotto"), builder ->
+                builder.title(Component.translatable("Cherry Blossom Grotto"))
+                    .icon(() -> new ItemStack(ModItems.CHERRY_SAPLING))
+                    .displayItems((enabledFlags, populator, hasPermissions) -> {
+                        // Cherry blossom blocks
+                        populator.accept(ModItems.CHERRY_LOG);
+                        populator.accept(ModItems.CHERRY_WOOD);
+                        populator.accept(ModItems.STRIPPED_CHERRY_LOG);
+                        populator.accept(ModItems.STRIPPED_CHERRY_WOOD);
+                        populator.accept(ModItems.CHERRY_PLANKS);
+                        populator.accept(ModItems.CHERRY_STAIRS);
+                        populator.accept(ModItems.CHERRY_SLAB);
+                        populator.accept(ModItems.CHERRY_FENCE);
+                        populator.accept(ModItems.CHERRY_FENCE_GATE);
+                        populator.accept(ModItems.CHERRY_DOOR);
+                        populator.accept(ModItems.CHERRY_TRAPDOOR);
+                        populator.accept(ModItems.CHERRY_PRESSURE_PLATE);
+                        populator.accept(ModItems.CHERRY_LOG);
+                        populator.accept(ModItems.CHERRY_BUTTON);
+                        populator.accept(ModItems.CHERRY_LEAVES);
+                        populator.accept(ModItems.CHERRY_SAPLING);
+                        populator.accept(new ItemStack(ModItems.CHERRY_PETAL));
+                        populator.accept(ModItems.CHERRY_PETALS);
+                        populator.accept(new ItemStack(ModItems.CHERRY_BOAT));
+                        populator.accept(new ItemStack(ModItems.CHERRY_CHEST_BOAT));
+                        populator.accept(ModItems.CHERRY_SIGN);
+                        populator.accept(ModItems.CHERRY_HANGING_SIGN);
+
+                        // Crops
+                        populator.accept(new ItemStack(ModItems.RICE));
+                        populator.accept(new ItemStack(ModItems.ONIGIRI));
+
+                        // Wildlife
+                        populator.accept(new ItemStack(ModItems.KOI));
+                        populator.accept(new ItemStack(ModItems.COOKED_KOI));
+                        populator.accept(new ItemStack(ModItems.KOI_BUCKET));
+                        populator.accept(new ItemStack(ModItems.KOI_SPAWN_EGG));
+
+                        // Misc building blocks
+                        populator.accept(ModItems.SHOJI_SCREEN);
+                        populator.accept(ModItems.TATAMI_MAT);
+                        populator.accept(ModItems.LONG_TATAMI_MAT);
+                        populator.accept(ModItems.AGED_TATAMI_MAT);
+                        populator.accept(ModItems.LONG_AGED_TATAMI_MAT);
+                        populator.accept(ModItems.ZEN_LANTERN);
+                        populator.accept(ModItems.SOUL_ZEN_LANTERN);
+
+                        // Weapons & Armour
+                        populator.accept(new ItemStack(ModItems.KATANA));
+                        populator.accept(new ItemStack(ModItems.KUNAI));
+                        populator.accept(new ItemStack(ModItems.SHURIKEN));
+                        populator.accept(new ItemStack(ModItems.NINJA_MASK));
+                        populator.accept(new ItemStack(ModItems.NINJA_TUNIC));
+                        populator.accept(new ItemStack(ModItems.NINJA_LEGGINGS));
+                        populator.accept(new ItemStack(ModItems.NINJA_SANDALS));
+                        populator.accept(new ItemStack(ModItems.KABUTO_HELMET));
+                        populator.accept(new ItemStack(ModItems.KABUTO_CUIRASS));
+                        populator.accept(new ItemStack(ModItems.KABUTO_GREAVES));
+                        populator.accept(new ItemStack(ModItems.KABUTO_SANDALS));
+
+                        // Hidden trapdoors
+                        populator.accept(ModItems.CHERRY_BLOSSOM_PLANKS_TRAP_DOOR);
+                        populator.accept(ModItems.ACACIA_PLANKS_TRAP_DOOR);
+                        populator.accept(ModItems.BIRCH_PLANKS_TRAP_DOOR);
+                        populator.accept(ModItems.DARK_OAK_PLANKS_TRAP_DOOR);
+                        populator.accept(ModItems.JUNGLE_PLANKS_TRAP_DOOR);
+                        populator.accept(ModItems.OAK_PLANKS_TRAP_DOOR);
+                        populator.accept(ModItems.SPRUCE_PLANKS_TRAP_DOOR);
+                        populator.accept(ModItems.MANGROVE_PLANKS_TRAP_DOOR);
+                        populator.accept(ModItems.SMOOTH_STONE_TRAP_DOOR);
+                        populator.accept(ModItems.STONE_TRAP_DOOR);
+                        populator.accept(ModItems.SMOOTH_STONE_TRAP_DOOR);
+                        populator.accept(ModItems.COBBLESTONE_TRAP_DOOR);
+                    }
+                )
+            );
+        }
+
+        /**
+         * Used to register items into vanilla creative mode tabs in the creative mode UI using the mod event bus
+         *
+         * @param creativeTabBuilderRegistryEvent The registry event with which new items are added to vanilla creative mode tabs
+         */
+        @SubscribeEvent
+        public static void onCreativeModeTabBuilderRegister(CreativeModeTabEvent.BuildContents creativeTabBuilderRegistryEvent) {
+            MutableHashedLinkedMap<ItemStack, CreativeModeTab.TabVisibility> entries = creativeTabBuilderRegistryEvent.getEntries();
+            CreativeModeTab.TabVisibility visibility = CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS;
+
+            if (creativeTabBuilderRegistryEvent.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
+                // Wood blocks
+                entries.putAfter(new ItemStack(Items.MANGROVE_BUTTON), new ItemStack(ModItems.CHERRY_LOG), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_LOG), new ItemStack(ModItems.CHERRY_WOOD), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_WOOD), new ItemStack(ModItems.STRIPPED_CHERRY_LOG), visibility);
+                entries.putAfter(new ItemStack(ModItems.STRIPPED_CHERRY_LOG), new ItemStack(ModItems.STRIPPED_CHERRY_WOOD), visibility);
+                entries.putAfter(new ItemStack(ModItems.STRIPPED_CHERRY_WOOD), new ItemStack(ModItems.CHERRY_PLANKS), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_PLANKS), new ItemStack(ModItems.CHERRY_STAIRS), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_STAIRS), new ItemStack(ModItems.CHERRY_SLAB), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_SLAB), new ItemStack(ModItems.CHERRY_FENCE), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_FENCE), new ItemStack(ModItems.CHERRY_FENCE_GATE), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_FENCE_GATE), new ItemStack(ModItems.CHERRY_DOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_DOOR), new ItemStack(ModItems.CHERRY_TRAPDOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_TRAPDOOR), new ItemStack(ModItems.CHERRY_PRESSURE_PLATE), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_PRESSURE_PLATE), new ItemStack(ModItems.CHERRY_BUTTON), visibility);
+
+                // Misc building blocks
+                creativeTabBuilderRegistryEvent.accept(ModItems.SHOJI_SCREEN);
+                creativeTabBuilderRegistryEvent.accept(ModItems.TATAMI_MAT);
+                creativeTabBuilderRegistryEvent.accept(ModItems.LONG_TATAMI_MAT);
+                creativeTabBuilderRegistryEvent.accept(ModItems.AGED_TATAMI_MAT);
+                creativeTabBuilderRegistryEvent.accept(ModItems.LONG_AGED_TATAMI_MAT);
+
+                // Hidden trapdoors
+                entries.putAfter(new ItemStack(Items.ACACIA_TRAPDOOR), new ItemStack(ModItems.ACACIA_PLANKS_TRAP_DOOR), visibility);
+                entries.putAfter(new ItemStack(Items.ACACIA_TRAPDOOR), new ItemStack(ModItems.BIRCH_PLANKS_TRAP_DOOR), visibility);
+                entries.putAfter(new ItemStack(Items.DARK_OAK_TRAPDOOR), new ItemStack(ModItems.DARK_OAK_PLANKS_TRAP_DOOR), visibility);
+                entries.putAfter(new ItemStack(Items.JUNGLE_TRAPDOOR), new ItemStack(ModItems.JUNGLE_PLANKS_TRAP_DOOR), visibility);
+                entries.putAfter(new ItemStack(Items.OAK_TRAPDOOR), new ItemStack(ModItems.OAK_PLANKS_TRAP_DOOR), visibility);
+                entries.putAfter(new ItemStack(Items.SPRUCE_TRAPDOOR), new ItemStack(ModItems.SPRUCE_PLANKS_TRAP_DOOR), visibility);
+                entries.putAfter(new ItemStack(Items.MANGROVE_TRAPDOOR), new ItemStack(ModItems.MANGROVE_PLANKS_TRAP_DOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_TRAPDOOR), new ItemStack(ModItems.CHERRY_BLOSSOM_PLANKS_TRAP_DOOR), visibility);
+                entries.putAfter(new ItemStack(Items.STONE_SLAB), new ItemStack(ModItems.STONE_TRAP_DOOR), visibility);
+                entries.putAfter(new ItemStack(Items.SMOOTH_STONE_SLAB), new ItemStack(ModItems.SMOOTH_STONE_TRAP_DOOR), visibility);
+                entries.putAfter(new ItemStack(Items.COBBLESTONE_WALL), new ItemStack(ModItems.COBBLESTONE_TRAP_DOOR), visibility);
+            } else if (creativeTabBuilderRegistryEvent.getTab() == CreativeModeTabs.NATURAL_BLOCKS) {
+                // Cherry blossom blocks
+                entries.putAfter(new ItemStack(Items.MANGROVE_LOG), new ItemStack(ModItems.CHERRY_LOG), visibility);
+                entries.putAfter(new ItemStack(Items.FLOWERING_AZALEA_LEAVES), new ItemStack(ModItems.CHERRY_LEAVES), visibility);
+                entries.putAfter(new ItemStack(Items.FLOWERING_AZALEA), new ItemStack(ModItems.CHERRY_SAPLING), visibility);
+                entries.putAfter(new ItemStack(Items.SWEET_BERRIES), new ItemStack(ModItems.RICE), visibility);
+                entries.putAfter(new ItemStack(ModItems.RICE), new ItemStack(ModItems.CHERRY_PETAL), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_PETAL), new ItemStack(ModItems.CHERRY_PETALS), visibility);
+            } else if (creativeTabBuilderRegistryEvent.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+                // Lanterns
+                entries.putAfter(new ItemStack(Items.SOUL_LANTERN), new ItemStack(ModItems.ZEN_LANTERN), visibility);
+                entries.putAfter(new ItemStack(ModItems.ZEN_LANTERN), new ItemStack(ModItems.SOUL_ZEN_LANTERN), visibility);
+
+                // Signs
+                entries.putAfter(new ItemStack(Items.MANGROVE_SIGN), new ItemStack(ModItems.CHERRY_SIGN), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_SIGN), new ItemStack(ModItems.CHERRY_HANGING_SIGN), visibility);
+            } else if (creativeTabBuilderRegistryEvent.getTab() == CreativeModeTabs.REDSTONE_BLOCKS) {
+                // Cherry blossom blocks
+                entries.putAfter(new ItemStack(Items.OAK_BUTTON), new ItemStack(ModItems.CHERRY_BUTTON), visibility);
+                entries.putAfter(new ItemStack(Items.OAK_PRESSURE_PLATE), new ItemStack(ModItems.CHERRY_PRESSURE_PLATE), visibility);
+                entries.putAfter(new ItemStack(Items.OAK_CHEST_BOAT), new ItemStack(ModItems.CHERRY_CHEST_BOAT), visibility);
+                entries.putAfter(new ItemStack(Items.OAK_FENCE_GATE), new ItemStack(ModItems.CHERRY_FENCE_GATE), visibility);
+                entries.putAfter(new ItemStack(Items.OAK_DOOR), new ItemStack(ModItems.CHERRY_DOOR), visibility);
+                entries.putAfter(new ItemStack(Items.OAK_TRAPDOOR), new ItemStack(ModItems.CHERRY_TRAPDOOR), visibility);
+            } else if (creativeTabBuilderRegistryEvent.getTab() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+                // Buckets
+                entries.putAfter(new ItemStack(Items.TROPICAL_FISH_BUCKET), new ItemStack(ModItems.KOI_BUCKET), visibility);
+
+                // Boats
+                entries.putAfter(new ItemStack(Items.MANGROVE_CHEST_BOAT), new ItemStack(ModItems.CHERRY_BOAT), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_BOAT), new ItemStack(ModItems.CHERRY_CHEST_BOAT), visibility);
+            } else if (creativeTabBuilderRegistryEvent.getTab() == CreativeModeTabs.COMBAT) {
+                // Melee weapons
+                entries.putAfter(new ItemStack(Items.NETHERITE_AXE), new ItemStack(ModItems.KATANA), visibility);
+
+                // Armours
+                entries.putAfter(new ItemStack(Items.LEATHER_BOOTS), new ItemStack(ModItems.NINJA_MASK), visibility);
+                entries.putAfter(new ItemStack(ModItems.NINJA_MASK), new ItemStack(ModItems.NINJA_TUNIC), visibility);
+                entries.putAfter(new ItemStack(ModItems.NINJA_TUNIC), new ItemStack(ModItems.NINJA_LEGGINGS), visibility);
+                entries.putAfter(new ItemStack(ModItems.NINJA_LEGGINGS), new ItemStack(ModItems.NINJA_SANDALS), visibility);
+                entries.putAfter(new ItemStack(Items.IRON_BOOTS), new ItemStack(ModItems.KABUTO_HELMET), visibility);
+                entries.putAfter(new ItemStack(ModItems.KABUTO_HELMET), new ItemStack(ModItems.KABUTO_CUIRASS), visibility);
+                entries.putAfter(new ItemStack(ModItems.KABUTO_CUIRASS), new ItemStack(ModItems.KABUTO_GREAVES), visibility);
+                entries.putAfter(new ItemStack(ModItems.KABUTO_GREAVES), new ItemStack(ModItems.KABUTO_SANDALS), visibility);
+
+                // Throwables
+                creativeTabBuilderRegistryEvent.accept(new ItemStack(ModItems.KUNAI));
+                creativeTabBuilderRegistryEvent.accept(new ItemStack(ModItems.SHURIKEN));
+            } else if (creativeTabBuilderRegistryEvent.getTab() == CreativeModeTabs.FOOD_AND_DRINKS) {
+                // Crops
+                entries.putAfter(new ItemStack(Items.BEETROOT), new ItemStack(ModItems.RICE), visibility);
+                entries.putAfter(new ItemStack(ModItems.RICE), new ItemStack(ModItems.ONIGIRI), visibility);
+
+                // Fish
+                entries.putAfter(new ItemStack(Items.TROPICAL_FISH), new ItemStack(ModItems.KOI), visibility);
+                entries.putAfter(new ItemStack(ModItems.KOI), new ItemStack(ModItems.COOKED_KOI), visibility);
+            } else if (creativeTabBuilderRegistryEvent.getTab() == CreativeModeTabs.INGREDIENTS) {
+                // Plants
+                entries.putAfter(new ItemStack(Items.WHEAT), new ItemStack(ModItems.CHERRY_PETAL), visibility);
+            } else if (creativeTabBuilderRegistryEvent.getTab() == CreativeModeTabs.SPAWN_EGGS) {
+                // Fish
+                entries.putAfter(new ItemStack(Items.TROPICAL_FISH_SPAWN_EGG), new ItemStack(ModItems.KOI_SPAWN_EGG), visibility);
+            }
         }
     }
 
@@ -595,7 +813,7 @@ public class Main
                                     player.jumpFromGround();
                                     player.fallDistance = 0.0F;
                                     player.causeFoodExhaustion(player.isSprinting() ? 0.2F * 3.0F : 0.05F * 3.0F);
-                                    ForgeReflection.setObfuscatedPrivatizedFieldToValue(LivingEntity.class, "field_70773_bE", 10, player);
+                                    player.noJumpDelay = 10;
 
                                     DoubleJumpServerMessage message = new DoubleJumpServerMessage(true);
                                     Main.NETWORK_CHANNEL.sendToServer(message);

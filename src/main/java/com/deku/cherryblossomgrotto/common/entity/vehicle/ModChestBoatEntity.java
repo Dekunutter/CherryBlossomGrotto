@@ -4,17 +4,17 @@ import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
 import com.deku.cherryblossomgrotto.common.items.ModItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.ChestBoat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 
 public class ModChestBoatEntity extends ChestBoat {
@@ -82,9 +82,9 @@ public class ModChestBoatEntity extends ChestBoat {
      * @return The packet containing entity spawning data to be sent across the network
      */
     @Override
-    public Packet<?> getAddEntityPacket()
+    public Packet<ClientGamePacketListener> getAddEntityPacket()
     {
-        return NetworkHooks.getEntitySpawningPacket(this);
+        return new ClientboundAddEntityPacket(this);
     }
 
     /**
@@ -103,30 +103,6 @@ public class ModChestBoatEntity extends ChestBoat {
      */
     public ModBoatTypes getModChestBoatType() {
         return ModBoatTypes.byId(this.entityData.get(MOD_CHEST_BOAT_TYPE));
-    }
-
-    /**
-     * Ensures that any attempt to get the vanilla boat type returns a consistent value.
-     * Returning the oak boat type as a standard.
-     * Just a safety net in case of missed calls to our modded boat type and since this type data cannot be extended
-     * and needs to be set to something anyway
-     *
-     * @return The vanilla boat type assigned to this boat
-     */
-    @Override
-    public Boat.Type getBoatType()
-    {
-        return Boat.Type.OAK;
-    }
-
-    /**
-     * Ensures that we can't change the vanilla chest boat type
-     *
-     * @param boatType The boat type we would be changing to, if we allowed it.
-     */
-    @Override
-    public void setType(Boat.Type boatType)
-    {
     }
 
     /**

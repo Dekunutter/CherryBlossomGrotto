@@ -3,9 +3,7 @@ package com.deku.cherryblossomgrotto.client.renderers;
 import com.deku.cherryblossomgrotto.common.entity.projectile.KunaiEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix3f;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -15,6 +13,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 
 import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
@@ -56,7 +56,7 @@ public class KunaiRenderer extends EntityRenderer<KunaiEntity> {
 
         renderShakingAnimation(entity, partialTicks, poseStack);
 
-        poseStack.mulPose(Vector3f.XP.rotationDegrees(45.0F));
+        poseStack.mulPose(Axis.XP.rotationDegrees(45.0F));
         poseStack.scale(RENDERED_SCALE, RENDERED_SCALE, RENDERED_SCALE);
         poseStack.translate(-RENDERED_LENGTH_X, 0.0D, 0.0D);
         VertexConsumer vertexBuilder = buffer.getBuffer(RenderType.entityCutout(this.getTextureLocation(entity)));
@@ -84,12 +84,12 @@ public class KunaiRenderer extends EntityRenderer<KunaiEntity> {
      * @param poseStack The rendering stack that holds the pose information of the entity
      */
     private void renderShakingAnimation(KunaiEntity entity, float partialTicks, PoseStack poseStack) {
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(partialTicks, entity.yRotO, entity.getYRot()) - 90.0F));
-        poseStack.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(partialTicks, entity.xRotO, entity.getXRot())));
+        poseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTicks, entity.yRotO, entity.getYRot()) - 90.0F));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(partialTicks, entity.xRotO, entity.getXRot())));
         float f9 = (float)entity.shakeTime - partialTicks;
         if (f9 > 0.0F) {
             float f10 = -Mth.sin(f9 * 3.0F) * f9;
-            poseStack.mulPose(Vector3f.ZP.rotationDegrees(f10));
+            poseStack.mulPose(Axis.ZP.rotationDegrees(f10));
         }
     }
 
@@ -100,7 +100,7 @@ public class KunaiRenderer extends EntityRenderer<KunaiEntity> {
      * @param poseStack The rendering stack that holds the pose information of the entity
      */
     private void repositionForCrossRender(PoseStack poseStack) {
-        poseStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
+        poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
         poseStack.translate(0.0D, -(RENDERED_LENGTH_X / 2), -(RENDERED_LENGTH_X / 2));
     }
 

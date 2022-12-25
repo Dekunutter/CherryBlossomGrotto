@@ -1,7 +1,7 @@
 package com.deku.cherryblossomgrotto.common.world.level.block.grower;
 
 import com.deku.cherryblossomgrotto.common.features.ModTreeFeatures;
-import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.grower.AbstractMegaTreeGrower;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -19,11 +19,11 @@ public class CherryBlossomTreeGrower extends AbstractMegaTreeGrower {
      * @return A holder containing the configured feature spawned by this grower
      */
     @Nullable
-    protected Holder<? extends ConfiguredFeature<?, ?>> getConfiguredFeature(RandomSource random, boolean hasBees) {
+    protected ResourceKey<ConfiguredFeature<?, ?>> getConfiguredFeature(RandomSource random, boolean hasBees) {
         if (random.nextInt(10) < 5) {
-            return hasBees ? Holder.direct(ModTreeFeatures.FANCY_CHERRY_BLOSSOM_BEES_05) : Holder.direct(ModTreeFeatures.FANCY_CHERRY_BLOSSOM);
+            return hasBees ? ModTreeFeatures.FANCY_CHERRY_BLOSSOM_BEES_05 : ModTreeFeatures.FANCY_CHERRY_BLOSSOM;
         } else {
-            return hasBees ? Holder.direct(ModTreeFeatures.CHERRY_BLOSSOM_BEES_05) : Holder.direct(ModTreeFeatures.CHERRY_BLOSSOM);
+            return hasBees ? ModTreeFeatures.CHERRY_BLOSSOM_BEES_05 : ModTreeFeatures.CHERRY_BLOSSOM;
         }
     }
 
@@ -34,7 +34,7 @@ public class CherryBlossomTreeGrower extends AbstractMegaTreeGrower {
      * @return A holder containing the configured mega feature spawned by this grower
      */
     @Nullable
-    protected Holder<? extends ConfiguredFeature<?, ?>> getConfiguredMegaFeature(RandomSource random) {
-        return Holder.direct(ModTreeFeatures.GRAND_CHERRY_BLOSSOM);
+    protected ResourceKey<ConfiguredFeature<?, ?>> getConfiguredMegaFeature(RandomSource random) {
+        return ModTreeFeatures.GRAND_CHERRY_BLOSSOM;
     }
 }
