@@ -1,0 +1,17 @@
+{
+  "feature": "cherryblossomgrotto:fancy_cherry_blossom_bees_005",
+  "placement": [
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:would_survive",
+        "state": {
+          "Name": "cherryblossomgrotto:cherry_blossom_sapling",
+          "Properties": {
+            "stage": "0"
+          }
+        }
+      }
+    }
+  ]
+}

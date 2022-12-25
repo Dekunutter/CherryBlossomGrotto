@@ -5,7 +5,7 @@ import com.deku.cherryblossomgrotto.client.models.geom.ModModelLayerLocations;
 import com.deku.cherryblossomgrotto.client.renderers.layers.KoiPatternLayer;
 import com.deku.cherryblossomgrotto.common.entity.passive.fish.KoiEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.model.ColorableHierarchicalModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -55,11 +55,11 @@ public class KoiRenderer extends MobRenderer<KoiEntity, ColorableHierarchicalMod
         }
 
         float f2 = f * 4.3F * Mth.sin(f1 * 0.6F * rotX);
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(f2));
+        poseStack.mulPose(Axis.YP.rotationDegrees(f2));
         poseStack.translate(0.0D, 0.0D, (double)-0.4F);
         if (!entity.isInWater()) {
             poseStack.translate((double)0.2F, (double)0.1F, 0.0D);
-            poseStack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
+            poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
         }
     }
 }

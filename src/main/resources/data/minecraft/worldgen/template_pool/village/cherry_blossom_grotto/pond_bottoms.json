@@ -1,0 +1,14 @@
+{
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "minecraft:village/cherry_blossom_grotto/pond_bottoms/koi_pond_bottom",
+        "processors": "cherryblossomgrotto:koi_pond_bottom_gravel_40_percent",
+        "projection": "rigid"
+      },
+      "weight": 1
+    }
+  ],
+  "fallback": "minecraft:empty"
+}

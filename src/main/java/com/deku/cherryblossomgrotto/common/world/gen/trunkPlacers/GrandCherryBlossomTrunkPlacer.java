@@ -5,7 +5,6 @@ import com.deku.cherryblossomgrotto.common.utils.RaytraceUtils;
 import com.deku.cherryblossomgrotto.common.utils.BlockPosUtils;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.mojang.math.Vector3d;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
@@ -20,6 +19,7 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.GiantTrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Vector3d;
 
 import java.util.List;
 import java.util.function.BiConsumer;

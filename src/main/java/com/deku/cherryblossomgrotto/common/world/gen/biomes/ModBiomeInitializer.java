@@ -1,48 +1,44 @@
 package com.deku.cherryblossomgrotto.common.world.gen.biomes;
 
-import com.deku.cherryblossomgrotto.Main;
-import net.minecraft.core.Registry;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.biome.OverworldBiomes;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
-
-import java.util.function.Supplier;
 
 import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
 public class ModBiomeInitializer {
     public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, MOD_ID);
 
-    static {
-        createBiome("cherry_blossom_grotto", OverworldBiomes::theVoid);
-    }
-
-    public static ResourceKey<Biome> CHERRY_BLOSSOM_GROTTO = registerBiome("cherry_blossom_grotto");
-
+    public static ResourceKey<Biome> CHERRY_BLOSSOM_GROTTO = registerBiomeKey("cherry_blossom_grotto");
     /**
      * Registers the biome into the vanilla game by the biome registry
      *
      * @param biomeName The registry name of the biome
      * @return The registered key for the custom biome
      */
-    public static ResourceKey<Biome> registerBiome(String biomeName) {
-        return ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(MOD_ID, biomeName));
+    public static ResourceKey<Biome> registerBiomeKey(String biomeName) {
+        return ResourceKey.create(Registries.BIOME, new ResourceLocation(MOD_ID, biomeName));
     }
 
     /**
-     * Initializes the custom biomes by registering them into the biome deferred register
+     * Bootstraps the context needed to register the biomes for the mod
      *
-     * @param biomeName The registry name of the biome
-     * @param biome Supplier containing the biome to be registered
-     * @return The registered object containing the biome
+     * @param context Bootstrap context needed to register biomes to the game
      */
-    public static RegistryObject<Biome> createBiome(String biomeName, Supplier<Biome> biome) {
-        return BIOMES.register(biomeName, biome);
+    public static void bootstrap(BootstapContext<Biome> context) {
+        HolderGetter<PlacedFeature> placementGetter = context.lookup(Registries.PLACED_FEATURE);
+        HolderGetter<ConfiguredWorldCarver<?>> carverGetter = context.lookup(Registries.CONFIGURED_CARVER);
+
+        context.register(CHERRY_BLOSSOM_GROTTO, OverworldBiomes.theVoid(placementGetter, carverGetter));
     }
 
     /**

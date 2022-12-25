@@ -1,7 +1,7 @@
 {
   "parent": "block/thin_block",
   "textures": {
-    "particle": "cherryblossomgrotto:particle/cherry_blossom_petal",
+    "particle": "cherryblossomgrotto:item/cherry_blossom_petal",
     "texture": "cherryblossomgrotto:block/cherry_blossom_petal_covered_grass_top"
   },
   "render_type": "cutout_mipped",

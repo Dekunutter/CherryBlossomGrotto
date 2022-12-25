@@ -3,15 +3,15 @@ package com.deku.cherryblossomgrotto.client.renderers;
 import com.deku.cherryblossomgrotto.common.entity.projectile.ShurikenEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix3f;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 
 import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
@@ -53,7 +53,7 @@ public class ShurikenRenderer extends EntityRenderer<ShurikenEntity> {
 
         applySpin(entity, poseStack);
 
-        poseStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
+        poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
         poseStack.scale(RENDERED_SCALE_X, RENDERED_SCALE_Y, RENDERED_SCALE_Z);
 
         VertexConsumer vertexBuilder = buffer.getBuffer(RenderType.entityCutout(this.getTextureLocation(entity)));
@@ -75,7 +75,7 @@ public class ShurikenRenderer extends EntityRenderer<ShurikenEntity> {
      * @param poseStack The rendering stack that holds the pose information of the entity
      */
     private void applySpin(ShurikenEntity entity, PoseStack poseStack) {
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(entity.spin));
+        poseStack.mulPose(Axis.YP.rotationDegrees(entity.spin));
     }
 
     /**

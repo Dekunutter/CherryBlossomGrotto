@@ -7,7 +7,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterials;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.Nullable;
@@ -16,7 +15,7 @@ import java.util.function.Consumer;
 
 public class KabutoHelmet extends ArmorItem {
     public KabutoHelmet() {
-        super(ArmorMaterials.IRON, EquipmentSlot.HEAD, new Properties().stacksTo(1).tab(CreativeModeTab.TAB_COMBAT));
+        super(ArmorMaterials.IRON, EquipmentSlot.HEAD, new Properties().stacksTo(1));
     }
 
     /**

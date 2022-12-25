@@ -1,6 +1,7 @@
 package com.deku.cherryblossomgrotto.common.world.gen.structures;
 
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 
@@ -14,7 +15,7 @@ public class ModStructurePieceTypes {
      * Registers all structure piece types via the structure piece registry
      */
     public static void register() {
-        Registry.register(Registry.STRUCTURE_PIECE, new ResourceLocation(MOD_ID, "g_b"), GIANT_BUDDHA_PIECE);
-        Registry.register(Registry.STRUCTURE_PIECE, new ResourceLocation(MOD_ID, "t_g"), TORII_GATE_PIECE);
+        Registry.register(BuiltInRegistries.STRUCTURE_PIECE, new ResourceLocation(MOD_ID, "g_b"), GIANT_BUDDHA_PIECE);
+        Registry.register(BuiltInRegistries.STRUCTURE_PIECE, new ResourceLocation(MOD_ID, "t_g"), TORII_GATE_PIECE);
     }
 }

@@ -9,7 +9,6 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
@@ -27,7 +26,7 @@ public class CherryBlossomBoat extends Item {
     private final ModBoatTypes type;
 
     public CherryBlossomBoat() {
-        super(new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_TRANSPORTATION));
+        super(new Item.Properties().stacksTo(1));
         type = ModBoatTypes.CHERRY;
     }
 

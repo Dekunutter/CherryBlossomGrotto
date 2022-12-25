@@ -45,11 +45,17 @@ public class ModBlocks {
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":cherry_blossom_wall_sign")
     public static CherryBlossomWallSign CHERRY_WALL_SIGN;
 
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":cherry_blossom_hanging_sign")
+    public static CherryBlossomHangingSign CHERRY_HANGING_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":cherry_blossom_wall_hanging_sign")
+    public static CherryBlossomWallHangingSign CHERRY_WALL_HANGING_SIGN;
+
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":cherry_blossom_door")
     public static CherryBlossomDoor CHERRY_DOOR;
 
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":cherry_blossom_trapdoor")
-    public static CherryBlossomTrapDoor CHERRY_TRAP_DOOR;
+    public static CherryBlossomTrapDoor CHERRY_TRAPDOOR;
 
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":cherry_blossom_planks_trapdoor")
     public static CherryBlossomPlanksTrapdoor CHERRY_BLOSSOM_PLANKS_TRAP_DOOR;

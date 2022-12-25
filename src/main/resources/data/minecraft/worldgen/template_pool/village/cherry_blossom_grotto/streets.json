@@ -1,0 +1,149 @@
+{
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "minecraft:village/cherry_blossom_grotto/streets/corner_01",
+        "processors": "cherryblossomgrotto:streets_cherry_blossom_grotto",
+        "projection": "terrain_matching"
+      },
+      "weight": 2
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "minecraft:village/cherry_blossom_grotto/streets/corner_02",
+        "processors": "cherryblossomgrotto:streets_cherry_blossom_grotto",
+        "projection": "terrain_matching"
+      },
+      "weight": 2
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "minecraft:village/cherry_blossom_grotto/streets/corner_03",
+        "processors": "cherryblossomgrotto:streets_cherry_blossom_grotto",
+        "projection": "terrain_matching"
+      },
+      "weight": 2
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "minecraft:village/plains/cherry_blossom_grotto/straight_01",
+        "processors": "cherryblossomgrotto:streets_cherry_blossom_grotto",
+        "projection": "terrain_matching"
+      },
+      "weight": 4
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "minecraft:village/plains/cherry_blossom_grotto/straight_02",
+        "processors": "cherryblossomgrotto:streets_cherry_blossom_grotto",
+        "projection": "terrain_matching"
+      },
+      "weight": 4
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "minecraft:village/plains/cherry_blossom_grotto/straight_03",
+        "processors": "cherryblossomgrotto:streets_cherry_blossom_grotto",
+        "projection": "terrain_matching"
+      },
+      "weight": 7
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "minecraft:village/plains/cherry_blossom_grotto/straight_04",
+        "processors": "cherryblossomgrotto:streets_cherry_blossom_grotto",
+        "projection": "terrain_matching"
+      },
+      "weight": 7
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "minecraft:village/plains/cherry_blossom_grotto/straight_05",
+        "processors": "minecraft:street_plains",
+        "projection": "terrain_matching"
+      },
+      "weight": 3
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "minecraft:village/plains/cherry_blossom_grotto/straight_06",
+        "processors": "cherryblossomgrotto:streets_cherry_blossom_grotto",
+        "projection": "terrain_matching"
+      },
+      "weight": 4
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "minecraft:village/plains/cherry_blossom_grotto/crossroad_01",
+        "processors": "cherryblossomgrotto:streets_cherry_blossom_grotto",
+        "projection": "terrain_matching"
+      },
+      "weight": 2
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "minecraft:village/plains/cherry_blossom_grotto/crossroad_02",
+        "processors": "cherryblossomgrotto:streets_cherry_blossom_grotto",
+        "projection": "terrain_matching"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "minecraft:village/plains/cherry_blossom_grotto/crossroad_03",
+        "processors": "cherryblossomgrotto:streets_cherry_blossom_grotto",
+        "projection": "terrain_matching"
+      },
+      "weight": 2
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "minecraft:village/plains/cherry_blossom_grotto/crossroad_04",
+        "processors": "cherryblossomgrotto:streets_cherry_blossom_grotto",
+        "projection": "terrain_matching"
+      },
+      "weight": 2
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "minecraft:village/plains/cherry_blossom_grotto/crossroad_05",
+        "processors": "cherryblossomgrotto:streets_cherry_blossom_grotto",
+        "projection": "terrain_matching"
+      },
+      "weight": 2
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "minecraft:village/plains/cherry_blossom_grotto/crossroad_06",
+        "processors": "cherryblossomgrotto:streets_cherry_blossom_grotto",
+        "projection": "terrain_matching"
+      },
+      "weight": 2
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "minecraft:village/plains/cherry_blossom_grotto/turn_01",
+        "processors": "cherryblossomgrotto:streets_cherry_blossom_grotto",
+        "projection": "terrain_matching"
+      },
+      "weight": 3
+    }
+  ],
+  "fallback": "minecraft:village/cherry_blossom_grotto/terminators"
+}
