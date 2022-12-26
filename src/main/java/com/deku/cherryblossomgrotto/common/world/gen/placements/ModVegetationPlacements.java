@@ -20,6 +20,7 @@ import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 public class ModVegetationPlacements {
     public static ResourceKey<PlacedFeature> TREES_CHERRY_BLOSSOM_GROTTO = registerVegetationPlacementKey("trees_cherry_blossom_grotto");
     public static ResourceKey<PlacedFeature> CHERRY_BLOSSOM_GROTTO_FLOWERS = registerVegetationPlacementKey("cherry_blossom_grotto_flowers");
+    public static ResourceKey<PlacedFeature> TREES_CHERRY_BLOSSOM_SLOPES = registerVegetationPlacementKey("trees_cherry_blossom_slopes");
 
     /**
      * Registers the vegetation placements into the vanilla game by the placed feature registry
@@ -45,5 +46,6 @@ public class ModVegetationPlacements {
             PlacementUtils.HEIGHTMAP,
             CountPlacement.of(ClampedInt.of(UniformInt.of(-1, 3), 0, 3)),
             BiomeFilter.biome())));
+        context.register(TREES_CHERRY_BLOSSOM_SLOPES, new PlacedFeature(featureGetter.getOrThrow(ModVegetationFeatures.TREES_CHERY_BLOSSOM_SLOPES), VegetationPlacements.treePlacement(PlacementUtils.countExtra(3, 0.1F, 1))));
     }
 }

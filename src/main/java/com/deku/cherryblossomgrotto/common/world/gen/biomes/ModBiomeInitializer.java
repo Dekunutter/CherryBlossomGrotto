@@ -19,6 +19,8 @@ public class ModBiomeInitializer {
     public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, MOD_ID);
 
     public static ResourceKey<Biome> CHERRY_BLOSSOM_GROTTO = registerBiomeKey("cherry_blossom_grotto");
+
+    public static ResourceKey<Biome> CHERRY_BLOSSOM_SLOPES = registerBiomeKey("cherry_blossom_slopes");
     /**
      * Registers the biome into the vanilla game by the biome registry
      *
@@ -39,6 +41,7 @@ public class ModBiomeInitializer {
         HolderGetter<ConfiguredWorldCarver<?>> carverGetter = context.lookup(Registries.CONFIGURED_CARVER);
 
         context.register(CHERRY_BLOSSOM_GROTTO, OverworldBiomes.theVoid(placementGetter, carverGetter));
+        context.register(CHERRY_BLOSSOM_SLOPES, OverworldBiomes.theVoid(placementGetter, carverGetter));
     }
 
     /**
@@ -47,5 +50,6 @@ public class ModBiomeInitializer {
      */
     public static void registerBiomes() {
         BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(CHERRY_BLOSSOM_GROTTO, 1));
+        BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(CHERRY_BLOSSOM_SLOPES, 1));
     }
 }

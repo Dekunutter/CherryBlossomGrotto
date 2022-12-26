@@ -19,11 +19,14 @@ import net.minecraft.world.level.levelgen.feature.configurations.*;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
+import java.util.List;
+
 import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
 public class ModVegetationFeatures {
     public static ResourceKey<ConfiguredFeature<?, ?>> TREES_CHERY_BLOSSOM_GROTTO = registerVegetationFeatureKey("trees_cherry_blossom_grotto");
     public static ResourceKey<ConfiguredFeature<?, ?>> CHERY_BLOSSOM_GROTTO_FLOWERS = registerVegetationFeatureKey("cherry_blossom_grotto_flowers");
+    public static ResourceKey<ConfiguredFeature<?, ?>> TREES_CHERY_BLOSSOM_SLOPES = registerVegetationFeatureKey("trees_cherry_blossom_slopes");
 
     /**
      * Registers a resource key for the given vegetation feature name
@@ -82,6 +85,22 @@ public class ModVegetationFeatures {
     }
 
     /**
+     * Creates a feature configuration for the sparse cherry blossom trees on slopes
+     *
+     * @param cherryBlossomTree Holder for the placeable cherry blossom trees feature
+     * @param fancyCherryBlossomTree Holder for the placeable fancy cherry blossom trees feature
+     * @return Random feature configuration for spreading the trees
+     */
+    private static RandomFeatureConfiguration createCherryBlossomSlopesTreesConfiguration(Holder<PlacedFeature> cherryBlossomTree, Holder<PlacedFeature> fancyCherryBlossomTree) {
+        return new RandomFeatureConfiguration(
+            ImmutableList.of(
+                new WeightedPlacedFeature(fancyCherryBlossomTree, 0.1f)
+            ),
+            cherryBlossomTree
+        );
+    }
+
+    /**
      * Registers vegetation features using the bootstrap context
      *
      * @param context The bootstrap context
@@ -90,10 +109,13 @@ public class ModVegetationFeatures {
         HolderGetter<PlacedFeature> placedFeatureGetter = context.lookup(Registries.PLACED_FEATURE);
 
         Holder<PlacedFeature> cherryBlossomTreeBees02 = placedFeatureGetter.getOrThrow(ModTreePlacements.CHERRY_BLOSSOM_BEES_02);
+        Holder<PlacedFeature> cherryBlossomTreeOnSnow = placedFeatureGetter.getOrThrow(ModTreePlacements.CHERRY_BLOSSOM_ON_SNOW);
         Holder<PlacedFeature> fancyCherryBlossomTree = placedFeatureGetter.getOrThrow(ModTreePlacements.FANCY_CHERRY_BLOSSOM_CHECKED);
+        Holder<PlacedFeature> fancyCherryBlossomTreeOnSnow = placedFeatureGetter.getOrThrow(ModTreePlacements.FANCY_CHERRY_BLOSSOM_ON_SNOW);
         Holder<PlacedFeature> grandCherryBlossomTree = placedFeatureGetter.getOrThrow(ModTreePlacements.GRAND_CHERRY_BLOSSOM_CHECKED);
 
         context.register(TREES_CHERY_BLOSSOM_GROTTO, new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, createCherryBlossomGrottoTreesConfiguration(cherryBlossomTreeBees02, fancyCherryBlossomTree, grandCherryBlossomTree)));
         context.register(CHERY_BLOSSOM_GROTTO_FLOWERS, new ConfiguredFeature<>(Feature.SIMPLE_RANDOM_SELECTOR, createCherryBlossomGrottoFlowersConfiguration()));
+        context.register(TREES_CHERY_BLOSSOM_SLOPES, new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, createCherryBlossomSlopesTreesConfiguration(cherryBlossomTreeOnSnow, fancyCherryBlossomTreeOnSnow)));
     }
 }

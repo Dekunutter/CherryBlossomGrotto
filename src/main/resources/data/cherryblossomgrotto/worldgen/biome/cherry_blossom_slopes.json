@@ -1,11 +1,11 @@
 {
-  "surface_builder": "minecraft:grass",
+  "surface_builder": "minecraft:dirt",
   "depth": 0.125,
   "scale": 0.05,
-  "temperature": 0.8,
+  "temperature": -0.3,
   "temperature_modifier": "none",
-  "downfall": 0.8,
-  "precipitation": "rain",
+  "downfall": 0.9,
+  "precipitation": "snow",
   "player_spawn_friendly": true,
   "creature_spawn_friendly": true,
   "creature_spawn_probability": 0.5,
@@ -27,7 +27,7 @@
       "max_delay": 24000,
       "min_delay": 12000,
       "replace_current_music": false,
-      "sound": "minecraft:music.overworld.jungle_and_forest"
+      "sound": "minecraft:music.overworld.snowy_slopes"
     }
   },
   "spawners": {
@@ -137,6 +137,7 @@
   "carvers": {
     "air": [
       "minecraft:cave",
+      "minecraft:cave_extra_underground",
       "minecraft:canyon"
     ],
     "liquid": [
@@ -198,13 +199,11 @@
       "minecraft:patch_tall_grass_2",
       "minecraft:patch_grass_forest",
       "minecraft:brown_mushroom_normal",
-      "minecraft:patch_sugar_cane",
-      "minecraft:patch_berry_rare",
-      "minecraft:patch_waterlily",
-      "cherryblossomgrotto:trees_cherry_blossom_grotto",
-      "cherryblossomgrotto:cherry_blossom_grotto_flowers"
+      "minecraft:patch_berry_common",
+      "cherryblossomgrotto:trees_cherry_blossom_slopes"
     ],
     [
+      "minecraft:freeze_top_layer",
       "cherryblossomgrotto:cherry_blossom_petals_top_layer"
     ]
   ]
