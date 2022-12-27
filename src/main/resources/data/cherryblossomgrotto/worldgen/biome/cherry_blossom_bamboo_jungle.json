@@ -1,11 +1,11 @@
 {
-  "surface_builder": "minecraft:dirt",
+  "surface_builder": "minecraft:grass",
   "depth": 0.125,
   "scale": 0.05,
-  "temperature": -0.3,
+  "temperature": 0.8,
   "temperature_modifier": "none",
   "downfall": 0.9,
-  "precipitation": "snow",
+  "precipitation": "rain",
   "player_spawn_friendly": true,
   "creature_spawn_friendly": true,
   "creature_spawn_probability": 0.5,
@@ -27,7 +27,7 @@
       "max_delay": 24000,
       "min_delay": 12000,
       "replace_current_music": false,
-      "sound": "minecraft:music.overworld.snowy_slopes"
+      "sound": "minecraft:music.overworld.jungle_and_forest"
     }
   },
   "spawners": {
@@ -79,6 +79,12 @@
         "weight": 5,
         "minCount": 1,
         "maxCount": 1
+      },
+      {
+        "type": "minecraft:ocelot",
+        "weight": 2,
+        "minCount": 1,
+        "maxCount": 1
       }
     ],
     "creature": [
@@ -91,8 +97,8 @@
       {
         "type": "minecraft:sheep",
         "weight": 12,
-        "maxCount": 4,
-        "minCount": 4
+        "minCount": 4,
+        "maxCount": 4
       },
       {
         "type": "minecraft:cow",
@@ -101,16 +107,16 @@
         "maxCount": 4
       },
       {
-        "type": "minecraft:horse",
-        "weight": 5,
-        "minCount": 2,
-        "maxCount": 6
+        "type": "minecraft:parrot",
+        "weight": 40,
+        "minCount": 1,
+        "maxCount": 2
       },
       {
-        "type": "minecraft:wolf",
-        "weight": 2,
-        "minCount": 2,
-        "maxCount": 4
+        "type": "minecraft:panda",
+        "weight": 80,
+        "minCount": 1,
+        "maxCount": 2
       },
       {
         "type": "minecraft:rabbit",
@@ -133,8 +139,8 @@
       {
         "type": "minecraft:glow_squid",
         "weight": 10,
-        "maxCount": 6,
-        "minCount": 4
+        "minCount": 4,
+        "maxCount": 6
       }
     ],
     "water_ambient": [
@@ -159,8 +165,7 @@
     [
     ],
     [
-      "minecraft:lake_lava_underground",
-      "minecraft:lake_lava_surface"
+      "minecraft:lake_lava_underground"
     ],
     [
       "minecraft:amethyst_geode",
@@ -211,14 +216,20 @@
     ],
     [
       "minecraft:glow_lichen",
-      "minecraft:patch_tall_grass_2",
-      "minecraft:patch_grass_forest",
+      "minecraft:bamboo",
+      "cherryblossomgrotto:cherry_blossom_bamboo_vegetation",
+      "minecraft:patch_grass_jungle",
+      "minecraft:flower_warm",
       "minecraft:brown_mushroom_normal",
-      "minecraft:patch_berry_common",
-      "cherryblossomgrotto:trees_cherry_blossom_slopes"
+      "minecraft:red_mushroom_normal",
+      "minecraft:patch_sugar_cane",
+      "minecraft:patch_pumpkin",
+      "minecraft:vines",
+      "minecraft:patch_melon",
+      "minecraft:patch_waterlily",
+      "cherryblossomgrotto:cherry_blossom_grotto_flowers"
     ],
     [
-      "minecraft:freeze_top_layer",
       "cherryblossomgrotto:cherry_blossom_petals_top_layer"
     ]
   ]

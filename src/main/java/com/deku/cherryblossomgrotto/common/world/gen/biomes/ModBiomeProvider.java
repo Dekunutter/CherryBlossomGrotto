@@ -66,6 +66,7 @@ public class ModBiomeProvider extends Region {
         addModifiedVanillaOverworldBiomes(mapper, builder -> {
             builder.replaceBiome(Biomes.FLOWER_FOREST, ModBiomeInitializer.CHERRY_BLOSSOM_GROTTO);
             builder.replaceBiome(Biomes.GROVE, ModBiomeInitializer.CHERRY_BLOSSOM_SLOPES);
+            builder.replaceBiome(Biomes.SPARSE_JUNGLE, ModBiomeInitializer.CHERRY_BLOSSOM_BAMBOO_JUNGLE);
         });
     }
 }
