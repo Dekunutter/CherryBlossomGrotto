@@ -15,6 +15,7 @@ import com.deku.cherryblossomgrotto.common.recipes.ModRecipeSerializerInitialize
 import com.deku.cherryblossomgrotto.common.utils.ForgeReflection;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeInitializer;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeProvider;
+import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModSurfaceRules;
 import com.deku.cherryblossomgrotto.common.world.gen.blockstateprovider.CherryBlossomForestFlowerProviderType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.GrandCherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.CherryBlossomFoliagePlacerType;
@@ -86,6 +87,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import terrablender.api.Regions;
+import terrablender.api.SurfaceRuleManager;
 
 import java.util.Map;
 import java.util.Optional;
@@ -190,6 +192,7 @@ public class Main
             WoodType.register(ModWoodType.CHERRY_BLOSSOM);
 
             Regions.register(new ModBiomeProvider());
+            SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MOD_ID, ModSurfaceRules.makeRules());
         });
 
         // TODO: Need to add the boat trade for the new villager type for this to work
@@ -518,7 +521,7 @@ public class Main
          */
         @SubscribeEvent
         public static void onCreativeModeTabRegister(CreativeModeTabEvent.Register creativeTabBuildRegistryEvent) {
-            creativeTabBuildRegistryEvent.registerCreativeModeTab(new ResourceLocation(MOD_ID, "cherry_blossom_grotto"), builder ->
+            creativeTabBuildRegistryEvent.registerCreativeModeTab(new ResourceLocation(MOD_ID, "cherry_blossom_grotto_creative_tab"), builder ->
                 builder.title(Component.translatable("Cherry Blossom Grotto"))
                     .icon(() -> new ItemStack(ModItems.CHERRY_SAPLING))
                     .displayItems((enabledFlags, populator, hasPermissions) -> {

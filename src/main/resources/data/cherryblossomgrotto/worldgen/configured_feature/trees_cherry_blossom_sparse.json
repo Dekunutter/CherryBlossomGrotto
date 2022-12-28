@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:random_selector",
+  "config": {
+    "default": "cherryblossomgrotto:cherry_blossom_bees_002",
+    "features": [
+      {
+        "chance": 0.1,
+        "feature":"cherryblossomgrotto:fancy_cherry_blossom_checked"
+      }
+    ]
+  }
+}

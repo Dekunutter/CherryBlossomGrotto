@@ -20,6 +20,9 @@ import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 public class ModVegetationPlacements {
     public static ResourceKey<PlacedFeature> TREES_CHERRY_BLOSSOM_GROTTO = registerVegetationPlacementKey("trees_cherry_blossom_grotto");
     public static ResourceKey<PlacedFeature> CHERRY_BLOSSOM_GROTTO_FLOWERS = registerVegetationPlacementKey("cherry_blossom_grotto_flowers");
+    public static ResourceKey<PlacedFeature> TREES_CHERRY_BLOSSOM_SLOPES = registerVegetationPlacementKey("trees_cherry_blossom_slopes");
+    public static ResourceKey<PlacedFeature> TREES_CHERRY_BLOSSOM_SPARSE = registerVegetationPlacementKey("trees_cherry_blossom_sparse");
+    public static ResourceKey<PlacedFeature> CHERRY_BLOSSOM_BAMBOO_VEGETATION = registerVegetationPlacementKey("cherry_blossom_bamboo_vegetation");
 
     /**
      * Registers the vegetation placements into the vanilla game by the placed feature registry
@@ -45,5 +48,8 @@ public class ModVegetationPlacements {
             PlacementUtils.HEIGHTMAP,
             CountPlacement.of(ClampedInt.of(UniformInt.of(-1, 3), 0, 3)),
             BiomeFilter.biome())));
+        context.register(TREES_CHERRY_BLOSSOM_SLOPES, new PlacedFeature(featureGetter.getOrThrow(ModVegetationFeatures.TREES_CHERY_BLOSSOM_SLOPES), VegetationPlacements.treePlacement(PlacementUtils.countExtra(3, 0.1F, 1))));
+        context.register(TREES_CHERRY_BLOSSOM_SPARSE, new PlacedFeature(featureGetter.getOrThrow(ModVegetationFeatures.TREES_CHERY_BLOSSOM_GROTTO), VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.1F, 1))));
+        context.register(CHERRY_BLOSSOM_BAMBOO_VEGETATION, new PlacedFeature(featureGetter.getOrThrow(ModVegetationFeatures.CHERRY_BLOSSOM_BAMBOO_VEGETATION), VegetationPlacements.treePlacement(PlacementUtils.countExtra(30, 0.1F, 1))));
     }
 }

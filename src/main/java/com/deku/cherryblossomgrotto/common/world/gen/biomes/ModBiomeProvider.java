@@ -20,7 +20,8 @@ import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
 public class ModBiomeProvider extends Region {
     public ModBiomeProvider() {
-        super(new ResourceLocation(MOD_ID, "biome_provider"), RegionType.OVERWORLD, 10);
+        // Adding low region weight since we only have one biome. Don't want it to be too common
+        super(new ResourceLocation(MOD_ID, "eastern_region"), RegionType.OVERWORLD, 2);
     }
 
     /**
@@ -63,8 +64,9 @@ public class ModBiomeProvider extends Region {
         });*/
 
         addModifiedVanillaOverworldBiomes(mapper, builder -> {
-            List<Climate.ParameterPoint> flowerForestPoints = RegionUtils.getVanillaParameterPoints(Biomes.FLOWER_FOREST).stream().collect(ImmutableList.toImmutableList());
-            flowerForestPoints.forEach(point -> builder.replaceBiome(point, ModBiomeInitializer.CHERRY_BLOSSOM_GROTTO));
+            builder.replaceBiome(Biomes.FLOWER_FOREST, ModBiomeInitializer.CHERRY_BLOSSOM_GROTTO);
+            builder.replaceBiome(Biomes.GROVE, ModBiomeInitializer.CHERRY_BLOSSOM_SLOPES);
+            builder.replaceBiome(Biomes.SPARSE_JUNGLE, ModBiomeInitializer.CHERRY_BLOSSOM_BAMBOO_JUNGLE);
         });
     }
 }
