@@ -26,8 +26,6 @@ import com.deku.cherryblossomgrotto.server.network.handlers.DoubleJumpServerMess
 import com.deku.cherryblossomgrotto.server.network.messages.DoubleJumpServerMessage;
 import com.deku.cherryblossomgrotto.utils.LogTweaker;
 import com.google.common.collect.ImmutableMap;
-import com.google.gson.JsonElement;
-import com.mojang.serialization.JsonOps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
@@ -38,7 +36,6 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.registries.VanillaRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -435,6 +432,9 @@ public class Main
             registerEvent.register(ForgeRegistries.Keys.FEATURES, registrar -> {
                 // All cherry blossom tree features
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_petal_ground_cover"), new CherryBlossomPetalCoverFeature());
+
+                // Misc overworld features
+                registrar.register(new ResourceLocation(MOD_ID, "hotspring"), new HotspringFeature(HotspringFeature.Configuration.CODEC));
             });
 
             //TODO: Should I register configured features in here after the feature registration has run? Right now they register at the global level spread across a few new classes and sit in holders. This might not be the right stage to be registering them...

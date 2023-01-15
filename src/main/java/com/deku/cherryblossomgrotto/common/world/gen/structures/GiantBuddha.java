@@ -33,7 +33,7 @@ public class GiantBuddha extends Structure {
     }
 
     /**
-     * Finds the point at which the structure will generate and starts generating its pieces if a place is find.
+     * Finds the point at which the structure will generate and starts generating its pieces if a place is found.
      *
      * @param generationContext Context of the generator for the chunk the structure is being built within
      * @return The generation stub where the structure begins to generate its first piece from
