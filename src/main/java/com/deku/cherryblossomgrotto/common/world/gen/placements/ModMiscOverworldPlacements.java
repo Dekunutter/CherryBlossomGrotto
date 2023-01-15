@@ -4,11 +4,11 @@ import com.deku.cherryblossomgrotto.common.features.ModMiscOverworldFeatures;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.placement.BiomeFilter;
-import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.placement.*;
 
 import java.util.List;
 
@@ -16,6 +16,7 @@ import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
 public class ModMiscOverworldPlacements {
     public static ResourceKey<PlacedFeature> CHERRY_BLOSSOM_PETAL_TOP_LAYER = registerOverworldPlacementKey("cherry_blossom_petals_top_layer");
+    public static ResourceKey<PlacedFeature> HOTSPRING = registerOverworldPlacementKey("hotspring");
 
     /**
      * Registers the overworld placements into the vanilla game by the placed feature registry
@@ -36,5 +37,6 @@ public class ModMiscOverworldPlacements {
         HolderGetter<ConfiguredFeature<?, ?>> featureGetter = context.lookup(Registries.CONFIGURED_FEATURE);
 
         context.register(CHERRY_BLOSSOM_PETAL_TOP_LAYER, new PlacedFeature(featureGetter.getOrThrow(ModMiscOverworldFeatures.CHERRY_BLOSSOM_PETAL_GROUND_COVER), List.of(BiomeFilter.biome())));
+        context.register(HOTSPRING, new PlacedFeature(featureGetter.getOrThrow(ModMiscOverworldFeatures.HOTSPRING), List.of(RarityFilter.onAverageOnceEvery(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
     }
 }
