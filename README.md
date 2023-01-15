@@ -1,5 +1,5 @@
 # CherryBlossomGrotto
-A Minecraft mod using the 1.19.2 version of the MC Forge framework.
+A Minecraft mod using the 1.19.3 version of the MC Forge framework.
 Uses [Terrablender](https://www.curseforge.com/minecraft/mc-mods/terrablender) as a dependency for generating custom biomes.
 
 # Contents
@@ -10,6 +10,11 @@ Mossy cobblestone generates naturally in this biome as well, similar to how it d
 There are also torii gates and giant buddha statues that generate in multiple vanilla biomes as well as the cherry blossom grotto biome.
 Cherry Blossom Grottos have their own variant of the ruined nether portal structure which is designed to looked like a ruined portal inside of a torii gate.
 Cherry blossom grotto villages are the one place where the new koi fish entity can be found. Villagers in these villages will also have new looks!
+
+Cherry Blossom trees also spawn in two new biomes as part of the Cherry Blossom Slopes and Cherry Blossom Bamboo Jungle biomes.
+These two biomes take biomes similar to those found in vanilla Minecraft and intersperse cherry blossom trees into them.
+The slopes biome is a snowy mountainside biome with sparse cherry blossom trees.
+The bamboo jungle biome is a typical bamboo jungle but interspersed with cherry blossom trees.
 
 ### Items
 - Cherry Blossom Log
