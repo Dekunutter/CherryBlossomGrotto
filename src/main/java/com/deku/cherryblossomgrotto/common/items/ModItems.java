@@ -175,4 +175,7 @@ public class ModItems {
 
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":koi_spawn_egg")
     public static ForgeSpawnEggItem KOI_SPAWN_EGG;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":tanooki_spawn_egg")
+    public static ForgeSpawnEggItem TANOOKI_SPAWN_EGG;
 }

@@ -1,6 +1,6 @@
 package com.deku.cherryblossomgrotto.common.entity.vehicle;
 
-import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
+import com.deku.cherryblossomgrotto.common.entity.ModEntityType;
 import com.deku.cherryblossomgrotto.common.items.ModItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -21,11 +21,11 @@ public class ModBoatEntity extends Boat {
     private static final EntityDataAccessor<Integer> MOD_BOAT_TYPE = SynchedEntityData.defineId(ModBoatEntity.class, EntityDataSerializers.INT);
 
     public ModBoatEntity(EntityType<? extends Entity> entityType, Level level) {
-        super(ModEntityData.MOD_BOAT_DATA, level);
+        super(ModEntityType.MOD_BOAT, level);
     }
 
     public ModBoatEntity(Level level, double positionX, double positionY, double positionZ) {
-        super(ModEntityData.MOD_BOAT_DATA, level);
+        super(ModEntityType.MOD_BOAT, level);
         this.setPos(positionX, positionY, positionZ);
         this.setDeltaMovement(Vec3.ZERO);
         this.xo = positionX;
@@ -35,7 +35,7 @@ public class ModBoatEntity extends Boat {
     }
 
     public ModBoatEntity(PlayMessages.SpawnEntity spawnEntity, Level level) {
-        this(ModEntityData.MOD_BOAT_DATA, level);
+        this(ModEntityType.MOD_BOAT, level);
     }
 
     /**

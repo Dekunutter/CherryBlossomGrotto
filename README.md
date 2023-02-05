@@ -1,6 +1,7 @@
 # CherryBlossomGrotto
 A Minecraft mod using the 1.19.3 version of the MC Forge framework.
 Uses [Terrablender](https://www.curseforge.com/minecraft/mc-mods/terrablender) as a dependency for generating custom biomes.
+Also uses [GeckoLib](https://www.curseforge.com/minecraft/mc-mods/geckolib) for entity animations.
 
 # Contents
 The main focus of this mod is the cherry blossom grotto that it adds to the Minecraft overworld.

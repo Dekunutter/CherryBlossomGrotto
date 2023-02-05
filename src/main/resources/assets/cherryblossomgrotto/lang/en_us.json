@@ -59,6 +59,7 @@
   "item.cherryblossomgrotto.koi": "Raw Koi",
   "item.cherryblossomgrotto.cooked_koi": "Cooked Koi",
   "item.cherryblossomgrotto.koi_spawn_egg": "Koi Spawn Egg",
+  "item.cherryblossomgrotto.tanooki_spawn_egg": "Tanooki Spawn Egg",
   "entity.cherryblossomgrotto.cherry_blossom_petal": "Cherry Blossom Petal",
   "entity.cherryblossomgrotto.koi_entity": "Koi",
   "entity.cherryblossomgrotto.cherry_blossom_boat": "Cherry Blossom Boat",
@@ -71,5 +72,9 @@
   "subtitles.entity.player.double_jump": "Player double jumps",
   "subtitles.entity.koi_entity.death": "Koi dies",
   "subtitles.entity.koi_entity.flop": "Koi flops",
-  "subtitles.entity.koi_entity.hurt": "Koi hurts"
+  "subtitles.entity.koi_entity.hurt": "Koi hurts",
+  "subtitles.entity.tanooki.attack": "Tanooki attacks",
+  "subtitles.entity.tanooki.death": "Tanooki dies",
+  "subtitles.entity.tanooki.hurt": "Tanooki hurts",
+  "subtitles.entity.tanooki.ambient": "Tanooki Screams"
 }

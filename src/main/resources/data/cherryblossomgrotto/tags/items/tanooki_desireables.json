@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "#cherryblossomgrotto:tanooki_tempt_items",
+    "minecraft:gold_ingot",
+    "minecraft:gold_nugget",
+    "#minecraft:gold_ores",
+    "minecraft:golden_helmet",
+    "minecraft:golden_chestplate",
+    "minecraft:golden_leggings",
+    "minecraft:golden_boots",
+    "minecraft:gold_block",
+    "minecraft:emerald",
+    "minecraft:diamond",
+    "#minecraft:diamond_ores",
+    "minecraft:diamond_helmet",
+    "minecraft:diamond_chestplate",
+    "minecraft:diamond_leggings",
+    "minecraft:diamond_boots",
+    "minecraft:diamond_block",
+    "minecraft:totem_of_undying",
+    "minecraft:ender_pearl",
+    "minecraft:lapis_lazuli",
+    "#minecraft:lapis_ores",
+    "minecraft:prismarine_crystals",
+    "minecraft:prismarine_shard"
+  ]
+}
+

@@ -1,6 +1,6 @@
 package com.deku.cherryblossomgrotto.common.entity.projectile;
 
-import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
+import com.deku.cherryblossomgrotto.common.entity.ModEntityType;
 import com.deku.cherryblossomgrotto.common.items.ModItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -17,22 +17,21 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 
 public class KunaiEntity extends AbstractArrow implements IEntityAdditionalSpawnData {
     public KunaiEntity(EntityType<Entity> entityType, Level level) {
-        super(ModEntityData.KUNAI_DATA, level);
+        super(ModEntityType.KUNAI, level);
         setBaseDamage(2.0D);
     }
 
     public KunaiEntity(LivingEntity livingEntity, Level level) {
-        super(ModEntityData.KUNAI_DATA, livingEntity, level);
+        super(ModEntityType.KUNAI, livingEntity, level);
         setBaseDamage(2.0D);
     }
 
     public KunaiEntity(PlayMessages.SpawnEntity spawnEntity, Level level) {
-        super(ModEntityData.KUNAI_DATA, level);
+        super(ModEntityType.KUNAI, level);
         setBaseDamage(2.0D);
     }
 

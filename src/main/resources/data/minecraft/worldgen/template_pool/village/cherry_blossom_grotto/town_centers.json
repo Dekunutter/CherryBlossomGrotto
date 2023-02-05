@@ -43,10 +43,8 @@
     {
       "element": {
         "element_type": "minecraft:legacy_single_pool_element",
-        "location": "minecraft:village/cherry_blossom_grotto/zombie/town_centers/koi_pond",
-        "processors": {
-          "processors": []
-        },
+        "location": "minecraft:village/cherry_blossom_grotto/town_centers/koi_pond",
+        "processors": "cherryblossomgrotto:koi_pond_bottom_gravel_40_percent",
         "projection": "rigid"
       },
       "weight": 35
