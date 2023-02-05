@@ -1,7 +1,6 @@
 package com.deku.cherryblossomgrotto.common.entity;
 
 import com.deku.cherryblossomgrotto.common.entity.animal.tanooki.Tanooki;
-import com.deku.cherryblossomgrotto.common.entity.monster.Coralfish;
 import com.deku.cherryblossomgrotto.common.entity.vehicle.ModBoatEntity;
 import com.deku.cherryblossomgrotto.common.entity.passive.fish.KoiEntity;
 import com.deku.cherryblossomgrotto.common.entity.projectile.KunaiEntity;

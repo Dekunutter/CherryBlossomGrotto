@@ -433,7 +433,6 @@ public class Main
 
                 // All living entities
                 registrar.register(new ResourceLocation(MOD_ID,"koi_entity"), EntityTypeInitializer.KOI_ENTITY_TYPE);
-                registrar.register(new ResourceLocation(MOD_ID, "coralfish"), EntityTypeInitializer.CORALFFISH_ENTITY_TYPE);
                 registrar.register(new ResourceLocation(MOD_ID, "tanooki"), EntityTypeInitializer.TANOOKI_ENTITY_TYPE);
             });
         }
