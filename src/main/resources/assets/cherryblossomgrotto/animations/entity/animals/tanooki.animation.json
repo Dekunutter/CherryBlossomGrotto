@@ -242,6 +242,9 @@
 		},
 		"misc.living": {
 			"loop": true
+		},
+		"misc.idle": {
+			"loop": false
 		}
 	}
 }
