@@ -68,7 +68,7 @@ public class CherryBlossomLeaves extends LeavesBlock implements IForgeBlock, Ent
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos position, RandomSource random) {
         super.animateTick(state, world, position, random);
-        if (random.nextInt(16) == 0) {
+        if (random.nextInt(32) == 0) {
             FallingCherryBlossomPetalOptions cherryBlossomPetal = new FallingCherryBlossomPetalOptions(new Color(255, 255, 255, 255), 1.0f);
             world.addParticle(cherryBlossomPetal, (float) position.getX() + random.nextFloat(), (float) position.getY() - 1.0f, (float) position.getZ() + random.nextFloat(), 0.0d, -0.1d, 0.0d);
         }

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "pink_dye",
+  "ingredients": [
+    {
+      "item": "cherryblossomgrotto:cherry_blossom_petal",
+      "count": 2
+    }
+  ],
+  "result": {
+    "item": "minecraft:pink_dye"
+  }
+}
