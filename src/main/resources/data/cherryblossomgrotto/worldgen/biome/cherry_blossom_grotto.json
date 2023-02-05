@@ -111,6 +111,12 @@
         "weight": 4,
         "minCount": 2,
         "maxCount": 3
+      },
+      {
+        "type": "cherryblossomgrotto:tanooki",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 3
       }
     ],
     "ambient": [

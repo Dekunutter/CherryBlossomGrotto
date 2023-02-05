@@ -8,7 +8,7 @@ import com.deku.cherryblossomgrotto.client.renderers.layers.NinjaRobesLayer;
 import com.deku.cherryblossomgrotto.common.blocks.ModWoodType;
 import com.deku.cherryblossomgrotto.common.entity.EntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ModBlockEntities;
-import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
+import com.deku.cherryblossomgrotto.common.entity.ModEntityType;
 import com.deku.cherryblossomgrotto.common.items.ModItems;
 import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalProvider;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
@@ -17,7 +17,6 @@ import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.Sheets;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -33,10 +32,10 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import software.bernie.geckolib.GeckoLib;
 
 import java.util.Map;
 
-import static com.deku.cherryblossomgrotto.Main.LOGGER;
 import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
 
@@ -54,6 +53,8 @@ public class ClientOnlyRegistrar {
     public void registerClientOnlyEvents() {
         // Register the doClientStuff method for modloading
         eventBus.addListener(this::doClientStuff);
+
+        GeckoLib.initialize();
     }
 
     /**
@@ -131,11 +132,12 @@ public class ClientOnlyRegistrar {
          */
         @SubscribeEvent
         public static void onEntityRendererRegistry(final EntityRenderersEvent.RegisterRenderers registerEntityEvent) {
-            registerEntityEvent.registerEntityRenderer(ModEntityData.MOD_BOAT_DATA, ModBoatRenderer::new);
-            registerEntityEvent.registerEntityRenderer(ModEntityData.MOD_CHEST_BOAT_DATA, ModChestBoatRenderer::new);
+            registerEntityEvent.registerEntityRenderer(ModEntityType.MOD_BOAT, ModBoatRenderer::new);
+            registerEntityEvent.registerEntityRenderer(ModEntityType.MOD_CHEST_BOAT, ModChestBoatRenderer::new);
             registerEntityEvent.registerEntityRenderer(EntityTypeInitializer.KOI_ENTITY_TYPE, KoiRenderer::new);
-            registerEntityEvent.registerEntityRenderer(ModEntityData.KUNAI_DATA, KunaiRenderer::new);
-            registerEntityEvent.registerEntityRenderer(ModEntityData.SHURIKEN_DATA, ShurikenRenderer::new);
+            registerEntityEvent.registerEntityRenderer(EntityTypeInitializer.TANOOKI_ENTITY_TYPE, TanookiRenderer::new);
+            registerEntityEvent.registerEntityRenderer(ModEntityType.KUNAI, KunaiRenderer::new);
+            registerEntityEvent.registerEntityRenderer(ModEntityType.SHURIKEN, ShurikenRenderer::new);
 
             registerEntityEvent.registerBlockEntityRenderer(ModBlockEntities.SIGN_ENTITY_TYPE, SignRenderer::new);
             registerEntityEvent.registerBlockEntityRenderer(ModBlockEntities.HANGING_SIGN_ENTITY_TYPE, HangingSignRenderer::new);

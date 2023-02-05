@@ -7,11 +7,15 @@ import com.deku.cherryblossomgrotto.common.capabilities.DoubleJumpCapability;
 import com.deku.cherryblossomgrotto.common.enchantments.ModEnchantmentInitializer;
 import com.deku.cherryblossomgrotto.common.entity.EntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ModBlockEntities;
+import com.deku.cherryblossomgrotto.common.entity.ModEntityType;
+import com.deku.cherryblossomgrotto.common.entity.ai.sensing.ModSensorTypes;
+import com.deku.cherryblossomgrotto.common.entity.animal.tanooki.Tanooki;
 import com.deku.cherryblossomgrotto.common.entity.npc.ModVillagerTypes;
 import com.deku.cherryblossomgrotto.common.features.*;
 import com.deku.cherryblossomgrotto.common.items.*;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
 import com.deku.cherryblossomgrotto.common.recipes.ModRecipeSerializerInitializer;
+import com.deku.cherryblossomgrotto.common.sounds.ModSoundEvents;
 import com.deku.cherryblossomgrotto.common.utils.ForgeReflection;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeInitializer;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeProvider;
@@ -40,10 +44,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
+import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -51,6 +54,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.MinecraftForge;
@@ -61,6 +65,7 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.*;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
@@ -133,6 +138,9 @@ public class Main
         }
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        // Sound events logic
+        ModSoundEvents.SOUND_EVENTS.register(eventBus);
+
         // Biome logic
         ModBiomeInitializer.BIOMES.register(eventBus);
         ModBiomeInitializer.registerBiomes();
@@ -146,6 +154,9 @@ public class Main
 
         // Trunk Placer Types
         ModTrunkPlacerTypes.TRUNK_PLACER_TYPES.register(eventBus);
+
+        // AI Sensor Types
+        ModSensorTypes.SENSOR_TYPES.register(eventBus);
 
         // Custom recipe serializers
         ModRecipeSerializerInitializer.RECIPE_SERIALIZERS.register(eventBus);
@@ -386,6 +397,8 @@ public class Main
 
                 // All spawn eggs
                 registrar.register(new ResourceLocation(MOD_ID, "koi_spawn_egg"), new ForgeSpawnEggItem(() -> EntityTypeInitializer.KOI_ENTITY_TYPE, 15724527, 16030538, new Item.Properties()));
+                // TODO: Select some proper colours or this spawn egg
+                registrar.register(new ResourceLocation(MOD_ID, "tanooki_spawn_egg"), new ForgeSpawnEggItem(() -> EntityTypeInitializer.TANOOKI_ENTITY_TYPE, 9738135, 3814711, new Item.Properties()));
             });
         }
 
@@ -398,6 +411,7 @@ public class Main
         @SubscribeEvent
         public static void onEntityAttributeRegistration(final EntityAttributeCreationEvent event) {
             event.put(EntityTypeInitializer.KOI_ENTITY_TYPE, AbstractSchoolingFish.createAttributes().build());
+            event.put(EntityTypeInitializer.TANOOKI_ENTITY_TYPE, Tanooki.createAttributes().build());
         }
 
         /**
@@ -419,7 +433,15 @@ public class Main
 
                 // All living entities
                 registrar.register(new ResourceLocation(MOD_ID,"koi_entity"), EntityTypeInitializer.KOI_ENTITY_TYPE);
+                registrar.register(new ResourceLocation(MOD_ID, "coralfish"), EntityTypeInitializer.CORALFFISH_ENTITY_TYPE);
+                registrar.register(new ResourceLocation(MOD_ID, "tanooki"), EntityTypeInitializer.TANOOKI_ENTITY_TYPE);
             });
+        }
+
+        @SubscribeEvent
+        public static void onEntitySpawn(final SpawnPlacementRegisterEvent registerEvent) {
+            registerEvent.register(ModEntityType.KOI, SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+            registerEvent.register(ModEntityType.TANOOKI, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Tanooki::checkTanookiSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
         }
 
         /**
@@ -558,6 +580,7 @@ public class Main
                         populator.accept(new ItemStack(ModItems.COOKED_KOI));
                         populator.accept(new ItemStack(ModItems.KOI_BUCKET));
                         populator.accept(new ItemStack(ModItems.KOI_SPAWN_EGG));
+                        populator.accept(new ItemStack(ModItems.TANOOKI_SPAWN_EGG));
 
                         // Misc building blocks
                         populator.accept(ModItems.SHOJI_SCREEN);
@@ -706,6 +729,10 @@ public class Main
             } else if (creativeTabBuilderRegistryEvent.getTab() == CreativeModeTabs.SPAWN_EGGS) {
                 // Fish
                 entries.putAfter(new ItemStack(Items.TROPICAL_FISH_SPAWN_EGG), new ItemStack(ModItems.KOI_SPAWN_EGG), visibility);
+
+                // Animals
+                // TODO: Put ater whatever is the last animal spawn egg in the overworld
+                entries.putAfter(new ItemStack(Items.COW_SPAWN_EGG), new ItemStack(ModItems.TANOOKI_SPAWN_EGG), visibility);
             }
         }
     }

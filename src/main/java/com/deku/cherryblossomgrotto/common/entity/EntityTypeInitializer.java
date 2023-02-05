@@ -1,5 +1,7 @@
 package com.deku.cherryblossomgrotto.common.entity;
 
+import com.deku.cherryblossomgrotto.common.entity.animal.tanooki.Tanooki;
+import com.deku.cherryblossomgrotto.common.entity.monster.Coralfish;
 import com.deku.cherryblossomgrotto.common.entity.vehicle.ModBoatEntity;
 import com.deku.cherryblossomgrotto.common.entity.passive.fish.KoiEntity;
 import com.deku.cherryblossomgrotto.common.entity.projectile.KunaiEntity;
@@ -21,4 +23,6 @@ public class EntityTypeInitializer {
     public static EntityType<Entity> SHURIKEN_ENTITY_TYPE = EntityType.Builder.of(ShurikenEntity::new, MobCategory.MISC).setCustomClientFactory(ShurikenEntity::new).sized(0.5f, 0.5f).clientTrackingRange(4).updateInterval(20).build("shuriken_entity");
 
     public static EntityType<KoiEntity> KOI_ENTITY_TYPE = EntityType.Builder.of(KoiEntity::new, MobCategory.WATER_AMBIENT).sized(0.7f, 0.4f).clientTrackingRange(4).build("koi_entity");
+    
+    public static EntityType<Tanooki> TANOOKI_ENTITY_TYPE = EntityType.Builder.of(Tanooki::new, MobCategory.CREATURE).sized(1.0f, 1.0f).clientTrackingRange(8).build("tanooki");
 }
