@@ -1,6 +1,6 @@
 package com.deku.cherryblossomgrotto.common.entity.animal.tanooki;
 
-import com.deku.cherryblossomgrotto.common.entity.EntityTypeInitializer;
+import com.deku.cherryblossomgrotto.common.entity.ModEntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ai.sensing.ModSensorTypes;
 import com.deku.cherryblossomgrotto.common.items.ModItemTags;
 import com.google.common.collect.ImmutableList;
@@ -262,7 +262,7 @@ public class Tanooki extends Animal implements GeoEntity, InventoryCarrier {
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob mob) {
-        Tanooki offspring = EntityTypeInitializer.TANOOKI_ENTITY_TYPE.create(level);
+        Tanooki offspring = ModEntityTypeInitializer.TANOOKI_ENTITY_TYPE.get().create(level);
         if (offspring != null) {
             offspring.setPersistenceRequired();
         }

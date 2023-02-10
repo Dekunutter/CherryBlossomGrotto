@@ -1,6 +1,7 @@
 package com.deku.cherryblossomgrotto.common.entity;
 
 import com.deku.cherryblossomgrotto.common.entity.animal.tanooki.Tanooki;
+import com.deku.cherryblossomgrotto.common.entity.monster.Coralfish;
 import com.deku.cherryblossomgrotto.common.entity.vehicle.ModBoatEntity;
 import com.deku.cherryblossomgrotto.common.entity.passive.fish.KoiEntity;
 import com.deku.cherryblossomgrotto.common.entity.projectile.KunaiEntity;
@@ -9,6 +10,7 @@ import com.deku.cherryblossomgrotto.common.entity.vehicle.ModChestBoatEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.projectile.Arrow;
 
 // NOTE: This may seem redundant due to ModEntityData already existing as an object holder class but those objects are only initialized on registration
 //  Since there are cases where we need entity types BEFORE all objects are registered, we have an alternative storage used during initialization for reading them
@@ -22,6 +24,8 @@ public class EntityTypeInitializer {
     public static EntityType<Entity> SHURIKEN_ENTITY_TYPE = EntityType.Builder.of(ShurikenEntity::new, MobCategory.MISC).setCustomClientFactory(ShurikenEntity::new).sized(0.5f, 0.5f).clientTrackingRange(4).updateInterval(20).build("shuriken_entity");
 
     public static EntityType<KoiEntity> KOI_ENTITY_TYPE = EntityType.Builder.of(KoiEntity::new, MobCategory.WATER_AMBIENT).sized(0.7f, 0.4f).clientTrackingRange(4).build("koi_entity");
-    
+
+    public static EntityType<Coralfish> CORALFFISH_ENTITY_TYPE = EntityType.Builder.of(Coralfish::new, MobCategory.MONSTER).sized(1.0f, 1.0f).clientTrackingRange(8).build("coralfish");
+
     public static EntityType<Tanooki> TANOOKI_ENTITY_TYPE = EntityType.Builder.of(Tanooki::new, MobCategory.CREATURE).sized(1.0f, 1.0f).clientTrackingRange(8).build("tanooki");
 }

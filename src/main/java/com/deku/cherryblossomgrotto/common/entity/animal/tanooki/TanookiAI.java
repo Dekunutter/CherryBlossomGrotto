@@ -1,6 +1,6 @@
 package com.deku.cherryblossomgrotto.common.entity.animal.tanooki;
 
-import com.deku.cherryblossomgrotto.common.entity.ModEntityType;
+import com.deku.cherryblossomgrotto.common.entity.ModEntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.items.ModItemTags;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -119,7 +119,7 @@ public class TanookiAI {
     private static void initIdleActivity(Brain<Tanooki> brain) {
         brain.addActivity(Activity.IDLE, 10, ImmutableList.of(
             SetEntityLookTarget.create(TanookiAI::isPlayerHoldingLovedItem, LOOK_DISTANCE),
-            new AnimalMakeLove(ModEntityType.TANOOKI, SPEED_MODIFIER_BREEDING),
+            new AnimalMakeLove(ModEntityTypeInitializer.TANOOKI_ENTITY_TYPE.get(), SPEED_MODIFIER_BREEDING),
             new FollowTemptation((entity) -> {
                 return SPEED_MODIFIER_TEMPTED;
             }),
@@ -202,7 +202,7 @@ public class TanookiAI {
     private static ImmutableList<Pair<OneShot<LivingEntity>, Integer>> createLookBehaviors() {
         return ImmutableList.of(
             Pair.of(SetEntityLookTarget.create(EntityType.PLAYER, LOOK_DISTANCE), 1),
-            Pair.of(SetEntityLookTarget.create(ModEntityType.TANOOKI, LOOK_DISTANCE), 1),
+            Pair.of(SetEntityLookTarget.create(ModEntityTypeInitializer.TANOOKI_ENTITY_TYPE.get(), LOOK_DISTANCE), 1),
             Pair.of(SetEntityLookTarget.create(LOOK_DISTANCE), 1)
         );
     }
@@ -232,7 +232,7 @@ public class TanookiAI {
     private static RunOne<Tanooki> createIdleMovementBehaviors() {
         return new RunOne<>(ImmutableList.of(
             Pair.of(RandomStroll.stroll(SPEED_MODIFIER_SLOW_STROLLING), 2),
-            Pair.of(InteractWith.of(ModEntityType.TANOOKI, INTERACTION_STARTING_DISTANCE_FROM_TARGET, MemoryModuleType.INTERACTION_TARGET, SPEED_MODIFIER_SLOW_STROLLING, INTERACTION_STOPPING_DISTANCE_FROM_TARGET), 2),
+            Pair.of(InteractWith.of(ModEntityTypeInitializer.TANOOKI_ENTITY_TYPE.get(), INTERACTION_STARTING_DISTANCE_FROM_TARGET, MemoryModuleType.INTERACTION_TARGET, SPEED_MODIFIER_SLOW_STROLLING, INTERACTION_STOPPING_DISTANCE_FROM_TARGET), 2),
             Pair.of(BehaviorBuilder.triggerIf(TanookiAI::doesntSeeAnyPlayerHoldingLovedItem, SetWalkTargetFromLookTarget.create(SPEED_MODIFIER_SLOW_STROLLING, STOPPING_DISTANCE_FROM_TARGET)), 2),
             Pair.of(new DoNothing(IDLE_MIN_DURATION, IDLE_MAX_DURATION), 1)
         ));
