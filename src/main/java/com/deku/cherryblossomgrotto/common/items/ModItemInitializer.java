@@ -20,10 +20,6 @@ public class ModItemInitializer {
         new ForgeSpawnEggItem(ModEntityTypeInitializer.KOI_ENTITY_TYPE, 15724527, 16030538, new Item.Properties())
     );
 
-    public static final RegistryObject<Item> CORALFISH_SPAWN_EGG = ITEMS.register("coralfish_spawn_egg", () ->
-            new ForgeSpawnEggItem(ModEntityTypeInitializer.CORALFFISH_ENTITY_TYPE, 9738135, 3814711, new Item.Properties())
-    );
-
     // TODO: Select some proper colours or this spawn egg
     public static final RegistryObject<Item> TANOOKI_SPAWN_EGG = ITEMS.register("tanooki_spawn_egg", () ->
             new ForgeSpawnEggItem(ModEntityTypeInitializer.TANOOKI_ENTITY_TYPE, 9738135, 3814711, new Item.Properties())
