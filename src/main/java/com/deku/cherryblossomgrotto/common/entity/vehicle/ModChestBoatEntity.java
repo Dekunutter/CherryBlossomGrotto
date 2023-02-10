@@ -1,6 +1,6 @@
 package com.deku.cherryblossomgrotto.common.entity.vehicle;
 
-import com.deku.cherryblossomgrotto.common.entity.ModEntityType;
+import com.deku.cherryblossomgrotto.common.entity.ModEntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.items.ModItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -9,7 +9,6 @@ import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.ChestBoat;
 import net.minecraft.world.item.Item;
@@ -20,12 +19,12 @@ import net.minecraftforge.network.PlayMessages;
 public class ModChestBoatEntity extends ChestBoat {
     private static final EntityDataAccessor<Integer> MOD_CHEST_BOAT_TYPE = SynchedEntityData.defineId(ModChestBoatEntity.class, EntityDataSerializers.INT);
 
-    public ModChestBoatEntity(EntityType<? extends Entity> entityType, Level level) {
-        super(ModEntityType.MOD_CHEST_BOAT, level);
+    public ModChestBoatEntity(EntityType<ModChestBoatEntity> entityType, Level level) {
+        super(entityType, level);
     }
 
     public ModChestBoatEntity(Level level, double positionX, double positionY, double positionZ) {
-        super(ModEntityType.MOD_CHEST_BOAT, level);
+        super(ModEntityTypeInitializer.CHEST_BOAT_ENTITY_TYPE.get(), level);
         this.setPos(positionX, positionY, positionZ);
         this.setDeltaMovement(Vec3.ZERO);
         this.xo = positionX;
@@ -35,7 +34,7 @@ public class ModChestBoatEntity extends ChestBoat {
     }
 
     public ModChestBoatEntity(PlayMessages.SpawnEntity spawnEntity, Level level) {
-        this(ModEntityType.MOD_CHEST_BOAT, level);
+        this(ModEntityTypeInitializer.CHEST_BOAT_ENTITY_TYPE.get(), level);
     }
 
     /**

@@ -1,6 +1,6 @@
 package com.deku.cherryblossomgrotto.common.entity.projectile;
 
-import com.deku.cherryblossomgrotto.common.entity.ModEntityType;
+import com.deku.cherryblossomgrotto.common.entity.ModEntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.items.ModItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -22,17 +22,17 @@ import net.minecraftforge.network.PlayMessages;
 public class ShurikenEntity extends AbstractArrow implements IEntityAdditionalSpawnData {
     public float spin = 0.0f;
 
-    public ShurikenEntity(EntityType<Entity> entityType, Level level) {
-        super(ModEntityType.SHURIKEN, level);
+    public ShurikenEntity(EntityType<ShurikenEntity> entityType, Level level) {
+        super(entityType, level);
     }
 
     public ShurikenEntity(LivingEntity livingEntity, Level level) {
-        super(ModEntityType.SHURIKEN, livingEntity, level);
+        super(ModEntityTypeInitializer.SHURIKEN_ENTITY_TYPE.get(), livingEntity, level);
         setBaseDamage(0.1D);
     }
 
     public ShurikenEntity(PlayMessages.SpawnEntity spawnEntity, Level level) {
-        super(ModEntityType.SHURIKEN, level);
+        super(ModEntityTypeInitializer.SHURIKEN_ENTITY_TYPE.get(), level);
         setBaseDamage(0.1D);
     }
 

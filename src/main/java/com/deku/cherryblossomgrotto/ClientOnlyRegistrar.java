@@ -6,9 +6,8 @@ import com.deku.cherryblossomgrotto.client.renderers.*;
 import com.deku.cherryblossomgrotto.client.renderers.layers.KabutoArmourLayer;
 import com.deku.cherryblossomgrotto.client.renderers.layers.NinjaRobesLayer;
 import com.deku.cherryblossomgrotto.common.blocks.ModWoodType;
-import com.deku.cherryblossomgrotto.common.entity.EntityTypeInitializer;
+import com.deku.cherryblossomgrotto.common.entity.ModEntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ModBlockEntities;
-import com.deku.cherryblossomgrotto.common.entity.ModEntityType;
 import com.deku.cherryblossomgrotto.common.items.ModItems;
 import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalProvider;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
@@ -132,12 +131,12 @@ public class ClientOnlyRegistrar {
          */
         @SubscribeEvent
         public static void onEntityRendererRegistry(final EntityRenderersEvent.RegisterRenderers registerEntityEvent) {
-            registerEntityEvent.registerEntityRenderer(ModEntityType.MOD_BOAT, ModBoatRenderer::new);
-            registerEntityEvent.registerEntityRenderer(ModEntityType.MOD_CHEST_BOAT, ModChestBoatRenderer::new);
-            registerEntityEvent.registerEntityRenderer(EntityTypeInitializer.KOI_ENTITY_TYPE, KoiRenderer::new);
-            registerEntityEvent.registerEntityRenderer(EntityTypeInitializer.TANOOKI_ENTITY_TYPE, TanookiRenderer::new);
-            registerEntityEvent.registerEntityRenderer(ModEntityType.KUNAI, KunaiRenderer::new);
-            registerEntityEvent.registerEntityRenderer(ModEntityType.SHURIKEN, ShurikenRenderer::new);
+            registerEntityEvent.registerEntityRenderer(ModEntityTypeInitializer.BOAT_ENTITY_TYPE.get(), ModBoatRenderer::new);
+            registerEntityEvent.registerEntityRenderer(ModEntityTypeInitializer.CHEST_BOAT_ENTITY_TYPE.get(), ModChestBoatRenderer::new);
+            registerEntityEvent.registerEntityRenderer(ModEntityTypeInitializer.KOI_ENTITY_TYPE.get(), KoiRenderer::new);
+            registerEntityEvent.registerEntityRenderer(ModEntityTypeInitializer.TANOOKI_ENTITY_TYPE.get(), TanookiRenderer::new);
+            registerEntityEvent.registerEntityRenderer(ModEntityTypeInitializer.KUNAI_ENTITY_TYPE.get(), KunaiRenderer::new);
+            registerEntityEvent.registerEntityRenderer(ModEntityTypeInitializer.SHURIKEN_ENTITY_TYPE.get(), ShurikenRenderer::new);
 
             registerEntityEvent.registerBlockEntityRenderer(ModBlockEntities.SIGN_ENTITY_TYPE, SignRenderer::new);
             registerEntityEvent.registerBlockEntityRenderer(ModBlockEntities.HANGING_SIGN_ENTITY_TYPE, HangingSignRenderer::new);

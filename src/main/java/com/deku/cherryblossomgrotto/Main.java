@@ -5,9 +5,8 @@ import com.deku.cherryblossomgrotto.client.network.messages.DoubleJumpClientMess
 import com.deku.cherryblossomgrotto.common.blocks.*;
 import com.deku.cherryblossomgrotto.common.capabilities.DoubleJumpCapability;
 import com.deku.cherryblossomgrotto.common.enchantments.ModEnchantmentInitializer;
-import com.deku.cherryblossomgrotto.common.entity.EntityTypeInitializer;
+import com.deku.cherryblossomgrotto.common.entity.ModEntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ModBlockEntities;
-import com.deku.cherryblossomgrotto.common.entity.ModEntityType;
 import com.deku.cherryblossomgrotto.common.entity.ai.sensing.ModSensorTypes;
 import com.deku.cherryblossomgrotto.common.entity.animal.tanooki.Tanooki;
 import com.deku.cherryblossomgrotto.common.entity.npc.ModVillagerTypes;
@@ -56,7 +55,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -151,6 +149,12 @@ public class Main
 
         // Enchantment logic
         ModEnchantmentInitializer.ENCHANTMENTS.register(eventBus);
+
+        // Entity Types logic
+        ModEntityTypeInitializer.ENTITY_TYPES.register(eventBus);
+
+        // Item logic
+        ModItemInitializer.ITEMS.register(eventBus);
 
         // Trunk Placer Types
         ModTrunkPlacerTypes.TRUNK_PLACER_TYPES.register(eventBus);
@@ -358,9 +362,6 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "aged_tatami_mat"), new BlockItem(ModBlocks.AGED_TATAMI_MAT, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "long_aged_tatami_mat"), new BlockItem(ModBlocks.LONG_AGED_TATAMI_MAT, new Item.Properties()));
 
-                // All bucket items
-                registrar.register(new ResourceLocation(MOD_ID, "koi_bucket"), new KoiBucket(EntityTypeInitializer.KOI_ENTITY_TYPE));
-
                 // TODO: Find a way to add these to the composter
                 // All food items
                 registrar.register(new ResourceLocation(MOD_ID, "koi"), new Koi());
@@ -394,11 +395,6 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "smooth_stone_trapdoor"), new BlockItem(ModBlocks.SMOOTH_STONE_TRAP_DOOR, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "stone_trapdoor"), new BlockItem(ModBlocks.STONE_TRAP_DOOR, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "cobblestone_trapdoor"), new BlockItem(ModBlocks.COBBLESTONE_TRAP_DOOR, new Item.Properties()));
-
-                // All spawn eggs
-                registrar.register(new ResourceLocation(MOD_ID, "koi_spawn_egg"), new ForgeSpawnEggItem(() -> EntityTypeInitializer.KOI_ENTITY_TYPE, 15724527, 16030538, new Item.Properties()));
-                // TODO: Select some proper colours or this spawn egg
-                registrar.register(new ResourceLocation(MOD_ID, "tanooki_spawn_egg"), new ForgeSpawnEggItem(() -> EntityTypeInitializer.TANOOKI_ENTITY_TYPE, 9738135, 3814711, new Item.Properties()));
             });
         }
 
@@ -410,37 +406,14 @@ public class Main
          */
         @SubscribeEvent
         public static void onEntityAttributeRegistration(final EntityAttributeCreationEvent event) {
-            event.put(EntityTypeInitializer.KOI_ENTITY_TYPE, AbstractSchoolingFish.createAttributes().build());
-            event.put(EntityTypeInitializer.TANOOKI_ENTITY_TYPE, Tanooki.createAttributes().build());
-        }
-
-        /**
-         * Used to register entities into the game using the mod event bus
-         * Associated entity data is assigned before registration
-         *
-         * @param registerEvent The register event with which entities will be registered
-         */
-        @SubscribeEvent
-        public static void onEntityRegistry(final RegisterEvent registerEvent) {
-            registerEvent.register(ForgeRegistries.Keys.ENTITY_TYPES, registrar -> {
-                // All vehicle entities
-                registrar.register(new ResourceLocation(MOD_ID,"mod_boat_entity"), EntityTypeInitializer.BOAT_ENTITY_TYPE);
-                registrar.register(new ResourceLocation(MOD_ID,"mod_chest_boat_entity"), EntityTypeInitializer.CHEST_BOAT_ENTITY_TYPE);
-
-                // All weapon entities
-                registrar.register(new ResourceLocation(MOD_ID,"kunai_entity"), EntityTypeInitializer.KUNAI_ENTITY_TYPE);
-                registrar.register(new ResourceLocation(MOD_ID,"shuriken_entity"), EntityTypeInitializer.SHURIKEN_ENTITY_TYPE);
-
-                // All living entities
-                registrar.register(new ResourceLocation(MOD_ID,"koi_entity"), EntityTypeInitializer.KOI_ENTITY_TYPE);
-                registrar.register(new ResourceLocation(MOD_ID, "tanooki"), EntityTypeInitializer.TANOOKI_ENTITY_TYPE);
-            });
+            event.put(ModEntityTypeInitializer.KOI_ENTITY_TYPE.get(), AbstractSchoolingFish.createAttributes().build());
+            event.put(ModEntityTypeInitializer.TANOOKI_ENTITY_TYPE.get(), Tanooki.createAttributes().build());
         }
 
         @SubscribeEvent
         public static void onEntitySpawn(final SpawnPlacementRegisterEvent registerEvent) {
-            registerEvent.register(ModEntityType.KOI, SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-            registerEvent.register(ModEntityType.TANOOKI, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Tanooki::checkTanookiSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+            registerEvent.register(ModEntityTypeInitializer.KOI_ENTITY_TYPE.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+            registerEvent.register(ModEntityTypeInitializer.TANOOKI_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Tanooki::checkTanookiSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
         }
 
         /**

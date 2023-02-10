@@ -6,8 +6,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.level.material.Fluids;
 
+import java.util.function.Supplier;
+
 public class KoiBucket extends MobBucketItem {
-    public KoiBucket(EntityType<?> entityType) {
-        super(entityType, Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, (new Item.Properties()).stacksTo(1));
+    public KoiBucket(Supplier<? extends EntityType<?>> entityType) {
+        super(entityType, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, (new Item.Properties()).stacksTo(1));
     }
 }

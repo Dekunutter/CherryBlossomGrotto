@@ -1,6 +1,6 @@
 package com.deku.cherryblossomgrotto.common.entity.vehicle;
 
-import com.deku.cherryblossomgrotto.common.entity.ModEntityType;
+import com.deku.cherryblossomgrotto.common.entity.ModEntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.items.ModItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -9,7 +9,6 @@ import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Item;
@@ -20,12 +19,12 @@ import net.minecraftforge.network.PlayMessages;
 public class ModBoatEntity extends Boat {
     private static final EntityDataAccessor<Integer> MOD_BOAT_TYPE = SynchedEntityData.defineId(ModBoatEntity.class, EntityDataSerializers.INT);
 
-    public ModBoatEntity(EntityType<? extends Entity> entityType, Level level) {
-        super(ModEntityType.MOD_BOAT, level);
+    public ModBoatEntity(EntityType<ModBoatEntity> entityType, Level level) {
+        super(entityType, level);
     }
 
     public ModBoatEntity(Level level, double positionX, double positionY, double positionZ) {
-        super(ModEntityType.MOD_BOAT, level);
+        super(ModEntityTypeInitializer.BOAT_ENTITY_TYPE.get(), level);
         this.setPos(positionX, positionY, positionZ);
         this.setDeltaMovement(Vec3.ZERO);
         this.xo = positionX;
@@ -35,7 +34,7 @@ public class ModBoatEntity extends Boat {
     }
 
     public ModBoatEntity(PlayMessages.SpawnEntity spawnEntity, Level level) {
-        this(ModEntityType.MOD_BOAT, level);
+        this(ModEntityTypeInitializer.BOAT_ENTITY_TYPE.get(), level);
     }
 
     /**
