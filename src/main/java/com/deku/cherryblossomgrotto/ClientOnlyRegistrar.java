@@ -10,8 +10,8 @@ import com.deku.cherryblossomgrotto.client.renderers.layers.KabutoArmourLayer;
 import com.deku.cherryblossomgrotto.client.renderers.layers.NinjaRobesLayer;
 import com.deku.cherryblossomgrotto.common.blocks.ModBlocks;
 import com.deku.cherryblossomgrotto.common.blocks.ModWoodType;
+import com.deku.cherryblossomgrotto.common.entity.ModEntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ModBlockEntities;
-import com.deku.cherryblossomgrotto.common.entity.ModEntityData;
 import com.deku.cherryblossomgrotto.common.items.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
@@ -149,10 +149,10 @@ public class ClientOnlyRegistrar {
          */
         @SubscribeEvent
         public static void onEntityRendererRegistry(final EntityRenderersEvent.RegisterRenderers registerEntityEvent) {
-            registerEntityEvent.registerEntityRenderer(ModEntityData.MOD_BOAT_DATA, ModBoatRenderer::new);
-            registerEntityEvent.registerEntityRenderer(ModEntityData.KOI_DATA, KoiRenderer::new);
-            registerEntityEvent.registerEntityRenderer(ModEntityData.KUNAI_DATA, KunaiRenderer::new);
-            registerEntityEvent.registerEntityRenderer(ModEntityData.SHURIKEN_DATA, ShurikenRenderer::new);
+            registerEntityEvent.registerEntityRenderer(ModEntityTypeInitializer.BOAT_ENTITY_TYPE.get(), ModBoatRenderer::new);
+            registerEntityEvent.registerEntityRenderer(ModEntityTypeInitializer.KOI_ENTITY_TYPE.get(), KoiRenderer::new);
+            registerEntityEvent.registerEntityRenderer(ModEntityTypeInitializer.KUNAI_ENTITY_TYPE.get(), KunaiRenderer::new);
+            registerEntityEvent.registerEntityRenderer(ModEntityTypeInitializer.SHURIKEN_ENTITY_TYPE.get(), ShurikenRenderer::new);
         }
 
         /**

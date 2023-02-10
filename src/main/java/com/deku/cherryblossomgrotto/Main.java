@@ -5,7 +5,7 @@ import com.deku.cherryblossomgrotto.client.network.messages.DoubleJumpClientMess
 import com.deku.cherryblossomgrotto.common.blocks.*;
 import com.deku.cherryblossomgrotto.common.capabilities.DoubleJumpCapability;
 import com.deku.cherryblossomgrotto.common.enchantments.ModEnchantmentInitializer;
-import com.deku.cherryblossomgrotto.common.entity.EntityTypeInitializer;
+import com.deku.cherryblossomgrotto.common.entity.ModEntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ModBlockEntities;
 import com.deku.cherryblossomgrotto.common.entity.npc.ModVillagerTypes;
 import com.deku.cherryblossomgrotto.common.features.*;
@@ -36,7 +36,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
@@ -141,6 +140,12 @@ public class Main
 
         // Enchantment logic
         ModEnchantmentInitializer.ENCHANTMENTS.register(eventBus);
+
+        // Entity Types logic
+        ModEntityTypeInitializer.ENTITY_TYPES.register(eventBus);
+
+        // Item logic
+        ModItemInitializer.ITEMS.register(eventBus);
 
         // Register the setup method for modloading
         eventBus.addListener(this::setup);
@@ -334,8 +339,6 @@ public class Main
 
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.SHOJI_SCREEN, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)).setRegistryName("shoji_screen"));
 
-            itemRegistryEvent.getRegistry().register(new KoiBucket(EntityTypeInitializer.KOI_ENTITY_TYPE));
-
             // TODO: Find a way to add these to the composter
             itemRegistryEvent.getRegistry().register(new Koi());
             itemRegistryEvent.getRegistry().register(new CookedKoi());
@@ -379,30 +382,7 @@ public class Main
         public static void onEntityAttributeRegistration(final EntityAttributeCreationEvent event) {
             LOGGER.info("HELLO from Register Entity Attribute");
 
-            event.put(EntityTypeInitializer.KOI_ENTITY_TYPE, AbstractSchoolingFish.createAttributes().build());
-        }
-
-        /**
-         * Used to register entities into the game using the mod event bus
-         * Associated entity data is assigned before registration
-         *
-         * @param entityRegistryEvent The registry event with which entities will be registered
-         */
-        @SubscribeEvent
-        public static void onEntityRegistry(final RegistryEvent.Register<EntityType<?>> entityRegistryEvent) {
-            LOGGER.info("HELLO from Register Entity");
-
-            EntityTypeInitializer.BOAT_ENTITY_TYPE.setRegistryName("mod_boat_entity");
-            entityRegistryEvent.getRegistry().register(EntityTypeInitializer.BOAT_ENTITY_TYPE);
-
-            EntityTypeInitializer.KUNAI_ENTITY_TYPE.setRegistryName("kunai_entity");
-            entityRegistryEvent.getRegistry().register(EntityTypeInitializer.KUNAI_ENTITY_TYPE);
-
-            EntityTypeInitializer.SHURIKEN_ENTITY_TYPE.setRegistryName("shuriken_entity");
-            entityRegistryEvent.getRegistry().register(EntityTypeInitializer.SHURIKEN_ENTITY_TYPE);
-
-            EntityTypeInitializer.KOI_ENTITY_TYPE.setRegistryName("koi_entity");
-            entityRegistryEvent.getRegistry().register(EntityTypeInitializer.KOI_ENTITY_TYPE);
+            event.put(ModEntityTypeInitializer.KOI_ENTITY_TYPE.get(), AbstractSchoolingFish.createAttributes().build());
         }
 
         /**
