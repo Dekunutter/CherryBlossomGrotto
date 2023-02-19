@@ -8,7 +8,8 @@ import net.minecraft.world.level.block.Block;
  * We use a new type since the types that are possible in vanilla cannot be overridden or extended directly.
  */
 public enum ModBoatTypes {
-    CHERRY(ModBlocks.CHERRY_PLANKS, "cherry_blossom");
+    CHERRY(ModBlocks.CHERRY_PLANKS, "cherry_blossom"),
+    MAPLE(ModBlocks.MAPLE_PLANKS, "maple");
 
     private final String name;
     private final Block planks;

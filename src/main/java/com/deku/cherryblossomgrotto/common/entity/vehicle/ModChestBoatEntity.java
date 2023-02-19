@@ -112,6 +112,8 @@ public class ModChestBoatEntity extends ChestBoat {
     @Override
     public Item getDropItem() {
         switch(this.getModChestBoatType()) {
+            case MAPLE:
+                return ModItems.MAPLE_BOAT;
             case CHERRY:
             default:
                 return ModItems.CHERRY_BOAT;

@@ -1,6 +1,6 @@
 package com.deku.cherryblossomgrotto.common.world.gen.placements;
 
-import com.deku.cherryblossomgrotto.common.features.ModTreeFeatures;
+import com.deku.cherryblossomgrotto.common.features.ModOreFeatures;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
@@ -36,7 +36,7 @@ public class ModOrePlacements {
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> featureGetter = context.lookup(Registries.CONFIGURED_FEATURE);
 
-        context.register(ORE_IRON_SPARSE, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.CHERRY_BLOSSOM), List.of(CountPlacement.of(10), InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(72)), BiomeFilter.biome())));
-        context.register(ORE_IRON_SPARSE_UPPER, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.CHERRY_BLOSSOM), List.of(CountPlacement.of(10), InSquarePlacement.spread(), HeightRangePlacement.triangle(VerticalAnchor.absolute(80), VerticalAnchor.absolute(384)), BiomeFilter.biome())));
+        context.register(ORE_IRON_SPARSE, new PlacedFeature(featureGetter.getOrThrow(ModOreFeatures.ORE_IRON_SPARSE), List.of(CountPlacement.of(10), InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(72)), BiomeFilter.biome())));
+        context.register(ORE_IRON_SPARSE_UPPER, new PlacedFeature(featureGetter.getOrThrow(ModOreFeatures.ORE_IRON_SPARSE), List.of(CountPlacement.of(10), InSquarePlacement.spread(), HeightRangePlacement.triangle(VerticalAnchor.absolute(80), VerticalAnchor.absolute(384)), BiomeFilter.biome())));
     }
 }

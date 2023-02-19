@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half_layers=1": {
+      "model": "cherryblossomgrotto:block/maple_leaf_pile_height2"
+    },
+    "half_layers=2": {
+      "model": "cherryblossomgrotto:block/maple_leaf_pile_height4"
+    }
+  }
+}

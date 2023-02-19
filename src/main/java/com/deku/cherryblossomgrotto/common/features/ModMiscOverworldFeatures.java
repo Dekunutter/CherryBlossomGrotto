@@ -14,6 +14,7 @@ import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
 public class ModMiscOverworldFeatures {
     public static ResourceKey<ConfiguredFeature<?, ?>> CHERRY_BLOSSOM_PETAL_GROUND_COVER = registerOverworldFeatureKey("cherry_blossom_petal_ground_cover");
+    public static ResourceKey<ConfiguredFeature<?, ?>> MAPLE_LEAF_GROUND_COVER = registerOverworldFeatureKey("maple_leaf_ground_cover");
     public static ResourceKey<ConfiguredFeature<?, ?>> HOTSPRING = registerOverworldFeatureKey("hotspring");
 
     /**
@@ -47,6 +48,7 @@ public class ModMiscOverworldFeatures {
      */
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
         context.register(CHERRY_BLOSSOM_PETAL_GROUND_COVER, new ConfiguredFeature<>(ModFeatures.CHERRY_BLOSSOM_GROUND_COVER, FeatureConfiguration.NONE));
+        context.register(MAPLE_LEAF_GROUND_COVER, new ConfiguredFeature<>(ModFeatures.MAPLE_GROUND_COVER, FeatureConfiguration.NONE));
 
         // TODO: Any way I can stop the water from freezing over? Magma blocks under work but when I start using less of those there could be more ice...
         //  Probably not worth all the effort... May be better to just go with a basic lake as I have here
