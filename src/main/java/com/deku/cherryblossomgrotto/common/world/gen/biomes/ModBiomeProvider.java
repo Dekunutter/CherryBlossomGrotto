@@ -1,5 +1,6 @@
 package com.deku.cherryblossomgrotto.common.world.gen.biomes;
 
+import com.deku.cherryblossomgrotto.utils.ModConfiguration;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
@@ -45,11 +46,15 @@ public class ModBiomeProvider extends Region {
         });*/
 
         addModifiedVanillaOverworldBiomes(mapper, builder -> {
-            builder.replaceBiome(Biomes.FLOWER_FOREST, ModBiomeInitializer.CHERRY_BLOSSOM_GROTTO);
-            builder.replaceBiome(Biomes.GROVE, ModBiomeInitializer.CHERRY_BLOSSOM_SLOPES);
-            builder.replaceBiome(Biomes.SPARSE_JUNGLE, ModBiomeInitializer.CHERRY_BLOSSOM_BAMBOO_JUNGLE);
-            builder.replaceBiome(Biomes.FOREST, ModBiomeInitializer.MAPLE_WOODS);
-            builder.replaceBiome(Biomes.BIRCH_FOREST, ModBiomeInitializer.OAK_AND_MAPLE_FOREST);
+            if(ModConfiguration.spawnCherryBlossomBiomes.get()) {
+                builder.replaceBiome(Biomes.FLOWER_FOREST, ModBiomeInitializer.CHERRY_BLOSSOM_GROTTO);
+                builder.replaceBiome(Biomes.GROVE, ModBiomeInitializer.CHERRY_BLOSSOM_SLOPES);
+                builder.replaceBiome(Biomes.SPARSE_JUNGLE, ModBiomeInitializer.CHERRY_BLOSSOM_BAMBOO_JUNGLE);
+            }
+            if(ModConfiguration.spawnMapleBiomes.get()) {
+                builder.replaceBiome(Biomes.FOREST, ModBiomeInitializer.MAPLE_WOODS);
+                builder.replaceBiome(Biomes.BIRCH_FOREST, ModBiomeInitializer.OAK_AND_MAPLE_FOREST);
+            }
         });
     }
 }
