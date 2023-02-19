@@ -17,7 +17,7 @@ import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 public class ModBiomeProvider extends Region {
     public ModBiomeProvider() {
         // Adding low region weight since we only have one biome. Don't want it to be too common
-        super(new ResourceLocation(MOD_ID, "eastern_region"), RegionType.OVERWORLD, 2);
+        super(new ResourceLocation(MOD_ID, "eastern_region"), RegionType.OVERWORLD, 1);
     }
 
     /**
