@@ -19,6 +19,7 @@ import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSi
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FancyFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.treedecorators.BeehiveDecorator;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.FancyTrunkPlacer;
 
 import java.util.OptionalInt;
 
@@ -32,6 +33,10 @@ public class ModTreeFeatures {
     public static ResourceKey<ConfiguredFeature<?, ?>> FANCY_CHERRY_BLOSSOM = registerTreeFeatureKey("fancy_cherry_blossom");
     public static ResourceKey<ConfiguredFeature<?, ?>> FANCY_CHERRY_BLOSSOM_BEES_05 = registerTreeFeatureKey("fancy_cherry_blossom_bees_05");
     public static ResourceKey<ConfiguredFeature<?, ?>> GRAND_CHERRY_BLOSSOM = registerTreeFeatureKey("grand_cherry_blossom");
+
+    public static ResourceKey<ConfiguredFeature<?, ?>> FANCY_MAPLE_TREE = registerTreeFeatureKey("fancy_maple");
+    public static ResourceKey<ConfiguredFeature<?, ?>> FANCY_MAPLE_TREE_BEES = registerTreeFeatureKey("fancy_maple_bees");
+
 
     /**
      * Registers a resource key for the given tree feature name
@@ -89,6 +94,21 @@ public class ModTreeFeatures {
     }
 
     /**
+     * Configures a maple tree
+     *
+     * @return The configuration for a maple tree
+     */
+    private static TreeConfiguration.TreeConfigurationBuilder createFancyMapleTreeConfiguration() {
+        return new TreeConfiguration.TreeConfigurationBuilder(
+                BlockStateProvider.simple(ModBlocks.MAPLE_LOG),
+                new FancyTrunkPlacer(3, 11, 0),
+                BlockStateProvider.simple(ModBlocks.MAPLE_LEAVES),
+                new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(4), 4),
+                new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4))
+        ).ignoreVines();
+    }
+
+    /**
      * Registers tree features using the bootstrap context
      *
      * @param context The bootstrap context
@@ -97,6 +117,7 @@ public class ModTreeFeatures {
         BeehiveDecorator beehiveDecorator002 = new BeehiveDecorator(0.002F);
         BeehiveDecorator beehiveDecorator02 = new BeehiveDecorator(0.02F);
         BeehiveDecorator beehiveDecorator05 = new BeehiveDecorator(0.05F);
+        BeehiveDecorator beehiveDecorator1 = new BeehiveDecorator(1.0F);
 
         context.register(CHERRY_BLOSSOM, new ConfiguredFeature<>(Feature.TREE, createCherryBlossomTreeConfiguration().build()));
         context.register(CHERRY_BLOSSOM_BEES_002, new ConfiguredFeature<>(Feature.TREE, createCherryBlossomTreeConfiguration().decorators(ImmutableList.of(beehiveDecorator002)).build()));
@@ -105,5 +126,7 @@ public class ModTreeFeatures {
         context.register(FANCY_CHERRY_BLOSSOM, new ConfiguredFeature<>(Feature.TREE, createFancyCherryBlossomTreeConfiguration().build()));
         context.register(FANCY_CHERRY_BLOSSOM_BEES_05, new ConfiguredFeature<>(Feature.TREE, createFancyCherryBlossomTreeConfiguration().decorators(ImmutableList.of(beehiveDecorator05)).build()));
         context.register(GRAND_CHERRY_BLOSSOM, new ConfiguredFeature<>(Feature.TREE, createGrandCherryBlossomTreeConfiguration().build()));
+
+        context.register(FANCY_MAPLE_TREE_BEES, new ConfiguredFeature<>(Feature.TREE, createFancyMapleTreeConfiguration().decorators(ImmutableList.of(beehiveDecorator1)).build()));
     }
 }

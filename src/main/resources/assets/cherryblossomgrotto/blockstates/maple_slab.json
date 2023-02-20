@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "type=bottom": { "model": "cherryblossomgrotto:block/maple_slab" },
+    "type=double": { "model": "cherryblossomgrotto:block/maple_planks" },
+    "type=top": { "model": "cherryblossomgrotto:block/maple_slab_top" }
+  }
+}

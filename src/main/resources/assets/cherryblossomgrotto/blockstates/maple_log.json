@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y": { "model": "cherryblossomgrotto:block/maple_log" },
+    "axis=z": { "model": "cherryblossomgrotto:block/maple_log", "x":  90 },
+    "axis=x": { "model":  "cherryblossomgrotto:block/maple_log", "x":  90, "y":  90 }
+  }
+}

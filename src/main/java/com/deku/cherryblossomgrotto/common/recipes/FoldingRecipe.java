@@ -1,6 +1,7 @@
 package com.deku.cherryblossomgrotto.common.recipes;
 
 import com.deku.cherryblossomgrotto.common.items.ModItems;
+import com.deku.cherryblossomgrotto.utils.ModConfiguration;
 import com.google.common.collect.Lists;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -88,7 +89,7 @@ public class FoldingRecipe extends CustomRecipe {
 
     /**
      * Assembles the resulting item for this recipe.
-     * In this case, the recipe is hardcoded to make a copy of a given katana and update it's fold count via NBT.
+     * In this case, the recipe is hardcoded to make a copy of a given katana and update its fold count via NBT.
      * If there's no existing fold count in NBT then we assume the current count as 1 and update it to 2.
      * Performing this recipe consumes a single iron ingot and the katana to clone it with the updated fold count.
      * Exits early if the katana or ingot global variables aren't assigned (which occurs during recipe matching)
@@ -106,8 +107,10 @@ public class FoldingRecipe extends CustomRecipe {
 
         if (compoundnbt != null) {
             int currentFolds = compoundnbt.getInt("folds");
-            if(currentFolds >= 0 && currentFolds < 1000) {
+            if(currentFolds >= 0 && currentFolds < ModConfiguration.maxFolds.get()) {
                 currentFolds++;
+            } else {
+                return ItemStack.EMPTY;
             }
             compoundnbt.putInt("folds", currentFolds);
             assembledKatana.setTag(compoundnbt);

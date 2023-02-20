@@ -3,6 +3,8 @@ package com.deku.cherryblossomgrotto;
 import com.deku.cherryblossomgrotto.client.network.handlers.DoubleJumpClientMessageHandler;
 import com.deku.cherryblossomgrotto.client.network.messages.DoubleJumpClientMessage;
 import com.deku.cherryblossomgrotto.common.blocks.*;
+import com.deku.cherryblossomgrotto.common.blocks.cherry_blossom.*;
+import com.deku.cherryblossomgrotto.common.blocks.maple.*;
 import com.deku.cherryblossomgrotto.common.capabilities.DoubleJumpCapability;
 import com.deku.cherryblossomgrotto.common.enchantments.ModEnchantmentInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ModEntityTypeInitializer;
@@ -12,6 +14,12 @@ import com.deku.cherryblossomgrotto.common.entity.animal.tanooki.Tanooki;
 import com.deku.cherryblossomgrotto.common.entity.npc.ModVillagerTypes;
 import com.deku.cherryblossomgrotto.common.features.*;
 import com.deku.cherryblossomgrotto.common.items.*;
+import com.deku.cherryblossomgrotto.common.items.cherry_blossom.CherryBlossomBoat;
+import com.deku.cherryblossomgrotto.common.items.cherry_blossom.CherryBlossomChestBoat;
+import com.deku.cherryblossomgrotto.common.items.cherry_blossom.CherryBlossomPetal;
+import com.deku.cherryblossomgrotto.common.items.maple.MapleBoat;
+import com.deku.cherryblossomgrotto.common.items.maple.MapleChestBoat;
+import com.deku.cherryblossomgrotto.common.items.maple.MapleLeaf;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
 import com.deku.cherryblossomgrotto.common.recipes.ModRecipeSerializerInitializer;
 import com.deku.cherryblossomgrotto.common.sounds.ModSoundEvents;
@@ -28,6 +36,7 @@ import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.*;
 import com.deku.cherryblossomgrotto.server.network.handlers.DoubleJumpServerMessageHandler;
 import com.deku.cherryblossomgrotto.server.network.messages.DoubleJumpServerMessage;
 import com.deku.cherryblossomgrotto.utils.LogTweaker;
+import com.deku.cherryblossomgrotto.utils.ModConfiguration;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -73,7 +82,9 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
@@ -134,6 +145,9 @@ public class Main
         if (HIDE_CONSOLE_NOISE) {
             LogTweaker.applyLogFilterLevel(Level.WARN);
         }
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ModConfiguration.COMMON_SPEC, "cherryblossomgrotto-common.toml");
+
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Sound events logic
@@ -202,6 +216,7 @@ public class Main
 
         event.enqueueWork(() -> {
             WoodType.register(ModWoodType.CHERRY_BLOSSOM);
+            WoodType.register(ModWoodType.MAPLE);
 
             Regions.register(new ModBiomeProvider());
             SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MOD_ID, ModSurfaceRules.makeRules());
@@ -271,6 +286,32 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_sapling"), new CherryBlossomSapling());
                 registrar.register(new ResourceLocation(MOD_ID, "potted_cherry_blossom_sapling"), new PottedCherryBlossomSapling());
 
+                // All maple wood blocks
+                registrar.register(new ResourceLocation(MOD_ID, "maple_log"), new MapleLog());
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_maple_log"), new StrippedMapleLog());
+                registrar.register(new ResourceLocation(MOD_ID, "maple_wood"), new MapleWood());
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_maple_wood"), new StrippedMapleWood());
+                registrar.register(new ResourceLocation(MOD_ID, "maple_planks"), new MaplePlanks());
+                registrar.register(new ResourceLocation(MOD_ID, "maple_slab"), new MapleSlab());
+                registrar.register(new ResourceLocation(MOD_ID, "maple_stairs"), new MapleStairs());
+                registrar.register(new ResourceLocation(MOD_ID, "maple_button"), new MapleButton());
+                registrar.register(new ResourceLocation(MOD_ID, "maple_fence"), new MapleFence());
+                registrar.register(new ResourceLocation(MOD_ID, "maple_fence_gate"), new MapleFenceGate());
+                registrar.register(new ResourceLocation(MOD_ID, "maple_pressure_plate"), new MaplePressurePlate());
+                registrar.register(new ResourceLocation(MOD_ID, "maple_sign"), new MapleSign());
+                registrar.register(new ResourceLocation(MOD_ID, "maple_wall_sign"), new MapleWallSign());
+                registrar.register(new ResourceLocation(MOD_ID, "maple_hanging_sign"), new MapleHangingSign());
+                registrar.register(new ResourceLocation(MOD_ID, "maple_wall_hanging_sign"), new MapleWallHangingSign());
+                registrar.register(new ResourceLocation(MOD_ID, "maple_door"), new MapleDoor());
+                registrar.register(new ResourceLocation(MOD_ID, "maple_trapdoor"), new MapleTrapDoor());
+                registrar.register(new ResourceLocation(MOD_ID, "maple_planks_trapdoor"), new MaplePlanksTrapdoor());
+
+                // All maple tree blocks
+                registrar.register(new ResourceLocation(MOD_ID, "maple_leaves"), new MapleLeaves());
+                registrar.register(new ResourceLocation(MOD_ID, "maple_leaf_pile"), new MapleLeafPile());
+                registrar.register(new ResourceLocation(MOD_ID, "maple_sapling"), new MapleSapling());
+                registrar.register(new ResourceLocation(MOD_ID, "potted_maple_sapling"), new PottedMapleSapling());
+
                 // All architectural blocks
                 registrar.register(new ResourceLocation(MOD_ID, "shoji_screen"), new ShojiScreen());
                 registrar.register(new ResourceLocation(MOD_ID, "tatami_mat"), new TatamiMat());
@@ -308,8 +349,9 @@ public class Main
         @SubscribeEvent
         public static void onTileEntityRegistry(final RegisterEvent registerEvent) {
             registerEvent.register(ForgeRegistries.Keys.BLOCK_ENTITY_TYPES, registrar -> {
-                // All cherry blossom tree block entities
+                // All tree block entities
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_leaves_tile_entity"), ModBlockEntities.CHERRY_LEAVES_TYPE);
+                registrar.register(new ResourceLocation(MOD_ID, "maple_leaves_tile_entity"), ModBlockEntities.MAPLE_LEAVES_TYPE);
 
                 // All sign block entities
                 registrar.register(new ResourceLocation(MOD_ID, "mod_sign_entity"), ModBlockEntities.SIGN_ENTITY_TYPE);
@@ -350,6 +392,32 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_petals"), new BlockItem(ModBlocks.CHERRY_PETALS, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_petal"), new CherryBlossomPetal());
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_sapling"), new BlockItem(ModBlocks.CHERRY_SAPLING, new Item.Properties()));
+
+                // All maple wood items
+                registrar.register(new ResourceLocation(MOD_ID, "maple_log"), new BlockItem(ModBlocks.MAPLE_LOG, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_maple_log"), new BlockItem(ModBlocks.STRIPPED_MAPLE_LOG, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "maple_wood"), new BlockItem(ModBlocks.MAPLE_WOOD, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_maple_wood"), new BlockItem(ModBlocks.STRIPPED_MAPLE_WOOD, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "maple_planks"), new BlockItem(ModBlocks.MAPLE_PLANKS, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "maple_slab"), new BlockItem(ModBlocks.MAPLE_SLAB, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "maple_stairs"), new BlockItem(ModBlocks.MAPLE_STAIRS, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "maple_button"), new BlockItem(ModBlocks.MAPLE_BUTTON, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "maple_fence"), new BlockItem(ModBlocks.MAPLE_FENCE, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "maple_fence_gate"), new BlockItem(ModBlocks.MAPLE_FENCE_GATE, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "maple_pressure_plate"), new BlockItem(ModBlocks.MAPLE_PRESSURE_PLATE, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "maple_sign"), new SignItem(new Item.Properties().stacksTo(16), ModBlocks.MAPLE_SIGN, ModBlocks.MAPLE_WALL_SIGN));
+                registrar.register(new ResourceLocation(MOD_ID, "maple_hanging_sign"), new HangingSignItem(ModBlocks.MAPLE_HANGING_SIGN, ModBlocks.MAPLE_WALL_HANGING_SIGN, new Item.Properties().stacksTo(16)));
+                registrar.register(new ResourceLocation(MOD_ID, "maple_door"), new DoubleHighBlockItem(ModBlocks.MAPLE_DOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "maple_trapdoor"), new BlockItem(ModBlocks.MAPLE_TRAPDOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "maple_planks_trapdoor"), new BlockItem(ModBlocks.MAPLE_PLANKS_TRAP_DOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "maple_boat"), new MapleBoat());
+                registrar.register(new ResourceLocation(MOD_ID, "maple_chest_boat"), new MapleChestBoat());
+
+                // All maple tree items
+                registrar.register(new ResourceLocation(MOD_ID, "maple_leaves"), new BlockItem(ModBlocks.MAPLE_LEAVES, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "maple_leaf_pile"), new BlockItem(ModBlocks.MAPLE_LEAF_PILE, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "maple_leaf"), new MapleLeaf());
+                registrar.register(new ResourceLocation(MOD_ID, "maple_sapling"), new BlockItem(ModBlocks.MAPLE_SAPLING, new Item.Properties()));
 
                 // All lantern items
                 registrar.register(new ResourceLocation(MOD_ID, "zen_lantern"), new DoubleHighBlockItem(ModBlocks.ZEN_LANTERN, new Item.Properties()));
@@ -424,8 +492,9 @@ public class Main
         @SubscribeEvent
         public static void onFeaturesRegistry(final RegisterEvent registerEvent) {
             registerEvent.register(ForgeRegistries.Keys.FEATURES, registrar -> {
-                // All cherry blossom tree features
+                // All ground cover features
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_petal_ground_cover"), new CherryBlossomPetalCoverFeature());
+                registrar.register(new ResourceLocation(MOD_ID, "maple_leaf_ground_cover"), new MapleLeafPileCoverFeature());
 
                 // Misc overworld features
                 registrar.register(new ResourceLocation(MOD_ID, "hotspring"), new HotspringFeature(HotspringFeature.Configuration.CODEC));
@@ -494,7 +563,7 @@ public class Main
             registerEvent.register(ForgeRegistries.Keys.PARTICLE_TYPES, registrar -> {
                 // All cherry blossom tree particle types
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_petal"), ModParticles.CHERRY_PETAL);
-
+                registrar.register(new ResourceLocation(MOD_ID, "maple_leaf"), ModParticles.MAPLE_LEAF);
             });
         }
 
@@ -516,81 +585,106 @@ public class Main
         @SubscribeEvent
         public static void onCreativeModeTabRegister(CreativeModeTabEvent.Register creativeTabBuildRegistryEvent) {
             creativeTabBuildRegistryEvent.registerCreativeModeTab(new ResourceLocation(MOD_ID, "cherry_blossom_grotto_creative_tab"), builder ->
-                builder.title(Component.translatable("Cherry Blossom Grotto"))
-                    .icon(() -> new ItemStack(ModItems.CHERRY_SAPLING))
-                    .displayItems((enabledFlags, populator, hasPermissions) -> {
-                        // Cherry blossom blocks
-                        populator.accept(ModItems.CHERRY_LOG);
-                        populator.accept(ModItems.CHERRY_WOOD);
-                        populator.accept(ModItems.STRIPPED_CHERRY_LOG);
-                        populator.accept(ModItems.STRIPPED_CHERRY_WOOD);
-                        populator.accept(ModItems.CHERRY_PLANKS);
-                        populator.accept(ModItems.CHERRY_STAIRS);
-                        populator.accept(ModItems.CHERRY_SLAB);
-                        populator.accept(ModItems.CHERRY_FENCE);
-                        populator.accept(ModItems.CHERRY_FENCE_GATE);
-                        populator.accept(ModItems.CHERRY_DOOR);
-                        populator.accept(ModItems.CHERRY_TRAPDOOR);
-                        populator.accept(ModItems.CHERRY_PRESSURE_PLATE);
-                        populator.accept(ModItems.CHERRY_LOG);
-                        populator.accept(ModItems.CHERRY_BUTTON);
-                        populator.accept(ModItems.CHERRY_LEAVES);
-                        populator.accept(ModItems.CHERRY_SAPLING);
-                        populator.accept(new ItemStack(ModItems.CHERRY_PETAL));
-                        populator.accept(ModItems.CHERRY_PETALS);
-                        populator.accept(new ItemStack(ModItems.CHERRY_BOAT));
-                        populator.accept(new ItemStack(ModItems.CHERRY_CHEST_BOAT));
-                        populator.accept(ModItems.CHERRY_SIGN);
-                        populator.accept(ModItems.CHERRY_HANGING_SIGN);
+                    builder.title(Component.translatable("Cherry Blossom Grotto"))
+                            .icon(() -> new ItemStack(ModItems.CHERRY_SAPLING))
+                            .displayItems((enabledFlags, populator, hasPermissions) -> {
+                                        // Cherry blossom blocks
+                                        populator.accept(ModItems.CHERRY_LOG);
+                                        populator.accept(ModItems.CHERRY_WOOD);
+                                        populator.accept(ModItems.STRIPPED_CHERRY_LOG);
+                                        populator.accept(ModItems.STRIPPED_CHERRY_WOOD);
+                                        populator.accept(ModItems.CHERRY_PLANKS);
+                                        populator.accept(ModItems.CHERRY_STAIRS);
+                                        populator.accept(ModItems.CHERRY_SLAB);
+                                        populator.accept(ModItems.CHERRY_FENCE);
+                                        populator.accept(ModItems.CHERRY_FENCE_GATE);
+                                        populator.accept(ModItems.CHERRY_DOOR);
+                                        populator.accept(ModItems.CHERRY_TRAPDOOR);
+                                        populator.accept(ModItems.CHERRY_PRESSURE_PLATE);
+                                        populator.accept(ModItems.CHERRY_LOG);
+                                        populator.accept(ModItems.CHERRY_BUTTON);
+                                        populator.accept(ModItems.CHERRY_LEAVES);
+                                        populator.accept(ModItems.CHERRY_SAPLING);
+                                        populator.accept(new ItemStack(ModItems.CHERRY_PETAL));
+                                        populator.accept(ModItems.CHERRY_PETALS);
+                                        populator.accept(new ItemStack(ModItems.CHERRY_BOAT));
+                                        populator.accept(new ItemStack(ModItems.CHERRY_CHEST_BOAT));
+                                        populator.accept(ModItems.CHERRY_SIGN);
+                                        populator.accept(ModItems.CHERRY_HANGING_SIGN);
 
-                        // Crops
-                        populator.accept(new ItemStack(ModItems.RICE));
-                        populator.accept(new ItemStack(ModItems.ONIGIRI));
+                                        // Maple blocks
+                                        populator.accept(ModItems.MAPLE_LOG);
+                                        populator.accept(ModItems.MAPLE_WOOD);
+                                        populator.accept(ModItems.STRIPPED_MAPLE_LOG);
+                                        populator.accept(ModItems.STRIPPED_MAPLE_WOOD);
+                                        populator.accept(ModItems.MAPLE_PLANKS);
+                                        populator.accept(ModItems.MAPLE_STAIRS);
+                                        populator.accept(ModItems.MAPLE_SLAB);
+                                        populator.accept(ModItems.MAPLE_FENCE);
+                                        populator.accept(ModItems.MAPLE_FENCE_GATE);
+                                        populator.accept(ModItems.MAPLE_DOOR);
+                                        populator.accept(ModItems.MAPLE_TRAPDOOR);
+                                        populator.accept(ModItems.MAPLE_PRESSURE_PLATE);
+                                        populator.accept(ModItems.MAPLE_LOG);
+                                        populator.accept(ModItems.MAPLE_BUTTON);
+                                        populator.accept(ModItems.MAPLE_LEAVES);
+                                        populator.accept(ModItems.MAPLE_SAPLING);
+                                        populator.accept(new ItemStack(ModItems.MAPLE_LEAF));
+                                        populator.accept(ModItems.MAPLE_LEAF_PILE);
+                                        populator.accept(new ItemStack(ModItems.MAPLE_BOAT));
+                                        populator.accept(new ItemStack(ModItems.MAPLE_CHEST_BOAT));
+                                        populator.accept(ModItems.MAPLE_SIGN);
+                                        populator.accept(ModItems.MAPLE_HANGING_SIGN);
 
-                        // Wildlife
-                        populator.accept(new ItemStack(ModItems.KOI));
-                        populator.accept(new ItemStack(ModItems.COOKED_KOI));
-                        populator.accept(new ItemStack(ModItems.KOI_BUCKET));
-                        populator.accept(new ItemStack(ModItems.KOI_SPAWN_EGG));
-                        populator.accept(new ItemStack(ModItems.TANOOKI_SPAWN_EGG));
+                                        // Crops
+                                        populator.accept(new ItemStack(ModItems.RICE));
+                                        populator.accept(new ItemStack(ModItems.ONIGIRI));
 
-                        // Misc building blocks
-                        populator.accept(ModItems.SHOJI_SCREEN);
-                        populator.accept(ModItems.TATAMI_MAT);
-                        populator.accept(ModItems.LONG_TATAMI_MAT);
-                        populator.accept(ModItems.AGED_TATAMI_MAT);
-                        populator.accept(ModItems.LONG_AGED_TATAMI_MAT);
-                        populator.accept(ModItems.ZEN_LANTERN);
-                        populator.accept(ModItems.SOUL_ZEN_LANTERN);
+                                        // Wildlife
+                                        populator.accept(new ItemStack(ModItems.KOI));
+                                        populator.accept(new ItemStack(ModItems.COOKED_KOI));
+                                        populator.accept(new ItemStack(ModItems.KOI_BUCKET));
+                                        populator.accept(new ItemStack(ModItems.KOI_SPAWN_EGG));
+                                        populator.accept(new ItemStack(ModItems.TANOOKI_SPAWN_EGG));
 
-                        // Weapons & Armour
-                        populator.accept(new ItemStack(ModItems.KATANA));
-                        populator.accept(new ItemStack(ModItems.KUNAI));
-                        populator.accept(new ItemStack(ModItems.SHURIKEN));
-                        populator.accept(new ItemStack(ModItems.NINJA_MASK));
-                        populator.accept(new ItemStack(ModItems.NINJA_TUNIC));
-                        populator.accept(new ItemStack(ModItems.NINJA_LEGGINGS));
-                        populator.accept(new ItemStack(ModItems.NINJA_SANDALS));
-                        populator.accept(new ItemStack(ModItems.KABUTO_HELMET));
-                        populator.accept(new ItemStack(ModItems.KABUTO_CUIRASS));
-                        populator.accept(new ItemStack(ModItems.KABUTO_GREAVES));
-                        populator.accept(new ItemStack(ModItems.KABUTO_SANDALS));
+                                        // Misc building blocks
+                                        populator.accept(ModItems.SHOJI_SCREEN);
+                                        populator.accept(ModItems.TATAMI_MAT);
+                                        populator.accept(ModItems.LONG_TATAMI_MAT);
+                                        populator.accept(ModItems.AGED_TATAMI_MAT);
+                                        populator.accept(ModItems.LONG_AGED_TATAMI_MAT);
+                                        populator.accept(ModItems.ZEN_LANTERN);
+                                        populator.accept(ModItems.SOUL_ZEN_LANTERN);
 
-                        // Hidden trapdoors
-                        populator.accept(ModItems.CHERRY_BLOSSOM_PLANKS_TRAP_DOOR);
-                        populator.accept(ModItems.ACACIA_PLANKS_TRAP_DOOR);
-                        populator.accept(ModItems.BIRCH_PLANKS_TRAP_DOOR);
-                        populator.accept(ModItems.DARK_OAK_PLANKS_TRAP_DOOR);
-                        populator.accept(ModItems.JUNGLE_PLANKS_TRAP_DOOR);
-                        populator.accept(ModItems.OAK_PLANKS_TRAP_DOOR);
-                        populator.accept(ModItems.SPRUCE_PLANKS_TRAP_DOOR);
-                        populator.accept(ModItems.MANGROVE_PLANKS_TRAP_DOOR);
-                        populator.accept(ModItems.SMOOTH_STONE_TRAP_DOOR);
-                        populator.accept(ModItems.STONE_TRAP_DOOR);
-                        populator.accept(ModItems.SMOOTH_STONE_TRAP_DOOR);
-                        populator.accept(ModItems.COBBLESTONE_TRAP_DOOR);
-                    }
-                )
+                                        // Weapons & Armour
+                                        populator.accept(new ItemStack(ModItems.KATANA));
+                                        populator.accept(new ItemStack(ModItems.KUNAI));
+                                        populator.accept(new ItemStack(ModItems.SHURIKEN));
+                                        populator.accept(new ItemStack(ModItems.NINJA_MASK));
+                                        populator.accept(new ItemStack(ModItems.NINJA_TUNIC));
+                                        populator.accept(new ItemStack(ModItems.NINJA_LEGGINGS));
+                                        populator.accept(new ItemStack(ModItems.NINJA_SANDALS));
+                                        populator.accept(new ItemStack(ModItems.KABUTO_HELMET));
+                                        populator.accept(new ItemStack(ModItems.KABUTO_CUIRASS));
+                                        populator.accept(new ItemStack(ModItems.KABUTO_GREAVES));
+                                        populator.accept(new ItemStack(ModItems.KABUTO_SANDALS));
+
+                                        // Hidden trapdoors
+                                        populator.accept(ModItems.CHERRY_BLOSSOM_PLANKS_TRAP_DOOR);
+                                        populator.accept(ModItems.MAPLE_PLANKS_TRAP_DOOR);
+                                        populator.accept(ModItems.ACACIA_PLANKS_TRAP_DOOR);
+                                        populator.accept(ModItems.BIRCH_PLANKS_TRAP_DOOR);
+                                        populator.accept(ModItems.DARK_OAK_PLANKS_TRAP_DOOR);
+                                        populator.accept(ModItems.JUNGLE_PLANKS_TRAP_DOOR);
+                                        populator.accept(ModItems.OAK_PLANKS_TRAP_DOOR);
+                                        populator.accept(ModItems.SPRUCE_PLANKS_TRAP_DOOR);
+                                        populator.accept(ModItems.MANGROVE_PLANKS_TRAP_DOOR);
+                                        populator.accept(ModItems.SMOOTH_STONE_TRAP_DOOR);
+                                        populator.accept(ModItems.STONE_TRAP_DOOR);
+                                        populator.accept(ModItems.SMOOTH_STONE_TRAP_DOOR);
+                                        populator.accept(ModItems.COBBLESTONE_TRAP_DOOR);
+                                    }
+                            )
             );
         }
 
@@ -620,6 +714,19 @@ public class Main
                 entries.putAfter(new ItemStack(ModItems.CHERRY_TRAPDOOR), new ItemStack(ModItems.CHERRY_PRESSURE_PLATE), visibility);
                 entries.putAfter(new ItemStack(ModItems.CHERRY_PRESSURE_PLATE), new ItemStack(ModItems.CHERRY_BUTTON), visibility);
 
+                entries.putAfter(new ItemStack(ModItems.MAPLE_LOG), new ItemStack(ModItems.MAPLE_WOOD), visibility);
+                entries.putAfter(new ItemStack(ModItems.MAPLE_WOOD), new ItemStack(ModItems.STRIPPED_MAPLE_LOG), visibility);
+                entries.putAfter(new ItemStack(ModItems.STRIPPED_MAPLE_LOG), new ItemStack(ModItems.STRIPPED_MAPLE_WOOD), visibility);
+                entries.putAfter(new ItemStack(ModItems.STRIPPED_MAPLE_WOOD), new ItemStack(ModItems.MAPLE_PLANKS), visibility);
+                entries.putAfter(new ItemStack(ModItems.MAPLE_PLANKS), new ItemStack(ModItems.MAPLE_STAIRS), visibility);
+                entries.putAfter(new ItemStack(ModItems.MAPLE_STAIRS), new ItemStack(ModItems.MAPLE_SLAB), visibility);
+                entries.putAfter(new ItemStack(ModItems.MAPLE_SLAB), new ItemStack(ModItems.MAPLE_FENCE), visibility);
+                entries.putAfter(new ItemStack(ModItems.MAPLE_FENCE), new ItemStack(ModItems.MAPLE_FENCE_GATE), visibility);
+                entries.putAfter(new ItemStack(ModItems.MAPLE_FENCE_GATE), new ItemStack(ModItems.MAPLE_DOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.MAPLE_DOOR), new ItemStack(ModItems.MAPLE_TRAPDOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.MAPLE_TRAPDOOR), new ItemStack(ModItems.MAPLE_PRESSURE_PLATE), visibility);
+                entries.putAfter(new ItemStack(ModItems.MAPLE_PRESSURE_PLATE), new ItemStack(ModItems.MAPLE_BUTTON), visibility);
+
                 // Misc building blocks
                 creativeTabBuilderRegistryEvent.accept(ModItems.SHOJI_SCREEN);
                 creativeTabBuilderRegistryEvent.accept(ModItems.TATAMI_MAT);
@@ -636,6 +743,7 @@ public class Main
                 entries.putAfter(new ItemStack(Items.SPRUCE_TRAPDOOR), new ItemStack(ModItems.SPRUCE_PLANKS_TRAP_DOOR), visibility);
                 entries.putAfter(new ItemStack(Items.MANGROVE_TRAPDOOR), new ItemStack(ModItems.MANGROVE_PLANKS_TRAP_DOOR), visibility);
                 entries.putAfter(new ItemStack(ModItems.CHERRY_TRAPDOOR), new ItemStack(ModItems.CHERRY_BLOSSOM_PLANKS_TRAP_DOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.MAPLE_TRAPDOOR), new ItemStack(ModItems.MAPLE_PLANKS_TRAP_DOOR), visibility);
                 entries.putAfter(new ItemStack(Items.STONE_SLAB), new ItemStack(ModItems.STONE_TRAP_DOOR), visibility);
                 entries.putAfter(new ItemStack(Items.SMOOTH_STONE_SLAB), new ItemStack(ModItems.SMOOTH_STONE_TRAP_DOOR), visibility);
                 entries.putAfter(new ItemStack(Items.COBBLESTONE_WALL), new ItemStack(ModItems.COBBLESTONE_TRAP_DOOR), visibility);
@@ -647,6 +755,11 @@ public class Main
                 entries.putAfter(new ItemStack(Items.SWEET_BERRIES), new ItemStack(ModItems.RICE), visibility);
                 entries.putAfter(new ItemStack(ModItems.RICE), new ItemStack(ModItems.CHERRY_PETAL), visibility);
                 entries.putAfter(new ItemStack(ModItems.CHERRY_PETAL), new ItemStack(ModItems.CHERRY_PETALS), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_LOG), new ItemStack(ModItems.MAPLE_LOG), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_LEAVES), new ItemStack(ModItems.MAPLE_LEAVES), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_SAPLING), new ItemStack(ModItems.MAPLE_SAPLING), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_PETAL), new ItemStack(ModItems.MAPLE_LEAF), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_PETALS), new ItemStack(ModItems.MAPLE_LEAF_PILE), visibility);
             } else if (creativeTabBuilderRegistryEvent.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
                 // Lanterns
                 entries.putAfter(new ItemStack(Items.SOUL_LANTERN), new ItemStack(ModItems.ZEN_LANTERN), visibility);
@@ -655,6 +768,8 @@ public class Main
                 // Signs
                 entries.putAfter(new ItemStack(Items.MANGROVE_SIGN), new ItemStack(ModItems.CHERRY_SIGN), visibility);
                 entries.putAfter(new ItemStack(ModItems.CHERRY_SIGN), new ItemStack(ModItems.CHERRY_HANGING_SIGN), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_SIGN), new ItemStack(ModItems.MAPLE_SIGN), visibility);
+                entries.putAfter(new ItemStack(ModItems.MAPLE_SIGN), new ItemStack(ModItems.MAPLE_HANGING_SIGN), visibility);
             } else if (creativeTabBuilderRegistryEvent.getTab() == CreativeModeTabs.REDSTONE_BLOCKS) {
                 // Cherry blossom blocks
                 entries.putAfter(new ItemStack(Items.OAK_BUTTON), new ItemStack(ModItems.CHERRY_BUTTON), visibility);
@@ -663,6 +778,14 @@ public class Main
                 entries.putAfter(new ItemStack(Items.OAK_FENCE_GATE), new ItemStack(ModItems.CHERRY_FENCE_GATE), visibility);
                 entries.putAfter(new ItemStack(Items.OAK_DOOR), new ItemStack(ModItems.CHERRY_DOOR), visibility);
                 entries.putAfter(new ItemStack(Items.OAK_TRAPDOOR), new ItemStack(ModItems.CHERRY_TRAPDOOR), visibility);
+
+                // Maple blocks
+                entries.putAfter(new ItemStack(ModItems.CHERRY_BUTTON), new ItemStack(ModItems.MAPLE_BUTTON), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_PRESSURE_PLATE), new ItemStack(ModItems.MAPLE_PRESSURE_PLATE), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_CHEST_BOAT), new ItemStack(ModItems.MAPLE_CHEST_BOAT), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_FENCE_GATE), new ItemStack(ModItems.MAPLE_FENCE_GATE), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_DOOR), new ItemStack(ModItems.MAPLE_DOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_TRAPDOOR), new ItemStack(ModItems.MAPLE_TRAPDOOR), visibility);
             } else if (creativeTabBuilderRegistryEvent.getTab() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
                 // Buckets
                 entries.putAfter(new ItemStack(Items.TROPICAL_FISH_BUCKET), new ItemStack(ModItems.KOI_BUCKET), visibility);
@@ -670,6 +793,8 @@ public class Main
                 // Boats
                 entries.putAfter(new ItemStack(Items.MANGROVE_CHEST_BOAT), new ItemStack(ModItems.CHERRY_BOAT), visibility);
                 entries.putAfter(new ItemStack(ModItems.CHERRY_BOAT), new ItemStack(ModItems.CHERRY_CHEST_BOAT), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_CHEST_BOAT), new ItemStack(ModItems.MAPLE_BOAT), visibility);
+                entries.putAfter(new ItemStack(ModItems.MAPLE_BOAT), new ItemStack(ModItems.MAPLE_CHEST_BOAT), visibility);
             } else if (creativeTabBuilderRegistryEvent.getTab() == CreativeModeTabs.COMBAT) {
                 // Melee weapons
                 entries.putAfter(new ItemStack(Items.NETHERITE_AXE), new ItemStack(ModItems.KATANA), visibility);
@@ -698,6 +823,7 @@ public class Main
             } else if (creativeTabBuilderRegistryEvent.getTab() == CreativeModeTabs.INGREDIENTS) {
                 // Plants
                 entries.putAfter(new ItemStack(Items.WHEAT), new ItemStack(ModItems.CHERRY_PETAL), visibility);
+                entries.putAfter(new ItemStack(ModItems.CHERRY_PETAL), new ItemStack(ModItems.MAPLE_LEAF), visibility);
             } else if (creativeTabBuilderRegistryEvent.getTab() == CreativeModeTabs.SPAWN_EGGS) {
                 // Fish
                 entries.putAfter(new ItemStack(Items.TROPICAL_FISH_SPAWN_EGG), new ItemStack(ModItems.KOI_SPAWN_EGG), visibility);

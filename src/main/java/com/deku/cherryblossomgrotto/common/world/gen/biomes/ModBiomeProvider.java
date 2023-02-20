@@ -1,6 +1,6 @@
 package com.deku.cherryblossomgrotto.common.world.gen.biomes;
 
-import com.google.common.collect.ImmutableList;
+import com.deku.cherryblossomgrotto.utils.ModConfiguration;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
@@ -8,12 +8,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.Climate;
-import terrablender.api.ParameterUtils;
 import terrablender.api.Region;
 import terrablender.api.RegionType;
-import terrablender.worldgen.RegionUtils;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 import static com.deku.cherryblossomgrotto.Main.MOD_ID;
@@ -21,7 +18,7 @@ import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 public class ModBiomeProvider extends Region {
     public ModBiomeProvider() {
         // Adding low region weight since we only have one biome. Don't want it to be too common
-        super(new ResourceLocation(MOD_ID, "eastern_region"), RegionType.OVERWORLD, 2);
+        super(new ResourceLocation(MOD_ID, "eastern_region"), RegionType.OVERWORLD, 1);
     }
 
     /**
@@ -48,25 +45,16 @@ public class ModBiomeProvider extends Region {
             cherryBlossomGrottoClimate.forEach(point -> builder.replaceBiome(point, ModBiomeInitializer.CHERRY_BLOSSOM_GROTTO));
         });*/
 
-        // TODO: Only loads on mountain peaks, would be good for a snowy variant of the biome
-        // Erosion is the higher the value, the flatter the terrian. Use smaller values for mountainous regions
-        /*addModifiedVanillaOverworldBiomes(mapper, builder -> {
-            List<Climate.ParameterPoint> cherryBlossomGrottoClimate = new ParameterUtils.ParameterPointListBuilder()
-                    .temperature(ParameterUtils.Temperature.NEUTRAL, ParameterUtils.Temperature.WARM)
-                    .humidity(ParameterUtils.Humidity.NEUTRAL, ParameterUtils.Humidity.WET, ParameterUtils.Humidity.HUMID)
-                    .continentalness(ParameterUtils.Continentalness.span(ParameterUtils.Continentalness.COAST, ParameterUtils.Continentalness.FAR_INLAND), ParameterUtils.Continentalness.span(ParameterUtils.Continentalness.MID_INLAND, ParameterUtils.Continentalness.FAR_INLAND))
-                    .erosion(ParameterUtils.Erosion.EROSION_0, ParameterUtils.Erosion.EROSION_1)
-                    .depth(ParameterUtils.Depth.SURFACE)
-                    .weirdness(ParameterUtils.Weirdness.MID_SLICE_NORMAL_ASCENDING, ParameterUtils.Weirdness.PEAK_NORMAL, ParameterUtils.Weirdness.LOW_SLICE_NORMAL_DESCENDING, ParameterUtils.Weirdness.VALLEY, ParameterUtils.Weirdness.MID_SLICE_NORMAL_DESCENDING)
-                    .build();
-
-            cherryBlossomGrottoClimate.forEach(point -> builder.replaceBiome(point, ModBiomeInitializer.CHERRY_BLOSSOM_GROTTO));
-        });*/
-
         addModifiedVanillaOverworldBiomes(mapper, builder -> {
-            builder.replaceBiome(Biomes.FLOWER_FOREST, ModBiomeInitializer.CHERRY_BLOSSOM_GROTTO);
-            builder.replaceBiome(Biomes.GROVE, ModBiomeInitializer.CHERRY_BLOSSOM_SLOPES);
-            builder.replaceBiome(Biomes.SPARSE_JUNGLE, ModBiomeInitializer.CHERRY_BLOSSOM_BAMBOO_JUNGLE);
+            if(ModConfiguration.spawnCherryBlossomBiomes.get()) {
+                builder.replaceBiome(Biomes.FLOWER_FOREST, ModBiomeInitializer.CHERRY_BLOSSOM_GROTTO);
+                builder.replaceBiome(Biomes.GROVE, ModBiomeInitializer.CHERRY_BLOSSOM_SLOPES);
+                builder.replaceBiome(Biomes.SPARSE_JUNGLE, ModBiomeInitializer.CHERRY_BLOSSOM_BAMBOO_JUNGLE);
+            }
+            if(ModConfiguration.spawnMapleBiomes.get()) {
+                builder.replaceBiome(Biomes.FOREST, ModBiomeInitializer.MAPLE_WOODS);
+                builder.replaceBiome(Biomes.BIRCH_FOREST, ModBiomeInitializer.OAK_AND_MAPLE_FOREST);
+            }
         });
     }
 }

@@ -31,6 +31,8 @@ public class ModVegetationFeatures {
     public static ResourceKey<ConfiguredFeature<?, ?>> TREES_CHERY_BLOSSOM_SLOPES = registerVegetationFeatureKey("trees_cherry_blossom_slopes");
     public static ResourceKey<ConfiguredFeature<?, ?>> TREES_CHERY_BLOSSOM_SPARSE = registerVegetationFeatureKey("trees_cherry_blossom_sparse");
     public static ResourceKey<ConfiguredFeature<?, ?>> CHERRY_BLOSSOM_BAMBOO_VEGETATION = registerVegetationFeatureKey("cherry_blossom_bamboo_vegetation");
+    public static ResourceKey<ConfiguredFeature<?, ?>> TREES_MAPLE_WOODS = registerVegetationFeatureKey("trees_maple_woods");
+    public static ResourceKey<ConfiguredFeature<?, ?>> TREES_OAK_AND_MAPLE_FOREST = registerVegetationFeatureKey("trees_oak_and_maple_forest");
 
     /**
      * Registers a resource key for the given vegetation feature name
@@ -138,6 +140,26 @@ public class ModVegetationFeatures {
         );
     }
 
+    private static RandomFeatureConfiguration createMapleTreesConfiguration(Holder<PlacedFeature> fancyMapleTree, Holder<PlacedFeature> fancyMapleTreeBees) {
+        return new RandomFeatureConfiguration(
+            ImmutableList.of(
+                new WeightedPlacedFeature(fancyMapleTreeBees, 0.1f)
+            ),
+            fancyMapleTree
+        );
+    }
+
+    private static RandomFeatureConfiguration createOakAndMapleTreesConfiguration(Holder<PlacedFeature> fancyMapleTree, Holder<PlacedFeature> fancyMapleTreeBees, Holder<PlacedFeature> oakTreeBees002, Holder<PlacedFeature> fancyOakTreeBees002) {
+        return new RandomFeatureConfiguration(
+                ImmutableList.of(
+                        new WeightedPlacedFeature(fancyMapleTree, 0.2f),
+                        new WeightedPlacedFeature(fancyMapleTreeBees, 0.1f),
+                        new WeightedPlacedFeature(oakTreeBees002, 0.1f)
+                ),
+                fancyOakTreeBees002
+        );
+    }
+
     /**
      * Registers vegetation features using the bootstrap context
      *
@@ -155,12 +177,18 @@ public class ModVegetationFeatures {
         Holder<PlacedFeature> fancyCherryBlossomTree = placedFeatureGetter.getOrThrow(ModTreePlacements.FANCY_CHERRY_BLOSSOM_CHECKED);
         Holder<PlacedFeature> fancyCherryBlossomTreeOnSnow = placedFeatureGetter.getOrThrow(ModTreePlacements.FANCY_CHERRY_BLOSSOM_ON_SNOW);
         Holder<PlacedFeature> grandCherryBlossomTree = placedFeatureGetter.getOrThrow(ModTreePlacements.GRAND_CHERRY_BLOSSOM_CHECKED);
+        Holder<PlacedFeature> fancyMapleTree = placedFeatureGetter.getOrThrow(ModTreePlacements.FANCY_MAPLE_CHECKED);
+        Holder<PlacedFeature> fancyMapleTreeBees = placedFeatureGetter.getOrThrow(ModTreePlacements.FANCY_MAPLE_BEES);
         Holder<PlacedFeature> jungleBush = placedFeatureGetter.getOrThrow(TreePlacements.JUNGLE_BUSH);
+        Holder<PlacedFeature> oakTreeBees002 = placedFeatureGetter.getOrThrow(TreePlacements.OAK_BEES_002);
+        Holder<PlacedFeature> fancyOakTreeBees002 = placedFeatureGetter.getOrThrow(TreePlacements.FANCY_OAK_BEES_002);
 
         context.register(TREES_CHERY_BLOSSOM_GROTTO, new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, createCherryBlossomGrottoTreesConfiguration(cherryBlossomTreeBees02, fancyCherryBlossomTree, grandCherryBlossomTree)));
         context.register(CHERY_BLOSSOM_GROTTO_FLOWERS, new ConfiguredFeature<>(Feature.SIMPLE_RANDOM_SELECTOR, createCherryBlossomGrottoFlowersConfiguration()));
         context.register(TREES_CHERY_BLOSSOM_SLOPES, new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, createCherryBlossomSlopesTreesConfiguration(cherryBlossomTreeOnSnow, fancyCherryBlossomTreeOnSnow)));
         context.register(TREES_CHERY_BLOSSOM_SPARSE, new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, createCherryBlossomSparseTreesConfiguration(cherryBlossomTreeBees02, fancyCherryBlossomTree)));
         context.register(CHERRY_BLOSSOM_BAMBOO_VEGETATION, new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, createCherryBlossomBambooVegetationConfiguration(jungleGrass, cherryBlossomTree, fancyCherryBlossomTree, jungleBush)));
+        context.register(TREES_MAPLE_WOODS, new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, createMapleTreesConfiguration(fancyMapleTree, fancyMapleTreeBees)));
+        context.register(TREES_OAK_AND_MAPLE_FOREST, new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, createOakAndMapleTreesConfiguration(fancyMapleTree, fancyMapleTreeBees, oakTreeBees002, fancyOakTreeBees002)));
     }
 }

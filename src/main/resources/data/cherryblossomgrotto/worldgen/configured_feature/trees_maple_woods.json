@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:random_selector",
+  "config": {
+    "default": "cherryblossomgrotto:fancy_maple_checked",
+    "features": [
+      {
+        "chance": 0.1,
+        "feature":"cherryblossomgrotto:fancy_maple_bees"
+      }
+    ]
+  }
+}

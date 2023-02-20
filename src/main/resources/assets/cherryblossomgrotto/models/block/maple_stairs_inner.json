@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "cherryblossomgrotto:block/maple_planks",
+    "top": "cherryblossomgrotto:block/maple_planks",
+    "side": "cherryblossomgrotto:block/maple_planks"
+  }
+}

@@ -128,6 +128,12 @@
       }
     ],
     "water_creature": [
+      {
+        "type": "cherryblossomgrotto:koi_entity",
+        "weight": 10,
+        "minCount": 2,
+        "maxCount": 5
+      }
     ],
     "underground_water_creature": [
       {

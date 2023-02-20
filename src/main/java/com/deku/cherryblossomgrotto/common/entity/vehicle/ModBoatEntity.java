@@ -112,6 +112,8 @@ public class ModBoatEntity extends Boat {
     @Override
     public Item getDropItem() {
         switch(this.getModBoatType()) {
+            case MAPLE:
+                return ModItems.MAPLE_BOAT;
             case CHERRY:
             default:
                 return ModItems.CHERRY_BOAT;

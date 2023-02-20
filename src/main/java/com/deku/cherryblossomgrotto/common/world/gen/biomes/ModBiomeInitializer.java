@@ -23,6 +23,12 @@ public class ModBiomeInitializer {
     public static ResourceKey<Biome> CHERRY_BLOSSOM_SLOPES = registerBiomeKey("cherry_blossom_slopes");
 
     public static ResourceKey<Biome> CHERRY_BLOSSOM_BAMBOO_JUNGLE = registerBiomeKey("cherry_blossom_bamboo_jungle");
+
+    public static ResourceKey<Biome> MAPLE_WOODS = registerBiomeKey("maple_woods");
+
+
+    public static ResourceKey<Biome> OAK_AND_MAPLE_FOREST = registerBiomeKey("oak_and_maple_forest");
+
     /**
      * Registers the biome into the vanilla game by the biome registry
      *
@@ -45,6 +51,8 @@ public class ModBiomeInitializer {
         context.register(CHERRY_BLOSSOM_GROTTO, OverworldBiomes.theVoid(placementGetter, carverGetter));
         context.register(CHERRY_BLOSSOM_SLOPES, OverworldBiomes.theVoid(placementGetter, carverGetter));
         context.register(CHERRY_BLOSSOM_BAMBOO_JUNGLE, OverworldBiomes.theVoid(placementGetter, carverGetter));
+        context.register(MAPLE_WOODS, OverworldBiomes.theVoid(placementGetter, carverGetter));
+        context.register(OAK_AND_MAPLE_FOREST, OverworldBiomes.theVoid(placementGetter, carverGetter));
     }
 
     /**
@@ -55,5 +63,7 @@ public class ModBiomeInitializer {
         BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(CHERRY_BLOSSOM_GROTTO, 1));
         BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(CHERRY_BLOSSOM_SLOPES, 1));
         BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(CHERRY_BLOSSOM_BAMBOO_JUNGLE, 1));
+        BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(MAPLE_WOODS, 1));
+        BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(OAK_AND_MAPLE_FOREST, 1));
     }
 }

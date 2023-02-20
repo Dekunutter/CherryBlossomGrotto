@@ -33,6 +33,9 @@ public class ModTreePlacements {
 
     public static ResourceKey<PlacedFeature> GRAND_CHERRY_BLOSSOM_CHECKED = registerTreePlacementKey("grand_cherry_blossom_checked");
 
+    public static ResourceKey<PlacedFeature> FANCY_MAPLE_CHECKED = registerTreePlacementKey("fancy_maple_checked");
+    public static ResourceKey<PlacedFeature> FANCY_MAPLE_BEES = registerTreePlacementKey("fancy_maple_bees");
+
     /**
      * Registers the tree placements into the vanilla game by the placed feature registry
      *
@@ -60,6 +63,9 @@ public class ModTreePlacements {
         context.register(FANCY_CHERRY_BLOSSOM_BEES_05, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.FANCY_CHERRY_BLOSSOM_BEES_05), List.of(PlacementUtils.filteredByBlockSurvival(ModBlocks.CHERRY_SAPLING))));
         context.register(FANCY_CHERRY_BLOSSOM_ON_SNOW, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.FANCY_CHERRY_BLOSSOM), surviveOnSnowPredicate()));
         context.register(GRAND_CHERRY_BLOSSOM_CHECKED, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.GRAND_CHERRY_BLOSSOM), List.of(PlacementUtils.filteredByBlockSurvival(ModBlocks.CHERRY_SAPLING))));
+
+        context.register(FANCY_MAPLE_CHECKED, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.FANCY_MAPLE_TREE), List.of(PlacementUtils.filteredByBlockSurvival(ModBlocks.MAPLE_SAPLING))));
+        context.register(FANCY_MAPLE_BEES, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.FANCY_MAPLE_TREE_BEES), List.of(PlacementUtils.filteredByBlockSurvival(ModBlocks.MAPLE_SAPLING))));
     }
 
     /**

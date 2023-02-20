@@ -8,41 +8,19 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.awt.*;
-import java.util.Locale;
 
-public class FallingCherryBlossomPetalOptions implements ParticleOptions {
+public class FallingCherryBlossomPetalOptions extends AbstractFallingLeafParticleOptions {
     private Color tint;
     private double diameter;
 
     public FallingCherryBlossomPetalOptions(Color tint, double diameter) {
-        this.tint = tint;
-        this.diameter = diameter;
+        super(tint, diameter);
     }
 
     private FallingCherryBlossomPetalOptions(int rgb, double diameter) {
-        this.tint = new Color(rgb);
-        this.diameter = diameter;
-    }
-
-    /**
-     * Getter for the color of the particle
-     *
-     * @return Color associated with this particle
-     */
-    public Color getTint() {
-        return tint;
-    }
-
-    /**
-     * Getter for the diameter of the particle
-     *
-     * @return Diameter in metres
-     */
-    public double getDiameter() {
-        return diameter;
+        super(rgb, diameter);
     }
 
     /**
@@ -53,29 +31,6 @@ public class FallingCherryBlossomPetalOptions implements ParticleOptions {
     @Override
     public ParticleType<FallingCherryBlossomPetalOptions> getType() {
         return ModParticles.CHERRY_PETAL;
-    }
-
-    /**
-     * Write particle information to a PacketBuffer, ready for transmission to a client
-     *
-     * @param buffer Buffer to be sent to the client
-     */
-    @Override
-    public void writeToNetwork(FriendlyByteBuf buffer) {
-        buffer.writeInt(tint.getRed());
-        buffer.writeInt(tint.getGreen());
-        buffer.writeInt(tint.getBlue());
-        buffer.writeDouble(diameter);
-    }
-
-    /**
-     * Prints data about the particle in human-readable format
-     *
-     * @return Particle data written to a string
-     */
-    @Override
-    public String writeToString() {
-        return String.format(Locale.ROOT, "%s %.2f %i %i %i", ForgeRegistries.PARTICLE_TYPES.getKey(this.getType()), diameter, tint.getRed(), tint.getGreen(), tint.getBlue());
     }
 
     /**
