@@ -108,6 +108,8 @@ public class FoldingRecipe extends CustomRecipe {
             int currentFolds = compoundnbt.getInt("folds");
             if(currentFolds >= 0 && currentFolds <  ModConfiguration.maxFolds.get()) {
                 currentFolds++;
+            } else {
+                return ItemStack.EMPTY;
             }
             compoundnbt.putInt("folds", currentFolds);
             assembledKatana.setTag(compoundnbt);
