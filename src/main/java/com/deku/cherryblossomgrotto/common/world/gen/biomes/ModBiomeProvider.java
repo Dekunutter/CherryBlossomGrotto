@@ -1,5 +1,6 @@
 package com.deku.cherryblossomgrotto.common.world.gen.biomes;
 
+import com.deku.cherryblossomgrotto.utils.ModConfiguration;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.Registry;
@@ -63,8 +64,10 @@ public class ModBiomeProvider extends Region {
         });*/
 
         addModifiedVanillaOverworldBiomes(mapper, builder -> {
-            List<Climate.ParameterPoint> flowerForestPoints = RegionUtils.getVanillaParameterPoints(Biomes.FLOWER_FOREST).stream().collect(ImmutableList.toImmutableList());
-            flowerForestPoints.forEach(point -> builder.replaceBiome(point, ModBiomeInitializer.CHERRY_BLOSSOM_GROTTO));
+            if(ModConfiguration.spawnCherryBlossomBiomes.get()) {
+                List<Climate.ParameterPoint> flowerForestPoints = RegionUtils.getVanillaParameterPoints(Biomes.FLOWER_FOREST).stream().collect(ImmutableList.toImmutableList());
+                flowerForestPoints.forEach(point -> builder.replaceBiome(point, ModBiomeInitializer.CHERRY_BLOSSOM_GROTTO));
+            }
         });
     }
 }

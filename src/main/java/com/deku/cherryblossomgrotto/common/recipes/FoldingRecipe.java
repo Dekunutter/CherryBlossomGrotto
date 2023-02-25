@@ -1,6 +1,7 @@
 package com.deku.cherryblossomgrotto.common.recipes;
 
 import com.deku.cherryblossomgrotto.common.items.ModItems;
+import com.deku.cherryblossomgrotto.utils.ModConfiguration;
 import com.google.common.collect.Lists;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -105,7 +106,7 @@ public class FoldingRecipe extends CustomRecipe {
 
         if (compoundnbt != null) {
             int currentFolds = compoundnbt.getInt("folds");
-            if(currentFolds >= 0 && currentFolds < 1000) {
+            if(currentFolds >= 0 && currentFolds <  ModConfiguration.maxFolds.get()) {
                 currentFolds++;
             }
             compoundnbt.putInt("folds", currentFolds);

@@ -25,6 +25,7 @@ import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.*;
 import com.deku.cherryblossomgrotto.server.network.handlers.DoubleJumpServerMessageHandler;
 import com.deku.cherryblossomgrotto.server.network.messages.DoubleJumpServerMessage;
 import com.deku.cherryblossomgrotto.utils.LogTweaker;
+import com.deku.cherryblossomgrotto.utils.ModConfiguration;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -58,7 +59,9 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
@@ -117,6 +120,9 @@ public class Main
         if (HIDE_CONSOLE_NOISE) {
             LogTweaker.applyLogFilterLevel(Level.WARN);
         }
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ModConfiguration.COMMON_SPEC, "cherryblossomgrotto-common.toml");
+
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Biome logic
