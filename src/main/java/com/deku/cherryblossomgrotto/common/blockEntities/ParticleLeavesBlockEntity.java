@@ -1,6 +1,7 @@
 package com.deku.cherryblossomgrotto.common.blockEntities;
 
 import com.deku.cherryblossomgrotto.common.blocks.AbstractLeafPileBlock;
+import com.deku.cherryblossomgrotto.utils.ModConfiguration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -34,7 +35,7 @@ public abstract class ParticleLeavesBlockEntity extends BlockEntity {
         }
 
         Random random = new Random();
-        if (random.nextInt(500) == 0) {
+        if (random.nextInt(ModConfiguration.leafPileSpawnChance.get()) == 0) {
             BlockPos belowPosition = position.below();
 
             while (belowPosition.getY() >= DimensionDefaults.OVERWORLD_MIN_Y) {

@@ -4,6 +4,7 @@ import com.deku.cherryblossomgrotto.common.blocks.AbstractFallingLeavesBlock;
 import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalOptions;
 import com.deku.cherryblossomgrotto.common.blockEntities.CherryLeavesBlockEntity;
 import com.deku.cherryblossomgrotto.common.blockEntities.ModBlockEntityType;
+import com.deku.cherryblossomgrotto.utils.ModConfiguration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
@@ -39,7 +40,7 @@ public class CherryBlossomLeaves extends AbstractFallingLeavesBlock {
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos position, RandomSource random) {
         super.animateTick(state, world, position, random);
-        if (random.nextInt(32) == 0) {
+        if (random.nextInt(ModConfiguration.fallingLeafParticleSpawnChance.get()) == 0) {
             FallingCherryBlossomPetalOptions cherryBlossomPetal = new FallingCherryBlossomPetalOptions(new Color(255, 255, 255, 255), 1.0f);
             world.addParticle(cherryBlossomPetal, (float) position.getX() + random.nextFloat(), (float) position.getY() - 1.0f, (float) position.getZ() + random.nextFloat(), 0.0d, -0.1d, 0.0d);
         }
