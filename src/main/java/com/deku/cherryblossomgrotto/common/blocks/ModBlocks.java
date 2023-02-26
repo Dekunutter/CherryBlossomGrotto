@@ -146,6 +146,9 @@ public class ModBlocks {
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":soul_zen_lantern")
     public static SoulZenLantern SOUL_ZEN_LANTERN;
 
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":paper_lantern")
+    public static PaperLantern PAPER_LANTERN;
+
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":shoji_screen")
     public static ShojiScreen SHOJI_SCREEN;
 

@@ -20,6 +20,7 @@ import com.deku.cherryblossomgrotto.common.items.cherry_blossom.CherryBlossomPet
 import com.deku.cherryblossomgrotto.common.items.maple.MapleBoat;
 import com.deku.cherryblossomgrotto.common.items.maple.MapleChestBoat;
 import com.deku.cherryblossomgrotto.common.items.maple.MapleLeaf;
+import com.deku.cherryblossomgrotto.common.items.maple.MapleSyrupBottleItem;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
 import com.deku.cherryblossomgrotto.common.recipes.ModRecipeSerializerInitializer;
 import com.deku.cherryblossomgrotto.common.sounds.ModSoundEvents;
@@ -30,7 +31,6 @@ import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModSurfaceRules;
 import com.deku.cherryblossomgrotto.common.world.gen.blockstateprovider.CherryBlossomForestFlowerProviderType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.GrandCherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.CherryBlossomFoliagePlacerType;
-import com.deku.cherryblossomgrotto.common.world.gen.placements.ModPlacements;
 import com.deku.cherryblossomgrotto.common.world.gen.structures.*;
 import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.*;
 import com.deku.cherryblossomgrotto.server.network.handlers.DoubleJumpServerMessageHandler;
@@ -325,6 +325,7 @@ public class Main
                 // All lanterns
                 registrar.register(new ResourceLocation(MOD_ID, "zen_lantern"), new ZenLantern());
                 registrar.register(new ResourceLocation(MOD_ID, "soul_zen_lantern"), new SoulZenLantern());
+                registrar.register(new ResourceLocation(MOD_ID, "paper_lantern"), new PaperLantern());
 
                 // All vanilla block trapdoors
                 registrar.register(new ResourceLocation(MOD_ID, "stone_trapdoor"), new StoneTrapdoor());
@@ -422,6 +423,7 @@ public class Main
                 // All lantern items
                 registrar.register(new ResourceLocation(MOD_ID, "zen_lantern"), new DoubleHighBlockItem(ModBlocks.ZEN_LANTERN, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "soul_zen_lantern"), new DoubleHighBlockItem(ModBlocks.SOUL_ZEN_LANTERN, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "paper_lantern"), new BlockItem(ModBlocks.PAPER_LANTERN, new Item.Properties()));
 
                 // All architectural items
                 registrar.register(new ResourceLocation(MOD_ID, "shoji_screen"), new DoubleHighBlockItem(ModBlocks.SHOJI_SCREEN, new Item.Properties()));
@@ -436,6 +438,9 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "cooked_koi"), new CookedKoi());
                 registrar.register(new ResourceLocation(MOD_ID, "rice"), new Rice());
                 registrar.register(new ResourceLocation(MOD_ID, "onigiri"), new Onigiri());
+
+                // All bottled items
+                registrar.register(new ResourceLocation(MOD_ID, "maple_syrup_bottle"), new MapleSyrupBottleItem());
 
                 // All weapon items
                 registrar.register(new ResourceLocation(MOD_ID, "katana"), new Katana());
@@ -528,8 +533,8 @@ public class Main
             ExistingFileHelper fileHelper = gatherEvent.getExistingFileHelper();
 
             HolderLookup.Provider lookupProvider = new RegistrySetBuilder()
-                    .add(Registries.CONFIGURED_FEATURE, (RegistrySetBuilder.RegistryBootstrap) ModConfiguredFeatures::bootstrap)
-                    .add(Registries.PLACED_FEATURE, (RegistrySetBuilder.RegistryBootstrap) ModPlacements::bootstrap)
+                    //.add(Registries.CONFIGURED_FEATURE, (RegistrySetBuilder.RegistryBootstrap) ModConfiguredFeatures::bootstrap)
+                    //.add(Registries.PLACED_FEATURE, (RegistrySetBuilder.RegistryBootstrap) ModPlacements::bootstrap)
                     //.add(Registries.FOLIAGE_PLACER_TYPE, (RegistrySetBuilder.RegistryBootstrap) ModFoliagePlacers::bootstrap)
                     //.add(Registries.PROCESSOR_LIST, ())
                     //.add(Registries.STRUCTURE_SET, ())
@@ -639,6 +644,7 @@ public class Main
                                         // Crops
                                         populator.accept(new ItemStack(ModItems.RICE));
                                         populator.accept(new ItemStack(ModItems.ONIGIRI));
+                                        populator.accept(new ItemStack(ModItems.MAPLE_SYRUP_BOTTLE));
 
                                         // Wildlife
                                         populator.accept(new ItemStack(ModItems.KOI));
@@ -655,6 +661,7 @@ public class Main
                                         populator.accept(ModItems.LONG_AGED_TATAMI_MAT);
                                         populator.accept(ModItems.ZEN_LANTERN);
                                         populator.accept(ModItems.SOUL_ZEN_LANTERN);
+                                        populator.accept(ModItems.PAPER_LANTERN);
 
                                         // Weapons & Armour
                                         populator.accept(new ItemStack(ModItems.KATANA));
@@ -764,6 +771,7 @@ public class Main
                 // Lanterns
                 entries.putAfter(new ItemStack(Items.SOUL_LANTERN), new ItemStack(ModItems.ZEN_LANTERN), visibility);
                 entries.putAfter(new ItemStack(ModItems.ZEN_LANTERN), new ItemStack(ModItems.SOUL_ZEN_LANTERN), visibility);
+                entries.putAfter(new ItemStack(ModItems.SOUL_ZEN_LANTERN), new ItemStack(ModItems.PAPER_LANTERN), visibility);
 
                 // Signs
                 entries.putAfter(new ItemStack(Items.MANGROVE_SIGN), new ItemStack(ModItems.CHERRY_SIGN), visibility);
@@ -816,6 +824,7 @@ public class Main
                 // Crops
                 entries.putAfter(new ItemStack(Items.BEETROOT), new ItemStack(ModItems.RICE), visibility);
                 entries.putAfter(new ItemStack(ModItems.RICE), new ItemStack(ModItems.ONIGIRI), visibility);
+                entries.putAfter(new ItemStack(ModItems.ONIGIRI), new ItemStack(ModItems.MAPLE_SYRUP_BOTTLE), visibility);
 
                 // Fish
                 entries.putAfter(new ItemStack(Items.TROPICAL_FISH), new ItemStack(ModItems.KOI), visibility);

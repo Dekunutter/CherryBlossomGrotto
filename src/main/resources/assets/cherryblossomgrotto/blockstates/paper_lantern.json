@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "cherryblossomgrotto:block/paper_lantern"
+    },
+    "hanging=true": {
+      "model": "cherryblossomgrotto:block/paper_lantern_hanging"
+    }
+  }
+}
