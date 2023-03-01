@@ -1,8 +1,7 @@
 package com.deku.cherryblossomgrotto.common.enchantments;
 
-import com.deku.cherryblossomgrotto.common.items.KabutoSandals;
-import com.deku.cherryblossomgrotto.common.items.NinjaSandals;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -20,9 +19,8 @@ public class DoubleJumpEnchantment extends Enchantment {
      */
     @Override
     public boolean canEnchant(ItemStack itemStack) {
-        return itemStack.getItem() instanceof NinjaSandals || itemStack.getItem() instanceof KabutoSandals || super.canEnchant(itemStack);
+        return itemStack.getItem() instanceof ArmorItem && ((ArmorItem)itemStack.getItem()).getSlot() == EquipmentSlot.FEET;
     }
-
     /**
      * Whether this enchantment can only be found in treasure
      *
