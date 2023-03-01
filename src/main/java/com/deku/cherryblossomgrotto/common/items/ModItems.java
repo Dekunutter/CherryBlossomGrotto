@@ -6,6 +6,7 @@ import com.deku.cherryblossomgrotto.common.items.cherry_blossom.CherryBlossomPet
 import com.deku.cherryblossomgrotto.common.items.maple.MapleBoat;
 import com.deku.cherryblossomgrotto.common.items.maple.MapleChestBoat;
 import com.deku.cherryblossomgrotto.common.items.maple.MapleLeaf;
+import com.deku.cherryblossomgrotto.common.items.maple.MapleSyrupBottleItem;
 import net.minecraft.world.item.*;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.ObjectHolder;
@@ -145,6 +146,9 @@ public class ModItems {
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":maple_chest_boat")
     public static MapleChestBoat MAPLE_CHEST_BOAT;
 
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":maple_syrup_bottle")
+    public static MapleSyrupBottleItem MAPLE_SYRUP_BOTTLE;
+
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":katana")
     public static Katana KATANA;
 
@@ -174,6 +178,9 @@ public class ModItems {
 
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":soul_zen_lantern")
     public static DoubleHighBlockItem SOUL_ZEN_LANTERN;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":paper_lantern")
+    public static BlockItem PAPER_LANTERN;
 
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":shoji_screen")
     public static DoubleHighBlockItem SHOJI_SCREEN;

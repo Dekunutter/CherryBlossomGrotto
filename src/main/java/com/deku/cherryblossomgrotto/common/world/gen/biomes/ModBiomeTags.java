@@ -13,4 +13,5 @@ public class ModBiomeTags {
     public static final TagKey<Biome> HAS_CHERRY_BLOSSOM_GROTTO_VILLAGE = TagKey.create(Registries.BIOME, new ResourceLocation(MOD_ID, "has_structure/village_cherry_blossom_grotto"));
     public static final TagKey<Biome> HAS_RUINED_TORII_PORTAL = TagKey.create(Registries.BIOME, new ResourceLocation(MOD_ID, "has_structure/ruined_torii_portal"));
     public static final TagKey<Biome> HAS_HOTSPRING = TagKey.create(Registries.BIOME, new ResourceLocation(MOD_ID, "has_structure/hotspring"));
+    public static final TagKey<Biome> HAS_GAZEBO = TagKey.create(Registries.BIOME, new ResourceLocation(MOD_ID, "has_structure/gazebo"));
 }

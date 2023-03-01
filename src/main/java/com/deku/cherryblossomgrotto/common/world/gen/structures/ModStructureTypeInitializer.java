@@ -16,6 +16,7 @@ public class ModStructureTypeInitializer {
     public static final RegistryObject<StructureType<GiantBuddha>> GIANT_BUDDHA = STRUCTURE_TYPES.register("giant_buddha", () -> convert(GiantBuddha.CODEC));
     public static final RegistryObject<StructureType<ToriiGate>> TORII_GATE = STRUCTURE_TYPES.register("torii_gate", () -> convert(ToriiGate.CODEC));
     public static final RegistryObject<StructureType<RuinedToriiPortal>> RUINED_TORII_PORTAL = STRUCTURE_TYPES.register("ruined_torii_portal", () -> convert(RuinedToriiPortal.CODEC));
+    public static final RegistryObject<StructureType<Gazebo>> GAZEBO = STRUCTURE_TYPES.register("gazebo", () -> convert(Gazebo.CODEC));
 
     /**
      * Converts a given codec for cleaner use in the structure type registry

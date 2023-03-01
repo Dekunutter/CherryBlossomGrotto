@@ -138,6 +138,7 @@ public abstract class LongCarpetBlock extends CarpetBlock {
      */
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(HALF, FACING);
     }
 

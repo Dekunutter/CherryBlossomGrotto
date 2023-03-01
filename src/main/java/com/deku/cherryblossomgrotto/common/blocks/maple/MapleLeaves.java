@@ -4,6 +4,7 @@ import com.deku.cherryblossomgrotto.common.blockEntities.MapleLeavesBlockEntity;
 import com.deku.cherryblossomgrotto.common.blockEntities.ModBlockEntityType;
 import com.deku.cherryblossomgrotto.common.blocks.AbstractFallingLeavesBlock;
 import com.deku.cherryblossomgrotto.common.particles.FallingMapleLeafOptions;
+import com.deku.cherryblossomgrotto.utils.ModConfiguration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
@@ -39,9 +40,9 @@ public class MapleLeaves extends AbstractFallingLeavesBlock {
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos position, RandomSource random) {
         super.animateTick(state, world, position, random);
-        if (random.nextInt(32) == 0) {
-            FallingMapleLeafOptions mapleLeaff = new FallingMapleLeafOptions(new Color(255, 255, 255, 255), 1.0f);
-            world.addParticle(mapleLeaff, (float) position.getX() + random.nextFloat(), (float) position.getY() - 1.0f, (float) position.getZ() + random.nextFloat(), 0.0d, -0.1d, 0.0d);
+        if (random.nextInt(ModConfiguration.fallingLeafParticleSpawnChance.get()) == 0) {
+            FallingMapleLeafOptions mapleLeaf = new FallingMapleLeafOptions(new Color(255, 255, 255, 255), 1.0f);
+            world.addParticle(mapleLeaf, (float) position.getX() + random.nextFloat(), (float) position.getY() - 1.0f, (float) position.getZ() + random.nextFloat(), 0.0d, -0.1d, 0.0d);
         }
     }
 

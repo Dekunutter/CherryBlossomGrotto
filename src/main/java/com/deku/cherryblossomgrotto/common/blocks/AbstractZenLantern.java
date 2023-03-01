@@ -141,6 +141,7 @@ public abstract class AbstractZenLantern extends Block {
      * @param builder The builder for the state container
      */
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(HALF);
     }
 

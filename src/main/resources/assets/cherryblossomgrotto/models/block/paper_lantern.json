@@ -1,0 +1,76 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "paper_lantern": "cherryblossomgrotto:block/paper_lantern",
+    "particle": "#paper_lantern"
+  },
+  "render_type": "cutout_mipped",
+  "elements": [
+    {
+      "name": "lamp",
+      "from": [4, 1, 4],
+      "to": [12, 8, 12],
+      "rotation": {"angle": 0, "axis": "y", "origin": [0, 1, 0]},
+      "faces": {
+        "north": {"uv": [0, 0, 4, 4], "texture": "#paper_lantern"},
+        "east": {"uv": [4, 0, 8, 4], "texture": "#paper_lantern"},
+        "south": {"uv": [0, 4, 4, 8], "texture": "#paper_lantern"},
+        "west": {"uv": [4, 4, 8, 8], "texture": "#paper_lantern"},
+        "up": {"uv": [0, 8, 4, 12], "texture": "#paper_lantern"},
+        "down": {"uv": [4, 8, 8, 12], "texture": "#paper_lantern"}
+      }
+    },
+    {
+      "name": "knot",
+      "from": [7, 9, 8],
+      "to": [9, 10, 8],
+      "rotation": {"angle": 45, "axis": "y", "origin": [8, 13, 8]},
+      "faces": {
+        "north": {"uv": [8, 2.5, 9, 3], "texture": "#paper_lantern"},
+        "east": {"uv": [0, 0, 0, 0.75], "texture": "#paper_lantern"},
+        "south": {"uv": [8, 2.5, 9, 3], "texture": "#paper_lantern"},
+        "west": {"uv": [0, 0, 0, 0.75], "texture": "#paper_lantern"},
+        "up": {"uv": [0, 0, 1, 0], "texture": "#paper_lantern"},
+        "down": {"uv": [0, 0, 1, 0], "texture": "#paper_lantern"}
+      }
+    },
+    {
+      "name": "knot",
+      "from": [8, 9, 7],
+      "to": [8, 10, 9],
+      "rotation": {"angle": 45, "axis": "y", "origin": [8, 13, 8]},
+      "faces": {
+        "north": {"uv": [0, 2.33333, 0, 3.08333], "texture": "#paper_lantern"},
+        "east": {"uv": [8, 2.5, 9, 3], "texture": "#paper_lantern"},
+        "south": {"uv": [0, 0, 0, 0.75], "texture": "#paper_lantern"},
+        "west": {"uv": [8, 2.5, 9, 3], "texture": "#paper_lantern"},
+        "up": {"uv": [0, 0, 1, 0], "rotation": 270, "texture": "#paper_lantern"},
+        "down": {"uv": [0, 0, 1, 0], "rotation": 90, "texture": "#paper_lantern"}
+      }
+    },
+    {
+      "from": [5, 8, 5],
+      "to": [11, 9, 11],
+      "faces": {
+        "north": {"uv": [0.5, 0, 3.5, 0.5], "texture": "#paper_lantern"},
+        "east": {"uv": [4.5, 4, 7.5, 4.5], "texture": "#paper_lantern"},
+        "south": {"uv": [0.5, 4, 3.5, 4.5], "texture": "#paper_lantern"},
+        "west": {"uv": [4.5, 0, 7.5, 0.5], "texture": "#paper_lantern"},
+        "up": {"uv": [0.5, 8.5, 3.5, 11.5], "texture": "#paper_lantern"},
+        "down": {"uv": [4.5, 8.5, 7.5, 11.5], "texture": "#paper_lantern"}
+      }
+    },
+    {
+      "from": [5, 0, 5],
+      "to": [11, 1, 11],
+      "faces": {
+        "north": {"uv": [0.5, 3.5, 3.5, 4], "texture": "#paper_lantern"},
+        "east": {"uv": [4.5, 7.5, 7.5, 8], "texture": "#paper_lantern"},
+        "south": {"uv": [0.5, 7.5, 3.5, 8], "texture": "#paper_lantern"},
+        "west": {"uv": [4.5, 3.5, 7.5, 4], "texture": "#paper_lantern"},
+        "up": {"uv": [0.5, 8.5, 3.5, 11.5], "texture": "#paper_lantern"},
+        "down": {"uv": [4.5, 8.5, 7.5, 11.5], "texture": "#paper_lantern"}
+      }
+    }
+  ]
+}

@@ -30,7 +30,7 @@ public class GiantBuddhaPieces {
      *
      * @param manager The template manager that will be used to load the NBT template from resources
      * @param position The position of the structure
-     * @param rotation The rotaion of the structure
+     * @param rotation The rotation of the structure
      * @param pieceAccessor Accessor for the array of individual pieces we want to append to so that the structure generate all pieces during generation
      * @param random A random number generator
      */

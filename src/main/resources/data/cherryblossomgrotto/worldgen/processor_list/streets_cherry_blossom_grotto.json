@@ -63,6 +63,19 @@
               "level": "0"
             }
           }
+        },
+        {
+          "_comment": "This is just to fix an issue I had with dirt spawning where structure blocks forced dirt paths to reset. Vanilla street processors don't do this but I couldn't think of another way around the issue",
+          "input_predicate": {
+            "block": "minecraft:dirt",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:dirt_path"
+          }
         }
       ]
     }
