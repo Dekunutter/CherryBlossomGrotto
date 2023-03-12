@@ -438,6 +438,7 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "cooked_koi"), new CookedKoi());
                 registrar.register(new ResourceLocation(MOD_ID, "rice"), new Rice());
                 registrar.register(new ResourceLocation(MOD_ID, "onigiri"), new Onigiri());
+                registrar.register(new ResourceLocation(MOD_ID, "congee"), new Congee());
 
                 // All bottled items
                 registrar.register(new ResourceLocation(MOD_ID, "maple_syrup_bottle"), new MapleSyrupBottleItem());

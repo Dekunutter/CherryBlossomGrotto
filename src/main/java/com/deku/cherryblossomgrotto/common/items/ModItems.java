@@ -170,6 +170,9 @@ public class ModItems {
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":onigiri")
     public static Onigiri ONIGIRI;
 
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":congee")
+    public static Congee CONGEE;
+
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":koi_bucket")
     public static KoiBucket KOI_BUCKET;
 
