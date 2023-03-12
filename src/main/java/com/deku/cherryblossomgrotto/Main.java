@@ -338,6 +338,7 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "spruce_planks_trapdoor"), new SprucePlanksTrapdoor());
                 registrar.register(new ResourceLocation(MOD_ID, "birch_planks_trapdoor"), new BirchPlanksTrapdoor());
                 registrar.register(new ResourceLocation(MOD_ID, "mangrove_planks_trapdoor"), new MangrovePlanksTrapdoor());
+                registrar.register(new ResourceLocation(MOD_ID, "bamboo_planks_trapdoor"), new BambooPlanksTrapdoor());
             });
         }
 
