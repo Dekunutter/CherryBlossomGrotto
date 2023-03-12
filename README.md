@@ -52,6 +52,9 @@ The bamboo jungle biome is a typical bamboo jungle but interspersed with cherry 
 - Onigiri 
     Crafted from rice and kelp
     Can be eaten for decent nutrition
+- Congee
+    Crafted from rice and a bowl
+    Can be eaten for decent nutrition
 - Zen lantern
     Stone lanterns that give slightly more light than a torch
     Can be crafted with cobblestone and a torch
@@ -151,9 +154,12 @@ The bamboo jungle biome is a typical bamboo jungle but interspersed with cherry 
 - Aged Tatami Mat
     Aged tatami mats lose their green hue as the fibres age. These mats are a variation of the standard tatami mats that provide a light brown/tan colouration to the texture.
     Created from wheat and string.
-  - Long Aged Tatami Mat
+- Long Aged Tatami Mat
     A long 2x1 variant to the aged tatami mat that provides additional decorating options.
     Crafted from wheat and string.
+- Paper lantern
+    Crafted from a torch surrounded by paper
+    Acts as a light source similar to lanterns but dimmer. Can be hung from ceilings or placed on the ground.
 
 ### Enchantments
 Theres one new enchantment in the game, which enables the double jumping capability for the player
