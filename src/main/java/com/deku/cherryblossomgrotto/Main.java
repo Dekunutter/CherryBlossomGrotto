@@ -338,6 +338,7 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "spruce_planks_trapdoor"), new SprucePlanksTrapdoor());
                 registrar.register(new ResourceLocation(MOD_ID, "birch_planks_trapdoor"), new BirchPlanksTrapdoor());
                 registrar.register(new ResourceLocation(MOD_ID, "mangrove_planks_trapdoor"), new MangrovePlanksTrapdoor());
+                registrar.register(new ResourceLocation(MOD_ID, "bamboo_planks_trapdoor"), new BambooPlanksTrapdoor());
             });
         }
 
@@ -438,6 +439,7 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "cooked_koi"), new CookedKoi());
                 registrar.register(new ResourceLocation(MOD_ID, "rice"), new Rice());
                 registrar.register(new ResourceLocation(MOD_ID, "onigiri"), new Onigiri());
+                registrar.register(new ResourceLocation(MOD_ID, "congee"), new Congee());
 
                 // All bottled items
                 registrar.register(new ResourceLocation(MOD_ID, "maple_syrup_bottle"), new MapleSyrupBottleItem());
