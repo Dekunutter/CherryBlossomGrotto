@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 
 public class KabutoSandals extends ArmorItem {
     public KabutoSandals() {
-        super(ArmorMaterials.IRON, EquipmentSlot.FEET, new Properties().stacksTo(1));
+        super(ArmorMaterials.IRON, Type.BOOTS, new Properties().stacksTo(1));
     }
 
     /**

@@ -1,11 +1,10 @@
 package com.deku.cherryblossomgrotto.common.blocks.maple;
 
+import com.deku.cherryblossomgrotto.common.blocks.ModBlockSetType;
 import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.DoorBlock;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -13,7 +12,7 @@ import net.minecraft.world.level.material.MaterialColor;
 public class MapleDoor extends DoorBlock
 {
     public MapleDoor() {
-        super(Properties.of(Material.WOOD, MaterialColor.WOOD).strength(3.0f).sound(SoundType.WOOD).noOcclusion().isValidSpawn(MapleDoor::never), SoundEvents.WOODEN_DOOR_CLOSE, SoundEvents.WOODEN_DOOR_OPEN);
+        super(Properties.of(Material.WOOD, MaterialColor.WOOD).strength(3.0f).noOcclusion().isValidSpawn(MapleDoor::never), ModBlockSetType.MAPLE);
     }
 
     /**

@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 
 public class NinjaSandals extends ArmorItem {
     public NinjaSandals() {
-        super(ModArmorMaterials.WOOL, EquipmentSlot.FEET, new Item.Properties().stacksTo(1));
+        super(ModArmorMaterials.WOOL, Type.BOOTS, new Item.Properties().stacksTo(1));
     }
 
     /**

@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 
 public class NinjaLeggings extends ArmorItem {
     public NinjaLeggings() {
-        super(ModArmorMaterials.WOOL, EquipmentSlot.LEGS, new Item.Properties().stacksTo(1));
+        super(ModArmorMaterials.WOOL, Type.LEGGINGS, new Item.Properties().stacksTo(1));
     }
 
     /**

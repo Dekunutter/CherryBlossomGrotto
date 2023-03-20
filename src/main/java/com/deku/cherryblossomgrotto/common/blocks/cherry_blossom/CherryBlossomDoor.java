@@ -1,7 +1,7 @@
 package com.deku.cherryblossomgrotto.common.blocks.cherry_blossom;
 
+import com.deku.cherryblossomgrotto.common.blocks.ModBlockSetType;
 import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.DoorBlock;
@@ -14,7 +14,7 @@ import net.minecraft.world.level.material.MaterialColor;
 public class CherryBlossomDoor extends DoorBlock
 {
     public CherryBlossomDoor() {
-        super(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.TERRACOTTA_RED).strength(3.0f).sound(SoundType.WOOD).noOcclusion().isValidSpawn(CherryBlossomDoor::never), SoundEvents.WOODEN_DOOR_CLOSE, SoundEvents.WOODEN_DOOR_OPEN);
+        super(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.TERRACOTTA_RED).strength(3.0f).sound(SoundType.WOOD).noOcclusion().isValidSpawn(CherryBlossomDoor::never), ModBlockSetType.CHERRY_BLOSSOM);
     }
 
     /**

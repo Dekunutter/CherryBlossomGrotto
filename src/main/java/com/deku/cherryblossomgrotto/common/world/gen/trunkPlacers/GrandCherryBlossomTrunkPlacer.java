@@ -285,7 +285,7 @@ public class GrandCherryBlossomTrunkPlacer extends GiantTrunkPlacer {
             double interpolatedPositionX = Mth.lerp(current, trueStartingPosition.getX(), end.getX());
             double interpolatedPositionY = Mth.lerp(current, trueStartingPosition.getY(), end.getY());
             double interpolatedPositionZ = Mth.lerp(current, trueStartingPosition.getZ(), end.getZ());
-            BlockPos nextPosition = new BlockPos(Math.round(interpolatedPositionX), Math.round(interpolatedPositionY), Math.round(interpolatedPositionZ));
+            BlockPos nextPosition = new BlockPos((int) Math.round(interpolatedPositionX), (int) Math.round(interpolatedPositionY), (int) Math.round(interpolatedPositionZ));
             greedyPoints.add(nextPosition);
         }
 

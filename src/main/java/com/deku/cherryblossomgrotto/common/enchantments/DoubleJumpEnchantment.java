@@ -19,7 +19,7 @@ public class DoubleJumpEnchantment extends Enchantment {
      */
     @Override
     public boolean canEnchant(ItemStack itemStack) {
-        return itemStack.getItem() instanceof ArmorItem && ((ArmorItem)itemStack.getItem()).getSlot() == EquipmentSlot.FEET;
+        return itemStack.getItem() instanceof ArmorItem && ((ArmorItem)itemStack.getItem()).getEquipmentSlot() == EquipmentSlot.FEET;
     }
     /**
      * Whether this enchantment can only be found in treasure

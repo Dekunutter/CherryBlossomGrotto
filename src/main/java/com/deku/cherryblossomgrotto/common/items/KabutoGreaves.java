@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 
 public class KabutoGreaves extends ArmorItem {
     public KabutoGreaves() {
-        super(ArmorMaterials.IRON, EquipmentSlot.LEGS, new Properties().stacksTo(1));
+        super(ArmorMaterials.IRON, Type.LEGGINGS, new Properties().stacksTo(1));
     }
 
     /**

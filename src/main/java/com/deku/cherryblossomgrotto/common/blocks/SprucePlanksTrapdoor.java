@@ -1,18 +1,17 @@
 package com.deku.cherryblossomgrotto.common.blocks;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.material.Material;
 
 public class SprucePlanksTrapdoor extends TrapDoorBlock {
     public SprucePlanksTrapdoor() {
-        super(Properties.of(Material.WOOD, Blocks.SPRUCE_PLANKS.defaultMaterialColor()).strength( 3.0f).sound(SoundType.WOOD).noOcclusion().isValidSpawn(SprucePlanksTrapdoor::never), SoundEvents.WOODEN_TRAPDOOR_CLOSE, SoundEvents.WOODEN_TRAPDOOR_OPEN);
+        super(Properties.of(Material.WOOD, Blocks.SPRUCE_PLANKS.defaultMaterialColor()).strength( 3.0f).noOcclusion().isValidSpawn(SprucePlanksTrapdoor::never), BlockSetType.SPRUCE);
     }
 
     /**
