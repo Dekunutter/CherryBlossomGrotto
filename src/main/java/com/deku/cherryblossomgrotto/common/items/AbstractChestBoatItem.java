@@ -18,6 +18,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -61,11 +62,9 @@ public abstract class AbstractChestBoatItem extends Item {
             {
                 Vec3 eyePosition = player.getEyePosition(1.0F);
 
-                for (Entity entity : entityList)
-                {
-                    AABB entityBoundingBox = entity.getBoundingBox().inflate(entity.getPickRadius());
-                    if (entityBoundingBox.contains(eyePosition))
-                    {
+                for (Entity entity : entityList) {
+                    AABB aabb = entity.getBoundingBox().inflate(entity.getPickRadius());
+                    if (aabb.contains(eyePosition)) {
                         return InteractionResultHolder.pass(itemStack);
                     }
                 }
@@ -85,7 +84,7 @@ public abstract class AbstractChestBoatItem extends Item {
                     if (!level.isClientSide)
                     {
                         level.addFreshEntity(boat);
-                        level.gameEvent(player, GameEvent.ENTITY_PLACE, new BlockPos(rayTraceResult.getLocation()));
+                        level.gameEvent(player, GameEvent.ENTITY_PLACE, rayTraceResult.getLocation());
                         if (!player.getAbilities().instabuild) {
                             itemStack.shrink(1);
                         }

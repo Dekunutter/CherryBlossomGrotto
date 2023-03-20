@@ -3,6 +3,7 @@ package com.deku.cherryblossomgrotto.client.renderers.layers;
 import com.deku.cherryblossomgrotto.client.models.InnerNinjaRobesModel;
 import com.deku.cherryblossomgrotto.client.models.NinjaRobesModel;
 import com.deku.cherryblossomgrotto.client.models.geom.ModModelLayerLocations;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -17,7 +18,7 @@ public class NinjaRobesLayer<T extends LivingEntity, M extends HumanoidModel<T>,
     public static InnerNinjaRobesModel INNER_MODEL;
 
     public NinjaRobesLayer(RenderLayerParent<T, M> armourRenderer, EntityModelSet modelSet) {
-        super(armourRenderer, (A) new InnerNinjaRobesModel(modelSet.bakeLayer(ModModelLayerLocations.INNER_NINJA_ROBES)), (A) new NinjaRobesModel(modelSet.bakeLayer(ModModelLayerLocations.NINJA_ROBES)));
+        super(armourRenderer, (A) new InnerNinjaRobesModel(modelSet.bakeLayer(ModModelLayerLocations.INNER_NINJA_ROBES)), (A) new NinjaRobesModel(modelSet.bakeLayer(ModModelLayerLocations.NINJA_ROBES)), Minecraft.getInstance().getModelManager());
 
         INNER_MODEL = (InnerNinjaRobesModel) this.innerModel;
         MODEL = (NinjaRobesModel) this.outerModel;

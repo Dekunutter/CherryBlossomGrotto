@@ -1,36 +1,52 @@
 package com.deku.cherryblossomgrotto.common.items;
 
 import com.deku.cherryblossomgrotto.Main;
+import net.minecraft.Util;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.util.EnumMap;
 import java.util.function.Supplier;
 
 public enum ModArmorMaterials implements ArmorMaterial {
-    WOOL("wool", 4, new int[] {1, 1, 1, 1}, 20, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, 0.0F, () -> {
+    WOOL("wool", 4, Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
+        map.put(ArmorItem.Type.BOOTS, 1);
+        map.put(ArmorItem.Type.LEGGINGS, 1);
+        map.put(ArmorItem.Type.CHESTPLATE, 1);
+        map.put(ArmorItem.Type.HELMET, 1);
+    }), 20, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, 0.0F, () -> {
         return Ingredient.of(Items.BLACK_WOOL);
     });
 
-    private static final int[] HEALTH_PER_SLOT = new int[]{13, 15, 16, 11};
+    // NOTE: Copied from vanilla ArmourMaterials
+    private static final EnumMap HEALTH_FUNCTION_FOR_TYPE = Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
+        map.put(ArmorItem.Type.BOOTS, 13);
+        map.put(ArmorItem.Type.LEGGINGS, 15);
+        map.put(ArmorItem.Type.CHESTPLATE, 16);
+        map.put(ArmorItem.Type.HELMET, 11);
+    });
+
     private final String name;
     private final int durabilityMultiplier;
-    private final int[] slotProtections;
+    private final EnumMap<ArmorItem.Type, Integer> protectionFunctionForType;
     private final int enchantmentValue;
     private final SoundEvent sound;
     private final float toughness;
     private final float knockbackResistance;
     private final Ingredient repairIngredient;
 
-    ModArmorMaterials(String name, int durabilityMultiplier, int[] slotProtections, int enchantmentValue, SoundEvent sound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient) {
+    ModArmorMaterials(String name, int durabilityMultiplier, EnumMap protections, int enchantmentValue, SoundEvent sound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient) {
         this.name = name;
         this.durabilityMultiplier = durabilityMultiplier;
-        this.slotProtections = slotProtections;
+        this.protectionFunctionForType = protections;
         this.enchantmentValue = enchantmentValue;
         this.sound = sound;
         this.toughness = toughness;
@@ -43,24 +59,24 @@ public enum ModArmorMaterials implements ArmorMaterial {
      * This is a combination of the health of each slot (a constant array inherited from the base game's
      * armour material class) and a durability multiplier.
      *
-     * @param slotType The type of slot that this armour piece is intended to be equipped in
+     * @param type The type of slot that this armour piece is intended to be equipped in
      * @return The durability of this piece of armour
      */
     @Override
-    public int getDurabilityForSlot(EquipmentSlot slotType) {
-        return HEALTH_PER_SLOT[slotType.getIndex()] * this.durabilityMultiplier;
+    public int getDurabilityForType(ArmorItem.Type type) {
+        return (Integer) HEALTH_FUNCTION_FOR_TYPE.get(type) * this.durabilityMultiplier;
     }
 
     /**
      * Gets the defense provided by wearing a piece of this armour in the given slot.
      * Read from the slot protections array specified in the enum definition.
      *
-     * @param slotType the type of slot that this armour piece is intended to be equipped in
-     * @return
+     * @param type the type of slot that this armour piece is intended to be equipped in
+     * @return Defense granted by this piece of armour
      */
     @Override
-    public int getDefenseForSlot(EquipmentSlot slotType) {
-        return this.slotProtections[slotType.getIndex()];
+    public int getDefenseForType(ArmorItem.Type type) {
+        return protectionFunctionForType.get(type);
     }
 
     /**

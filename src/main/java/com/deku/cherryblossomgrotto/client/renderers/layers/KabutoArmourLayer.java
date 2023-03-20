@@ -3,6 +3,7 @@ package com.deku.cherryblossomgrotto.client.renderers.layers;
 import com.deku.cherryblossomgrotto.client.models.InnerKabutoArmourModel;
 import com.deku.cherryblossomgrotto.client.models.KabutoArmourModel;
 import com.deku.cherryblossomgrotto.client.models.geom.ModModelLayerLocations;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -17,7 +18,7 @@ public class KabutoArmourLayer<T extends LivingEntity, M extends HumanoidModel<T
     public static InnerKabutoArmourModel INNER_MODEL;
 
     public KabutoArmourLayer(RenderLayerParent<T, M> armourRenderer, EntityModelSet modelSet) {
-        super(armourRenderer, (A) new InnerKabutoArmourModel(modelSet.bakeLayer(ModModelLayerLocations.INNER_KABUTO_ARMOUR)), (A) new KabutoArmourModel(modelSet.bakeLayer(ModModelLayerLocations.KABUTO_ARMOUR)));
+        super(armourRenderer, (A) new InnerKabutoArmourModel(modelSet.bakeLayer(ModModelLayerLocations.INNER_KABUTO_ARMOUR)), (A) new KabutoArmourModel(modelSet.bakeLayer(ModModelLayerLocations.KABUTO_ARMOUR)), Minecraft.getInstance().getModelManager());
 
         INNER_MODEL = (InnerKabutoArmourModel) this.innerModel;
         MODEL = (KabutoArmourModel) this.outerModel;

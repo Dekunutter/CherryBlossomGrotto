@@ -40,7 +40,7 @@ public class GrandCherryBlossomFoliagePlacer extends FoliagePlacer {
      * The following rows will overwrite each other with a low radius as the top of the tree if foliage height is low.
      *
      * @param levelReader Reader for the level the foliage is being generated in
-     * @param blockConsumer Consumer for block position and state
+     * @param foliageSetter Setter for block position and state
      * @param random A random number generator
      * @param treeConfig Configuration class for getting the state of the placed blocks
      * @param trunkLength Length of the current tree's trunk
@@ -50,23 +50,23 @@ public class GrandCherryBlossomFoliagePlacer extends FoliagePlacer {
      * @param offsetY The offset on the Y-axis to start the placement position
      */
     @Override
-    protected void createFoliage(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, RandomSource random, TreeConfiguration treeConfig, int trunkLength, FoliagePlacer.FoliageAttachment foliage, int foliageHeight, int foliageRadius, int offsetY) {
+    protected void createFoliage(LevelSimulatedReader levelReader, FoliagePlacer.FoliageSetter foliageSetter, RandomSource random, TreeConfiguration treeConfig, int trunkLength, FoliagePlacer.FoliageAttachment foliage, int foliageHeight, int foliageRadius, int offsetY) {
         if (foliage.doubleTrunk()) {
             // Places the base row which is a cross of leaves and at the top level of logs
-            this.placeLeavesRow(levelReader, blockConsumer, random, treeConfig, foliage.pos(), foliageRadius - 2, -1, true);
+            this.placeLeavesRow(levelReader, foliageSetter, random, treeConfig, foliage.pos(), foliageRadius - 2, -1, true);
 
-            generateCanopy(levelReader, blockConsumer, random, treeConfig, foliage, foliageHeight, foliageRadius);
+            generateCanopy(levelReader, foliageSetter, random, treeConfig, foliage, foliageHeight, foliageRadius);
         } else {
             foliageRadius -= 3;
 
             // top off with a small amount of leaves
-            this.placeLeavesRow(levelReader, blockConsumer, random, treeConfig, foliage.pos(), 1, 1, false);
+            this.placeLeavesRow(levelReader, foliageSetter, random, treeConfig, foliage.pos(), 1, 1, false);
 
             // Places the base row which is a cross of leaves and at the top level of logs
-            this.placeLeavesRow(levelReader, blockConsumer, random, treeConfig, foliage.pos(), foliageRadius, 0, false);
+            this.placeLeavesRow(levelReader, foliageSetter, random, treeConfig, foliage.pos(), foliageRadius, 0, false);
 
             // bottom out with a single block of leaves to cover the source log
-            this.placeLeavesRow(levelReader, blockConsumer, random, treeConfig, foliage.pos(), 0, -1, false);
+            this.placeLeavesRow(levelReader, foliageSetter, random, treeConfig, foliage.pos(), 0, -1, false);
         }
     }
 
@@ -74,17 +74,17 @@ public class GrandCherryBlossomFoliagePlacer extends FoliagePlacer {
      * Places foliage in a typical canopy shape by looping through all height levels for the leave generation and making individual rows one after the other with a degrading radius value.
      *
      * @param levelReader Reader for the level the foliage is being generated in
-     * @param blockConsumer Consumer for block position and state
+     * @param foliageSetter Setter for block position and state
      * @param random A random number generator
      * @param treeConfig Configuration class for getting the state of the placed blocks
      * @param foliage Foliage settings for this foliage placer
      * @param foliageHeight Height of the foliage to be created at this foliage point
      * @param foliageRadius The radius of the foliage
      */
-    private void generateCanopy(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, RandomSource random, TreeConfiguration treeConfig, FoliagePlacer.FoliageAttachment foliage, int foliageHeight, int foliageRadius) {
+    private void generateCanopy(LevelSimulatedReader levelReader, FoliagePlacer.FoliageSetter foliageSetter, RandomSource random, TreeConfiguration treeConfig, FoliagePlacer.FoliageAttachment foliage, int foliageHeight, int foliageRadius) {
         for (int positionY = foliageHeight; positionY > -1; positionY--) {
             int radius = Math.max(foliageRadius + foliage.radiusOffset() - positionY, 0);
-            this.placeLeavesRow(levelReader, blockConsumer, random, treeConfig, foliage.pos(), radius, positionY, foliage.doubleTrunk());
+            this.placeLeavesRow(levelReader, foliageSetter, random, treeConfig, foliage.pos(), radius, positionY, foliage.doubleTrunk());
         }
     }
 

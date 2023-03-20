@@ -39,7 +39,7 @@ public class CherryBlossomFoliagePlacer extends FoliagePlacer {
      * The following rows will overwrite each other with a low radius as the top of the tree if foliage height is low.
      *
      * @param levelReader Reader for the level the foliage is being generated in
-     * @param blockConsumer Consumer for block position and state
+     * @param foliageSetter Setter for block position and state
      * @param random A random number generator
      * @param treeConfig Configuration class for getting the state of the placed blocks
      * @param trunkLength Length of the current tree's trunk
@@ -49,14 +49,14 @@ public class CherryBlossomFoliagePlacer extends FoliagePlacer {
      * @param offsetY The offset on the Y-axis to start the placement position
      */
     @Override
-    protected void createFoliage(LevelSimulatedReader levelReader, BiConsumer<BlockPos, BlockState> blockConsumer, RandomSource random, TreeConfiguration treeConfig, int trunkLength, FoliagePlacer.FoliageAttachment foliage, int foliageHeight, int foliageRadius, int offsetY) {
+    protected void createFoliage(LevelSimulatedReader levelReader, FoliagePlacer.FoliageSetter foliageSetter, RandomSource random, TreeConfiguration treeConfig, int trunkLength, FoliagePlacer.FoliageAttachment foliage, int foliageHeight, int foliageRadius, int offsetY) {
         boolean isDoubleTrunk = foliage.doubleTrunk();
         BlockPos foliageStartPosition = foliage.pos().above(offsetY);
-        this.placeLeavesRow(levelReader, blockConsumer, random, treeConfig, foliageStartPosition, foliageRadius + foliage.radiusOffset(), -1 - foliageHeight, isDoubleTrunk);
-        this.placeLeavesRow(levelReader, blockConsumer, random, treeConfig, foliageStartPosition, foliageRadius - 1, -foliageHeight, isDoubleTrunk);
+        this.placeLeavesRow(levelReader, foliageSetter, random, treeConfig, foliageStartPosition, foliageRadius + foliage.radiusOffset(), -1 - foliageHeight, isDoubleTrunk);
+        this.placeLeavesRow(levelReader, foliageSetter, random, treeConfig, foliageStartPosition, foliageRadius - 1, -foliageHeight, isDoubleTrunk);
 
         if (random.nextInt(2) == 1) {
-            this.placeLeavesRow(levelReader, blockConsumer, random, treeConfig, foliageStartPosition, foliageRadius + foliage.radiusOffset() - 1, -2 - foliageHeight, isDoubleTrunk);
+            this.placeLeavesRow(levelReader, foliageSetter, random, treeConfig, foliageStartPosition, foliageRadius + foliage.radiusOffset() - 1, -2 - foliageHeight, isDoubleTrunk);
         }
     }
 

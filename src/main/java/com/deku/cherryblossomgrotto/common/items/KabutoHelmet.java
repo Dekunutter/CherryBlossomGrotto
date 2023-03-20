@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 
 public class KabutoHelmet extends ArmorItem {
     public KabutoHelmet() {
-        super(ArmorMaterials.IRON, EquipmentSlot.HEAD, new Properties().stacksTo(1));
+        super(ArmorMaterials.IRON, Type.HELMET, new Properties().stacksTo(1));
     }
 
     /**

@@ -242,6 +242,9 @@ public class ModItems {
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":mangrove_planks_trapdoor")
     public static BlockItem MANGROVE_PLANKS_TRAP_DOOR;
 
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":bamboo_planks_trapdoor")
+    public static BlockItem BAMBOO_PLANKS_TRAP_DOOR;
+
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":smooth_stone_trapdoor")
     public static BlockItem SMOOTH_STONE_TRAP_DOOR;
 

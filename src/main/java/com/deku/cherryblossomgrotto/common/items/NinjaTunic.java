@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 
 public class NinjaTunic extends ArmorItem {
     public NinjaTunic() {
-        super(ModArmorMaterials.WOOL, EquipmentSlot.CHEST, new Item.Properties().stacksTo(1));
+        super(ModArmorMaterials.WOOL, Type.CHESTPLATE, new Item.Properties().stacksTo(1));
     }
 
     /**

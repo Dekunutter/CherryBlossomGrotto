@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 
 public class NinjaMask extends ArmorItem {
     public NinjaMask() {
-        super(ModArmorMaterials.WOOL, EquipmentSlot.HEAD, new Item.Properties().stacksTo(1));
+        super(ModArmorMaterials.WOOL, Type.HELMET, new Item.Properties().stacksTo(1));
     }
 
     /**

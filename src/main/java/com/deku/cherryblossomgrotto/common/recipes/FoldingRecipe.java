@@ -3,6 +3,7 @@ package com.deku.cherryblossomgrotto.common.recipes;
 import com.deku.cherryblossomgrotto.common.items.ModItems;
 import com.deku.cherryblossomgrotto.utils.ModConfiguration;
 import com.google.common.collect.Lists;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -95,10 +96,11 @@ public class FoldingRecipe extends CustomRecipe {
      * Exits early if the katana or ingot global variables aren't assigned (which occurs during recipe matching)
      *
      * @param craftingInventory The crafting menu and inventory the katana is being assembled within
+     * @param registryAccess The accessor for registries
      * @return The instance of the Katana with NBT data saved that will build our result
      */
     @Override
-    public ItemStack assemble(CraftingContainer craftingInventory) {
+    public ItemStack assemble(CraftingContainer craftingInventory, RegistryAccess registryAccess) {
         if (katana == null || ingot == null) {
             return ItemStack.EMPTY;
         }
