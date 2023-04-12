@@ -39,7 +39,7 @@
                       }
                     }
                   ],
-                  "name": "cherryblossomgrotto:cherry_blossom_petal"
+                  "name": "cherryblossomgrotto:maple_leaf"
                 },
                 {
                   "type": "minecraft:item",
@@ -58,7 +58,7 @@
                       "count": 2
                     }
                   ],
-                  "name": "cherryblossomgrotto:cherry_blossom_petal"
+                  "name": "cherryblossomgrotto:maple_leaf"
                 }
               ]
             },
