@@ -912,7 +912,7 @@ public class Main
          */
         @SubscribeEvent
         public static void onBlockClicked(PlayerInteractEvent.RightClickBlock event) {
-            final Map<Block, Block> BLOCK_STRIPPING_MAP = (new ImmutableMap.Builder<Block, Block>().put(ModBlocks.CHERRY_LOG, ModBlocks.STRIPPED_CHERRY_LOG).put(ModBlocks.CHERRY_WOOD, ModBlocks.STRIPPED_CHERRY_WOOD)).build();
+            final Map<Block, Block> BLOCK_STRIPPING_MAP = (new ImmutableMap.Builder<Block, Block>().put(ModBlocks.CHERRY_LOG, ModBlocks.STRIPPED_CHERRY_LOG).put(ModBlocks.CHERRY_WOOD, ModBlocks.STRIPPED_CHERRY_WOOD).put(ModBlocks.MAPLE_LOG, ModBlocks.STRIPPED_MAPLE_LOG).put(ModBlocks.MAPLE_WOOD, ModBlocks.STRIPPED_MAPLE_WOOD)).build();
 
             if (event.getItemStack().getItem() instanceof AxeItem) {
                 net.minecraft.world.level.Level level = event.getLevel();
