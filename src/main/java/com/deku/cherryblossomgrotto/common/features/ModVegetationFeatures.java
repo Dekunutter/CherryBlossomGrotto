@@ -34,6 +34,8 @@ public class ModVegetationFeatures {
     public static ResourceKey<ConfiguredFeature<?, ?>> TREES_MAPLE_WOODS = registerVegetationFeatureKey("trees_maple_woods");
     public static ResourceKey<ConfiguredFeature<?, ?>> TREES_OAK_AND_MAPLE_FOREST = registerVegetationFeatureKey("trees_oak_and_maple_forest");
 
+    public static ResourceKey<ConfiguredFeature<?, ?>> TREES_BLACK_PINE_FOREST = registerVegetationFeatureKey("trees_black_pine_forest");
+
     /**
      * Registers a resource key for the given vegetation feature name
      *
@@ -160,6 +162,17 @@ public class ModVegetationFeatures {
         );
     }
 
+    private static RandomFeatureConfiguration createBlackPineTreesConfiguration(Holder<PlacedFeature> wobblyBlackPine, Holder<PlacedFeature> straightBlackPine, Holder<PlacedFeature> branchingBlackPine) {
+        return new RandomFeatureConfiguration(
+                ImmutableList.of(
+                        new WeightedPlacedFeature(wobblyBlackPine, 0.5f),
+                        new WeightedPlacedFeature(straightBlackPine, 0.3f),
+                        new WeightedPlacedFeature(branchingBlackPine, 0.2f)
+                ),
+                wobblyBlackPine
+        );
+    }
+
     /**
      * Registers vegetation features using the bootstrap context
      *
@@ -182,6 +195,9 @@ public class ModVegetationFeatures {
         Holder<PlacedFeature> jungleBush = placedFeatureGetter.getOrThrow(TreePlacements.JUNGLE_BUSH);
         Holder<PlacedFeature> oakTreeBees002 = placedFeatureGetter.getOrThrow(TreePlacements.OAK_BEES_002);
         Holder<PlacedFeature> fancyOakTreeBees002 = placedFeatureGetter.getOrThrow(TreePlacements.FANCY_OAK_BEES_002);
+        Holder<PlacedFeature> wobblyBlackPine = placedFeatureGetter.getOrThrow(ModTreePlacements.BLACK_PINE_CHECKED);
+        Holder<PlacedFeature> straightBlackPine = placedFeatureGetter.getOrThrow(ModTreePlacements.STRAIGHT_BLACK_PINE_CHECKED);
+        Holder<PlacedFeature> branchingBlackPine = placedFeatureGetter.getOrThrow(ModTreePlacements.BRANCHING_BLACK_PINE_CHECKED);
 
         context.register(TREES_CHERY_BLOSSOM_GROTTO, new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, createCherryBlossomGrottoTreesConfiguration(cherryBlossomTreeBees02, fancyCherryBlossomTree, grandCherryBlossomTree)));
         context.register(CHERY_BLOSSOM_GROTTO_FLOWERS, new ConfiguredFeature<>(Feature.SIMPLE_RANDOM_SELECTOR, createCherryBlossomGrottoFlowersConfiguration()));
@@ -190,5 +206,6 @@ public class ModVegetationFeatures {
         context.register(CHERRY_BLOSSOM_BAMBOO_VEGETATION, new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, createCherryBlossomBambooVegetationConfiguration(jungleGrass, cherryBlossomTree, fancyCherryBlossomTree, jungleBush)));
         context.register(TREES_MAPLE_WOODS, new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, createMapleTreesConfiguration(fancyMapleTree, fancyMapleTreeBees)));
         context.register(TREES_OAK_AND_MAPLE_FOREST, new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, createOakAndMapleTreesConfiguration(fancyMapleTree, fancyMapleTreeBees, oakTreeBees002, fancyOakTreeBees002)));
+        context.register(TREES_BLACK_PINE_FOREST, new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, createBlackPineTreesConfiguration(wobblyBlackPine, straightBlackPine, branchingBlackPine)));
     }
 }

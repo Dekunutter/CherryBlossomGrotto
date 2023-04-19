@@ -149,6 +149,66 @@ public class ModItems {
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":maple_syrup_bottle")
     public static MapleSyrupBottleItem MAPLE_SYRUP_BOTTLE;
 
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":black_pine_log")
+    public static BlockItem BLACK_PINE_LOG;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":stripped_black_pine_log")
+    public static BlockItem STRIPPED_BLACK_PINE_LOG;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":black_pine_wood")
+    public static BlockItem BLACK_PINE_WOOD;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":stripped_black_pine_wood")
+    public static BlockItem STRIPPED_BLACK_PINE_WOOD;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":black_pine_planks")
+    public static BlockItem BLACK_PINE_PLANKS;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":black_pine_slab")
+    public static BlockItem BLACK_PINE_SLAB;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":black_pine_stairs")
+    public static BlockItem BLACK_PINE_STAIRS;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":black_pine_button")
+    public static BlockItem BLACK_PINE_BUTTON;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":black_pine_fence")
+    public static BlockItem BLACK_PINE_FENCE;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":black_pine_fence_gate")
+    public static BlockItem BLACK_PINE_FENCE_GATE;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":black_pine_pressure_plate")
+    public static BlockItem BLACK_PINE_PRESSURE_PLATE;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":black_pine_sign")
+    public static SignItem BLACK_PINE_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":black_pine_hanging_sign")
+    public static HangingSignItem BLACK_PINE_HANGING_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":black_pine_door")
+    public static DoubleHighBlockItem BLACK_PINE_DOOR;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":black_pine_trapdoor")
+    public static BlockItem BLACK_PINE_TRAPDOOR;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":black_pine_planks_trapdoor")
+    public static BlockItem BLACK_PINE_PLANKS_TRAP_DOOR;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":black_pine_leaves")
+    public static BlockItem BLACK_PINE_LEAVES;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":black_pine_sapling")
+    public static BlockItem BLACK_PINE_SAPLING;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":black_pine_boat")
+    public static MapleBoat BLACK_PINE_BOAT;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":black_pine_chest_boat")
+    public static MapleChestBoat BLACK_PINE_CHEST_BOAT;
+
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":katana")
     public static Katana KATANA;
 

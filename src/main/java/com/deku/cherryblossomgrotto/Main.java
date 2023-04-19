@@ -3,6 +3,7 @@ package com.deku.cherryblossomgrotto;
 import com.deku.cherryblossomgrotto.client.network.handlers.DoubleJumpClientMessageHandler;
 import com.deku.cherryblossomgrotto.client.network.messages.DoubleJumpClientMessage;
 import com.deku.cherryblossomgrotto.common.blocks.*;
+import com.deku.cherryblossomgrotto.common.blocks.black_pine.*;
 import com.deku.cherryblossomgrotto.common.blocks.cherry_blossom.*;
 import com.deku.cherryblossomgrotto.common.blocks.maple.*;
 import com.deku.cherryblossomgrotto.common.capabilities.DoubleJumpCapability;
@@ -29,6 +30,7 @@ import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeInitializer;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeProvider;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModSurfaceRules;
 import com.deku.cherryblossomgrotto.common.world.gen.blockstateprovider.CherryBlossomForestFlowerProviderType;
+import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.BlackPineFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.GrandCherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.CherryBlossomFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.structures.*;
@@ -219,9 +221,11 @@ public class Main
         event.enqueueWork(() -> {
             BlockSetType.register(ModBlockSetType.CHERRY_BLOSSOM);
             BlockSetType.register(ModBlockSetType.MAPLE);
+            BlockSetType.register(ModBlockSetType.BLACK_PINE);
 
             WoodType.register(ModWoodType.CHERRY_BLOSSOM);
             WoodType.register(ModWoodType.MAPLE);
+            WoodType.register(ModWoodType.BLACK_PINE);
 
             Regions.register(new ModBiomeProvider());
             SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MOD_ID, ModSurfaceRules.makeRules());
@@ -316,6 +320,31 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "maple_leaf_pile"), new MapleLeafPile());
                 registrar.register(new ResourceLocation(MOD_ID, "maple_sapling"), new MapleSapling());
                 registrar.register(new ResourceLocation(MOD_ID, "potted_maple_sapling"), new PottedMapleSapling());
+
+                // All black pine wood blocks
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_log"), new BlackPineLog());
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_black_pine_log"), new StrippedBlackPineLog());
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_wood"), new BlackPineWood());
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_black_pine_wood"), new StrippedBlackPineWood());
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_planks"), new BlackPinePlanks());
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_slab"), new BlackPineSlab());
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_stairs"), new BlackPineStairs());
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_button"), new BlackPineButton());
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_fence"), new BlackPineFence());
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_fence_gate"), new BlackPineFenceGate());
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_pressure_plate"), new BlackPinePressurePlate());
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_sign"), new BlackPineSign());
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_wall_sign"), new BlackPineWallSign());
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_hanging_sign"), new BlackPineHangingSign());
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_wall_hanging_sign"), new BlackPineWallHangingSign());
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_door"), new BlackPineDoor());
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_trapdoor"), new BlackPineTrapDoor());
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_planks_trapdoor"), new BlackPinePlanksTrapdoor());
+
+                // All black pine tree blocks
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_leaves"), new BlackPineLeaves());
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_sapling"), new BlackPineSapling());
+                registrar.register(new ResourceLocation(MOD_ID, "potted_black_pine_sapling"), new PottedBlackPineSapling());
 
                 // All architectural blocks
                 registrar.register(new ResourceLocation(MOD_ID, "shoji_screen"), new ShojiScreen());
@@ -425,6 +454,30 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "maple_leaf_pile"), new BlockItem(ModBlocks.MAPLE_LEAF_PILE, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "maple_leaf"), new MapleLeaf());
                 registrar.register(new ResourceLocation(MOD_ID, "maple_sapling"), new BlockItem(ModBlocks.MAPLE_SAPLING, new Item.Properties()));
+
+                // All black pine wood items
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_log"), new BlockItem(ModBlocks.BLACK_PINE_LOG, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_black_pine_log"), new BlockItem(ModBlocks.STRIPPED_BLACK_PINE_LOG, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_wood"), new BlockItem(ModBlocks.BLACK_PINE_WOOD, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_black_pine_wood"), new BlockItem(ModBlocks.STRIPPED_BLACK_PINE_WOOD, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_planks"), new BlockItem(ModBlocks.BLACK_PINE_PLANKS, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_slab"), new BlockItem(ModBlocks.BLACK_PINE_SLAB, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_stairs"), new BlockItem(ModBlocks.BLACK_PINE_STAIRS, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_button"), new BlockItem(ModBlocks.BLACK_PINE_BUTTON, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_fence"), new BlockItem(ModBlocks.BLACK_PINE_FENCE, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_fence_gate"), new BlockItem(ModBlocks.BLACK_PINE_FENCE_GATE, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_pressure_plate"), new BlockItem(ModBlocks.BLACK_PINE_PRESSURE_PLATE, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_sign"), new SignItem(new Item.Properties().stacksTo(16), ModBlocks.BLACK_PINE_SIGN, ModBlocks.BLACK_PINE_WALL_SIGN));
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_hanging_sign"), new HangingSignItem(ModBlocks.BLACK_PINE_HANGING_SIGN, ModBlocks.BLACK_PINE_WALL_HANGING_SIGN, new Item.Properties().stacksTo(16)));
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_door"), new DoubleHighBlockItem(ModBlocks.BLACK_PINE_DOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_trapdoor"), new BlockItem(ModBlocks.BLACK_PINE_TRAPDOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_planks_trapdoor"), new BlockItem(ModBlocks.BLACK_PINE_PLANKS_TRAP_DOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_boat"), new MapleBoat());
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_chest_boat"), new MapleChestBoat());
+
+                // All black pine tree items
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_leaves"), new BlockItem(ModBlocks.BLACK_PINE_LEAVES, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_sapling"), new BlockItem(ModBlocks.BLACK_PINE_SAPLING, new Item.Properties()));
 
                 // All lantern items
                 registrar.register(new ResourceLocation(MOD_ID, "zen_lantern"), new DoubleHighBlockItem(ModBlocks.ZEN_LANTERN, new Item.Properties()));
@@ -562,6 +615,8 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "cherry_blossom_tree_foliage_placer"), new CherryBlossomFoliagePlacerType());
                 registrar.register(new ResourceLocation(MOD_ID, "big_cherry_blossom_tree_foliage_placer"), new GrandCherryBlossomFoliagePlacerType());
 
+                // All black pine tree foliage placer types
+                registrar.register(new ResourceLocation(MOD_ID, "black_pine_tree_foliage_placer"), new BlackPineFoliagePlacerType());
             });
         }
 
@@ -646,6 +701,27 @@ public class Main
                                         output.accept(ModItems.MAPLE_SIGN);
                                         output.accept(ModItems.MAPLE_HANGING_SIGN);
 
+                                        // Black pine blocks
+                                        output.accept(ModItems.BLACK_PINE_LOG);
+                                        output.accept(ModItems.BLACK_PINE_WOOD);
+                                        output.accept(ModItems.STRIPPED_BLACK_PINE_LOG);
+                                        output.accept(ModItems.STRIPPED_BLACK_PINE_WOOD);
+                                        output.accept(ModItems.BLACK_PINE_PLANKS);
+                                        output.accept(ModItems.BLACK_PINE_STAIRS);
+                                        output.accept(ModItems.BLACK_PINE_SLAB);
+                                        output.accept(ModItems.BLACK_PINE_FENCE);
+                                        output.accept(ModItems.BLACK_PINE_FENCE_GATE);
+                                        output.accept(ModItems.BLACK_PINE_DOOR);
+                                        output.accept(ModItems.BLACK_PINE_TRAPDOOR);
+                                        output.accept(ModItems.BLACK_PINE_PRESSURE_PLATE);
+                                        output.accept(ModItems.BLACK_PINE_BUTTON);
+                                        output.accept(ModItems.BLACK_PINE_LEAVES);
+                                        output.accept(ModItems.BLACK_PINE_SAPLING);
+                                        output.accept(new ItemStack(ModItems.BLACK_PINE_BOAT));
+                                        output.accept(new ItemStack(ModItems.BLACK_PINE_CHEST_BOAT));
+                                        output.accept(ModItems.BLACK_PINE_SIGN);
+                                        output.accept(ModItems.BLACK_PINE_HANGING_SIGN);
+
                                         // Crops
                                         output.accept(new ItemStack(ModItems.RICE));
                                         output.accept(new ItemStack(ModItems.ONIGIRI));
@@ -684,6 +760,7 @@ public class Main
                                         // Hidden trapdoors
                                         output.accept(ModItems.CHERRY_BLOSSOM_PLANKS_TRAP_DOOR);
                                         output.accept(ModItems.MAPLE_PLANKS_TRAP_DOOR);
+                                        output.accept(ModItems.BLACK_PINE_PLANKS_TRAP_DOOR);
                                         output.accept(ModItems.ACACIA_PLANKS_TRAP_DOOR);
                                         output.accept(ModItems.BIRCH_PLANKS_TRAP_DOOR);
                                         output.accept(ModItems.DARK_OAK_PLANKS_TRAP_DOOR);
@@ -741,6 +818,20 @@ public class Main
                 entries.putAfter(new ItemStack(ModItems.MAPLE_TRAPDOOR), new ItemStack(ModItems.MAPLE_PRESSURE_PLATE), visibility);
                 entries.putAfter(new ItemStack(ModItems.MAPLE_PRESSURE_PLATE), new ItemStack(ModItems.MAPLE_BUTTON), visibility);
 
+                entries.putAfter(new ItemStack(ModItems.MAPLE_PRESSURE_PLATE), new ItemStack(ModItems.BLACK_PINE_LOG), visibility);
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_LOG), new ItemStack(ModItems.BLACK_PINE_WOOD), visibility);
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_WOOD), new ItemStack(ModItems.STRIPPED_BLACK_PINE_LOG), visibility);
+                entries.putAfter(new ItemStack(ModItems.STRIPPED_BLACK_PINE_LOG), new ItemStack(ModItems.STRIPPED_BLACK_PINE_WOOD), visibility);
+                entries.putAfter(new ItemStack(ModItems.STRIPPED_BLACK_PINE_WOOD), new ItemStack(ModItems.BLACK_PINE_PLANKS), visibility);
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_PLANKS), new ItemStack(ModItems.BLACK_PINE_STAIRS), visibility);
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_STAIRS), new ItemStack(ModItems.BLACK_PINE_SLAB), visibility);
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_SLAB), new ItemStack(ModItems.BLACK_PINE_FENCE), visibility);
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_FENCE), new ItemStack(ModItems.BLACK_PINE_FENCE_GATE), visibility);
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_FENCE_GATE), new ItemStack(ModItems.BLACK_PINE_DOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_DOOR), new ItemStack(ModItems.BLACK_PINE_TRAPDOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_TRAPDOOR), new ItemStack(ModItems.BLACK_PINE_PRESSURE_PLATE), visibility);
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_PRESSURE_PLATE), new ItemStack(ModItems.BLACK_PINE_BUTTON), visibility);
+
                 // Misc building blocks
                 creativeTabBuilderRegistryEvent.accept(ModItems.SHOJI_SCREEN);
                 creativeTabBuilderRegistryEvent.accept(ModItems.TATAMI_MAT);
@@ -759,6 +850,7 @@ public class Main
                 entries.putAfter(new ItemStack(Items.BAMBOO_TRAPDOOR), new ItemStack(ModItems.BAMBOO_PLANKS_TRAP_DOOR), visibility);
                 entries.putAfter(new ItemStack(ModItems.CHERRY_TRAPDOOR), new ItemStack(ModItems.CHERRY_BLOSSOM_PLANKS_TRAP_DOOR), visibility);
                 entries.putAfter(new ItemStack(ModItems.MAPLE_TRAPDOOR), new ItemStack(ModItems.MAPLE_PLANKS_TRAP_DOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.MAPLE_PLANKS_TRAP_DOOR), new ItemStack(ModItems.BLACK_PINE_PLANKS_TRAP_DOOR), visibility);
                 entries.putAfter(new ItemStack(Items.STONE_SLAB), new ItemStack(ModItems.STONE_TRAP_DOOR), visibility);
                 entries.putAfter(new ItemStack(Items.SMOOTH_STONE_SLAB), new ItemStack(ModItems.SMOOTH_STONE_TRAP_DOOR), visibility);
                 entries.putAfter(new ItemStack(Items.COBBLESTONE_WALL), new ItemStack(ModItems.COBBLESTONE_TRAP_DOOR), visibility);
@@ -777,6 +869,11 @@ public class Main
                 entries.putAfter(new ItemStack(ModItems.CHERRY_SAPLING), new ItemStack(ModItems.MAPLE_SAPLING), visibility);
                 entries.putAfter(new ItemStack(ModItems.CHERRY_PETAL), new ItemStack(ModItems.MAPLE_LEAF), visibility);
                 entries.putAfter(new ItemStack(ModItems.CHERRY_PETALS), new ItemStack(ModItems.MAPLE_LEAF_PILE), visibility);
+
+                // Black pine blocks
+                entries.putAfter(new ItemStack(ModItems.MAPLE_LOG), new ItemStack(ModItems.BLACK_PINE_LOG), visibility);
+                entries.putAfter(new ItemStack(ModItems.MAPLE_LEAVES), new ItemStack(ModItems.BLACK_PINE_LEAVES), visibility);
+                entries.putAfter(new ItemStack(ModItems.MAPLE_SAPLING), new ItemStack(ModItems.BLACK_PINE_SAPLING), visibility);
             } else if (creativeTabBuilderRegistryEvent.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
                 // Lanterns
                 entries.putAfter(new ItemStack(Items.SOUL_LANTERN), new ItemStack(ModItems.ZEN_LANTERN), visibility);

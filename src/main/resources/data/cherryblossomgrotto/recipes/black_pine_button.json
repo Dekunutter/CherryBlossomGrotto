@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "wooden_button",
+  "ingredients": [
+    {
+      "item": "cherryblossomgrotto:black_pine_planks"
+    }
+  ],
+  "result": {
+    "item": "cherryblossomgrotto:black_pine_button"
+  }
+}

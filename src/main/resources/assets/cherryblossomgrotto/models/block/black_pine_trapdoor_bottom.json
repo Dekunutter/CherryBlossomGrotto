@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_orientable_trapdoor_bottom",
+  "textures": {
+    "texture": "cherryblossomgrotto:block/black_pine_trapdoor"
+  },
+  "render_type": "cutout_mipped"
+}

@@ -13,4 +13,6 @@ public class ModTrunkPlacerTypes {
     public static RegistryObject<TrunkPlacerType<CherryBlossomTrunkPlacer>> CHERRY_TREE_TRUNK_PLACER = TRUNK_PLACER_TYPES.register("cherry_blossom_tree_trunk_placer", () -> new TrunkPlacerType<>(CherryBlossomTrunkPlacer.CODEC));
     public static RegistryObject<TrunkPlacerType<FancyCherryBlossomTrunkPlacer>> FANCY_CHERRY_TREE_TRUNK_PLACER = TRUNK_PLACER_TYPES.register("fancy_cherry_blossom_tree_trunk_placer", () -> new TrunkPlacerType<>(FancyCherryBlossomTrunkPlacer.CODEC));
     public static RegistryObject<TrunkPlacerType<GrandCherryBlossomTrunkPlacer>> GRAND_CHERRY_TREE_TRUNK_PLACER = TRUNK_PLACER_TYPES.register("grand_cherry_blossom_tree_trunk_placer", () -> new TrunkPlacerType<>(GrandCherryBlossomTrunkPlacer.CODEC));
+
+    public static RegistryObject<TrunkPlacerType<BlackPineTrunkPlacer>> BLACK_PINE_TREE_TRUNK_PLACER = TRUNK_PLACER_TYPES.register("black_pine_tree_trunk_placer", () -> new TrunkPlacerType<>(BlackPineTrunkPlacer.CODEC));
 }

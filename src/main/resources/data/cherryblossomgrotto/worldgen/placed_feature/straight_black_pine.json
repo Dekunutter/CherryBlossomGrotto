@@ -1,0 +1,17 @@
+{
+  "feature": "cherryblossomgrotto:straight_black_pine",
+  "placement": [
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:would_survive",
+        "state": {
+          "Name": "cherryblossomgrotto:black_pine_sapling",
+          "Properties": {
+            "stage": "0"
+          }
+        }
+      }
+    }
+  ]
+}
