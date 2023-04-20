@@ -26,6 +26,8 @@ public class ModVegetationPlacements {
     public static ResourceKey<PlacedFeature> TREES_MAPLE_WOODS = registerVegetationPlacementKey("trees_maple_woods");
     public static ResourceKey<PlacedFeature> TREES_OAK_AND_MAPLE_FOREST = registerVegetationPlacementKey("trees_oak_and_maple_forest");
 
+    public static ResourceKey<PlacedFeature> TREES_BLACK_PINE_FOREST = registerVegetationPlacementKey("trees_black_pine_forest");
+
     /**
      * Registers the vegetation placements into the vanilla game by the placed feature registry
      *
@@ -55,5 +57,6 @@ public class ModVegetationPlacements {
         context.register(CHERRY_BLOSSOM_BAMBOO_VEGETATION, new PlacedFeature(featureGetter.getOrThrow(ModVegetationFeatures.CHERRY_BLOSSOM_BAMBOO_VEGETATION), VegetationPlacements.treePlacement(PlacementUtils.countExtra(30, 0.1F, 1))));
         context.register(TREES_MAPLE_WOODS, new PlacedFeature(featureGetter.getOrThrow(ModVegetationFeatures.TREES_MAPLE_WOODS), VegetationPlacements.treePlacement(PlacementUtils.countExtra(6, 0.1F, 1))));
         context.register(TREES_OAK_AND_MAPLE_FOREST, new PlacedFeature(featureGetter.getOrThrow(ModVegetationFeatures.TREES_OAK_AND_MAPLE_FOREST), VegetationPlacements.treePlacement(PlacementUtils.countExtra(6, 0.1F, 1))));
+        context.register(TREES_BLACK_PINE_FOREST, new PlacedFeature(featureGetter.getOrThrow(ModVegetationFeatures.TREES_BLACK_PINE_FOREST), VegetationPlacements.treePlacement(PlacementUtils.countExtra(3, 0.1F, 1))));
     }
 }

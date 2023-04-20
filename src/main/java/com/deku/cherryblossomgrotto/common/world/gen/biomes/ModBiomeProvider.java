@@ -52,8 +52,11 @@ public class ModBiomeProvider extends Region {
                 builder.replaceBiome(Biomes.SPARSE_JUNGLE, ModBiomeInitializer.CHERRY_BLOSSOM_BAMBOO_JUNGLE);
             }
             if(ModConfiguration.spawnMapleBiomes.get()) {
-                builder.replaceBiome(Biomes.FOREST, ModBiomeInitializer.MAPLE_WOODS);
+                builder.replaceBiome(Biomes.DARK_FOREST, ModBiomeInitializer.MAPLE_WOODS);
                 builder.replaceBiome(Biomes.BIRCH_FOREST, ModBiomeInitializer.OAK_AND_MAPLE_FOREST);
+            }
+            if(ModConfiguration.spawnMapleBiomes.get()) {
+                builder.replaceBiome(Biomes.TAIGA, ModBiomeInitializer.BLACK_PINE_FOREST);
             }
         });
     }

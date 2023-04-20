@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/fence_inventory",
+  "textures": {
+    "texture": "cherryblossomgrotto:block/black_pine_planks"
+  }
+}

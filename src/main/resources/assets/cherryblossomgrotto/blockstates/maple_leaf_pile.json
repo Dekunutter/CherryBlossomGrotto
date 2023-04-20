@@ -5,6 +5,12 @@
     },
     "half_layers=2": {
       "model": "cherryblossomgrotto:block/maple_leaf_pile_height4"
+    },
+    "half_layers=3": {
+      "model": "cherryblossomgrotto:block/maple_leaf_pile_height4"
+    },
+    "half_layers=4": {
+      "model": "cherryblossomgrotto:block/maple_leaf_pile_height4"
     }
   }
 }

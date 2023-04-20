@@ -12,7 +12,7 @@ public class ModBlockEntities {
 
     public static BlockEntityType<MapleLeavesBlockEntity> MAPLE_LEAVES_TYPE = BlockEntityType.Builder.of(MapleLeavesBlockEntity::new, ModBlocks.MAPLE_LEAVES).build(null);
 
-    public static BlockEntityType<ModSignBlockEntity> SIGN_ENTITY_TYPE = BlockEntityType.Builder.of(ModSignBlockEntity::new, ModBlocks.CHERRY_SIGN, ModBlocks.CHERRY_WALL_SIGN).build(null);
+    public static BlockEntityType<ModSignBlockEntity> SIGN_ENTITY_TYPE = BlockEntityType.Builder.of(ModSignBlockEntity::new, ModBlocks.CHERRY_SIGN, ModBlocks.CHERRY_WALL_SIGN, ModBlocks.MAPLE_SIGN, ModBlocks.MAPLE_WALL_SIGN, ModBlocks.BLACK_PINE_SIGN, ModBlocks.BLACK_PINE_WALL_SIGN).build(null);
 
-    public static BlockEntityType<ModHangingSignBlockEntity> HANGING_SIGN_ENTITY_TYPE = BlockEntityType.Builder.of(ModHangingSignBlockEntity::new, ModBlocks.CHERRY_HANGING_SIGN, ModBlocks.CHERRY_WALL_HANGING_SIGN).build(null);
+    public static BlockEntityType<ModHangingSignBlockEntity> HANGING_SIGN_ENTITY_TYPE = BlockEntityType.Builder.of(ModHangingSignBlockEntity::new, ModBlocks.CHERRY_HANGING_SIGN, ModBlocks.CHERRY_WALL_HANGING_SIGN, ModBlocks.MAPLE_HANGING_SIGN, ModBlocks.MAPLE_WALL_HANGING_SIGN, ModBlocks.BLACK_PINE_HANGING_SIGN, ModBlocks.BLACK_PINE_WALL_HANGING_SIGN).build(null);
 }

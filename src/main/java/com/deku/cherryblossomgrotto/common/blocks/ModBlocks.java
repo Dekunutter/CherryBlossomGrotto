@@ -1,6 +1,7 @@
 package com.deku.cherryblossomgrotto.common.blocks;
 
 
+import com.deku.cherryblossomgrotto.common.blocks.black_pine.*;
 import com.deku.cherryblossomgrotto.common.blocks.cherry_blossom.*;
 import com.deku.cherryblossomgrotto.common.blocks.maple.*;
 import net.minecraftforge.registries.ObjectHolder;
@@ -139,6 +140,69 @@ public class ModBlocks {
 
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":potted_maple_sapling")
     public static PottedMapleSapling POTTED_MAPLE_SAPLING;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":black_pine_log")
+    public static BlackPineLog BLACK_PINE_LOG;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":stripped_black_pine_log")
+    public static StrippedBlackPineLog STRIPPED_BLACK_PINE_LOG;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":black_pine_wood")
+    public static BlackPineWood BLACK_PINE_WOOD;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":stripped_black_pine_wood")
+    public static StrippedBlackPineWood STRIPPED_BLACK_PINE_WOOD;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":black_pine_planks")
+    public static BlackPinePlanks BLACK_PINE_PLANKS;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":black_pine_slab")
+    public static BlackPineSlab BLACK_PINE_SLAB;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":black_pine_stairs")
+    public static BlackPineStairs BLACK_PINE_STAIRS;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":black_pine_button")
+    public static BlackPineButton BLACK_PINE_BUTTON;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":black_pine_fence")
+    public static BlackPineFence BLACK_PINE_FENCE;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":black_pine_fence_gate")
+    public static BlackPineFenceGate BLACK_PINE_FENCE_GATE;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":black_pine_pressure_plate")
+    public static BlackPinePressurePlate BLACK_PINE_PRESSURE_PLATE;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":black_pine_sign")
+    public static BlackPineSign BLACK_PINE_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":black_pine_wall_sign")
+    public static BlackPineWallSign BLACK_PINE_WALL_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":black_pine_hanging_sign")
+    public static BlackPineHangingSign BLACK_PINE_HANGING_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":black_pine_wall_hanging_sign")
+    public static BlackPineWallHangingSign BLACK_PINE_WALL_HANGING_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":black_pine_door")
+    public static BlackPineDoor BLACK_PINE_DOOR;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":black_pine_trapdoor")
+    public static BlackPineTrapDoor BLACK_PINE_TRAPDOOR;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":black_pine_planks_trapdoor")
+    public static BlackPinePlanksTrapdoor BLACK_PINE_PLANKS_TRAP_DOOR;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":black_pine_leaves")
+    public static BlackPineLeaves BLACK_PINE_LEAVES;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":black_pine_sapling")
+    public static BlackPineSapling BLACK_PINE_SAPLING;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":potted_black_pine_sapling")
+    public static PottedBlackPineSapling POTTED_BLACK_PINE_SAPLING;
 
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":zen_lantern")
     public static ZenLantern ZEN_LANTERN;

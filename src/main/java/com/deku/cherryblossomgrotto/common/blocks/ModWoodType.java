@@ -8,4 +8,5 @@ import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 public class ModWoodType {
     public static WoodType CHERRY_BLOSSOM = new WoodType(new ResourceLocation(MOD_ID, "cherry_blossom").toString(), ModBlockSetType.CHERRY_BLOSSOM);
     public static WoodType MAPLE = new WoodType(new ResourceLocation(MOD_ID, "maple").toString(), ModBlockSetType.MAPLE);
+    public static WoodType BLACK_PINE = new WoodType(new ResourceLocation(MOD_ID, "black_pine").toString(), ModBlockSetType.BLACK_PINE);
 }

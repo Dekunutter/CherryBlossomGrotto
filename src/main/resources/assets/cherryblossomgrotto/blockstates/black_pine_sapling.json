@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "stage=0": {
+      "model": "cherryblossomgrotto:block/black_pine_sapling"
+    },
+    "stage=1": {
+      "model": "cherryblossomgrotto:block/black_pine_sapling"
+    }
+  }
+}

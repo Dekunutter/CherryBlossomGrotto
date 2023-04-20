@@ -35,6 +35,9 @@ public class ModTreePlacements {
 
     public static ResourceKey<PlacedFeature> FANCY_MAPLE_CHECKED = registerTreePlacementKey("fancy_maple_checked");
     public static ResourceKey<PlacedFeature> FANCY_MAPLE_BEES = registerTreePlacementKey("fancy_maple_bees");
+    public static ResourceKey<PlacedFeature> BLACK_PINE_CHECKED = registerTreePlacementKey("black_pine_checked");
+    public static ResourceKey<PlacedFeature> STRAIGHT_BLACK_PINE_CHECKED = registerTreePlacementKey("straight_black_pine_checked");
+    public static ResourceKey<PlacedFeature> BRANCHING_BLACK_PINE_CHECKED = registerTreePlacementKey(" branching_black_pine_checked");
 
     /**
      * Registers the tree placements into the vanilla game by the placed feature registry
@@ -66,6 +69,10 @@ public class ModTreePlacements {
 
         context.register(FANCY_MAPLE_CHECKED, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.FANCY_MAPLE_TREE), List.of(PlacementUtils.filteredByBlockSurvival(ModBlocks.MAPLE_SAPLING))));
         context.register(FANCY_MAPLE_BEES, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.FANCY_MAPLE_TREE_BEES), List.of(PlacementUtils.filteredByBlockSurvival(ModBlocks.MAPLE_SAPLING))));
+
+        context.register(BLACK_PINE_CHECKED, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.BLACK_PINE), List.of(PlacementUtils.filteredByBlockSurvival(ModBlocks.BLACK_PINE_SAPLING))));
+        context.register(STRAIGHT_BLACK_PINE_CHECKED, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.STRAIGHT_BLACK_PINE), List.of(PlacementUtils.filteredByBlockSurvival(ModBlocks.BLACK_PINE_SAPLING))));
+        context.register(BRANCHING_BLACK_PINE_CHECKED, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.BRANCHING_BLACK_PINE), List.of(PlacementUtils.filteredByBlockSurvival(ModBlocks.BLACK_PINE_SAPLING))));
     }
 
     /**

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "cherryblossomgrotto:black_pine_logs"
+    }
+  ],
+  "result": {
+    "item": "cherryblossomgrotto:black_pine_planks",
+    "count": 4
+  }
+}

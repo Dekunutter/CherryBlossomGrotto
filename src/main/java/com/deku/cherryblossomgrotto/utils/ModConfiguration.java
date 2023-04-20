@@ -10,12 +10,14 @@ public final class ModConfiguration {
 
     public static final ForgeConfigSpec.ConfigValue<Boolean> spawnCherryBlossomBiomes;
     public static final ForgeConfigSpec.ConfigValue<Boolean> spawnMapleBiomes;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> spawnBlackPineBiomes;
     public static final ForgeConfigSpec.ConfigValue<Integer> fallingLeafParticleSpawnChance;
     public static final ForgeConfigSpec.ConfigValue<Integer> leafPileSpawnChance;
 
     static {
         BUILDER.comment("------ Cherry Blossom Grotto General Settings ------").push("cherry_blossom_grotto");
             BUILDER.push("biomes");
+                spawnBlackPineBiomes = BUILDER.comment("Whether black pine tree biomes should spawn").define("blackPineBiomes", false);
                 spawnMapleBiomes = BUILDER.comment("Whether maple tree biomes should spawn").define("mapleBiomes", true);
                 spawnCherryBlossomBiomes = BUILDER.comment("Whether cherry blossom biomes should spawn").define("cherryBlossomBiomes", true);
                 fallingLeafParticleSpawnChance = BUILDER.comment("The chance a falling leaf will spawn from a cherry or maple leaves block. The higher the number, the slower the falling leaf particles will spawn, and therefore the slower leaf piles will accumulate underneath").defineInRange("fallingLeafParticleSpawnChance", 32, 1, 1000000);

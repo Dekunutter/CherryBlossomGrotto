@@ -11,4 +11,7 @@ public class ModFoliagePlacers {
 
     @ObjectHolder(registryName = "minecraft:worldgen/foliage_placer_type", value = MOD_ID + ":big_cherry_blossom_tree_foliage_placer")
     public static FoliagePlacerType<GrandCherryBlossomFoliagePlacer> GRAND_CHERRY_TREE_FOLIAGE_PLACER;
+
+    @ObjectHolder(registryName = "minecraft:worldgen/foliage_placer_type", value = MOD_ID + ":black_pine_foliage_placer")
+    public static FoliagePlacerType<BlackPineFoliagePlacer> BLACK_PINE_FOLIAGE_PLACER;
 }
