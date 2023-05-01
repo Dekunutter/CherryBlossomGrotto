@@ -563,6 +563,7 @@ public class Main
 
                 // Misc overworld features
                 registrar.register(new ResourceLocation(MOD_ID, "hotspring"), new HotspringFeature(HotspringFeature.Configuration.CODEC));
+                registrar.register(new ResourceLocation(MOD_ID, "karst_stone"), new KarstStoneFeature(KarstStoneFeature.Configuration.CODEC));
             });
 
             //TODO: Should I register configured features in here after the feature registration has run? Right now they register at the global level spread across a few new classes and sit in holders. This might not be the right stage to be registering them...
