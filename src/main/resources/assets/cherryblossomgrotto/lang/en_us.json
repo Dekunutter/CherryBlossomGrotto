@@ -116,12 +116,14 @@
   "entity.cherryblossomgrotto.cherry_blossom_chest_boat": "Cherry Blossom Chest Boat",
   "entity.cherryblossomgrotto.maple_boat": "Maple Boat",
   "entity.cherryblossomgrotto.maple_chest_boat": "Maple Chest Boat",
+  "entity.cherryblossomgrotto.terracotta_warrior": "Terracotta Warrior",
   "biome.cherryblossomgrotto.cherry_blossom_grotto": "Cherry Blossom Grotto",
   "biome.cherryblossomgrotto.cherry_blossom_slopes": "Cherry Blossom Slopes",
   "biome.cherryblossomgrotto.cherry_blossom_bamboo_jungle": "Cherry Blossom Bamboo Jungle",
   "biome.cherryblossomgrotto.maple_woods": "Maple Woods",
   "biome.cherryblossomgrotto.oak_and_maple_forest": "Oak & Maple Forest",
   "biome.cherryblossomgrotto.black_pine_forest": "Black Pine Forest",
+  "biome.cherryblossomgrotto.stone_forest": "Stone Forest",
   "enchantment.cherryblossomgrotto.double_jump": "Double Jump",
   "enchantment.cherryblossomgrotto.double_jump.desc": "Enables double jumping",
   "subtitles.item.maple_syrup_bottle.drink": "Slurping",
@@ -132,5 +134,8 @@
   "subtitles.entity.tanooki.attack": "Tanooki attacks",
   "subtitles.entity.tanooki.death": "Tanooki dies",
   "subtitles.entity.tanooki.hurt": "Tanooki hurts",
-  "subtitles.entity.tanooki.ambient": "Tanooki Screams"
+  "subtitles.entity.tanooki.ambient": "Tanooki Screams",
+  "subtitles.entity.terracotta_warrior.attack": "Terracotta Warrior attacks",
+  "subtitles.entity.terracotta_warrior.death": "Terracotta Warrior dies",
+  "subtitles.entity.terracotta_warrior.hurt": "Terracotta Warrior hurts"
 }

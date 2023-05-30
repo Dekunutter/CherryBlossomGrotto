@@ -20,8 +20,11 @@ public class ModItemInitializer {
         new ForgeSpawnEggItem(ModEntityTypeInitializer.KOI_ENTITY_TYPE, 15724527, 16030538, new Item.Properties())
     );
 
-    // TODO: Select some proper colours or this spawn egg
     public static final RegistryObject<Item> TANOOKI_SPAWN_EGG = ITEMS.register("tanooki_spawn_egg", () ->
-            new ForgeSpawnEggItem(ModEntityTypeInitializer.TANOOKI_ENTITY_TYPE, 9738135, 3814711, new Item.Properties())
+            new ForgeSpawnEggItem(ModEntityTypeInitializer.TANOOKI_ENTITY_TYPE, 4604732, 9078636, new Item.Properties())
+    );
+
+    public static final RegistryObject<Item> TERRACOTTA_WARRIOR_SPAWN_EGG = ITEMS.register("terracotta_warrior_spawn_egg", () ->
+            new ForgeSpawnEggItem(ModEntityTypeInitializer.TERRACOTTA_WARRIOR_ENTITY_TYPE, 9991201, 12748579, new Item.Properties())
     );
 }

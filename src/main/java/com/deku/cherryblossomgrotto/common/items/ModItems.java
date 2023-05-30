@@ -257,6 +257,9 @@ public class ModItems {
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":long_aged_tatami_mat")
     public static BlockItem LONG_AGED_TATAMI_MAT;
 
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":terracotta_warrior_statue")
+    public static DoubleHighBlockItem TERRACOTTA_WARRIOR_STATUE;
+
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":ninja_mask")
     public static ArmorItem NINJA_MASK;
 
@@ -319,4 +322,7 @@ public class ModItems {
 
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":tanooki_spawn_egg")
     public static ForgeSpawnEggItem TANOOKI_SPAWN_EGG;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":terracotta_warrior_spawn_egg")
+    public static ForgeSpawnEggItem TERRACOTTA_WARRIOR_SPAWN_EGG;
 }

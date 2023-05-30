@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 78992812,
+    "separation": 32,
+    "spacing": 80
+  },
+  "structures": [
+    {
+      "structure": "cherryblossomgrotto:great_wall",
+      "weight": 1
+    }
+  ]
+}

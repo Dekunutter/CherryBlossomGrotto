@@ -405,7 +405,7 @@ public class Tanooki extends Animal implements GeoEntity, InventoryCarrier {
     }
 
     /**
-     * Logic that runs when the tanooki is killed by another entity
+     * Logic that runs when the tanooki kills another entity
      * Checks if the target is dead but otherwise doesn't really do anything with that information for now.
      *
      * @param tanooki The tanooki that was killed

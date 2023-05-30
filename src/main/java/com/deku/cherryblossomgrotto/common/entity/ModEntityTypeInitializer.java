@@ -1,6 +1,7 @@
 package com.deku.cherryblossomgrotto.common.entity;
 
 import com.deku.cherryblossomgrotto.common.entity.animal.tanooki.Tanooki;
+import com.deku.cherryblossomgrotto.common.entity.monster.terracotta_warrior.TerracottaWarrior;
 import com.deku.cherryblossomgrotto.common.entity.vehicle.ModBoatEntity;
 import com.deku.cherryblossomgrotto.common.entity.passive.fish.KoiEntity;
 import com.deku.cherryblossomgrotto.common.entity.projectile.KunaiEntity;
@@ -64,5 +65,12 @@ public class ModEntityTypeInitializer {
             .sized(1.0f, 1.0f)
             .clientTrackingRange(8)
             .build(new ResourceLocation(MOD_ID, "tanooki").toString())
+    );
+
+    public static final RegistryObject<EntityType<TerracottaWarrior>> TERRACOTTA_WARRIOR_ENTITY_TYPE = ENTITY_TYPES.register("terracotta_warrior", () ->
+        EntityType.Builder.<TerracottaWarrior>of(TerracottaWarrior::new, MobCategory.MONSTER)
+            .sized(1.0f, 2.0f)
+            .clientTrackingRange(8)
+            .build(new ResourceLocation(MOD_ID, "terracotta_warrior").toString())
     );
 }
