@@ -19,8 +19,8 @@ public final class ModConfiguration {
     static {
         BUILDER.comment("------ Cherry Blossom Grotto General Settings ------").push("cherry_blossom_grotto");
             BUILDER.push("biomes");
-                spawnStoneForestBiomes = BUILDER.comment("Whether stone forest biomes should spawn").define("stoneForestBiomes", false);
-                spawnBlackPineBiomes = BUILDER.comment("Whether black pine tree biomes should spawn").define("blackPineBiomes", false);
+                spawnStoneForestBiomes = BUILDER.comment("Whether stone forest biomes should spawn").define("stoneForestBiomes", true);
+                spawnBlackPineBiomes = BUILDER.comment("Whether black pine tree biomes should spawn").define("blackPineBiomes", true);
                 spawnMapleBiomes = BUILDER.comment("Whether maple tree biomes should spawn").define("mapleBiomes", true);
                 spawnCherryBlossomBiomes = BUILDER.comment("Whether cherry blossom biomes should spawn").define("cherryBlossomBiomes", true);
                 fallingLeafParticleSpawnChance = BUILDER.comment("The chance a falling leaf will spawn from a cherry or maple leaves block. The higher the number, the slower the falling leaf particles will spawn, and therefore the slower leaf piles will accumulate underneath").defineInRange("fallingLeafParticleSpawnChance", 32, 1, 1000000);
