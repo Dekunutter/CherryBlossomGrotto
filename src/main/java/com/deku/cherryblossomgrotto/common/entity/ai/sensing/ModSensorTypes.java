@@ -15,4 +15,5 @@ public class ModSensorTypes<U extends Sensor<?>> {
 
     public static RegistryObject<SensorType<TanookiAttackablesSensor>> TANOOKI_ATTACKABLES = SENSOR_TYPES.register("tanooki_attackables", () -> new SensorType<>(TanookiAttackablesSensor::new));
     public static RegistryObject<SensorType<TemptingSensor>> TANOOKI_TEMPTATIONS = SENSOR_TYPES.register("tanooki_temptations", () -> new SensorType<>(() -> new TemptingSensor(TanookiAI.getTemptations())));
+    public static RegistryObject<SensorType<TerracottaWarriorAttackablesSensor>> TERRACOTTA_WARRIOR_ATTACKABLES = SENSOR_TYPES.register("terracotta_warrior_attackables", () -> new SensorType<>(TerracottaWarriorAttackablesSensor::new));
 }

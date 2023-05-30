@@ -1,7 +1,6 @@
 package com.deku.cherryblossomgrotto.common.world.gen.structures;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
@@ -17,6 +16,8 @@ public class ModStructureTypeInitializer {
     public static final RegistryObject<StructureType<ToriiGate>> TORII_GATE = STRUCTURE_TYPES.register("torii_gate", () -> convert(ToriiGate.CODEC));
     public static final RegistryObject<StructureType<RuinedToriiPortal>> RUINED_TORII_PORTAL = STRUCTURE_TYPES.register("ruined_torii_portal", () -> convert(RuinedToriiPortal.CODEC));
     public static final RegistryObject<StructureType<Gazebo>> GAZEBO = STRUCTURE_TYPES.register("gazebo", () -> convert(Gazebo.CODEC));
+
+    public static final RegistryObject<StructureType<LargeJigsawStructure>> LARGE_JIGSAW = STRUCTURE_TYPES.register("large_jigsaw", () -> convert(LargeJigsawStructure.CODEC));
 
     /**
      * Converts a given codec for cleaner use in the structure type registry

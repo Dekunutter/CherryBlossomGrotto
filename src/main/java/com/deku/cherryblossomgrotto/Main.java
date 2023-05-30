@@ -10,8 +10,10 @@ import com.deku.cherryblossomgrotto.common.capabilities.DoubleJumpCapability;
 import com.deku.cherryblossomgrotto.common.enchantments.ModEnchantmentInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ModEntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ModBlockEntities;
+import com.deku.cherryblossomgrotto.common.entity.ai.memory.ModMemoryModuleTypes;
 import com.deku.cherryblossomgrotto.common.entity.ai.sensing.ModSensorTypes;
 import com.deku.cherryblossomgrotto.common.entity.animal.tanooki.Tanooki;
+import com.deku.cherryblossomgrotto.common.entity.monster.terracotta_warrior.TerracottaWarrior;
 import com.deku.cherryblossomgrotto.common.entity.npc.ModVillagerTypes;
 import com.deku.cherryblossomgrotto.common.features.*;
 import com.deku.cherryblossomgrotto.common.items.*;
@@ -179,6 +181,9 @@ public class Main
 
         // AI Sensor Types
         ModSensorTypes.SENSOR_TYPES.register(eventBus);
+
+        // AI Memory Module Types
+        ModMemoryModuleTypes.MEMORY_MODULE_TYPES.register(eventBus);
 
         // Custom recipe serializers
         ModRecipeSerializerInitializer.RECIPE_SERIALIZERS.register(eventBus);
@@ -352,6 +357,7 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "long_tatami_mat"), new LongTatamiMat());
                 registrar.register(new ResourceLocation(MOD_ID, "aged_tatami_mat"), new AgedTatamiMat());
                 registrar.register(new ResourceLocation(MOD_ID, "long_aged_tatami_mat"), new LongAgedTatamiMat());
+                registrar.register(new ResourceLocation(MOD_ID, "terracotta_warrior_statue"), new TerracottaWarriorStatue());
 
                 // All farm crops
                 registrar.register(new ResourceLocation(MOD_ID, "rice_paddy"), new RicePaddy());
@@ -490,6 +496,7 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "long_tatami_mat"), new BlockItem(ModBlocks.LONG_TATAMI_MAT, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "aged_tatami_mat"), new BlockItem(ModBlocks.AGED_TATAMI_MAT, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "long_aged_tatami_mat"), new BlockItem(ModBlocks.LONG_AGED_TATAMI_MAT, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "terracotta_warrior_statue"), new DoubleHighBlockItem(ModBlocks.TERRACOTTA_WARRIOR_STATUE, new Item.Properties()));
 
                 // TODO: Find a way to add these to the composter
                 // All food items
@@ -541,12 +548,14 @@ public class Main
         public static void onEntityAttributeRegistration(final EntityAttributeCreationEvent event) {
             event.put(ModEntityTypeInitializer.KOI_ENTITY_TYPE.get(), AbstractSchoolingFish.createAttributes().build());
             event.put(ModEntityTypeInitializer.TANOOKI_ENTITY_TYPE.get(), Tanooki.createAttributes().build());
+            event.put(ModEntityTypeInitializer.TERRACOTTA_WARRIOR_ENTITY_TYPE.get(), TerracottaWarrior.createAttributes().build());
         }
 
         @SubscribeEvent
         public static void onEntitySpawn(final SpawnPlacementRegisterEvent registerEvent) {
             registerEvent.register(ModEntityTypeInitializer.KOI_ENTITY_TYPE.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
             registerEvent.register(ModEntityTypeInitializer.TANOOKI_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Tanooki::checkTanookiSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+            registerEvent.register(ModEntityTypeInitializer.TERRACOTTA_WARRIOR_ENTITY_TYPE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TerracottaWarrior::checkTerracottaWarriorSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
         }
 
         /**
@@ -563,6 +572,7 @@ public class Main
 
                 // Misc overworld features
                 registrar.register(new ResourceLocation(MOD_ID, "hotspring"), new HotspringFeature(HotspringFeature.Configuration.CODEC));
+                registrar.register(new ResourceLocation(MOD_ID, "karst_stone"), new KarstStoneFeature(KarstStoneFeature.Configuration.CODEC));
             });
 
             //TODO: Should I register configured features in here after the feature registration has run? Right now they register at the global level spread across a few new classes and sit in holders. This might not be the right stage to be registering them...
@@ -734,6 +744,9 @@ public class Main
                                         output.accept(new ItemStack(ModItems.KOI_SPAWN_EGG));
                                         output.accept(new ItemStack(ModItems.TANOOKI_SPAWN_EGG));
 
+                                        // Monsters
+                                        output.accept(new ItemStack(ModItems.TERRACOTTA_WARRIOR_SPAWN_EGG));
+
                                         // Misc building blocks
                                         output.accept(ModItems.SHOJI_SCREEN);
                                         output.accept(ModItems.TATAMI_MAT);
@@ -743,6 +756,7 @@ public class Main
                                         output.accept(ModItems.ZEN_LANTERN);
                                         output.accept(ModItems.SOUL_ZEN_LANTERN);
                                         output.accept(ModItems.PAPER_LANTERN);
+                                        output.accept(ModItems.TERRACOTTA_WARRIOR_STATUE);
 
                                         // Weapons & Armour
                                         output.accept(new ItemStack(ModItems.KATANA));
@@ -838,6 +852,7 @@ public class Main
                 creativeTabBuilderRegistryEvent.accept(ModItems.LONG_TATAMI_MAT);
                 creativeTabBuilderRegistryEvent.accept(ModItems.AGED_TATAMI_MAT);
                 creativeTabBuilderRegistryEvent.accept(ModItems.LONG_AGED_TATAMI_MAT);
+                creativeTabBuilderRegistryEvent.accept(ModItems.TERRACOTTA_WARRIOR_STATUE);
 
                 // Hidden trapdoors
                 entries.putAfter(new ItemStack(Items.ACACIA_TRAPDOOR), new ItemStack(ModItems.ACACIA_PLANKS_TRAP_DOOR), visibility);
@@ -945,8 +960,12 @@ public class Main
                 entries.putAfter(new ItemStack(Items.TROPICAL_FISH_SPAWN_EGG), new ItemStack(ModItems.KOI_SPAWN_EGG), visibility);
 
                 // Animals
-                // TODO: Put ater whatever is the last animal spawn egg in the overworld
+                // TODO: Put after whatever is the last animal spawn egg in the overworld
                 entries.putAfter(new ItemStack(Items.COW_SPAWN_EGG), new ItemStack(ModItems.TANOOKI_SPAWN_EGG), visibility);
+
+                // TODO: Put after whatever is the last monster spawn egg in the overworld
+                // Monsters
+                entries.putAfter(new ItemStack(Items.ZOMBIE_SPAWN_EGG), new ItemStack(ModItems.TERRACOTTA_WARRIOR_SPAWN_EGG), visibility);
             }
         }
     }

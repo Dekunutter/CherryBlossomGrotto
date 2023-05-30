@@ -13,4 +13,7 @@ public class ModFeatures {
 
     @ObjectHolder(registryName = "minecraft:worldgen/feature", value = MOD_ID + ":hotspring")
     public static HotspringFeature HOTSPRING;
+
+    @ObjectHolder(registryName = "minecrarft:worldgen/feature", value = MOD_ID + ":karst_stone")
+    public static KarstStoneFeature KARST_STONE;
 }

@@ -30,6 +30,8 @@ public class ModBiomeInitializer {
 
     public static ResourceKey<Biome> BLACK_PINE_FOREST = registerBiomeKey("black_pine_forest");
 
+    public static ResourceKey<Biome> STONE_FOREST = registerBiomeKey("stone_forest");
+
     /**
      * Registers the biome into the vanilla game by the biome registry
      *
@@ -55,6 +57,7 @@ public class ModBiomeInitializer {
         context.register(MAPLE_WOODS, OverworldBiomes.theVoid(placementGetter, carverGetter));
         context.register(OAK_AND_MAPLE_FOREST, OverworldBiomes.theVoid(placementGetter, carverGetter));
         context.register(BLACK_PINE_FOREST, OverworldBiomes.theVoid(placementGetter, carverGetter));
+        context.register(STONE_FOREST, OverworldBiomes.theVoid(placementGetter, carverGetter));
     }
 
     /**
@@ -68,5 +71,6 @@ public class ModBiomeInitializer {
         BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(MAPLE_WOODS, 1));
         BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(OAK_AND_MAPLE_FOREST, 1));
         BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(BLACK_PINE_FOREST, 1));
+        BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(STONE_FOREST, 1));
     }
 }

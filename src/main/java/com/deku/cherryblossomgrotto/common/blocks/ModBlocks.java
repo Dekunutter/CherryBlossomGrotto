@@ -228,6 +228,9 @@ public class ModBlocks {
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":long_aged_tatami_mat")
     public static LongAgedTatamiMat LONG_AGED_TATAMI_MAT;
 
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":terracotta_warrior_statue")
+    public static TerracottaWarriorStatue TERRACOTTA_WARRIOR_STATUE;
+
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":rice_paddy")
     public static RicePaddy RICE_PADDY;
 

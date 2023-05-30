@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.Climate;
+import terrablender.api.ParameterUtils;
 import terrablender.api.Region;
 import terrablender.api.RegionType;
 
@@ -32,18 +33,18 @@ public class ModBiomeProvider extends Region {
     public void addBiomes(Registry<Biome> registry, Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> mapper)
     {
         // TODO: REALLY COOL Sometimes. Generates on mountain slopes and tops which can lead to awesome cherry blossom covered mountains around valleys
-        /*addModifiedVanillaOverworldBiomes(mapper, builder -> {
-            List<Climate.ParameterPoint> cherryBlossomGrottoClimate = new ParameterUtils.ParameterPointListBuilder()
-                    .temperature(ParameterUtils.Temperature.COOL, ParameterUtils.Temperature.NEUTRAL, ParameterUtils.Temperature.WARM)
-                    .humidity(ParameterUtils.Humidity.NEUTRAL, ParameterUtils.Humidity.WET, ParameterUtils.Humidity.HUMID)
-                    .continentalness(ParameterUtils.Continentalness.span(ParameterUtils.Continentalness.COAST, ParameterUtils.Continentalness.FAR_INLAND), ParameterUtils.Continentalness.span(ParameterUtils.Continentalness.MID_INLAND, ParameterUtils.Continentalness.FAR_INLAND))
-                    .erosion(ParameterUtils.Erosion.EROSION_0, ParameterUtils.Erosion.EROSION_1)
-                    .depth(ParameterUtils.Depth.SURFACE, ParameterUtils.Depth.FLOOR)
-                    .weirdness(ParameterUtils.Weirdness.HIGH_SLICE_VARIANT_ASCENDING, ParameterUtils.Weirdness.PEAK_VARIANT, ParameterUtils.Weirdness.HIGH_SLICE_VARIANT_DESCENDING)
-                    .build();
-
-            cherryBlossomGrottoClimate.forEach(point -> builder.replaceBiome(point, ModBiomeInitializer.CHERRY_BLOSSOM_GROTTO));
-        });*/
+//        addModifiedVanillaOverworldBiomes(mapper, builder -> {
+//            List<Climate.ParameterPoint> cherryBlossomGrottoClimate = new ParameterUtils.ParameterPointListBuilder()
+//                    .temperature(ParameterUtils.Temperature.COOL, ParameterUtils.Temperature.NEUTRAL, ParameterUtils.Temperature.WARM)
+//                    .humidity(ParameterUtils.Humidity.NEUTRAL, ParameterUtils.Humidity.WET, ParameterUtils.Humidity.HUMID)
+//                    .continentalness(ParameterUtils.Continentalness.span(ParameterUtils.Continentalness.COAST, ParameterUtils.Continentalness.FAR_INLAND), ParameterUtils.Continentalness.span(ParameterUtils.Continentalness.MID_INLAND, ParameterUtils.Continentalness.FAR_INLAND))
+//                    .erosion(ParameterUtils.Erosion.EROSION_0, ParameterUtils.Erosion.EROSION_1)
+//                    .depth(ParameterUtils.Depth.SURFACE, ParameterUtils.Depth.FLOOR)
+//                    .weirdness(ParameterUtils.Weirdness.HIGH_SLICE_VARIANT_ASCENDING, ParameterUtils.Weirdness.PEAK_VARIANT, ParameterUtils.Weirdness.HIGH_SLICE_VARIANT_DESCENDING)
+//                    .build();
+//
+//            cherryBlossomGrottoClimate.forEach(point -> builder.replaceBiome(point, ModBiomeInitializer.CHERRY_BLOSSOM_GROTTO));
+//        });
 
         addModifiedVanillaOverworldBiomes(mapper, builder -> {
             if(ModConfiguration.spawnCherryBlossomBiomes.get()) {
@@ -55,8 +56,11 @@ public class ModBiomeProvider extends Region {
                 builder.replaceBiome(Biomes.DARK_FOREST, ModBiomeInitializer.MAPLE_WOODS);
                 builder.replaceBiome(Biomes.BIRCH_FOREST, ModBiomeInitializer.OAK_AND_MAPLE_FOREST);
             }
-            if(ModConfiguration.spawnMapleBiomes.get()) {
+            if(ModConfiguration.spawnBlackPineBiomes.get()) {
                 builder.replaceBiome(Biomes.TAIGA, ModBiomeInitializer.BLACK_PINE_FOREST);
+            }
+            if(ModConfiguration.spawnStoneForestBiomes.get()) {
+                builder.replaceBiome(Biomes.JUNGLE, ModBiomeInitializer.STONE_FOREST);
             }
         });
     }

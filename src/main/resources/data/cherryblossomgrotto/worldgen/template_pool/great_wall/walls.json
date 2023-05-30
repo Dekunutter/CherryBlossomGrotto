@@ -1,0 +1,158 @@
+{
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "cherryblossomgrotto:great_wall/walls/great_wall_straight_01",
+        "processors": "cherryblossomgrotto:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "cherryblossomgrotto:great_wall/walls/great_wall_straight_02",
+        "processors": "cherryblossomgrotto:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "cherryblossomgrotto:great_wall/walls/great_wall_straight_03",
+        "processors": "cherryblossomgrotto:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "cherryblossomgrotto:great_wall/walls/great_wall_straight_04",
+        "processors": "cherryblossomgrotto:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "cherryblossomgrotto:great_wall/walls/great_wall_straight_05",
+        "processors": "cherryblossomgrotto:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "cherryblossomgrotto:great_wall/walls/great_wall_straight_06",
+        "processors": "cherryblossomgrotto:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "cherryblossomgrotto:great_wall/walls/great_wall_straight_07",
+        "processors": "cherryblossomgrotto:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "cherryblossomgrotto:great_wall/walls/great_wall_straight_08",
+        "processors": "cherryblossomgrotto:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "cherryblossomgrotto:great_wall/walls/great_wall_straight_09",
+        "processors": "cherryblossomgrotto:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "cherryblossomgrotto:great_wall/walls/great_wall_straight_10",
+        "processors": "cherryblossomgrotto:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "cherryblossomgrotto:great_wall/walls/great_wall_tower_01",
+        "processors": "cherryblossomgrotto:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "cherryblossomgrotto:great_wall/walls/great_wall_tower_02",
+        "processors": "cherryblossomgrotto:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "cherryblossomgrotto:great_wall/walls/great_wall_tower_03",
+        "processors": "cherryblossomgrotto:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "cherryblossomgrotto:great_wall/walls/great_wall_tower_04",
+        "processors": "cherryblossomgrotto:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "cherryblossomgrotto:great_wall/walls/great_wall_tower_05",
+        "processors": "cherryblossomgrotto:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "cherryblossomgrotto:great_wall/walls/great_wall_turn_01",
+        "processors": "cherryblossomgrotto:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "cherryblossomgrotto:great_wall/walls/great_wall_turn_02",
+        "processors": "cherryblossomgrotto:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    }
+  ],
+  "fallback": "cherryblossomgrotto:great_wall/terminators"
+}

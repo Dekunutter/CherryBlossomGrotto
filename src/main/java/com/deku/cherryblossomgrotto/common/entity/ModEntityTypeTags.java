@@ -9,4 +9,6 @@ import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
 public class ModEntityTypeTags {
     public static final TagKey<EntityType<?>> TANOOKI_HUNT_TARGETS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(MOD_ID, "tanooki_hunt_targets"));
+
+    public static final TagKey<EntityType<?>> TERRACOTTA_WARRIOR_TARGETS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(MOD_ID, "terracotta_warrior_targets"));
 }

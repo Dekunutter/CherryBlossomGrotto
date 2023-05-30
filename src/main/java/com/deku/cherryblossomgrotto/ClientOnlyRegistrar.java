@@ -138,6 +138,7 @@ public class ClientOnlyRegistrar {
             registerEntityEvent.registerEntityRenderer(ModEntityTypeInitializer.CHEST_BOAT_ENTITY_TYPE.get(), ModChestBoatRenderer::new);
             registerEntityEvent.registerEntityRenderer(ModEntityTypeInitializer.KOI_ENTITY_TYPE.get(), KoiRenderer::new);
             registerEntityEvent.registerEntityRenderer(ModEntityTypeInitializer.TANOOKI_ENTITY_TYPE.get(), TanookiRenderer::new);
+            registerEntityEvent.registerEntityRenderer(ModEntityTypeInitializer.TERRACOTTA_WARRIOR_ENTITY_TYPE.get(), TerracottaWarriorRenderer::new);
             registerEntityEvent.registerEntityRenderer(ModEntityTypeInitializer.KUNAI_ENTITY_TYPE.get(), KunaiRenderer::new);
             registerEntityEvent.registerEntityRenderer(ModEntityTypeInitializer.SHURIKEN_ENTITY_TYPE.get(), ShurikenRenderer::new);
 
