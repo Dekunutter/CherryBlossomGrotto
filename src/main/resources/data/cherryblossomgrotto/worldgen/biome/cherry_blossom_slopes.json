@@ -217,8 +217,8 @@
       "minecraft:spring_lava"
     ],
     [
-      "minecraft:glow_lichen",
       "minecraft:patch_tall_grass_2",
+      "minecraft:glow_lichen",
       "minecraft:patch_grass_forest",
       "minecraft:brown_mushroom_normal",
       "minecraft:patch_berry_common",
