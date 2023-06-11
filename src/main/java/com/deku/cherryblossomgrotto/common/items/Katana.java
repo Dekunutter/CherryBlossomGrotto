@@ -11,7 +11,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 
 import static com.deku.cherryblossomgrotto.common.utils.VanillaAttributeUUIDs.ATTACK_DAMAGE_UUID;
 import static com.deku.cherryblossomgrotto.common.utils.VanillaAttributeUUIDs.ATTACK_SPEED_UUID;
@@ -44,8 +43,7 @@ public class Katana extends SwordItem {
         if (state.is(Blocks.COBWEB)) {
             return 20.0F;
         } else {
-            Material material = state.getMaterial();
-            return material != Material.PLANT && material != Material.REPLACEABLE_PLANT && !state.is(BlockTags.LEAVES) && material != Material.VEGETABLE ? 1.0F : 1.5F;
+            return state.is(BlockTags.SWORD_EFFICIENT) ? 1.5F : 1.0F;
         }
     }
 

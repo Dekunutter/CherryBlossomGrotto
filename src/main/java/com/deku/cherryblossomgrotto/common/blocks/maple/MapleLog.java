@@ -5,15 +5,15 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 
 public class MapleLog extends AbstractWoodenBlock {
 
     public MapleLog() {
-        super(BlockBehaviour.Properties.of(Material.WOOD, (determineMaterialColour) ->
-                        determineMaterialColour.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? MaterialColor.TERRACOTTA_BROWN : MaterialColor.WOOD
-                ).strength(2.0f).sound(SoundType.WOOD)
+        super(BlockBehaviour.Properties.of().mapColor((determineMaterialColour) -> {
+            return determineMaterialColour.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? MapColor.TERRACOTTA_BROWN : MapColor.WOOD;
+        }).sound(SoundType.WOOD).instrument(NoteBlockInstrument.BASS).ignitedByLava()
         );
     }
 }

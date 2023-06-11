@@ -7,12 +7,12 @@ import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 
 public class TatamiMat extends CarpetBlock {
     public TatamiMat() {
-        super(BlockBehaviour.Properties.of(Material.BAMBOO, MaterialColor.COLOR_BROWN).strength(0.2F).sound(SoundType.BAMBOO));
+        super(BlockBehaviour.Properties.of().strength(0.2F).mapColor(MapColor.COLOR_BROWN).ignitedByLava().pushReaction(PushReaction.DESTROY).sound(SoundType.BAMBOO));
     }
 
     /**

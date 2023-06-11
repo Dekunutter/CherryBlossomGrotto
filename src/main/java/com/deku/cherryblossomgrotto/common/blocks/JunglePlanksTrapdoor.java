@@ -4,14 +4,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 
 public class JunglePlanksTrapdoor extends TrapDoorBlock {
     public JunglePlanksTrapdoor() {
-        super(Properties.of(Material.WOOD, Blocks.JUNGLE_PLANKS.defaultMaterialColor()).strength( 3.0f).noOcclusion().isValidSpawn(JunglePlanksTrapdoor::never), BlockSetType.JUNGLE);
+        super(Properties.of().strength( 3.0f).mapColor(Blocks.JUNGLE_PLANKS.defaultMapColor()).ignitedByLava().sound(SoundType.WOOD).instrument(NoteBlockInstrument.BASS).noOcclusion().isValidSpawn(JunglePlanksTrapdoor::never), BlockSetType.JUNGLE);
     }
 
     /**

@@ -14,8 +14,8 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
@@ -24,7 +24,7 @@ import java.awt.*;
 
 public class MapleLeaves extends AbstractFallingLeavesBlock {
     public MapleLeaves() {
-        super(BlockBehaviour.Properties.of(Material.LEAVES, MaterialColor.COLOR_RED).strength(0.2f).sound(SoundType.GRASS).noOcclusion().isValidSpawn(MapleLeaves::validSpawns).isSuffocating(MapleLeaves.never()).isViewBlocking(MapleLeaves.never()).randomTicks());
+        super(BlockBehaviour.Properties.of().strength(0.2f).sound(SoundType.GRASS).noOcclusion().mapColor(MapColor.COLOR_RED).pushReaction(PushReaction.DESTROY).ignitedByLava().isValidSpawn(MapleLeaves::validSpawns).isSuffocating(MapleLeaves.never()).isViewBlocking(MapleLeaves.never()).randomTicks());
     }
 
     /**

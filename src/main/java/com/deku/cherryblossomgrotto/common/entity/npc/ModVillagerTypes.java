@@ -1,6 +1,5 @@
 package com.deku.cherryblossomgrotto.common.entity.npc;
 
-import com.deku.cherryblossomgrotto.common.items.ModItems;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -9,6 +8,7 @@ import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.npc.VillagerType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +45,7 @@ public class ModVillagerTypes {
 
         Map<VillagerType, Item> trades = boatTradesType.trades;
         Map<VillagerType, Item> newTrades = new HashMap<>(trades);
-        newTrades.put(ModVillagerTypes.CHERRY_BLOSSOM_GROTTO_VILLAGER_TYPE, ModItems.CHERRY_BOAT);
+        newTrades.put(ModVillagerTypes.CHERRY_BLOSSOM_GROTTO_VILLAGER_TYPE, Items.CHERRY_BOAT);
         boatTradesType.trades = newTrades;
     }
 }

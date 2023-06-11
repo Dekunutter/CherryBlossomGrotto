@@ -8,12 +8,12 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.WallSignBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 
 public class BlackPineWallSign extends WallSignBlock {
     public BlackPineWallSign() {
-        super(Properties.of(Material.WOOD, MaterialColor.WOOD).noCollission().strength(1.0F).sound(SoundType.WOOD).lootFrom(() -> ModBlocks.BLACK_PINE_SIGN), ModWoodType.BLACK_PINE);
+        super(Properties.of().noCollission().strength(1.0F).mapColor(MapColor.WOOD).ignitedByLava().sound(SoundType.WOOD).instrument(NoteBlockInstrument.BASS).lootFrom(() -> ModBlocks.BLACK_PINE_SIGN), ModWoodType.BLACK_PINE);
     }
 
     /**

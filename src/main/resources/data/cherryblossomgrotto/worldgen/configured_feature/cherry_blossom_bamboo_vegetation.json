@@ -8,7 +8,7 @@
     "features": [
       {
         "chance": 0.05,
-        "feature": "cherryblossomgrotto:fancy_cherry_blossom_checked"
+        "feature": "minecraft:cherry_bees_005"
       },
       {
         "chance": 0.15,
@@ -16,7 +16,7 @@
       },
       {
         "chance": 0.7,
-        "feature": "cherryblossomgrotto:cherry_blossom_checked"
+        "feature": "minecraft:cherry_bees_005"
       }
     ]
   }

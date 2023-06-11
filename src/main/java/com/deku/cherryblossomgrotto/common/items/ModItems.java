@@ -1,8 +1,7 @@
 package com.deku.cherryblossomgrotto.common.items;
 
-import com.deku.cherryblossomgrotto.common.items.cherry_blossom.CherryBlossomBoat;
-import com.deku.cherryblossomgrotto.common.items.cherry_blossom.CherryBlossomChestBoat;
-import com.deku.cherryblossomgrotto.common.items.cherry_blossom.CherryBlossomPetal;
+import com.deku.cherryblossomgrotto.common.items.black_pine.BlackPineBoat;
+import com.deku.cherryblossomgrotto.common.items.black_pine.BlackPineChestBoat;
 import com.deku.cherryblossomgrotto.common.items.maple.MapleBoat;
 import com.deku.cherryblossomgrotto.common.items.maple.MapleChestBoat;
 import com.deku.cherryblossomgrotto.common.items.maple.MapleLeaf;
@@ -14,72 +13,6 @@ import net.minecraftforge.registries.ObjectHolder;
 import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
 public class ModItems {
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_log")
-    public static BlockItem CHERRY_LOG;
-
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":stripped_cherry_blossom_log")
-    public static BlockItem STRIPPED_CHERRY_LOG;
-
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_wood")
-    public static BlockItem CHERRY_WOOD;
-
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":stripped_cherry_blossom_wood")
-    public static BlockItem STRIPPED_CHERRY_WOOD;
-
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_planks")
-    public static BlockItem CHERRY_PLANKS;
-
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_slab")
-    public static BlockItem CHERRY_SLAB;
-
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_stairs")
-    public static BlockItem CHERRY_STAIRS;
-
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_button")
-    public static BlockItem CHERRY_BUTTON;
-
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_fence")
-    public static BlockItem CHERRY_FENCE;
-
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_fence_gate")
-    public static BlockItem CHERRY_FENCE_GATE;
-
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_pressure_plate")
-    public static BlockItem CHERRY_PRESSURE_PLATE;
-
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_sign")
-    public static SignItem CHERRY_SIGN;
-
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_hanging_sign")
-    public static HangingSignItem CHERRY_HANGING_SIGN;
-
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_door")
-    public static DoubleHighBlockItem CHERRY_DOOR;
-
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_trapdoor")
-    public static BlockItem CHERRY_TRAPDOOR;
-
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_planks_trapdoor")
-    public static BlockItem CHERRY_BLOSSOM_PLANKS_TRAP_DOOR;
-
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_petal")
-    public static CherryBlossomPetal CHERRY_PETAL;
-
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_leaves")
-    public static BlockItem CHERRY_LEAVES;
-
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_petals")
-    public static BlockItem CHERRY_PETALS;
-
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_sapling")
-    public static BlockItem CHERRY_SAPLING;
-
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_boat")
-    public static CherryBlossomBoat CHERRY_BOAT;
-
-    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_blossom_chest_boat")
-    public static CherryBlossomChestBoat CHERRY_CHEST_BOAT;
-
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":maple_log")
     public static BlockItem MAPLE_LOG;
 
@@ -204,10 +137,10 @@ public class ModItems {
     public static BlockItem BLACK_PINE_SAPLING;
 
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":black_pine_boat")
-    public static MapleBoat BLACK_PINE_BOAT;
+    public static BlackPineBoat BLACK_PINE_BOAT;
 
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":black_pine_chest_boat")
-    public static MapleChestBoat BLACK_PINE_CHEST_BOAT;
+    public static BlackPineChestBoat BLACK_PINE_CHEST_BOAT;
 
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":katana")
     public static Katana KATANA;
@@ -229,6 +162,9 @@ public class ModItems {
 
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":onigiri")
     public static Onigiri ONIGIRI;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":congee")
+    public static Congee CONGEE;
 
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":koi_bucket")
     public static KoiBucket KOI_BUCKET;
@@ -307,6 +243,9 @@ public class ModItems {
 
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":bamboo_planks_trapdoor")
     public static BlockItem BAMBOO_PLANKS_TRAP_DOOR;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":cherry_planks_trapdoor")
+    public static BlockItem CHERRY_PLANKS_TRAP_DOOR;
 
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":smooth_stone_trapdoor")
     public static BlockItem SMOOTH_STONE_TRAP_DOOR;

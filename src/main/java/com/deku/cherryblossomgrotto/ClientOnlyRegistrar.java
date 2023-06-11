@@ -9,7 +9,6 @@ import com.deku.cherryblossomgrotto.common.blocks.ModWoodType;
 import com.deku.cherryblossomgrotto.common.entity.ModEntityTypeInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ModBlockEntities;
 import com.deku.cherryblossomgrotto.common.items.ModItems;
-import com.deku.cherryblossomgrotto.common.particles.FallingCherryBlossomPetalProvider;
 import com.deku.cherryblossomgrotto.common.particles.FallingMapleLeafProvider;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
 import net.minecraft.client.Minecraft;
@@ -70,7 +69,6 @@ public class ClientOnlyRegistrar {
      */
     private void doClientStuff(final FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            Sheets.addWoodType(ModWoodType.CHERRY_BLOSSOM);
             Sheets.addWoodType(ModWoodType.MAPLE);
             Sheets.addWoodType(ModWoodType.BLACK_PINE);
         });
@@ -179,7 +177,6 @@ public class ClientOnlyRegistrar {
          */
         @SubscribeEvent
         public static void onParticleFactoryRegistry(final RegisterParticleProvidersEvent particleFactoryRegistryEvent) {
-            Minecraft.getInstance().particleEngine.register(ModParticles.CHERRY_PETAL, FallingCherryBlossomPetalProvider::new);
             Minecraft.getInstance().particleEngine.register(ModParticles.MAPLE_LEAF, FallingMapleLeafProvider::new);
         }
 

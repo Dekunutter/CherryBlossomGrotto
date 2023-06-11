@@ -15,16 +15,16 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 
 import static com.deku.cherryblossomgrotto.common.blocks.ModBlockStateProperties.HAS_MAPLE_SYRUP;
 
 public class StrippedMapleLog extends AbstractWoodenBlock {
     public StrippedMapleLog() {
-        super(Properties.of(Material.WOOD, MaterialColor.WOOD).strength(2.0f).sound(SoundType.WOOD));
+        super(Properties.of().strength(2.0f).mapColor(MapColor.WOOD).ignitedByLava().sound(SoundType.WOOD).instrument(NoteBlockInstrument.BASS));
         registerDefaultState(defaultBlockState().setValue(HAS_MAPLE_SYRUP, true));
     }
 

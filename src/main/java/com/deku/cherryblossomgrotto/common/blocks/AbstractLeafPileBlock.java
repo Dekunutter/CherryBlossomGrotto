@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -211,9 +210,8 @@ public class AbstractLeafPileBlock extends Block {
      * @param state State of the block being checked
      * @return Whether the block is "free" for replacement by a leaf pile or not
      */
-    public static boolean isFree(BlockState state, Level world, BlockPos position) {
-        Material material = state.getMaterial();
-        return state.isAir() || material.isLiquid() || material.isReplaceable();
+    public static boolean isFree(BlockState state) {
+        return state.isAir() || state.liquid() || state.canBeReplaced();
     }
 
     /**

@@ -225,8 +225,7 @@
       "cherryblossomgrotto:trees_cherry_blossom_slopes"
     ],
     [
-      "minecraft:freeze_top_layer",
-      "cherryblossomgrotto:cherry_blossom_petals_top_layer"
+      "minecraft:freeze_top_layer"
     ]
   ]
 }

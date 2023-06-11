@@ -353,7 +353,7 @@ public class Tanooki extends Animal implements GeoEntity, InventoryCarrier {
      * @return Whether the item is one that the tanooki will want
      */
     public boolean wantsToPickUp(ItemStack itemStack) {
-        return net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) && this.canPickUpLoot() && TanookiAI.wantsToPickup(this, itemStack);
+        return net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(level(), this) && this.canPickUpLoot() && TanookiAI.wantsToPickup(this, itemStack);
     }
 
     /**
@@ -395,12 +395,12 @@ public class Tanooki extends Animal implements GeoEntity, InventoryCarrier {
      * Just ticks the tanooki's brain and updates any activities
      */
     protected void customServerAiStep() {
-        this.level.getProfiler().push("tanookiBrain");
-        this.getBrain().tick((ServerLevel)this.level, this);
-        this.level.getProfiler().pop();
-        this.level.getProfiler().push("tanookiActivityUpdate");
+        level().getProfiler().push("tanookiBrain");
+        this.getBrain().tick((ServerLevel)level(), this);
+        level().getProfiler().pop();
+        level().getProfiler().push("tanookiActivityUpdate");
         TanookiAI.updateActivity(this);
-        this.level.getProfiler().pop();
+        level().getProfiler().pop();
         super.customServerAiStep();
     }
 

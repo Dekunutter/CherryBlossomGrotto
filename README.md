@@ -1,21 +1,12 @@
 # CherryBlossomGrotto
-A Minecraft mod using the 1.19.3 version of the MC Forge framework.
+A Minecraft mod using the 1.20 version of the MC Forge framework.
 Uses [Terrablender](https://www.curseforge.com/minecraft/mc-mods/terrablender) as a dependency for generating custom biomes.
 Also uses [GeckoLib](https://www.curseforge.com/minecraft/mc-mods/geckolib) for entity animations.
 
 # Contents
-The main focus of this mod is the cherry blossom grotto that it adds to the Minecraft overworld.
-This biome includes a new type of cherry blossom tree and a new style of villages with a Japanese design.
-Iron ore generates much more sparcely in this new biome.
-Mossy cobblestone generates naturally in this biome as well, similar to how it does in some vanilla biomes.
-There are also torii gates and giant buddha statues that generate in multiple vanilla biomes as well as the cherry blossom grotto biome.
-Cherry Blossom Grottos have their own variant of the ruined nether portal structure which is designed to looked like a ruined portal inside of a torii gate.
-Cherry blossom grotto villages are the one place where the new koi fish entity can be found. Villagers in these villages will also have new looks!
-
-Cherry Blossom trees also spawn in two new biomes as part of the Cherry Blossom Slopes and Cherry Blossom Bamboo Jungle biomes.
-These two biomes take biomes similar to those found in vanilla Minecraft and intersperse cherry blossom trees into them.
-The slopes biome is a snowy mountainside biome with sparse cherry blossom trees.
-The bamboo jungle biome is a typical bamboo jungle but interspersed with cherry blossom trees.
+This mod is a sequel to the Cherry Blossom Grotto mod. Now that cherry blossoms are natively supported by Minecraft, this mod shifts its focus into the support of new biomes themed around the nature of eastern asia.
+The cherry blossom trees will now show up in some new biomes and a new style of village with a Japanese design will also spawn in these locations.
+On top of this, new biomes like the Maple Woods and the Stone Forest, alongside new structures like the Great Wall provide a selection of new content thats unlike what Minecraft has provided before!
 
 ### Items
 - Cherry Blossom Log

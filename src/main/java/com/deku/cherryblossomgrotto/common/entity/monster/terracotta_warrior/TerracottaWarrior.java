@@ -264,12 +264,12 @@ public class TerracottaWarrior extends Monster implements GeoEntity {
      * Just ticks the entity's brain and updates any activities
      */
     protected void customServerAiStep() {
-        this.level.getProfiler().push("terracottaWarriorBrain");
-        this.getBrain().tick((ServerLevel)this.level, this);
-        this.level.getProfiler().pop();
-        this.level.getProfiler().push("terracottaWarriorActivityUpdate");
+        level().getProfiler().push("terracottaWarriorBrain");
+        this.getBrain().tick((ServerLevel)level(), this);
+        level().getProfiler().pop();
+        level().getProfiler().push("terracottaWarriorActivityUpdate");
         TerracottaWarriorAI.updateActivity(this);
-        this.level.getProfiler().pop();
+        level().getProfiler().pop();
         super.customServerAiStep();
     }
 

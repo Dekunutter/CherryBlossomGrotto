@@ -4,14 +4,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 
 public class DarkOakPlanksTrapdoor extends TrapDoorBlock {
     public DarkOakPlanksTrapdoor() {
-        super(Properties.of(Material.WOOD, Blocks.DARK_OAK_PLANKS.defaultMaterialColor()).strength( 3.0f).noOcclusion().isValidSpawn(DarkOakPlanksTrapdoor::never), BlockSetType.DARK_OAK);
+        super(Properties.of().strength( 3.0f).mapColor(Blocks.DARK_OAK_PLANKS.defaultMapColor()).ignitedByLava().sound(SoundType.WOOD).instrument(NoteBlockInstrument.BASS).noOcclusion().isValidSpawn(DarkOakPlanksTrapdoor::never), BlockSetType.DARK_OAK);
     }
 
     /**

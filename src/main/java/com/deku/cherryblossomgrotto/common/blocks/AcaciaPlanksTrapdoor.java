@@ -7,11 +7,11 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 
 public class AcaciaPlanksTrapdoor extends TrapDoorBlock {
     public AcaciaPlanksTrapdoor() {
-        super(Properties.of(Material.WOOD, Blocks.ACACIA_PLANKS.defaultMaterialColor()).strength( 3.0f).noOcclusion().isValidSpawn(AcaciaPlanksTrapdoor::never), BlockSetType.ACACIA);
+        super(Properties.of().strength( 3.0f).mapColor(Blocks.ACACIA_PLANKS.defaultMapColor()).ignitedByLava().noOcclusion().instrument(NoteBlockInstrument.BASS).isValidSpawn(AcaciaPlanksTrapdoor::never), BlockSetType.ACACIA);
     }
 
     /**

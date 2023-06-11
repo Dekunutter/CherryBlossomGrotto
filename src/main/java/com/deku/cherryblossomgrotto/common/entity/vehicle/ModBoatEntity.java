@@ -72,7 +72,7 @@ public class ModBoatEntity extends Boat {
     protected void defineSynchedData()
     {
         super.defineSynchedData();
-        this.entityData.define(MOD_BOAT_TYPE, ModBoatTypes.CHERRY.ordinal());
+        this.entityData.define(MOD_BOAT_TYPE, ModBoatTypes.BLACK_PINE.ordinal());
     }
 
     /**
@@ -114,9 +114,9 @@ public class ModBoatEntity extends Boat {
         switch(this.getModBoatType()) {
             case MAPLE:
                 return ModItems.MAPLE_BOAT;
-            case CHERRY:
+            case BLACK_PINE:
             default:
-                return ModItems.CHERRY_BOAT;
+                return ModItems.BLACK_PINE_BOAT;
         }
     }
 }

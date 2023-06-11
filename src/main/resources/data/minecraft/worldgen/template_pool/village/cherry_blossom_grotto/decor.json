@@ -14,7 +14,7 @@
     {
       "element": {
         "element_type": "minecraft:feature_pool_element",
-        "feature": "cherryblossomgrotto:cherry_blossom",
+        "feature": "minecraft:cherry_bees_005",
         "projection": "rigid"
       },
       "weight": 1

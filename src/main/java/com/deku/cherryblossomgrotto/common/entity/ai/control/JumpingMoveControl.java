@@ -63,7 +63,7 @@ public class JumpingMoveControl extends MoveControl {
             mob.setYRot(rotlerp(mob.getYRot(), f9, 90.0F));
 
             double currentSpeedModifier = speedModifier;
-            if (mob.isOnGround()) {
+            if (mob.onGround()) {
                 if (timeSinceLastJump-- <= 0) {
                     timeSinceLastJump = jumpDelay;
                     mob.getJumpControl().jump();

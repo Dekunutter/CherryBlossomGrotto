@@ -3,7 +3,8 @@ package com.deku.cherryblossomgrotto.common.blocks.maple;
 import com.deku.cherryblossomgrotto.common.blocks.AbstractLeafPileBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -18,7 +19,7 @@ public class MapleLeafPile extends AbstractLeafPileBlock {
     };
 
     public MapleLeafPile() {
-        super(Properties.of(Material.LEAVES).strength(0.1f).sound(SoundType.GRASS).noOcclusion(), MAX_LAYERS, SHAPE_BY_LAYER);
+        super(Properties.of().strength(0.1f).mapColor(MapColor.PLANT).ignitedByLava().sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY).noOcclusion(), MAX_LAYERS, SHAPE_BY_LAYER);
         this.registerDefaultState(this.defaultBlockState().setValue(HALF_LAYERS, 1));
     }
 }

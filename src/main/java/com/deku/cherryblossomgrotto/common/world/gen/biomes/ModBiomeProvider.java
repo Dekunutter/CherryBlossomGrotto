@@ -48,7 +48,8 @@ public class ModBiomeProvider extends Region {
 
         addModifiedVanillaOverworldBiomes(mapper, builder -> {
             if(ModConfiguration.spawnCherryBlossomBiomes.get()) {
-                builder.replaceBiome(Biomes.FLOWER_FOREST, ModBiomeInitializer.CHERRY_BLOSSOM_GROTTO);
+                // TODO: Replace with cherry grove variant using more flower types or something? Or maybe cherry trees with no trunk generation??
+                //builder.replaceBiome(Biomes.FLOWER_FOREST, ModBiomeInitializer.CHERRY_BLOSSOM_GROTTO);
                 builder.replaceBiome(Biomes.GROVE, ModBiomeInitializer.CHERRY_BLOSSOM_SLOPES);
                 builder.replaceBiome(Biomes.SPARSE_JUNGLE, ModBiomeInitializer.CHERRY_BLOSSOM_BAMBOO_JUNGLE);
             }

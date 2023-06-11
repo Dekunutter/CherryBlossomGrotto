@@ -96,7 +96,7 @@ public class ToriiGatePieces {
             return false;
         }
 
-        return blockState.getTags().anyMatch((element) -> element != BlockTags.REPLACEABLE_PLANTS);
+        return blockState.getTags().anyMatch((element) -> element != BlockTags.REPLACEABLE_BY_TREES);
     }
 
     /**

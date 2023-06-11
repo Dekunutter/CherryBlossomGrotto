@@ -13,12 +13,8 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.state.properties.*;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -39,7 +35,7 @@ public class ShojiScreen extends Block {
 
 
     public ShojiScreen() {
-        super(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.NONE).noOcclusion().strength(0.1f).sound(SoundType.GRASS));
+        super(BlockBehaviour.Properties.of().noOcclusion().strength(0.1f).mapColor(MapColor.NONE).ignitedByLava().instrument(NoteBlockInstrument.BASS).sound(SoundType.GRASS));
         registerDefaultState(defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER).setValue(FACING, Direction.NORTH));
     }
 

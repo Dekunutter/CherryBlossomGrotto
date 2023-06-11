@@ -8,12 +8,12 @@ import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 
 public class BlackPineDoor extends DoorBlock {
     public BlackPineDoor() {
-        super(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.WOOD).strength(3.0f).sound(SoundType.WOOD).noOcclusion().isValidSpawn(BlackPineDoor::never), ModBlockSetType.BLACK_PINE);
+        super(BlockBehaviour.Properties.of().strength(3.0f).sound(SoundType.WOOD).mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).ignitedByLava().noOcclusion().isValidSpawn(BlackPineDoor::never), ModBlockSetType.BLACK_PINE);
     }
 
     /**

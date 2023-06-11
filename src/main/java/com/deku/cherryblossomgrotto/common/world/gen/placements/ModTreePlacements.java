@@ -57,16 +57,6 @@ public class ModTreePlacements {
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> featureGetter = context.lookup(Registries.CONFIGURED_FEATURE);
 
-        context.register(CHERRY_BLOSSOM_CHECKED, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.CHERRY_BLOSSOM), List.of(PlacementUtils.filteredByBlockSurvival(ModBlocks.CHERRY_SAPLING))));
-        context.register(CHERRY_BLOSSOM_BEES_002, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.CHERRY_BLOSSOM_BEES_002), List.of(PlacementUtils.filteredByBlockSurvival(ModBlocks.CHERRY_SAPLING))));
-        context.register(CHERRY_BLOSSOM_BEES_02, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.CHERRY_BLOSSOM_BEES_02), List.of(PlacementUtils.filteredByBlockSurvival(ModBlocks.CHERRY_SAPLING))));
-        context.register(CHERRY_BLOSSOM_BEES_05, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.CHERRY_BLOSSOM_BEES_05), List.of(PlacementUtils.filteredByBlockSurvival(ModBlocks.CHERRY_SAPLING))));
-        context.register(CHERRY_BLOSSOM_ON_SNOW, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.CHERRY_BLOSSOM), surviveOnSnowPredicate()));
-        context.register(FANCY_CHERRY_BLOSSOM_CHECKED, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.FANCY_CHERRY_BLOSSOM), List.of(PlacementUtils.filteredByBlockSurvival(ModBlocks.CHERRY_SAPLING))));
-        context.register(FANCY_CHERRY_BLOSSOM_BEES_05, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.FANCY_CHERRY_BLOSSOM_BEES_05), List.of(PlacementUtils.filteredByBlockSurvival(ModBlocks.CHERRY_SAPLING))));
-        context.register(FANCY_CHERRY_BLOSSOM_ON_SNOW, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.FANCY_CHERRY_BLOSSOM), surviveOnSnowPredicate()));
-        context.register(GRAND_CHERRY_BLOSSOM_CHECKED, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.GRAND_CHERRY_BLOSSOM), List.of(PlacementUtils.filteredByBlockSurvival(ModBlocks.CHERRY_SAPLING))));
-
         context.register(FANCY_MAPLE_CHECKED, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.FANCY_MAPLE_TREE), List.of(PlacementUtils.filteredByBlockSurvival(ModBlocks.MAPLE_SAPLING))));
         context.register(FANCY_MAPLE_BEES, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.FANCY_MAPLE_TREE_BEES), List.of(PlacementUtils.filteredByBlockSurvival(ModBlocks.MAPLE_SAPLING))));
 

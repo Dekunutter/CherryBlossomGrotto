@@ -4,15 +4,16 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 
 public class CobblestoneTrapdoor extends TrapDoorBlock {
     public CobblestoneTrapdoor() {
-        super(BlockBehaviour.Properties.of(Material.STONE, Blocks.COBBLESTONE.defaultMaterialColor()).strength(6.0f).noOcclusion().isValidSpawn(CobblestoneTrapdoor::never), BlockSetType.STONE);
+        super(BlockBehaviour.Properties.of().strength(6.0f).mapColor(Blocks.COBBLESTONE.defaultMapColor()).sound(SoundType.STONE).instrument(NoteBlockInstrument.BASEDRUM).noOcclusion().isValidSpawn(CobblestoneTrapdoor::never), BlockSetType.STONE);
     }
 
     /**

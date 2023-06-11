@@ -33,7 +33,7 @@ public class FallingMapleLeafProvider implements ParticleProvider<FallingMapleLe
     @Nullable
     @Override
     public Particle createParticle(FallingMapleLeafOptions particleData, ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-        FallingCherryBlossomPetal petal = new FallingCherryBlossomPetal(world, particleData.getTint(), particleData.getDiameter(), sprites, x, y, z, xSpeed, ySpeed, zSpeed);
+        FallingMapleLeaf petal = new FallingMapleLeaf(world, particleData.getTint(), particleData.getDiameter(), sprites, x, y, z, xSpeed, ySpeed, zSpeed);
         petal.pickSprite(sprites);
         return petal;
     }

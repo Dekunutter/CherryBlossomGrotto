@@ -12,7 +12,6 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
-import net.minecraft.world.level.material.Material;
 
 public class HotspringFeature extends Feature<HotspringFeature.Configuration> {
     private static final BlockState AIR = Blocks.CAVE_AIR.defaultBlockState();
@@ -81,12 +80,12 @@ public class HotspringFeature extends Feature<HotspringFeature.Configuration> {
                     for (int chunkY = 0; chunkY < 8; ++chunkY) {
                         boolean flag = !booleanArray[(chunkX * 16 + chunkZ) * 8 + chunkY] && (chunkX < 15 && booleanArray[((chunkX + 1) * 16 + chunkZ) * 8 + chunkY] || chunkX > 0 && booleanArray[((chunkX - 1) * 16 + chunkZ) * 8 + chunkY] || chunkZ < 15 && booleanArray[(chunkX * 16 + chunkZ + 1) * 8 + chunkY] || chunkZ > 0 && booleanArray[(chunkX * 16 + (chunkZ - 1)) * 8 + chunkY] || chunkY < 7 && booleanArray[(chunkX * 16 + chunkZ) * 8 + chunkY + 1] || chunkY > 0 && booleanArray[(chunkX * 16 + chunkZ) * 8 + (chunkY - 1)]);
                         if (flag) {
-                            Material material = level.getBlockState(position.offset(chunkX, chunkY, chunkZ)).getMaterial();
-                            if (chunkY >= 4 && material.isLiquid()) {
+                            BlockState state = level.getBlockState(position.offset(chunkX, chunkY, chunkZ));
+                            if (chunkY >= 4 && state.liquid()) {
                                 return false;
                             }
 
-                            if (chunkY < 4 && !material.isSolid() && level.getBlockState(position.offset(chunkX, chunkY, chunkZ)) != water) {
+                            if (chunkY < 4 && !state.isSolid() && level.getBlockState(position.offset(chunkX, chunkY, chunkZ)) != water) {
                                 return false;
                             }
                         }
@@ -123,7 +122,7 @@ public class HotspringFeature extends Feature<HotspringFeature.Configuration> {
                             if (flag2) {
                                 if ((chunkY < 4 || random.nextInt(2) != 0)) {
                                     BlockState chunkBlock = level.getBlockState(position.offset(chunkX, chunkY, chunkZ));
-                                    if (chunkBlock.getMaterial().isSolid() && !chunkBlock.is(BlockTags.LAVA_POOL_STONE_CANNOT_REPLACE)) {
+                                    if (chunkBlock.isSolid() && !chunkBlock.is(BlockTags.LAVA_POOL_STONE_CANNOT_REPLACE)) {
                                         BlockState blockToReplaceWith = barrier;
                                         if (chunkY < 3 && (random.nextInt(8) == 0)) {
                                             blockToReplaceWith = Blocks.MAGMA_BLOCK.defaultBlockState();

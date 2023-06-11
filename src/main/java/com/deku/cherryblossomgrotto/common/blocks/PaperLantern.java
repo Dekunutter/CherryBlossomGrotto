@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -32,7 +32,7 @@ public class PaperLantern extends Block {
     private static final VoxelShape HANGING_AABB = Shapes.or(Block.box(4.0D, 1.0D, 4.0D, 12.0D, 7.0D, 12.0D), Block.box(7.0D, 7.0D, 7.0D, 9.0D, 16.0D, 9.0D));
 
     public PaperLantern() {
-        super(BlockBehaviour.Properties.of(Material.PLANT).strength(0.5F).sound(SoundType.GRASS).lightLevel((level) -> {
+        super(BlockBehaviour.Properties.of().strength(0.5F).mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).sound(SoundType.GRASS).lightLevel((level) -> {
             return 12;
         }).noOcclusion());
         registerDefaultState(defaultBlockState().setValue(HANGING, false).setValue(WATERLOGGED, false));

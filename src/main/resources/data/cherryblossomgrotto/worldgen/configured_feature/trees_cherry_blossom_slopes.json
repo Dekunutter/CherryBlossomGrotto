@@ -4,8 +4,8 @@
     "default": "cherryblossomgrotto:cherry_blossom_on_snow",
     "features": [
       {
-        "chance": 0.1,
-        "feature":"cherryblossomgrotto:fancy_cherry_blossom_on_snow"
+        "chance": 1.0,
+        "feature":"cherryblossomgrotto:cherry_blossom_on_snow"
       }
     ]
   }

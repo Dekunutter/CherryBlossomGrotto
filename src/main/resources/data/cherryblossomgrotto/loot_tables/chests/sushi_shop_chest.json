@@ -7,7 +7,7 @@
         {
           "type": "minecraft:item",
           "weight": 20,
-          "name": "cherryblossomgrotto:cherry_blossom_petal",
+          "name": "cherryblossomgrotto:rice",
           "functions": [
             {
               "function": "minecraft:set_count",

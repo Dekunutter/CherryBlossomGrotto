@@ -66,7 +66,7 @@ public class JumpPathNavigation extends PathNavigation {
             } else if (path != null && !path.isDone()) {
                 Vec3 vec3 = getTempMobPos();
                 Vec3 vec31 = path.getNextEntityPos(mob);
-                if (vec3.y > vec31.y && !mob.isOnGround() && Mth.floor(vec3.x) == Mth.floor(vec31.x) && Mth.floor(vec3.z) == Mth.floor(vec31.z)) {
+                if (vec3.y > vec31.y && !mob.onGround() && Mth.floor(vec3.x) == Mth.floor(vec31.x) && Mth.floor(vec3.z) == Mth.floor(vec31.z)) {
                     path.advance();
                 }
             }

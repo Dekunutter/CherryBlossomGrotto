@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -61,7 +61,7 @@ public class TerracottaWarriorStatue extends Block {
     );
 
     public TerracottaWarriorStatue() {
-        super(BlockBehaviour.Properties.of(Material.DECORATION).strength(2.0F, 6.0F).sound(SoundType.STONE));
+        super(BlockBehaviour.Properties.of().strength(2.0F, 6.0F).sound(SoundType.STONE).pushReaction(PushReaction.DESTROY));
         this.registerDefaultState(this.defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER).setValue(FACING, Direction.NORTH));
     }
 
@@ -150,7 +150,7 @@ public class TerracottaWarriorStatue extends Block {
     /**
      * Places the block into the world if the position above is also free so that the top block can be generated also.
      *
-     * @param level Level the block is being placed in
+     * @param world Level the block is being placed in
      * @param position Position the block is being placed on
      * @param blockState State of the block to be placed
      * @param entity The entity placing the block

@@ -6,12 +6,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 
 public class BlackPineTrapDoor extends TrapDoorBlock {
     public BlackPineTrapDoor() {
-        super(Properties.of(Material.WOOD, MaterialColor.WOOD).strength( 3.0f).noOcclusion().isValidSpawn(BlackPineTrapDoor::never), ModBlockSetType.BLACK_PINE);
+        super(Properties.of().strength( 3.0f).mapColor(MapColor.WOOD).ignitedByLava().noOcclusion().instrument(NoteBlockInstrument.BASS).isValidSpawn(BlackPineTrapDoor::never), ModBlockSetType.BLACK_PINE);
     }
 
     /**

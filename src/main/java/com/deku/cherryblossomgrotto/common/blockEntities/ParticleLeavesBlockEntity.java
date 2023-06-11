@@ -45,7 +45,7 @@ public abstract class ParticleLeavesBlockEntity extends BlockEntity {
                     if (belowState.getBlock() == entity.getLeafPile()) {
                         AbstractLeafPileBlock leafPile = (AbstractLeafPileBlock) belowState.getBlock();
                         leafPile.updateLayerState(belowPosition, world);
-                    } else if (AbstractLeafPileBlock.isFree(world.getBlockState(spawningPosition), world, spawningPosition)) {
+                    } else if (AbstractLeafPileBlock.isFree(world.getBlockState(spawningPosition))) {
                         if (entity.getLeafPile().defaultBlockState().canSurvive(world, spawningPosition)) {
                             world.setBlockAndUpdate(spawningPosition, entity.getLeafPile().defaultBlockState());
                         }

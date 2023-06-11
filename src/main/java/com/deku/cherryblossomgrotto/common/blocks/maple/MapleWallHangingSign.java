@@ -4,17 +4,16 @@ import com.deku.cherryblossomgrotto.common.blocks.ModBlocks;
 import com.deku.cherryblossomgrotto.common.blocks.ModWoodType;
 import com.deku.cherryblossomgrotto.common.entity.sign.ModHangingSignBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.WallHangingSignBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 
 public class MapleWallHangingSign extends WallHangingSignBlock {
     public MapleWallHangingSign() {
-        super(Properties.of(Material.WOOD, MaterialColor.WOOD).noCollission().strength(1.0F).sound(SoundType.HANGING_SIGN).lootFrom(() -> ModBlocks.MAPLE_HANGING_SIGN).requiredFeatures(FeatureFlags.UPDATE_1_20), ModWoodType.MAPLE);
+        super(Properties.of().mapColor(MapColor.WOOD).ignitedByLava().sound(SoundType.HANGING_SIGN).instrument(NoteBlockInstrument.BASS).lootFrom(() -> ModBlocks.MAPLE_HANGING_SIGN), ModWoodType.MAPLE);
     }
 
     /**

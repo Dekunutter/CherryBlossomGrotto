@@ -10,21 +10,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 20,
-          "name": "cherryblossomgrotto:cherry_blossom_petal",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 4.0,
-                "max": 9.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
           "weight": 2,
           "name": "minecraft:lilac"
         },
@@ -86,7 +71,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "cherryblossomgrotto:cherry_blossom_sapling",
+          "name": "minecraft:cherry_sapling",
           "weight": 5,
           "functions": [
             {

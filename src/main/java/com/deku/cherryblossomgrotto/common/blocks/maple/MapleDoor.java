@@ -6,13 +6,13 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 
 public class MapleDoor extends DoorBlock
 {
     public MapleDoor() {
-        super(Properties.of(Material.WOOD, MaterialColor.WOOD).strength(3.0f).noOcclusion().isValidSpawn(MapleDoor::never), ModBlockSetType.MAPLE);
+        super(Properties.of().strength(3.0f).mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).ignitedByLava().noOcclusion().isValidSpawn(MapleDoor::never), ModBlockSetType.MAPLE);
     }
 
     /**
