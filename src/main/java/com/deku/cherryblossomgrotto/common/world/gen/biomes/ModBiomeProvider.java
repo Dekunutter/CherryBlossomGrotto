@@ -63,6 +63,12 @@ public class ModBiomeProvider extends Region {
             if(ModConfiguration.spawnStoneForestBiomes.get()) {
                 builder.replaceBiome(Biomes.JUNGLE, ModBiomeInitializer.STONE_FOREST);
             }
+            if(ModConfiguration.spawnHinokiBiomes.get()) {
+                builder.replaceBiome(Biomes.MEADOW, ModBiomeInitializer.HINOKI_FOREST);
+            }
+            if(ModConfiguration.spawnWaterFirBiomes.get()) {
+                builder.replaceBiome(Biomes.OLD_GROWTH_SPRUCE_TAIGA, ModBiomeInitializer.OLD_GROWTH_FIR_FOREST);
+            }
         });
     }
 }

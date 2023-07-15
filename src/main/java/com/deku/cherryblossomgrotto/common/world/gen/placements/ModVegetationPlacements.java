@@ -18,11 +18,6 @@ import java.util.List;
 import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
 public class ModVegetationPlacements {
-    public static ResourceKey<PlacedFeature> TREES_CHERRY_BLOSSOM_GROTTO = registerVegetationPlacementKey("trees_cherry_blossom_grotto");
-    public static ResourceKey<PlacedFeature> CHERRY_BLOSSOM_GROTTO_FLOWERS = registerVegetationPlacementKey("cherry_blossom_grotto_flowers");
-    public static ResourceKey<PlacedFeature> TREES_CHERRY_BLOSSOM_SLOPES = registerVegetationPlacementKey("trees_cherry_blossom_slopes");
-    public static ResourceKey<PlacedFeature> TREES_CHERRY_BLOSSOM_SPARSE = registerVegetationPlacementKey("trees_cherry_blossom_sparse");
-    public static ResourceKey<PlacedFeature> CHERRY_BLOSSOM_BAMBOO_VEGETATION = registerVegetationPlacementKey("cherry_blossom_bamboo_vegetation");
     public static ResourceKey<PlacedFeature> TREES_MAPLE_WOODS = registerVegetationPlacementKey("trees_maple_woods");
     public static ResourceKey<PlacedFeature> TREES_OAK_AND_MAPLE_FOREST = registerVegetationPlacementKey("trees_oak_and_maple_forest");
 
@@ -46,15 +41,6 @@ public class ModVegetationPlacements {
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> featureGetter = context.lookup(Registries.CONFIGURED_FEATURE);
 
-        context.register(TREES_CHERRY_BLOSSOM_GROTTO, new PlacedFeature(featureGetter.getOrThrow(ModVegetationFeatures.TREES_CHERY_BLOSSOM_GROTTO), VegetationPlacements.treePlacement(PlacementUtils.countExtra(6, 0.1F, 1))));
-        context.register(CHERRY_BLOSSOM_GROTTO_FLOWERS, new PlacedFeature(featureGetter.getOrThrow(ModVegetationFeatures.CHERY_BLOSSOM_GROTTO_FLOWERS), List.of(RarityFilter.onAverageOnceEvery(7),
-            InSquarePlacement.spread(),
-            PlacementUtils.HEIGHTMAP,
-            CountPlacement.of(ClampedInt.of(UniformInt.of(-1, 3), 0, 3)),
-            BiomeFilter.biome())));
-        context.register(TREES_CHERRY_BLOSSOM_SLOPES, new PlacedFeature(featureGetter.getOrThrow(ModVegetationFeatures.TREES_CHERY_BLOSSOM_SLOPES), VegetationPlacements.treePlacement(PlacementUtils.countExtra(3, 0.1F, 1))));
-        context.register(TREES_CHERRY_BLOSSOM_SPARSE, new PlacedFeature(featureGetter.getOrThrow(ModVegetationFeatures.TREES_CHERY_BLOSSOM_GROTTO), VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.1F, 1))));
-        context.register(CHERRY_BLOSSOM_BAMBOO_VEGETATION, new PlacedFeature(featureGetter.getOrThrow(ModVegetationFeatures.CHERRY_BLOSSOM_BAMBOO_VEGETATION), VegetationPlacements.treePlacement(PlacementUtils.countExtra(30, 0.1F, 1))));
         context.register(TREES_MAPLE_WOODS, new PlacedFeature(featureGetter.getOrThrow(ModVegetationFeatures.TREES_MAPLE_WOODS), VegetationPlacements.treePlacement(PlacementUtils.countExtra(6, 0.1F, 1))));
         context.register(TREES_OAK_AND_MAPLE_FOREST, new PlacedFeature(featureGetter.getOrThrow(ModVegetationFeatures.TREES_OAK_AND_MAPLE_FOREST), VegetationPlacements.treePlacement(PlacementUtils.countExtra(6, 0.1F, 1))));
         context.register(TREES_BLACK_PINE_FOREST, new PlacedFeature(featureGetter.getOrThrow(ModVegetationFeatures.TREES_BLACK_PINE_FOREST), VegetationPlacements.treePlacement(PlacementUtils.countExtra(3, 0.1F, 1))));

@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "#cherryblossomgrotto:maple_logs",
-    "#cherryblossomgrotto:black_pine_logs"
+    "#cherryblossomgrotto:black_pine_logs",
+    "#cherryblossomgrotto:hinoki_logs",
+    "#cherryblossomgrotto:water_fir_logs"
   ]
 }

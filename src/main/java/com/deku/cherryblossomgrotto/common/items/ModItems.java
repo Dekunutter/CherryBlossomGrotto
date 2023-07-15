@@ -2,10 +2,14 @@ package com.deku.cherryblossomgrotto.common.items;
 
 import com.deku.cherryblossomgrotto.common.items.black_pine.BlackPineBoat;
 import com.deku.cherryblossomgrotto.common.items.black_pine.BlackPineChestBoat;
+import com.deku.cherryblossomgrotto.common.items.hinoki.HinokiBoat;
+import com.deku.cherryblossomgrotto.common.items.hinoki.HinokiChestBoat;
 import com.deku.cherryblossomgrotto.common.items.maple.MapleBoat;
 import com.deku.cherryblossomgrotto.common.items.maple.MapleChestBoat;
 import com.deku.cherryblossomgrotto.common.items.maple.MapleLeaf;
 import com.deku.cherryblossomgrotto.common.items.maple.MapleSyrupBottleItem;
+import com.deku.cherryblossomgrotto.common.items.water_fir.WaterFirBoat;
+import com.deku.cherryblossomgrotto.common.items.water_fir.WaterFirChestBoat;
 import net.minecraft.world.item.*;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.ObjectHolder;
@@ -142,6 +146,128 @@ public class ModItems {
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":black_pine_chest_boat")
     public static BlackPineChestBoat BLACK_PINE_CHEST_BOAT;
 
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":hinoki_log")
+    public static BlockItem HINOKI_LOG;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":stripped_hinoki_log")
+    public static BlockItem STRIPPED_HINOKI_LOG;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":hinoki_wood")
+    public static BlockItem HINOKI_WOOD;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":stripped_hinoki_wood")
+    public static BlockItem STRIPPED_HINOKI_WOOD;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":hinoki_planks")
+    public static BlockItem HINOKI_PLANKS;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":hinoki_slab")
+    public static BlockItem HINOKI_SLAB;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":hinoki_stairs")
+    public static BlockItem HINOKI_STAIRS;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":hinoki_button")
+    public static BlockItem HINOKI_BUTTON;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":hinoki_fence")
+    public static BlockItem HINOKI_FENCE;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":hinoki_fence_gate")
+    public static BlockItem HINOKI_FENCE_GATE;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":hinoki_pressure_plate")
+    public static BlockItem HINOKI_PRESSURE_PLATE;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":hinoki_sign")
+    public static SignItem HINOKI_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":hinoki_hanging_sign")
+    public static HangingSignItem HINOKI_HANGING_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":hinoki_door")
+    public static DoubleHighBlockItem HINOKI_DOOR;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":hinoki_trapdoor")
+    public static BlockItem HINOKI_TRAPDOOR;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":hinoki_planks_trapdoor")
+    public static BlockItem HINOKI_PLANKS_TRAP_DOOR;
+
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":hinoki_leaves")
+    public static BlockItem HINOKI_LEAVES;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":hinoki_sapling")
+    public static BlockItem HINOKI_SAPLING;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":hinoki_boat")
+    public static HinokiBoat HINOKI_BOAT;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":hinoki_chest_boat")
+    public static HinokiChestBoat HINOKI_CHEST_BOAT;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_log")
+    public static BlockItem WATER_FIR_LOG;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":stripped_water_fir_log")
+    public static BlockItem STRIPPED_WATER_FIR_LOG;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_wood")
+    public static BlockItem WATER_FIR_WOOD;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":stripped_water_fir_wood")
+    public static BlockItem STRIPPED_WATER_FIR_WOOD;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_planks")
+    public static BlockItem WATER_FIR_PLANKS;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_slab")
+    public static BlockItem WATER_FIR_SLAB;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_stairs")
+    public static BlockItem WATER_FIR_STAIRS;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_button")
+    public static BlockItem WATER_FIR_BUTTON;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_fence")
+    public static BlockItem WATER_FIR_FENCE;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_fence_gate")
+    public static BlockItem WATER_FIR_FENCE_GATE;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_pressure_plate")
+    public static BlockItem WATER_FIR_PRESSURE_PLATE;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_sign")
+    public static SignItem WATER_FIR_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_hanging_sign")
+    public static HangingSignItem WATER_FIR_HANGING_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_door")
+    public static DoubleHighBlockItem WATER_FIR_DOOR;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_trapdoor")
+    public static BlockItem WATER_FIR_TRAPDOOR;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_planks_trapdoor")
+    public static BlockItem WATER_FIR_PLANKS_TRAP_DOOR;
+
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_leaves")
+    public static BlockItem WATER_FIR_LEAVES;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_sapling")
+    public static BlockItem WATER_FIR_SAPLING;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_boat")
+    public static WaterFirBoat WATER_FIR_BOAT;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_chest_boat")
+    public static WaterFirChestBoat WATER_FIR_CHEST_BOAT;
+
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":katana")
     public static Katana KATANA;
 
@@ -181,6 +307,9 @@ public class ModItems {
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":shoji_screen")
     public static DoubleHighBlockItem SHOJI_SCREEN;
 
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":dark_shoji_screen")
+    public static DoubleHighBlockItem DARK_SHOJI_SCREEN;
+
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":tatami_mat")
     public static BlockItem TATAMI_MAT;
 
@@ -192,6 +321,15 @@ public class ModItems {
 
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":long_aged_tatami_mat")
     public static BlockItem LONG_AGED_TATAMI_MAT;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":enoki_mushroom")
+    public static BlockItem ENOKI_MUSHROOM;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":shiitake_mushroom")
+    public static BlockItem SHIITAKE_MUSHROOM;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":enoki_mushroom_block")
+    public static BlockItem ENOKI_MUSHROOM_BLOCK;
 
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":terracotta_warrior_statue")
     public static DoubleHighBlockItem TERRACOTTA_WARRIOR_STATUE;

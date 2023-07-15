@@ -2,7 +2,9 @@ package com.deku.cherryblossomgrotto.common.blocks;
 
 
 import com.deku.cherryblossomgrotto.common.blocks.black_pine.*;
+import com.deku.cherryblossomgrotto.common.blocks.hinoki.*;
 import com.deku.cherryblossomgrotto.common.blocks.maple.*;
+import com.deku.cherryblossomgrotto.common.blocks.water_fir.*;
 import net.minecraftforge.registries.ObjectHolder;
 
 import static com.deku.cherryblossomgrotto.Main.MOD_ID;
@@ -137,6 +139,132 @@ public class ModBlocks {
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":potted_black_pine_sapling")
     public static PottedBlackPineSapling POTTED_BLACK_PINE_SAPLING;
 
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":hinoki_log")
+    public static HinokiLog HINOKI_LOG;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":stripped_hinoki_log")
+    public static StrippedHinokiLog STRIPPED_HINOKI_LOG;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":hinoki_wood")
+    public static HinokiWood HINOKI_WOOD;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":stripped_hinoki_wood")
+    public static StrippedHinokiWood STRIPPED_HINOKI_WOOD;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":hinoki_planks")
+    public static HinokiPlanks HINOKI_PLANKS;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":hinoki_slab")
+    public static HinokiSlab HINOKI_SLAB;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":hinoki_stairs")
+    public static HinokiStairs HINOKI_STAIRS;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":hinoki_button")
+    public static HinokiButton HINOKI_BUTTON;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":hinoki_fence")
+    public static HinokiFence HINOKI_FENCE;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":hinoki_fence_gate")
+    public static HinokiFenceGate HINOKI_FENCE_GATE;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":hinoki_pressure_plate")
+    public static HinokiPressurePlate HINOKI_PRESSURE_PLATE;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":hinoki_sign")
+    public static HinokiSign HINOKI_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":hinoki_wall_sign")
+    public static HinokiWallSign HINOKI_WALL_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":hinoki_hanging_sign")
+    public static HinokiHangingSign HINOKI_HANGING_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":hinoki_wall_hanging_sign")
+    public static HinokiWallHangingSign HINOKI_WALL_HANGING_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":hinoki_door")
+    public static HinokiDoor HINOKI_DOOR;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":hinoki_trapdoor")
+    public static HinokiTrapDoor HINOKI_TRAPDOOR;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":hinoki_planks_trapdoor")
+    public static HinokiPlanksTrapdoor HINOKI_PLANKS_TRAP_DOOR;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":hinoki_leaves")
+    public static HinokiLeaves HINOKI_LEAVES;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":hinoki_sapling")
+    public static HinokiSapling HINOKI_SAPLING;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":potted_hinoki_sapling")
+    public static PottedHinokiSapling POTTED_HINOKI_SAPLING;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":water_fir_log")
+    public static WaterFirLog WATER_FIR_LOG;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":stripped_water_fir_log")
+    public static StrippedWaterFirLog STRIPPED_WATER_FIR_LOG;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":water_fir_wood")
+    public static WaterFirWood WATER_FIR_WOOD;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":stripped_water_fir_wood")
+    public static StrippedWaterFirWood STRIPPED_WATER_FIR_WOOD;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":water_fir_planks")
+    public static WaterFirPlanks WATER_FIR_PLANKS;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":water_fir_slab")
+    public static WaterFirSlab WATER_FIR_SLAB;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":water_fir_stairs")
+    public static WaterFirStairs WATER_FIR_STAIRS;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":water_fir_button")
+    public static WaterFirButton WATER_FIR_BUTTON;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":water_fir_fence")
+    public static WaterFirFence WATER_FIR_FENCE;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":water_fir_fence_gate")
+    public static WaterFirFenceGate WATER_FIR_FENCE_GATE;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":water_fir_pressure_plate")
+    public static WaterFirPressurePlate WATER_FIR_PRESSURE_PLATE;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":water_fir_sign")
+    public static WaterFirSign WATER_FIR_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":water_fir_wall_sign")
+    public static WaterFirWallSign WATER_FIR_WALL_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":water_fir_hanging_sign")
+    public static WaterFirHangingSign WATER_FIR_HANGING_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":water_fir_wall_hanging_sign")
+    public static WaterFirWallHangingSign WATER_FIR_WALL_HANGING_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":water_fir_door")
+    public static WaterFirDoor WATER_FIR_DOOR;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":water_fir_trapdoor")
+    public static WaterFirTrapDoor WATER_FIR_TRAPDOOR;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":water_fir_planks_trapdoor")
+    public static WaterFirPlanksTrapdoor WATER_FIR_PLANKS_TRAP_DOOR;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":water_fir_leaves")
+    public static WaterFirLeaves WATER_FIR_LEAVES;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":water_fir_sapling")
+    public static WaterFirSapling WATER_FIR_SAPLING;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":potted_water_fir_sapling")
+    public static PottedWaterFirSapling POTTED_WATER_FIR_SAPLING;
+
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":zen_lantern")
     public static ZenLantern ZEN_LANTERN;
 
@@ -148,6 +276,9 @@ public class ModBlocks {
 
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":shoji_screen")
     public static ShojiScreen SHOJI_SCREEN;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":dark_shoji_screen")
+    public static ShojiScreen DARK_SHOJI_SCREEN;
 
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":tatami_mat")
     public static TatamiMat TATAMI_MAT;
@@ -166,6 +297,15 @@ public class ModBlocks {
 
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":rice_paddy")
     public static RicePaddy RICE_PADDY;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":enoki_mushroom")
+    public static EnokiMushroom ENOKI_MUSHROOM;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":shiitake_mushroom")
+    public static ShiitakeMushroom SHIITAKE_MUSHROOM;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":enoki_mushroom_block")
+    public static EnokiMushroomBlock ENOKI_MUSHROOM_BLOCK;
 
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":acacia_planks_trapdoor")
     public static AcaciaPlanksTrapdoor ACACIA_PLANKS_TRAP_DOOR;

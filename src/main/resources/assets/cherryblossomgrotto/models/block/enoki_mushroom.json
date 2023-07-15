@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "cherryblossomgrotto:block/enoki_mushroom"
+  },
+  "render_type": "cutout_mipped"
+}

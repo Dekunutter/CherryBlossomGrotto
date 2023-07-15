@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,half=lower": {
+      "model": "cherryblossomgrotto:block/dark_shoji_screen_bottom"
+    },
+    "facing=east,half=upper": {
+      "model": "cherryblossomgrotto:block/dark_shoji_screen_top"
+    },
+    "facing=north,half=lower": {
+      "model": "cherryblossomgrotto:block/dark_shoji_screen_bottom",
+      "y": 270
+    },
+    "facing=north,half=upper": {
+      "model": "cherryblossomgrotto:block/dark_shoji_screen_top",
+      "y": 270
+    },
+    "facing=south,half=lower": {
+      "model": "cherryblossomgrotto:block/dark_shoji_screen_bottom",
+      "y": 90
+    },
+    "facing=south,half=upper": {
+      "model": "cherryblossomgrotto:block/dark_shoji_screen_top",
+      "y": 90
+    },
+    "facing=west,half=lower": {
+      "model": "cherryblossomgrotto:block/dark_shoji_screen_bottom",
+      "y": 180
+    },
+    "facing=west,half=upper": {
+      "model": "cherryblossomgrotto:block/dark_shoji_screen_top",
+      "y": 180
+    }
+  }
+}

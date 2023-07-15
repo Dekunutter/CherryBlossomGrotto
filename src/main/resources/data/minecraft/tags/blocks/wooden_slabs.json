@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "cherryblossomgrotto:maple_slab",
-    "cherryblossomgrotto:black_pine_slab"
+    "cherryblossomgrotto:black_pine_slab",
+    "cherryblossomgrotto:hinoki_slab",
+    "cherryblossomgrotto:water_fir_slab"
   ]
 }

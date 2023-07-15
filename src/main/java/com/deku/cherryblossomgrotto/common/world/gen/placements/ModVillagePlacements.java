@@ -4,6 +4,7 @@ import com.deku.cherryblossomgrotto.common.features.ModTreeFeatures;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.features.TreeFeatures;
 import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
@@ -38,7 +39,7 @@ public class ModVillagePlacements {
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> featureGetter = context.lookup(Registries.CONFIGURED_FEATURE);
 
-        context.register(CHERRY_BLOSSOM_TREE_VILLAGE, new PlacedFeature(featureGetter.getOrThrow(ModTreeFeatures.CHERRY_BLOSSOM), List.of(PlacementUtils.filteredByBlockSurvival(Blocks.CHERRY_SAPLING))));
+        context.register(CHERRY_BLOSSOM_TREE_VILLAGE, new PlacedFeature(featureGetter.getOrThrow(TreeFeatures.CHERRY), List.of(PlacementUtils.filteredByBlockSurvival(Blocks.CHERRY_SAPLING))));
         context.register(FLOWER_FOREST_VILLAGE, new PlacedFeature(featureGetter.getOrThrow(VegetationFeatures.FLOWER_FLOWER_FOREST), List.of()));
     }
 }

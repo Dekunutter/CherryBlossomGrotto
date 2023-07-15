@@ -1,5 +1,6 @@
 package com.deku.cherryblossomgrotto.common.features;
 
+import com.deku.cherryblossomgrotto.common.blocks.ModBlocks;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
@@ -15,9 +16,13 @@ import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
 public class ModMiscOverworldFeatures {
     public static ResourceKey<ConfiguredFeature<?, ?>> MAPLE_LEAF_GROUND_COVER = registerOverworldFeatureKey("maple_leaf_ground_cover");
+    public static ResourceKey<ConfiguredFeature<?, ?>> MOSS_LAYER = registerOverworldFeatureKey("moss_layer");
+
     public static ResourceKey<ConfiguredFeature<?, ?>> HOTSPRING = registerOverworldFeatureKey("hotspring");
 
     public static ResourceKey<ConfiguredFeature<?, ?>> KARST_STONE = registerOverworldFeatureKey("karst_stone");
+
+    public static ResourceKey<ConfiguredFeature<?, ?>> FALLEN_TREE_HINOKI = registerOverworldFeatureKey("fallen_tree_hinoki");
 
     /**
      * Registers a resource key for the given miscellanous overworld feature name
@@ -47,6 +52,10 @@ public class ModMiscOverworldFeatures {
         return new KarstStoneFeature.Configuration(BlockStateProvider.simple(stone), UniformInt.of(1, 2), UniformInt.of(8, 25));
     }
 
+    private static FallenTreeFeature.Configuration createFallenTreeConfiguration(BlockState log, int minLength, int maxLength) {
+        return new FallenTreeFeature.Configuration(BlockStateProvider.simple(log), UniformInt.of(minLength, maxLength));
+    }
+
     /**
      * Registers miscellaneous overworld features using the bootstrap context
      *
@@ -54,6 +63,7 @@ public class ModMiscOverworldFeatures {
      */
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
         context.register(MAPLE_LEAF_GROUND_COVER, new ConfiguredFeature<>(ModFeatures.MAPLE_GROUND_COVER, FeatureConfiguration.NONE));
+        context.register(MOSS_LAYER, new ConfiguredFeature<>(ModFeatures.MOSS_LAYER, FeatureConfiguration.NONE));
 
         // TODO: Any way I can stop the water from freezing over? Magma blocks under work but when I start using less of those there could be more ice...
         //  Probably not worth all the effort... May be better to just go with a basic lake as I have here
@@ -61,5 +71,6 @@ public class ModMiscOverworldFeatures {
         context.register(HOTSPRING, new ConfiguredFeature<>(ModFeatures.HOTSPRING, createHotspringConfiguration(Blocks.WATER.defaultBlockState(), Blocks.STONE.defaultBlockState())));
 
         context.register(KARST_STONE, new ConfiguredFeature<>(ModFeatures.KARST_STONE, createKarstStoneConfiguration(Blocks.STONE.defaultBlockState())));
+        context.register(FALLEN_TREE_HINOKI, new ConfiguredFeature<>(ModFeatures.FALLEN_TREE, createFallenTreeConfiguration(ModBlocks.HINOKI_LOG.defaultBlockState(), 6, 16)));
     }
 }

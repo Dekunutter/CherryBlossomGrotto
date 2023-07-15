@@ -4,7 +4,9 @@ import com.deku.cherryblossomgrotto.client.network.handlers.DoubleJumpClientMess
 import com.deku.cherryblossomgrotto.client.network.messages.DoubleJumpClientMessage;
 import com.deku.cherryblossomgrotto.common.blocks.*;
 import com.deku.cherryblossomgrotto.common.blocks.black_pine.*;
+import com.deku.cherryblossomgrotto.common.blocks.hinoki.*;
 import com.deku.cherryblossomgrotto.common.blocks.maple.*;
+import com.deku.cherryblossomgrotto.common.blocks.water_fir.*;
 import com.deku.cherryblossomgrotto.common.capabilities.DoubleJumpCapability;
 import com.deku.cherryblossomgrotto.common.enchantments.ModEnchantmentInitializer;
 import com.deku.cherryblossomgrotto.common.entity.ModEntityTypeInitializer;
@@ -15,13 +17,18 @@ import com.deku.cherryblossomgrotto.common.entity.animal.tanooki.Tanooki;
 import com.deku.cherryblossomgrotto.common.entity.monster.terracotta_warrior.TerracottaWarrior;
 import com.deku.cherryblossomgrotto.common.entity.npc.ModVillagerTypes;
 import com.deku.cherryblossomgrotto.common.features.*;
+import com.deku.cherryblossomgrotto.common.features.decorators.ModTreeDecoratorTypes;
 import com.deku.cherryblossomgrotto.common.items.*;
 import com.deku.cherryblossomgrotto.common.items.black_pine.BlackPineBoat;
 import com.deku.cherryblossomgrotto.common.items.black_pine.BlackPineChestBoat;
+import com.deku.cherryblossomgrotto.common.items.hinoki.HinokiBoat;
+import com.deku.cherryblossomgrotto.common.items.hinoki.HinokiChestBoat;
 import com.deku.cherryblossomgrotto.common.items.maple.MapleBoat;
 import com.deku.cherryblossomgrotto.common.items.maple.MapleChestBoat;
 import com.deku.cherryblossomgrotto.common.items.maple.MapleLeaf;
 import com.deku.cherryblossomgrotto.common.items.maple.MapleSyrupBottleItem;
+import com.deku.cherryblossomgrotto.common.items.water_fir.WaterFirBoat;
+import com.deku.cherryblossomgrotto.common.items.water_fir.WaterFirChestBoat;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
 import com.deku.cherryblossomgrotto.common.recipes.ModRecipeSerializerInitializer;
 import com.deku.cherryblossomgrotto.common.sounds.ModSoundEvents;
@@ -62,6 +69,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFeatureConfiguration;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
@@ -169,6 +177,9 @@ public class Main
         // Item logic
         ModItemInitializer.ITEMS.register(eventBus);
 
+        // Tree Decorator Types
+        ModTreeDecoratorTypes.TREE_DECORATOR_TYPES.register(eventBus);
+
         // Trunk Placer Types
         ModTrunkPlacerTypes.TRUNK_PLACER_TYPES.register(eventBus);
 
@@ -222,9 +233,13 @@ public class Main
         event.enqueueWork(() -> {
             BlockSetType.register(ModBlockSetType.MAPLE);
             BlockSetType.register(ModBlockSetType.BLACK_PINE);
+            BlockSetType.register(ModBlockSetType.HINOKI);
+            BlockSetType.register(ModBlockSetType.WATER_FIR);
 
             WoodType.register(ModWoodType.MAPLE);
             WoodType.register(ModWoodType.BLACK_PINE);
+            WoodType.register(ModWoodType.HINOKI);
+            WoodType.register(ModWoodType.WATER_FIR);
 
             Regions.register(new ModBiomeProvider());
             SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MOD_ID, ModSurfaceRules.makeRules());
@@ -319,8 +334,60 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "black_pine_sapling"), new BlackPineSapling());
                 registrar.register(new ResourceLocation(MOD_ID, "potted_black_pine_sapling"), new PottedBlackPineSapling());
 
+                // All hinoki wood blocks
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_log"), new HinokiLog());
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_hinoki_log"), new StrippedHinokiLog());
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_wood"), new HinokiWood());
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_hinoki_wood"), new StrippedHinokiWood());
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_planks"), new HinokiPlanks());
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_slab"), new HinokiSlab());
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_stairs"), new HinokiStairs());
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_button"), new HinokiButton());
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_fence"), new HinokiFence());
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_fence_gate"), new HinokiFenceGate());
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_pressure_plate"), new HinokiPressurePlate());
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_sign"), new HinokiSign());
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_wall_sign"), new HinokiWallSign());
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_hanging_sign"), new HinokiHangingSign());
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_wall_hanging_sign"), new HinokiWallHangingSign());
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_door"), new HinokiDoor());
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_trapdoor"), new HinokiTrapDoor());
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_planks_trapdoor"), new HinokiPlanksTrapdoor());
+
+                // All hinoki tree blocks
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_leaves"), new HinokiLeaves());
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_sapling"), new HinokiSapling());
+                registrar.register(new ResourceLocation(MOD_ID, "potted_hinoki_sapling"), new PottedHinokiSapling());
+
+                // All water fir wood blocks
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_log"), new WaterFirLog());
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_water_fir_log"), new StrippedWaterFirLog());
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_wood"), new WaterFirWood());
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_water_fir_wood"), new StrippedWaterFirWood());
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_planks"), new WaterFirPlanks());
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_slab"), new WaterFirSlab());
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_stairs"), new WaterFirStairs());
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_button"), new WaterFirButton());
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_fence"), new WaterFirFence());
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_fence_gate"), new WaterFirFenceGate());
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_pressure_plate"), new WaterFirPressurePlate());
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_sign"), new WaterFirSign());
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_wall_sign"), new WaterFirWallSign());
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_hanging_sign"), new WaterFirHangingSign());
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_wall_hanging_sign"), new WaterFirWallHangingSign());
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_door"), new WaterFirDoor());
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_trapdoor"), new WaterFirTrapDoor());
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_planks_trapdoor"), new WaterFirPlanksTrapdoor());
+
+                // All water fir tree blocks
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_leaves"), new WaterFirLeaves());
+                registrar.register(new ResourceLocation(MOD_ID, "autumnal_water_fir_leaves"), new AutumnalWaterFirLeaves());
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_sapling"), new WaterFirSapling());
+                registrar.register(new ResourceLocation(MOD_ID, "potted_water_fir_sapling"), new PottedWaterFirSapling());
+
                 // All architectural blocks
                 registrar.register(new ResourceLocation(MOD_ID, "shoji_screen"), new ShojiScreen());
+                registrar.register(new ResourceLocation(MOD_ID, "dark_shoji_screen"), new ShojiScreen());
                 registrar.register(new ResourceLocation(MOD_ID, "tatami_mat"), new TatamiMat());
                 registrar.register(new ResourceLocation(MOD_ID, "long_tatami_mat"), new LongTatamiMat());
                 registrar.register(new ResourceLocation(MOD_ID, "aged_tatami_mat"), new AgedTatamiMat());
@@ -329,6 +396,11 @@ public class Main
 
                 // All farm crops
                 registrar.register(new ResourceLocation(MOD_ID, "rice_paddy"), new RicePaddy());
+
+                // Mushrooms
+                registrar.register(new ResourceLocation(MOD_ID, "enoki_mushroom"), new EnokiMushroom());
+                registrar.register(new ResourceLocation(MOD_ID, "shiitake_mushroom"), new ShiitakeMushroom());
+                registrar.register(new ResourceLocation(MOD_ID, "enoki_mushroom_block"), new EnokiMushroomBlock());
 
                 // All lanterns
                 registrar.register(new ResourceLocation(MOD_ID, "zen_lantern"), new ZenLantern());
@@ -427,6 +499,55 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "black_pine_leaves"), new BlockItem(ModBlocks.BLACK_PINE_LEAVES, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "black_pine_sapling"), new BlockItem(ModBlocks.BLACK_PINE_SAPLING, new Item.Properties()));
 
+                // All hinoki wood items
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_log"), new BlockItem(ModBlocks.HINOKI_LOG, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_hinoki_log"), new BlockItem(ModBlocks.STRIPPED_HINOKI_LOG, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_wood"), new BlockItem(ModBlocks.HINOKI_WOOD, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_hinoki_wood"), new BlockItem(ModBlocks.STRIPPED_HINOKI_WOOD, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_planks"), new BlockItem(ModBlocks.HINOKI_PLANKS, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_slab"), new BlockItem(ModBlocks.HINOKI_SLAB, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_stairs"), new BlockItem(ModBlocks.HINOKI_STAIRS, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_button"), new BlockItem(ModBlocks.HINOKI_BUTTON, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_fence"), new BlockItem(ModBlocks.HINOKI_FENCE, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_fence_gate"), new BlockItem(ModBlocks.HINOKI_FENCE_GATE, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_pressure_plate"), new BlockItem(ModBlocks.HINOKI_PRESSURE_PLATE, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_sign"), new SignItem(new Item.Properties().stacksTo(16), ModBlocks.HINOKI_SIGN, ModBlocks.HINOKI_WALL_SIGN));
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_hanging_sign"), new HangingSignItem(ModBlocks.HINOKI_HANGING_SIGN, ModBlocks.HINOKI_WALL_HANGING_SIGN, new Item.Properties().stacksTo(16)));
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_door"), new DoubleHighBlockItem(ModBlocks.HINOKI_DOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_trapdoor"), new BlockItem(ModBlocks.HINOKI_TRAPDOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_planks_trapdoor"), new BlockItem(ModBlocks.HINOKI_PLANKS_TRAP_DOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_boat"), new HinokiBoat());
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_chest_boat"), new HinokiChestBoat());
+
+                // All hinoki tree items
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_leaves"), new BlockItem(ModBlocks.HINOKI_LEAVES, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "hinoki_sapling"), new BlockItem(ModBlocks.HINOKI_SAPLING, new Item.Properties()));
+
+                // All water fir wood items
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_log"), new BlockItem(ModBlocks.WATER_FIR_LOG, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_water_fir_log"), new BlockItem(ModBlocks.STRIPPED_WATER_FIR_LOG, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_wood"), new BlockItem(ModBlocks.WATER_FIR_WOOD, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_water_fir_wood"), new BlockItem(ModBlocks.STRIPPED_WATER_FIR_WOOD, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_planks"), new BlockItem(ModBlocks.WATER_FIR_PLANKS, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_slab"), new BlockItem(ModBlocks.WATER_FIR_SLAB, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_stairs"), new BlockItem(ModBlocks.WATER_FIR_STAIRS, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_button"), new BlockItem(ModBlocks.WATER_FIR_BUTTON, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_fence"), new BlockItem(ModBlocks.WATER_FIR_FENCE, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_fence_gate"), new BlockItem(ModBlocks.WATER_FIR_FENCE_GATE, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_pressure_plate"), new BlockItem(ModBlocks.WATER_FIR_PRESSURE_PLATE, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_sign"), new SignItem(new Item.Properties().stacksTo(16), ModBlocks.WATER_FIR_SIGN, ModBlocks.WATER_FIR_WALL_SIGN));
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_hanging_sign"), new HangingSignItem(ModBlocks.WATER_FIR_HANGING_SIGN, ModBlocks.WATER_FIR_WALL_HANGING_SIGN, new Item.Properties().stacksTo(16)));
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_door"), new DoubleHighBlockItem(ModBlocks.WATER_FIR_DOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_trapdoor"), new BlockItem(ModBlocks.WATER_FIR_TRAPDOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_planks_trapdoor"), new BlockItem(ModBlocks.WATER_FIR_PLANKS_TRAP_DOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_boat"), new WaterFirBoat());
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_chest_boat"), new WaterFirChestBoat());
+
+                // All water fir tree items
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_leaves"), new BlockItem(ModBlocks.WATER_FIR_LEAVES, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "water_fir_sapling"), new BlockItem(ModBlocks.WATER_FIR_SAPLING, new Item.Properties()));
+
+
                 // All lantern items
                 registrar.register(new ResourceLocation(MOD_ID, "zen_lantern"), new DoubleHighBlockItem(ModBlocks.ZEN_LANTERN, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "soul_zen_lantern"), new DoubleHighBlockItem(ModBlocks.SOUL_ZEN_LANTERN, new Item.Properties()));
@@ -434,11 +555,17 @@ public class Main
 
                 // All architectural items
                 registrar.register(new ResourceLocation(MOD_ID, "shoji_screen"), new DoubleHighBlockItem(ModBlocks.SHOJI_SCREEN, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "dark_shoji_screen"), new DoubleHighBlockItem(ModBlocks.DARK_SHOJI_SCREEN, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "tatami_mat"), new BlockItem(ModBlocks.TATAMI_MAT, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "long_tatami_mat"), new BlockItem(ModBlocks.LONG_TATAMI_MAT, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "aged_tatami_mat"), new BlockItem(ModBlocks.AGED_TATAMI_MAT, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "long_aged_tatami_mat"), new BlockItem(ModBlocks.LONG_AGED_TATAMI_MAT, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "terracotta_warrior_statue"), new DoubleHighBlockItem(ModBlocks.TERRACOTTA_WARRIOR_STATUE, new Item.Properties()));
+
+                // Mushrooms
+                registrar.register(new ResourceLocation(MOD_ID, "enoki_mushroom"), new BlockItem(ModBlocks.ENOKI_MUSHROOM, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "shiitake_mushroom"), new BlockItem(ModBlocks.SHIITAKE_MUSHROOM, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "enoki_mushroom_block"), new BlockItem(ModBlocks.ENOKI_MUSHROOM_BLOCK, new Item.Properties()));
 
                 // TODO: Find a way to add these to the composter
                 // All food items
@@ -512,10 +639,14 @@ public class Main
             registerEvent.register(ForgeRegistries.Keys.FEATURES, registrar -> {
                 // All ground cover features
                 registrar.register(new ResourceLocation(MOD_ID, "maple_leaf_ground_cover"), new MapleLeafPileCoverFeature());
+                registrar.register(new ResourceLocation(MOD_ID, "moss_layer"), new MossLayerFeature());
 
                 // Misc overworld features
                 registrar.register(new ResourceLocation(MOD_ID, "hotspring"), new HotspringFeature(HotspringFeature.Configuration.CODEC));
                 registrar.register(new ResourceLocation(MOD_ID, "karst_stone"), new KarstStoneFeature(KarstStoneFeature.Configuration.CODEC));
+                registrar.register(new ResourceLocation(MOD_ID, "fallen_tree"), new FallenTreeFeature(FallenTreeFeature.Configuration.CODEC));
+                registrar.register(new ResourceLocation(MOD_ID, "huge_enoki_mushroom"), new HugeEnokiMushroomFeature(HugeMushroomFeatureConfiguration.CODEC));
+                registrar.register(new ResourceLocation(MOD_ID, "huge_shiitake_mushroom"), new HugeShiitakeMushroomFeature(HugeMushroomFeatureConfiguration.CODEC));
             });
 
             //TODO: Should I register configured features in here after the feature registration has run? Right now they register at the global level spread across a few new classes and sit in holders. This might not be the right stage to be registering them...
@@ -605,7 +736,7 @@ public class Main
                 entries.putAfter(new ItemStack(ModItems.MAPLE_TRAPDOOR), new ItemStack(ModItems.MAPLE_PRESSURE_PLATE), visibility);
                 entries.putAfter(new ItemStack(ModItems.MAPLE_PRESSURE_PLATE), new ItemStack(ModItems.MAPLE_BUTTON), visibility);
 
-                entries.putAfter(new ItemStack(ModItems.MAPLE_PRESSURE_PLATE), new ItemStack(ModItems.BLACK_PINE_LOG), visibility);
+                entries.putAfter(new ItemStack(ModItems.MAPLE_BUTTON), new ItemStack(ModItems.BLACK_PINE_LOG), visibility);
                 entries.putAfter(new ItemStack(ModItems.BLACK_PINE_LOG), new ItemStack(ModItems.BLACK_PINE_WOOD), visibility);
                 entries.putAfter(new ItemStack(ModItems.BLACK_PINE_WOOD), new ItemStack(ModItems.STRIPPED_BLACK_PINE_LOG), visibility);
                 entries.putAfter(new ItemStack(ModItems.STRIPPED_BLACK_PINE_LOG), new ItemStack(ModItems.STRIPPED_BLACK_PINE_WOOD), visibility);
@@ -619,8 +750,37 @@ public class Main
                 entries.putAfter(new ItemStack(ModItems.BLACK_PINE_TRAPDOOR), new ItemStack(ModItems.BLACK_PINE_PRESSURE_PLATE), visibility);
                 entries.putAfter(new ItemStack(ModItems.BLACK_PINE_PRESSURE_PLATE), new ItemStack(ModItems.BLACK_PINE_BUTTON), visibility);
 
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_BUTTON), new ItemStack(ModItems.HINOKI_LOG), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_LOG), new ItemStack(ModItems.HINOKI_WOOD), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_WOOD), new ItemStack(ModItems.STRIPPED_HINOKI_LOG), visibility);
+                entries.putAfter(new ItemStack(ModItems.STRIPPED_HINOKI_LOG), new ItemStack(ModItems.STRIPPED_HINOKI_WOOD), visibility);
+                entries.putAfter(new ItemStack(ModItems.STRIPPED_HINOKI_WOOD), new ItemStack(ModItems.HINOKI_PLANKS), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_PLANKS), new ItemStack(ModItems.HINOKI_STAIRS), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_STAIRS), new ItemStack(ModItems.HINOKI_SLAB), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_SLAB), new ItemStack(ModItems.HINOKI_FENCE), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_FENCE), new ItemStack(ModItems.HINOKI_FENCE_GATE), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_FENCE_GATE), new ItemStack(ModItems.HINOKI_DOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_DOOR), new ItemStack(ModItems.HINOKI_TRAPDOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_TRAPDOOR), new ItemStack(ModItems.HINOKI_PRESSURE_PLATE), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_PRESSURE_PLATE), new ItemStack(ModItems.HINOKI_BUTTON), visibility);
+
+                entries.putAfter(new ItemStack(ModItems.HINOKI_BUTTON), new ItemStack(ModItems.WATER_FIR_LOG), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_LOG), new ItemStack(ModItems.WATER_FIR_WOOD), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_WOOD), new ItemStack(ModItems.STRIPPED_WATER_FIR_LOG), visibility);
+                entries.putAfter(new ItemStack(ModItems.STRIPPED_WATER_FIR_LOG), new ItemStack(ModItems.STRIPPED_WATER_FIR_WOOD), visibility);
+                entries.putAfter(new ItemStack(ModItems.STRIPPED_WATER_FIR_WOOD), new ItemStack(ModItems.WATER_FIR_PLANKS), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_PLANKS), new ItemStack(ModItems.WATER_FIR_STAIRS), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_STAIRS), new ItemStack(ModItems.WATER_FIR_SLAB), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_SLAB), new ItemStack(ModItems.WATER_FIR_FENCE), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_FENCE), new ItemStack(ModItems.WATER_FIR_FENCE_GATE), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_FENCE_GATE), new ItemStack(ModItems.WATER_FIR_DOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_DOOR), new ItemStack(ModItems.WATER_FIR_TRAPDOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_TRAPDOOR), new ItemStack(ModItems.WATER_FIR_PRESSURE_PLATE), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_PRESSURE_PLATE), new ItemStack(ModItems.WATER_FIR_BUTTON), visibility);
+
                 // Misc building blocks
                 creativeTabBuilderRegistryEvent.accept(ModItems.SHOJI_SCREEN);
+                creativeTabBuilderRegistryEvent.accept(ModItems.DARK_SHOJI_SCREEN);
                 creativeTabBuilderRegistryEvent.accept(ModItems.TATAMI_MAT);
                 creativeTabBuilderRegistryEvent.accept(ModItems.LONG_TATAMI_MAT);
                 creativeTabBuilderRegistryEvent.accept(ModItems.AGED_TATAMI_MAT);
@@ -639,6 +799,8 @@ public class Main
                 entries.putAfter(new ItemStack(Items.CHERRY_TRAPDOOR), new ItemStack(ModItems.CHERRY_PLANKS_TRAP_DOOR), visibility);
                 entries.putAfter(new ItemStack(ModItems.MAPLE_TRAPDOOR), new ItemStack(ModItems.MAPLE_PLANKS_TRAP_DOOR), visibility);
                 entries.putAfter(new ItemStack(ModItems.MAPLE_PLANKS_TRAP_DOOR), new ItemStack(ModItems.BLACK_PINE_PLANKS_TRAP_DOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_PLANKS_TRAP_DOOR), new ItemStack(ModItems.HINOKI_PLANKS_TRAP_DOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_PLANKS_TRAP_DOOR), new ItemStack(ModItems.WATER_FIR_PLANKS_TRAP_DOOR), visibility);
                 entries.putAfter(new ItemStack(Items.STONE_SLAB), new ItemStack(ModItems.STONE_TRAP_DOOR), visibility);
                 entries.putAfter(new ItemStack(Items.SMOOTH_STONE_SLAB), new ItemStack(ModItems.SMOOTH_STONE_TRAP_DOOR), visibility);
                 entries.putAfter(new ItemStack(Items.COBBLESTONE_WALL), new ItemStack(ModItems.COBBLESTONE_TRAP_DOOR), visibility);
@@ -654,6 +816,22 @@ public class Main
                 entries.putAfter(new ItemStack(ModItems.MAPLE_LOG), new ItemStack(ModItems.BLACK_PINE_LOG), visibility);
                 entries.putAfter(new ItemStack(ModItems.MAPLE_LEAVES), new ItemStack(ModItems.BLACK_PINE_LEAVES), visibility);
                 entries.putAfter(new ItemStack(ModItems.MAPLE_SAPLING), new ItemStack(ModItems.BLACK_PINE_SAPLING), visibility);
+
+                // Hinoki blocks
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_LOG), new ItemStack(ModItems.HINOKI_LOG), visibility);
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_LEAVES), new ItemStack(ModItems.HINOKI_LEAVES), visibility);
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_SAPLING), new ItemStack(ModItems.HINOKI_SAPLING), visibility);
+
+                // Water fir blocks
+                entries.putAfter(new ItemStack(ModItems.HINOKI_LOG), new ItemStack(ModItems.WATER_FIR_LOG), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_LEAVES), new ItemStack(ModItems.WATER_FIR_LEAVES), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_SAPLING), new ItemStack(ModItems.WATER_FIR_SAPLING), visibility);
+
+                // TODO: Maybe this goes under food or something? Should check where it is in vanilla
+                // Mushrooms
+                entries.putAfter(new ItemStack(Items.BROWN_MUSHROOM), new ItemStack(ModItems.ENOKI_MUSHROOM), visibility);
+                entries.putAfter(new ItemStack(ModItems.ENOKI_MUSHROOM), new ItemStack(ModItems.SHIITAKE_MUSHROOM), visibility);
+                entries.putAfter(new ItemStack(Items.BROWN_MUSHROOM_BLOCK), new ItemStack(ModItems.ENOKI_MUSHROOM_BLOCK), visibility);
             } else if (creativeTabBuilderRegistryEvent.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
                 // Lanterns
                 entries.putAfter(new ItemStack(Items.SOUL_LANTERN), new ItemStack(ModItems.ZEN_LANTERN), visibility);
@@ -665,6 +843,10 @@ public class Main
                 entries.putAfter(new ItemStack(ModItems.MAPLE_SIGN), new ItemStack(ModItems.MAPLE_HANGING_SIGN), visibility);
                 entries.putAfter(new ItemStack(ModItems.MAPLE_HANGING_SIGN), new ItemStack(ModItems.BLACK_PINE_SIGN), visibility);
                 entries.putAfter(new ItemStack(ModItems.BLACK_PINE_SIGN), new ItemStack(ModItems.BLACK_PINE_HANGING_SIGN), visibility);
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_HANGING_SIGN), new ItemStack(ModItems.HINOKI_SIGN), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_SIGN), new ItemStack(ModItems.HINOKI_HANGING_SIGN), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_HANGING_SIGN), new ItemStack(ModItems.WATER_FIR_SIGN), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_SIGN), new ItemStack(ModItems.WATER_FIR_HANGING_SIGN), visibility);
             } else if (creativeTabBuilderRegistryEvent.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
                 // Maple blocks
                 entries.putAfter(new ItemStack(Items.CHERRY_BUTTON), new ItemStack(ModItems.MAPLE_BUTTON), visibility);
@@ -681,6 +863,22 @@ public class Main
                 entries.putAfter(new ItemStack(ModItems.MAPLE_FENCE_GATE), new ItemStack(ModItems.BLACK_PINE_FENCE_GATE), visibility);
                 entries.putAfter(new ItemStack(ModItems.MAPLE_DOOR), new ItemStack(ModItems.BLACK_PINE_DOOR), visibility);
                 entries.putAfter(new ItemStack(ModItems.MAPLE_TRAPDOOR), new ItemStack(ModItems.BLACK_PINE_TRAPDOOR), visibility);
+
+                // Hinoki blocks
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_BUTTON), new ItemStack(ModItems.HINOKI_BUTTON), visibility);
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_PRESSURE_PLATE), new ItemStack(ModItems.HINOKI_PRESSURE_PLATE), visibility);
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_CHEST_BOAT), new ItemStack(ModItems.HINOKI_CHEST_BOAT), visibility);
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_FENCE_GATE), new ItemStack(ModItems.HINOKI_FENCE_GATE), visibility);
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_DOOR), new ItemStack(ModItems.HINOKI_DOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_TRAPDOOR), new ItemStack(ModItems.HINOKI_TRAPDOOR), visibility);
+
+                // Water fir blocks
+                entries.putAfter(new ItemStack(ModItems.HINOKI_BUTTON), new ItemStack(ModItems.WATER_FIR_BUTTON), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_PRESSURE_PLATE), new ItemStack(ModItems.WATER_FIR_PRESSURE_PLATE), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_CHEST_BOAT), new ItemStack(ModItems.WATER_FIR_CHEST_BOAT), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_FENCE_GATE), new ItemStack(ModItems.WATER_FIR_FENCE_GATE), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_DOOR), new ItemStack(ModItems.WATER_FIR_DOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_TRAPDOOR), new ItemStack(ModItems.WATER_FIR_TRAPDOOR), visibility);
             } else if (creativeTabBuilderRegistryEvent.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
                 // Buckets
                 entries.putAfter(new ItemStack(Items.TROPICAL_FISH_BUCKET), new ItemStack(ModItems.KOI_BUCKET), visibility);
@@ -690,6 +888,10 @@ public class Main
                 entries.putAfter(new ItemStack(ModItems.MAPLE_BOAT), new ItemStack(ModItems.MAPLE_CHEST_BOAT), visibility);
                 entries.putAfter(new ItemStack(ModItems.MAPLE_CHEST_BOAT), new ItemStack(ModItems.BLACK_PINE_BOAT), visibility);
                 entries.putAfter(new ItemStack(ModItems.BLACK_PINE_BOAT), new ItemStack(ModItems.BLACK_PINE_CHEST_BOAT), visibility);
+                entries.putAfter(new ItemStack(ModItems.BLACK_PINE_CHEST_BOAT), new ItemStack(ModItems.HINOKI_BOAT), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_BOAT), new ItemStack(ModItems.HINOKI_CHEST_BOAT), visibility);
+                entries.putAfter(new ItemStack(ModItems.HINOKI_CHEST_BOAT), new ItemStack(ModItems.WATER_FIR_BOAT), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_BOAT), new ItemStack(ModItems.WATER_FIR_CHEST_BOAT), visibility);
             } else if (creativeTabBuilderRegistryEvent.getTabKey() == CreativeModeTabs.COMBAT) {
                 // Melee weapons
                 entries.putAfter(new ItemStack(Items.NETHERITE_AXE), new ItemStack(ModItems.KATANA), visibility);
@@ -804,7 +1006,17 @@ public class Main
          */
         @SubscribeEvent
         public static void onBlockClicked(PlayerInteractEvent.RightClickBlock event) {
-            final Map<Block, Block> BLOCK_STRIPPING_MAP = (new ImmutableMap.Builder<Block, Block>().put(ModBlocks.MAPLE_LOG, ModBlocks.STRIPPED_MAPLE_LOG).put(ModBlocks.MAPLE_WOOD, ModBlocks.STRIPPED_MAPLE_WOOD).put(ModBlocks.BLACK_PINE_LOG, ModBlocks.STRIPPED_BLACK_PINE_LOG).put(ModBlocks.BLACK_PINE_WOOD, ModBlocks.STRIPPED_BLACK_PINE_WOOD)).build();
+            final Map<Block, Block> BLOCK_STRIPPING_MAP = (
+                new ImmutableMap.Builder<Block, Block>()
+                    .put(ModBlocks.MAPLE_LOG, ModBlocks.STRIPPED_MAPLE_LOG)
+                    .put(ModBlocks.MAPLE_WOOD, ModBlocks.STRIPPED_MAPLE_WOOD)
+                    .put(ModBlocks.BLACK_PINE_LOG, ModBlocks.STRIPPED_BLACK_PINE_LOG)
+                    .put(ModBlocks.BLACK_PINE_WOOD, ModBlocks.STRIPPED_BLACK_PINE_WOOD)
+                    .put(ModBlocks.HINOKI_LOG, ModBlocks.STRIPPED_HINOKI_LOG)
+                    .put(ModBlocks.HINOKI_WOOD, ModBlocks.STRIPPED_HINOKI_WOOD)
+                    .put(ModBlocks.WATER_FIR_LOG, ModBlocks.STRIPPED_WATER_FIR_LOG)
+                    .put(ModBlocks.WATER_FIR_WOOD, ModBlocks.STRIPPED_WATER_FIR_WOOD)
+            ).build();
 
             if (event.getItemStack().getItem() instanceof AxeItem) {
                 net.minecraft.world.level.Level level = event.getLevel();

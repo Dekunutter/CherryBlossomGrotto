@@ -22,17 +22,6 @@ import java.util.List;
 import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
 public class ModTreePlacements {
-    public static ResourceKey<PlacedFeature> CHERRY_BLOSSOM_CHECKED = registerTreePlacementKey("cherry_blossom_checked");
-    public static ResourceKey<PlacedFeature> CHERRY_BLOSSOM_BEES_002 = registerTreePlacementKey("cherry_blossom_bees_002");
-    public static ResourceKey<PlacedFeature> CHERRY_BLOSSOM_BEES_02 = registerTreePlacementKey("cherry_blossom_bees_02");
-    public static ResourceKey<PlacedFeature> CHERRY_BLOSSOM_BEES_05 = registerTreePlacementKey("cherry_blossom_bees_05");
-    public static ResourceKey<PlacedFeature> CHERRY_BLOSSOM_ON_SNOW = registerTreePlacementKey("cherry_blossom_on_snow");
-    public static ResourceKey<PlacedFeature> FANCY_CHERRY_BLOSSOM_CHECKED = registerTreePlacementKey("fancy_cherry_blossom_checked");
-    public static ResourceKey<PlacedFeature> FANCY_CHERRY_BLOSSOM_BEES_05 = registerTreePlacementKey("fancy_cherry_blossom_bees_05");
-    public static ResourceKey<PlacedFeature> FANCY_CHERRY_BLOSSOM_ON_SNOW = registerTreePlacementKey("fancy_cherry_blossom_on_snow");
-
-    public static ResourceKey<PlacedFeature> GRAND_CHERRY_BLOSSOM_CHECKED = registerTreePlacementKey("grand_cherry_blossom_checked");
-
     public static ResourceKey<PlacedFeature> FANCY_MAPLE_CHECKED = registerTreePlacementKey("fancy_maple_checked");
     public static ResourceKey<PlacedFeature> FANCY_MAPLE_BEES = registerTreePlacementKey("fancy_maple_bees");
     public static ResourceKey<PlacedFeature> BLACK_PINE_CHECKED = registerTreePlacementKey("black_pine_checked");

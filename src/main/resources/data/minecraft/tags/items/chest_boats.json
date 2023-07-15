@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "cherryblossomgrotto:maple_chest_boat",
-    "cherryblossomgrotto:black_pine_chest_boat"
+    "cherryblossomgrotto:black_pine_chest_boat",
+    "cherryblossomgrotto:hinoki_chest_boat",
+    "cherryblossomgrotto:water_fir_chest_boat"
   ]
 }

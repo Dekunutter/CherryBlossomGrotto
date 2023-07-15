@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "type=bottom": { "model": "cherryblossomgrotto:block/hinoki_slab" },
+    "type=double": { "model": "cherryblossomgrotto:block/hinoki_planks" },
+    "type=top": { "model": "cherryblossomgrotto:block/hinoki_slab_top" }
+  }
+}

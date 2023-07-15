@@ -114,6 +114,10 @@ public class ModBoatEntity extends Boat {
         switch(this.getModBoatType()) {
             case MAPLE:
                 return ModItems.MAPLE_BOAT;
+            case HINOKI:
+                return ModItems.HINOKI_BOAT;
+            case WATER_FIR:
+                return ModItems.WATER_FIR_BOAT;
             case BLACK_PINE:
             default:
                 return ModItems.BLACK_PINE_BOAT;

@@ -58,6 +58,48 @@ public class ModCreativeTabs {
         output.accept(ModItems.BLACK_PINE_SIGN);
         output.accept(ModItems.BLACK_PINE_HANGING_SIGN);
 
+        // Hinoki blocks
+        output.accept(ModItems.HINOKI_LOG);
+        output.accept(ModItems.HINOKI_WOOD);
+        output.accept(ModItems.STRIPPED_HINOKI_LOG);
+        output.accept(ModItems.STRIPPED_HINOKI_WOOD);
+        output.accept(ModItems.HINOKI_PLANKS);
+        output.accept(ModItems.HINOKI_STAIRS);
+        output.accept(ModItems.HINOKI_SLAB);
+        output.accept(ModItems.HINOKI_FENCE);
+        output.accept(ModItems.HINOKI_FENCE_GATE);
+        output.accept(ModItems.HINOKI_DOOR);
+        output.accept(ModItems.HINOKI_TRAPDOOR);
+        output.accept(ModItems.HINOKI_PRESSURE_PLATE);
+        output.accept(ModItems.HINOKI_BUTTON);
+        output.accept(ModItems.HINOKI_LEAVES);
+        output.accept(ModItems.HINOKI_SAPLING);
+        output.accept(new ItemStack(ModItems.HINOKI_BOAT));
+        output.accept(new ItemStack(ModItems.HINOKI_CHEST_BOAT));
+        output.accept(ModItems.HINOKI_SIGN);
+        output.accept(ModItems.HINOKI_HANGING_SIGN);
+
+        // Water Fir blocks
+        output.accept(ModItems.WATER_FIR_LOG);
+        output.accept(ModItems.WATER_FIR_WOOD);
+        output.accept(ModItems.STRIPPED_WATER_FIR_LOG);
+        output.accept(ModItems.STRIPPED_WATER_FIR_WOOD);
+        output.accept(ModItems.WATER_FIR_PLANKS);
+        output.accept(ModItems.WATER_FIR_STAIRS);
+        output.accept(ModItems.WATER_FIR_SLAB);
+        output.accept(ModItems.WATER_FIR_FENCE);
+        output.accept(ModItems.WATER_FIR_FENCE_GATE);
+        output.accept(ModItems.WATER_FIR_DOOR);
+        output.accept(ModItems.WATER_FIR_TRAPDOOR);
+        output.accept(ModItems.WATER_FIR_PRESSURE_PLATE);
+        output.accept(ModItems.WATER_FIR_BUTTON);
+        output.accept(ModItems.WATER_FIR_LEAVES);
+        output.accept(ModItems.WATER_FIR_SAPLING);
+        output.accept(new ItemStack(ModItems.WATER_FIR_BOAT));
+        output.accept(new ItemStack(ModItems.WATER_FIR_CHEST_BOAT));
+        output.accept(ModItems.WATER_FIR_SIGN);
+        output.accept(ModItems.WATER_FIR_HANGING_SIGN);
+
         // Crops & Food
         output.accept(new ItemStack(ModItems.RICE));
         output.accept(new ItemStack(ModItems.ONIGIRI));
@@ -101,6 +143,8 @@ public class ModCreativeTabs {
         // Hidden trapdoors
         output.accept(ModItems.MAPLE_PLANKS_TRAP_DOOR);
         output.accept(ModItems.BLACK_PINE_PLANKS_TRAP_DOOR);
+        output.accept(ModItems.HINOKI_PLANKS_TRAP_DOOR);
+        output.accept(ModItems.WATER_FIR_PLANKS_TRAP_DOOR);
         output.accept(ModItems.ACACIA_PLANKS_TRAP_DOOR);
         output.accept(ModItems.BIRCH_PLANKS_TRAP_DOOR);
         output.accept(ModItems.DARK_OAK_PLANKS_TRAP_DOOR);

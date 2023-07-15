@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "cherryblossomgrotto:maple_door",
-    "cherryblossomgrotto:black_pine_door"
+    "cherryblossomgrotto:black_pine_door",
+    "cherryblossomgrotto:hinoki_door",
+    "cherryblossomgrotto:water_fir_door"
   ]
 }

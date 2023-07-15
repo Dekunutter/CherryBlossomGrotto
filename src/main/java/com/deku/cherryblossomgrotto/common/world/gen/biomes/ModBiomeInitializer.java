@@ -32,6 +32,10 @@ public class ModBiomeInitializer {
 
     public static ResourceKey<Biome> STONE_FOREST = registerBiomeKey("stone_forest");
 
+    public static ResourceKey<Biome> HINOKI_FOREST = registerBiomeKey("hinoki_forest");
+
+    public static ResourceKey<Biome> OLD_GROWTH_FIR_FOREST = registerBiomeKey("old_growth_fir_forest");
+
     /**
      * Registers the biome into the vanilla game by the biome registry
      *
@@ -58,6 +62,8 @@ public class ModBiomeInitializer {
         context.register(OAK_AND_MAPLE_FOREST, OverworldBiomes.theVoid(placementGetter, carverGetter));
         context.register(BLACK_PINE_FOREST, OverworldBiomes.theVoid(placementGetter, carverGetter));
         context.register(STONE_FOREST, OverworldBiomes.theVoid(placementGetter, carverGetter));
+        context.register(HINOKI_FOREST, OverworldBiomes.theVoid(placementGetter, carverGetter));
+        context.register(OLD_GROWTH_FIR_FOREST, OverworldBiomes.theVoid(placementGetter, carverGetter));
     }
 
     /**
@@ -71,6 +77,8 @@ public class ModBiomeInitializer {
         BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(MAPLE_WOODS, 1));
         BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(OAK_AND_MAPLE_FOREST, 1));
         BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(BLACK_PINE_FOREST, 1));
+        BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(HINOKI_FOREST, 1));
+        BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(OLD_GROWTH_FIR_FOREST, 1));
         BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(STONE_FOREST, 1));
     }
 }

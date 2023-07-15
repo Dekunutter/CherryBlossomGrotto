@@ -26,11 +26,6 @@ import java.util.List;
 import static com.deku.cherryblossomgrotto.Main.MOD_ID;
 
 public class ModVegetationFeatures {
-    public static ResourceKey<ConfiguredFeature<?, ?>> TREES_CHERY_BLOSSOM_GROTTO = registerVegetationFeatureKey("trees_cherry_blossom_grotto");
-    public static ResourceKey<ConfiguredFeature<?, ?>> CHERY_BLOSSOM_GROTTO_FLOWERS = registerVegetationFeatureKey("cherry_blossom_grotto_flowers");
-    public static ResourceKey<ConfiguredFeature<?, ?>> TREES_CHERY_BLOSSOM_SLOPES = registerVegetationFeatureKey("trees_cherry_blossom_slopes");
-    public static ResourceKey<ConfiguredFeature<?, ?>> TREES_CHERY_BLOSSOM_SPARSE = registerVegetationFeatureKey("trees_cherry_blossom_sparse");
-    public static ResourceKey<ConfiguredFeature<?, ?>> CHERRY_BLOSSOM_BAMBOO_VEGETATION = registerVegetationFeatureKey("cherry_blossom_bamboo_vegetation");
     public static ResourceKey<ConfiguredFeature<?, ?>> TREES_MAPLE_WOODS = registerVegetationFeatureKey("trees_maple_woods");
     public static ResourceKey<ConfiguredFeature<?, ?>> TREES_OAK_AND_MAPLE_FOREST = registerVegetationFeatureKey("trees_oak_and_maple_forest");
 
@@ -182,28 +177,14 @@ public class ModVegetationFeatures {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatureGetter = context.lookup(Registries.CONFIGURED_FEATURE);
         HolderGetter<PlacedFeature> placedFeatureGetter = context.lookup(Registries.PLACED_FEATURE);
 
-        Holder<ConfiguredFeature<?, ?>> jungleGrass = configuredFeatureGetter.getOrThrow(VegetationFeatures.PATCH_GRASS_JUNGLE);
-
-        Holder<PlacedFeature> cherryBlossomTree = placedFeatureGetter.getOrThrow(ModTreePlacements.CHERRY_BLOSSOM_CHECKED);
-        Holder<PlacedFeature> cherryBlossomTreeBees02 = placedFeatureGetter.getOrThrow(ModTreePlacements.CHERRY_BLOSSOM_BEES_02);
-        Holder<PlacedFeature> cherryBlossomTreeOnSnow = placedFeatureGetter.getOrThrow(ModTreePlacements.CHERRY_BLOSSOM_ON_SNOW);
-        Holder<PlacedFeature> fancyCherryBlossomTree = placedFeatureGetter.getOrThrow(ModTreePlacements.FANCY_CHERRY_BLOSSOM_CHECKED);
-        Holder<PlacedFeature> fancyCherryBlossomTreeOnSnow = placedFeatureGetter.getOrThrow(ModTreePlacements.FANCY_CHERRY_BLOSSOM_ON_SNOW);
-        Holder<PlacedFeature> grandCherryBlossomTree = placedFeatureGetter.getOrThrow(ModTreePlacements.GRAND_CHERRY_BLOSSOM_CHECKED);
         Holder<PlacedFeature> fancyMapleTree = placedFeatureGetter.getOrThrow(ModTreePlacements.FANCY_MAPLE_CHECKED);
         Holder<PlacedFeature> fancyMapleTreeBees = placedFeatureGetter.getOrThrow(ModTreePlacements.FANCY_MAPLE_BEES);
-        Holder<PlacedFeature> jungleBush = placedFeatureGetter.getOrThrow(TreePlacements.JUNGLE_BUSH);
         Holder<PlacedFeature> oakTreeBees002 = placedFeatureGetter.getOrThrow(TreePlacements.OAK_BEES_002);
         Holder<PlacedFeature> fancyOakTreeBees002 = placedFeatureGetter.getOrThrow(TreePlacements.FANCY_OAK_BEES_002);
         Holder<PlacedFeature> wobblyBlackPine = placedFeatureGetter.getOrThrow(ModTreePlacements.BLACK_PINE_CHECKED);
         Holder<PlacedFeature> straightBlackPine = placedFeatureGetter.getOrThrow(ModTreePlacements.STRAIGHT_BLACK_PINE_CHECKED);
         Holder<PlacedFeature> branchingBlackPine = placedFeatureGetter.getOrThrow(ModTreePlacements.BRANCHING_BLACK_PINE_CHECKED);
 
-        context.register(TREES_CHERY_BLOSSOM_GROTTO, new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, createCherryBlossomGrottoTreesConfiguration(cherryBlossomTreeBees02, fancyCherryBlossomTree, grandCherryBlossomTree)));
-        context.register(CHERY_BLOSSOM_GROTTO_FLOWERS, new ConfiguredFeature<>(Feature.SIMPLE_RANDOM_SELECTOR, createCherryBlossomGrottoFlowersConfiguration()));
-        context.register(TREES_CHERY_BLOSSOM_SLOPES, new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, createCherryBlossomSlopesTreesConfiguration(cherryBlossomTreeOnSnow, fancyCherryBlossomTreeOnSnow)));
-        context.register(TREES_CHERY_BLOSSOM_SPARSE, new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, createCherryBlossomSparseTreesConfiguration(cherryBlossomTreeBees02, fancyCherryBlossomTree)));
-        context.register(CHERRY_BLOSSOM_BAMBOO_VEGETATION, new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, createCherryBlossomBambooVegetationConfiguration(jungleGrass, cherryBlossomTree, fancyCherryBlossomTree, jungleBush)));
         context.register(TREES_MAPLE_WOODS, new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, createMapleTreesConfiguration(fancyMapleTree, fancyMapleTreeBees)));
         context.register(TREES_OAK_AND_MAPLE_FOREST, new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, createOakAndMapleTreesConfiguration(fancyMapleTree, fancyMapleTreeBees, oakTreeBees002, fancyOakTreeBees002)));
         context.register(TREES_BLACK_PINE_FOREST, new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, createBlackPineTreesConfiguration(wobblyBlackPine, straightBlackPine, branchingBlackPine)));

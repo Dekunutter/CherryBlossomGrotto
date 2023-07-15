@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y": { "model": "cherryblossomgrotto:block/stripped_water_fir_log" },
+    "axis=z": { "model": "cherryblossomgrotto:block/stripped_water_fir_log", "x":  90 },
+    "axis=x": { "model":  "cherryblossomgrotto:block/stripped_water_fir_log", "x":  90, "y":  90 }
+  }
+}

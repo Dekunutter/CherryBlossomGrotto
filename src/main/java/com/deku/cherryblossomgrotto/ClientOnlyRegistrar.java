@@ -71,6 +71,8 @@ public class ClientOnlyRegistrar {
         event.enqueueWork(() -> {
             Sheets.addWoodType(ModWoodType.MAPLE);
             Sheets.addWoodType(ModWoodType.BLACK_PINE);
+            Sheets.addWoodType(ModWoodType.HINOKI);
+            Sheets.addWoodType(ModWoodType.WATER_FIR);
         });
     }
 

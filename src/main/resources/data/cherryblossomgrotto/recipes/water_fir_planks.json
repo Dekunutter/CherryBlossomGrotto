@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "cherryblossomgrotto:water_fir_logs"
+    }
+  ],
+  "result": {
+    "item": "cherryblossomgrotto:water_fir_planks",
+    "count": 4
+  }
+}

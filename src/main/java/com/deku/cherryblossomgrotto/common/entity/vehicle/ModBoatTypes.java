@@ -9,7 +9,9 @@ import net.minecraft.world.level.block.Block;
  */
 public enum ModBoatTypes {
     MAPLE(ModBlocks.MAPLE_PLANKS, "maple"),
-    BLACK_PINE(ModBlocks.BLACK_PINE_PLANKS, "black_pine");
+    BLACK_PINE(ModBlocks.BLACK_PINE_PLANKS, "black_pine"),
+    HINOKI(ModBlocks.HINOKI_PLANKS, "hinoki"),
+    WATER_FIR(ModBlocks.WATER_FIR_PLANKS, "water_fir");
 
     private final String name;
     private final Block planks;
