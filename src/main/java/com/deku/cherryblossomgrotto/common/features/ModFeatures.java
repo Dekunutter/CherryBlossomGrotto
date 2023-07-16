@@ -25,4 +25,7 @@ public class ModFeatures {
 
     @ObjectHolder(registryName = "minecrarft:worldgen/feature", value = MOD_ID + ":huge_shiitake_mushroom")
     public static HugeShiitakeMushroomFeature HUGE_SHIITAKE_MUSHROOM;
+
+    @ObjectHolder(registryName = "minecraft:worldgen/feature", value = MOD_ID + ":rice_paddy")
+    public static RicePaddyFeature RICE_PADDY;
 }

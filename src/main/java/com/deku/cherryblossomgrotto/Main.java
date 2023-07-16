@@ -650,6 +650,7 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "fallen_tree"), new FallenTreeFeature(FallenTreeFeature.Configuration.CODEC));
                 registrar.register(new ResourceLocation(MOD_ID, "huge_enoki_mushroom"), new HugeEnokiMushroomFeature(HugeMushroomFeatureConfiguration.CODEC));
                 registrar.register(new ResourceLocation(MOD_ID, "huge_shiitake_mushroom"), new HugeShiitakeMushroomFeature(HugeMushroomFeatureConfiguration.CODEC));
+                registrar.register(new ResourceLocation(MOD_ID, "rice_paddy"), new RicePaddyFeature(RicePaddyFeature.Configuration.CODEC));
             });
 
             //TODO: Should I register configured features in here after the feature registration has run? Right now they register at the global level spread across a few new classes and sit in holders. This might not be the right stage to be registering them...
