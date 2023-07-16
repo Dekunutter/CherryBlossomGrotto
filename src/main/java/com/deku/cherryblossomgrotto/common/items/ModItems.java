@@ -255,9 +255,11 @@ public class ModItems {
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_planks_trapdoor")
     public static BlockItem WATER_FIR_PLANKS_TRAP_DOOR;
 
-
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_leaves")
     public static BlockItem WATER_FIR_LEAVES;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":autumnal_water_fir_leaves")
+    public static BlockItem AUTUMNAL_WATER_FIR_LEAVES;
 
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_sapling")
     public static BlockItem WATER_FIR_SAPLING;
@@ -333,6 +335,9 @@ public class ModItems {
 
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":terracotta_warrior_statue")
     public static DoubleHighBlockItem TERRACOTTA_WARRIOR_STATUE;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":red_fence")
+    public static BlockItem RED_FENCE;
 
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":ninja_mask")
     public static ArmorItem NINJA_MASK;

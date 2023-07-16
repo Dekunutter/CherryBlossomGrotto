@@ -259,6 +259,9 @@ public class ModBlocks {
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":water_fir_leaves")
     public static WaterFirLeaves WATER_FIR_LEAVES;
 
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":autumnal_water_fir_leaves")
+    public static AutumnalWaterFirLeaves AUTUMNAL_WATER_FIR_LEAVES;
+
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":water_fir_sapling")
     public static WaterFirSapling WATER_FIR_SAPLING;
 
@@ -294,6 +297,9 @@ public class ModBlocks {
 
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":terracotta_warrior_statue")
     public static TerracottaWarriorStatue TERRACOTTA_WARRIOR_STATUE;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":red_fence")
+    public static RedFence RED_FENCE;
 
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":rice_paddy")
     public static RicePaddy RICE_PADDY;

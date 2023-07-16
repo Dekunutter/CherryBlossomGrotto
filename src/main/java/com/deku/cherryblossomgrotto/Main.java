@@ -393,6 +393,7 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "aged_tatami_mat"), new AgedTatamiMat());
                 registrar.register(new ResourceLocation(MOD_ID, "long_aged_tatami_mat"), new LongAgedTatamiMat());
                 registrar.register(new ResourceLocation(MOD_ID, "terracotta_warrior_statue"), new TerracottaWarriorStatue());
+                registrar.register(new ResourceLocation(MOD_ID, "red_fence"), new RedFence());
 
                 // All farm crops
                 registrar.register(new ResourceLocation(MOD_ID, "rice_paddy"), new RicePaddy());
@@ -545,6 +546,7 @@ public class Main
 
                 // All water fir tree items
                 registrar.register(new ResourceLocation(MOD_ID, "water_fir_leaves"), new BlockItem(ModBlocks.WATER_FIR_LEAVES, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "autumnal_water_fir_leaves"), new BlockItem(ModBlocks.AUTUMNAL_WATER_FIR_LEAVES, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "water_fir_sapling"), new BlockItem(ModBlocks.WATER_FIR_SAPLING, new Item.Properties()));
 
 
@@ -561,6 +563,7 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "aged_tatami_mat"), new BlockItem(ModBlocks.AGED_TATAMI_MAT, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "long_aged_tatami_mat"), new BlockItem(ModBlocks.LONG_AGED_TATAMI_MAT, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "terracotta_warrior_statue"), new DoubleHighBlockItem(ModBlocks.TERRACOTTA_WARRIOR_STATUE, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "red_fence"), new BlockItem(ModBlocks.RED_FENCE, new Item.Properties()));
 
                 // Mushrooms
                 registrar.register(new ResourceLocation(MOD_ID, "enoki_mushroom"), new BlockItem(ModBlocks.ENOKI_MUSHROOM, new Item.Properties()));
@@ -786,6 +789,7 @@ public class Main
                 creativeTabBuilderRegistryEvent.accept(ModItems.AGED_TATAMI_MAT);
                 creativeTabBuilderRegistryEvent.accept(ModItems.LONG_AGED_TATAMI_MAT);
                 creativeTabBuilderRegistryEvent.accept(ModItems.TERRACOTTA_WARRIOR_STATUE);
+                creativeTabBuilderRegistryEvent.accept(ModItems.RED_FENCE);
 
                 // Hidden trapdoors
                 entries.putAfter(new ItemStack(Items.ACACIA_TRAPDOOR), new ItemStack(ModItems.ACACIA_PLANKS_TRAP_DOOR), visibility);
@@ -825,6 +829,7 @@ public class Main
                 // Water fir blocks
                 entries.putAfter(new ItemStack(ModItems.HINOKI_LOG), new ItemStack(ModItems.WATER_FIR_LOG), visibility);
                 entries.putAfter(new ItemStack(ModItems.HINOKI_LEAVES), new ItemStack(ModItems.WATER_FIR_LEAVES), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_LEAVES), new ItemStack(ModItems.AUTUMNAL_WATER_FIR_LEAVES), visibility);
                 entries.putAfter(new ItemStack(ModItems.HINOKI_SAPLING), new ItemStack(ModItems.WATER_FIR_SAPLING), visibility);
 
                 // TODO: Maybe this goes under food or something? Should check where it is in vanilla
