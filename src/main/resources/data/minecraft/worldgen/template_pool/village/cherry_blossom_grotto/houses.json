@@ -229,6 +229,17 @@
     },
     {
       "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "minecraft:village/cherry_blossom_grotto/houses/pink_petal_box",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 2
+    },
+    {
+      "element": {
         "element_type": "minecraft:empty_pool_element"
       },
       "weight": 10
