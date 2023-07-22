@@ -2,8 +2,11 @@ package com.deku.cherryblossomgrotto.common.blocks;
 
 
 import com.deku.cherryblossomgrotto.common.blocks.black_pine.*;
+import com.deku.cherryblossomgrotto.common.blocks.black_pine.StrippedBlackPineLog;
+import com.deku.cherryblossomgrotto.common.blocks.black_pine.StrippedBlackPineWood;
 import com.deku.cherryblossomgrotto.common.blocks.hinoki.*;
 import com.deku.cherryblossomgrotto.common.blocks.maple.*;
+import com.deku.cherryblossomgrotto.common.blocks.saxaul.*;
 import com.deku.cherryblossomgrotto.common.blocks.water_fir.*;
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -268,6 +271,69 @@ public class ModBlocks {
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":potted_water_fir_sapling")
     public static PottedWaterFirSapling POTTED_WATER_FIR_SAPLING;
 
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":saxaul_log")
+    public static SaxaulLog SAXAUL_LOG;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":stripped_saxaul_log")
+    public static StrippedSaxaulLog STRIPPED_SAXAUL_LOG;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":saxaul_wood")
+    public static SaxaulWood SAXAUL_WOOD;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":stripped_saxaul_wood")
+    public static StrippedSaxaulWood STRIPPED_SAXAUL_WOOD;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":saxaul_planks")
+    public static SaxaulPlanks SAXAUL_PLANKS;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":saxaul_slab")
+    public static SaxaulSlab SAXAUL_SLAB;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":saxaul_stairs")
+    public static SaxaulStairs SAXAUL_STAIRS;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":saxaul_button")
+    public static SaxaulButton SAXAUL_BUTTON;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":saxaul_fence")
+    public static SaxaulFence SAXAUL_FENCE;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":saxaul_fence_gate")
+    public static SaxaulFenceGate SAXAUL_FENCE_GATE;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":saxaul_pressure_plate")
+    public static SaxaulPressurePlate SAXAUL_PRESSURE_PLATE;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":saxaul_sign")
+    public static SaxaulSign SAXAUL_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":saxaul_wall_sign")
+    public static SaxaulWallSign SAXAUL_WALL_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":saxaul_hanging_sign")
+    public static SaxaulHangingSign SAXAUL_HANGING_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":saxaul_wall_hanging_sign")
+    public static SaxaulWallHangingSign SAXAUL_WALL_HANGING_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":saxaul_door")
+    public static SaxaulDoor SAXAUL_DOOR;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":saxaul_trapdoor")
+    public static SaxaulTrapDoor SAXAUL_TRAPDOOR;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":saxaul_planks_trapdoor")
+    public static SaxaulPlanksTrapdoor SAXAUL_PLANKS_TRAP_DOOR;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":saxaul_leaves")
+    public static SaxaulLeaves SAXAUL_LEAVES;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":saxaul_sapling")
+    public static SaxaulSapling SAXAUL_SAPLING;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":potted_saxaul_sapling")
+    public static PottedSaxaulSapling POTTED_SAXAUL_SAPLING;
+
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":zen_lantern")
     public static ZenLantern ZEN_LANTERN;
 
@@ -312,6 +378,12 @@ public class ModBlocks {
 
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":enoki_mushroom_block")
     public static EnokiMushroomBlock ENOKI_MUSHROOM_BLOCK;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":flowering_cactus")
+    public static FloweringCactus FLOWERING_CACTUS;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":potted_flowering_cactus")
+    public static PottedFloweringCactus POTTED_FLOWERING_CACTUS;
 
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":acacia_planks_trapdoor")
     public static AcaciaPlanksTrapdoor ACACIA_PLANKS_TRAP_DOOR;

@@ -73,6 +73,7 @@ public class ClientOnlyRegistrar {
             Sheets.addWoodType(ModWoodType.BLACK_PINE);
             Sheets.addWoodType(ModWoodType.HINOKI);
             Sheets.addWoodType(ModWoodType.WATER_FIR);
+            Sheets.addWoodType(ModWoodType.SAXAUL);
         });
     }
 

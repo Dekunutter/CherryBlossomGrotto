@@ -8,6 +8,8 @@ import com.deku.cherryblossomgrotto.common.items.maple.MapleBoat;
 import com.deku.cherryblossomgrotto.common.items.maple.MapleChestBoat;
 import com.deku.cherryblossomgrotto.common.items.maple.MapleLeaf;
 import com.deku.cherryblossomgrotto.common.items.maple.MapleSyrupBottleItem;
+import com.deku.cherryblossomgrotto.common.items.saxaul.SaxaulBoat;
+import com.deku.cherryblossomgrotto.common.items.saxaul.SaxaulChestBoat;
 import com.deku.cherryblossomgrotto.common.items.water_fir.WaterFirBoat;
 import com.deku.cherryblossomgrotto.common.items.water_fir.WaterFirChestBoat;
 import net.minecraft.world.item.*;
@@ -270,6 +272,66 @@ public class ModItems {
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":water_fir_chest_boat")
     public static WaterFirChestBoat WATER_FIR_CHEST_BOAT;
 
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":saxaul_log")
+    public static BlockItem SAXAUL_LOG;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":stripped_saxaul_log")
+    public static BlockItem STRIPPED_SAXAUL_LOG;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":saxaul_wood")
+    public static BlockItem SAXAUL_WOOD;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":stripped_saxaul_wood")
+    public static BlockItem STRIPPED_SAXAUL_WOOD;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":saxaul_planks")
+    public static BlockItem SAXAUL_PLANKS;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":saxaul_slab")
+    public static BlockItem SAXAUL_SLAB;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":saxaul_stairs")
+    public static BlockItem SAXAUL_STAIRS;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":saxaul_button")
+    public static BlockItem SAXAUL_BUTTON;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":saxaul_fence")
+    public static BlockItem SAXAUL_FENCE;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":saxaul_fence_gate")
+    public static BlockItem SAXAUL_FENCE_GATE;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":saxaul_pressure_plate")
+    public static BlockItem SAXAUL_PRESSURE_PLATE;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":saxaul_sign")
+    public static SignItem SAXAUL_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":saxaul_hanging_sign")
+    public static HangingSignItem SAXAUL_HANGING_SIGN;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":saxaul_door")
+    public static DoubleHighBlockItem SAXAUL_DOOR;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":saxaul_trapdoor")
+    public static BlockItem SAXAUL_TRAPDOOR;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":saxaul_planks_trapdoor")
+    public static BlockItem SAXAUL_PLANKS_TRAP_DOOR;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":saxaul_leaves")
+    public static BlockItem SAXAUL_LEAVES;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":saxaul_sapling")
+    public static BlockItem SAXAUL_SAPLING;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":saxaul_boat")
+    public static SaxaulBoat SAXAUL_BOAT;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":saxaul_chest_boat")
+    public static SaxaulChestBoat SAXAUL_CHEST_BOAT;
+
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":katana")
     public static Katana KATANA;
 
@@ -332,6 +394,9 @@ public class ModItems {
 
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":enoki_mushroom_block")
     public static BlockItem ENOKI_MUSHROOM_BLOCK;
+
+    @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":flowering_cactus")
+    public static BlockItem FLOWERING_CACTUS;
 
     @ObjectHolder(registryName = "minecraft:item", value = MOD_ID + ":terracotta_warrior_statue")
     public static DoubleHighBlockItem TERRACOTTA_WARRIOR_STATUE;

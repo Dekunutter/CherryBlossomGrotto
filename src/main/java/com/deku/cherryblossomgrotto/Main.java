@@ -6,6 +6,7 @@ import com.deku.cherryblossomgrotto.common.blocks.*;
 import com.deku.cherryblossomgrotto.common.blocks.black_pine.*;
 import com.deku.cherryblossomgrotto.common.blocks.hinoki.*;
 import com.deku.cherryblossomgrotto.common.blocks.maple.*;
+import com.deku.cherryblossomgrotto.common.blocks.saxaul.*;
 import com.deku.cherryblossomgrotto.common.blocks.water_fir.*;
 import com.deku.cherryblossomgrotto.common.capabilities.DoubleJumpCapability;
 import com.deku.cherryblossomgrotto.common.enchantments.ModEnchantmentInitializer;
@@ -27,6 +28,8 @@ import com.deku.cherryblossomgrotto.common.items.maple.MapleBoat;
 import com.deku.cherryblossomgrotto.common.items.maple.MapleChestBoat;
 import com.deku.cherryblossomgrotto.common.items.maple.MapleLeaf;
 import com.deku.cherryblossomgrotto.common.items.maple.MapleSyrupBottleItem;
+import com.deku.cherryblossomgrotto.common.items.saxaul.SaxaulBoat;
+import com.deku.cherryblossomgrotto.common.items.saxaul.SaxaulChestBoat;
 import com.deku.cherryblossomgrotto.common.items.water_fir.WaterFirBoat;
 import com.deku.cherryblossomgrotto.common.items.water_fir.WaterFirChestBoat;
 import com.deku.cherryblossomgrotto.common.particles.ModParticles;
@@ -37,6 +40,7 @@ import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeInitializer;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModBiomeProvider;
 import com.deku.cherryblossomgrotto.common.world.gen.biomes.ModSurfaceRules;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.BlackPineFoliagePlacerType;
+import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.SaxaulFoliagePlacerType;
 import com.deku.cherryblossomgrotto.common.world.gen.structures.*;
 import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.*;
 import com.deku.cherryblossomgrotto.server.network.handlers.DoubleJumpServerMessageHandler;
@@ -235,11 +239,13 @@ public class Main
             BlockSetType.register(ModBlockSetType.BLACK_PINE);
             BlockSetType.register(ModBlockSetType.HINOKI);
             BlockSetType.register(ModBlockSetType.WATER_FIR);
+            BlockSetType.register(ModBlockSetType.SAXAUL);
 
             WoodType.register(ModWoodType.MAPLE);
             WoodType.register(ModWoodType.BLACK_PINE);
             WoodType.register(ModWoodType.HINOKI);
             WoodType.register(ModWoodType.WATER_FIR);
+            WoodType.register(ModWoodType.SAXAUL);
 
             Regions.register(new ModBiomeProvider());
             SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MOD_ID, ModSurfaceRules.makeRules());
@@ -385,6 +391,32 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "water_fir_sapling"), new WaterFirSapling());
                 registrar.register(new ResourceLocation(MOD_ID, "potted_water_fir_sapling"), new PottedWaterFirSapling());
 
+                // All saxaul wood blocks
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_log"), new SaxaulLog());
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_saxaul_log"), new StrippedSaxaulLog());
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_wood"), new SaxaulWood());
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_saxaul_wood"), new StrippedSaxaulWood());
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_planks"), new SaxaulPlanks());
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_slab"), new SaxaulSlab());
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_stairs"), new SaxaulStairs());
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_button"), new SaxaulButton());
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_fence"), new SaxaulFence());
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_fence_gate"), new SaxaulFenceGate());
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_pressure_plate"), new SaxaulPressurePlate());
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_sign"), new SaxaulSign());
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_wall_sign"), new SaxaulWallSign());
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_hanging_sign"), new SaxaulHangingSign());
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_wall_hanging_sign"), new SaxaulWallHangingSign());
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_door"), new SaxaulDoor());
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_trapdoor"), new SaxaulTrapDoor());
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_planks_trapdoor"), new SaxaulPlanksTrapdoor());
+
+                // All saxaul tree blocks
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_leaves"), new SaxaulLeaves());
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_sapling"), new SaxaulSapling());
+                registrar.register(new ResourceLocation(MOD_ID, "potted_saxaul_sapling"), new PottedSaxaulSapling());
+
+
                 // All architectural blocks
                 registrar.register(new ResourceLocation(MOD_ID, "shoji_screen"), new ShojiScreen());
                 registrar.register(new ResourceLocation(MOD_ID, "dark_shoji_screen"), new ShojiScreen());
@@ -402,6 +434,10 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "enoki_mushroom"), new EnokiMushroom());
                 registrar.register(new ResourceLocation(MOD_ID, "shiitake_mushroom"), new ShiitakeMushroom());
                 registrar.register(new ResourceLocation(MOD_ID, "enoki_mushroom_block"), new EnokiMushroomBlock());
+
+                //Cacti
+                registrar.register(new ResourceLocation(MOD_ID, "flowering_cactus"), new FloweringCactus());
+                registrar.register(new ResourceLocation(MOD_ID, "potted_flowering_cactus"), new PottedFloweringCactus());
 
                 // All lanterns
                 registrar.register(new ResourceLocation(MOD_ID, "zen_lantern"), new ZenLantern());
@@ -549,6 +585,29 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "autumnal_water_fir_leaves"), new BlockItem(ModBlocks.AUTUMNAL_WATER_FIR_LEAVES, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "water_fir_sapling"), new BlockItem(ModBlocks.WATER_FIR_SAPLING, new Item.Properties()));
 
+                // All saxaul wood items
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_log"), new BlockItem(ModBlocks.SAXAUL_LOG, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_saxaul_log"), new BlockItem(ModBlocks.STRIPPED_SAXAUL_LOG, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_wood"), new BlockItem(ModBlocks.SAXAUL_WOOD, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "stripped_saxaul_wood"), new BlockItem(ModBlocks.STRIPPED_SAXAUL_WOOD, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_planks"), new BlockItem(ModBlocks.SAXAUL_PLANKS, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_slab"), new BlockItem(ModBlocks.SAXAUL_SLAB, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_stairs"), new BlockItem(ModBlocks.SAXAUL_STAIRS, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_button"), new BlockItem(ModBlocks.SAXAUL_BUTTON, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_fence"), new BlockItem(ModBlocks.SAXAUL_FENCE, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_fence_gate"), new BlockItem(ModBlocks.SAXAUL_FENCE_GATE, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_pressure_plate"), new BlockItem(ModBlocks.SAXAUL_PRESSURE_PLATE, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_sign"), new SignItem(new Item.Properties().stacksTo(16), ModBlocks.SAXAUL_SIGN, ModBlocks.SAXAUL_WALL_SIGN));
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_hanging_sign"), new HangingSignItem(ModBlocks.SAXAUL_HANGING_SIGN, ModBlocks.SAXAUL_WALL_HANGING_SIGN, new Item.Properties().stacksTo(16)));
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_door"), new DoubleHighBlockItem(ModBlocks.SAXAUL_DOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_trapdoor"), new BlockItem(ModBlocks.SAXAUL_TRAPDOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_planks_trapdoor"), new BlockItem(ModBlocks.SAXAUL_PLANKS_TRAP_DOOR, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_boat"), new SaxaulBoat());
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_chest_boat"), new SaxaulChestBoat());
+
+                // All saxaul tree items
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_leaves"), new BlockItem(ModBlocks.SAXAUL_LEAVES, new Item.Properties()));
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_sapling"), new BlockItem(ModBlocks.SAXAUL_SAPLING, new Item.Properties()));
 
                 // All lantern items
                 registrar.register(new ResourceLocation(MOD_ID, "zen_lantern"), new DoubleHighBlockItem(ModBlocks.ZEN_LANTERN, new Item.Properties()));
@@ -569,6 +628,9 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "enoki_mushroom"), new BlockItem(ModBlocks.ENOKI_MUSHROOM, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "shiitake_mushroom"), new BlockItem(ModBlocks.SHIITAKE_MUSHROOM, new Item.Properties()));
                 registrar.register(new ResourceLocation(MOD_ID, "enoki_mushroom_block"), new BlockItem(ModBlocks.ENOKI_MUSHROOM_BLOCK, new Item.Properties()));
+
+                //Cacti
+                registrar.register(new ResourceLocation(MOD_ID, "flowering_cactus"), new BlockItem(ModBlocks.FLOWERING_CACTUS, new Item.Properties()));
 
                 // TODO: Find a way to add these to the composter
                 // All food items
@@ -688,6 +750,7 @@ public class Main
             registerEvent.register(ForgeRegistries.Keys.FOLIAGE_PLACER_TYPES, registrar -> {
                 // All black pine tree foliage placer types
                 registrar.register(new ResourceLocation(MOD_ID, "black_pine_tree_foliage_placer"), new BlackPineFoliagePlacerType());
+                registrar.register(new ResourceLocation(MOD_ID, "saxaul_tree_foliage_placer"), new SaxaulFoliagePlacerType());
             });
         }
 
@@ -782,6 +845,20 @@ public class Main
                 entries.putAfter(new ItemStack(ModItems.WATER_FIR_TRAPDOOR), new ItemStack(ModItems.WATER_FIR_PRESSURE_PLATE), visibility);
                 entries.putAfter(new ItemStack(ModItems.WATER_FIR_PRESSURE_PLATE), new ItemStack(ModItems.WATER_FIR_BUTTON), visibility);
 
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_BUTTON), new ItemStack(ModItems.SAXAUL_LOG), visibility);
+                entries.putAfter(new ItemStack(ModItems.SAXAUL_LOG), new ItemStack(ModItems.SAXAUL_WOOD), visibility);
+                entries.putAfter(new ItemStack(ModItems.SAXAUL_WOOD), new ItemStack(ModItems.STRIPPED_SAXAUL_LOG), visibility);
+                entries.putAfter(new ItemStack(ModItems.STRIPPED_SAXAUL_LOG), new ItemStack(ModItems.STRIPPED_SAXAUL_WOOD), visibility);
+                entries.putAfter(new ItemStack(ModItems.STRIPPED_SAXAUL_WOOD), new ItemStack(ModItems.SAXAUL_PLANKS), visibility);
+                entries.putAfter(new ItemStack(ModItems.SAXAUL_PLANKS), new ItemStack(ModItems.SAXAUL_STAIRS), visibility);
+                entries.putAfter(new ItemStack(ModItems.SAXAUL_STAIRS), new ItemStack(ModItems.SAXAUL_SLAB), visibility);
+                entries.putAfter(new ItemStack(ModItems.SAXAUL_SLAB), new ItemStack(ModItems.SAXAUL_FENCE), visibility);
+                entries.putAfter(new ItemStack(ModItems.SAXAUL_FENCE), new ItemStack(ModItems.SAXAUL_FENCE_GATE), visibility);
+                entries.putAfter(new ItemStack(ModItems.SAXAUL_FENCE_GATE), new ItemStack(ModItems.SAXAUL_DOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.SAXAUL_DOOR), new ItemStack(ModItems.SAXAUL_TRAPDOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.SAXAUL_TRAPDOOR), new ItemStack(ModItems.SAXAUL_PRESSURE_PLATE), visibility);
+                entries.putAfter(new ItemStack(ModItems.SAXAUL_PRESSURE_PLATE), new ItemStack(ModItems.SAXAUL_BUTTON), visibility);
+
                 // Misc building blocks
                 creativeTabBuilderRegistryEvent.accept(ModItems.SHOJI_SCREEN);
                 creativeTabBuilderRegistryEvent.accept(ModItems.DARK_SHOJI_SCREEN);
@@ -806,6 +883,7 @@ public class Main
                 entries.putAfter(new ItemStack(ModItems.MAPLE_PLANKS_TRAP_DOOR), new ItemStack(ModItems.BLACK_PINE_PLANKS_TRAP_DOOR), visibility);
                 entries.putAfter(new ItemStack(ModItems.BLACK_PINE_PLANKS_TRAP_DOOR), new ItemStack(ModItems.HINOKI_PLANKS_TRAP_DOOR), visibility);
                 entries.putAfter(new ItemStack(ModItems.HINOKI_PLANKS_TRAP_DOOR), new ItemStack(ModItems.WATER_FIR_PLANKS_TRAP_DOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_PLANKS_TRAP_DOOR), new ItemStack(ModItems.SAXAUL_PLANKS_TRAP_DOOR), visibility);
                 entries.putAfter(new ItemStack(Items.STONE_SLAB), new ItemStack(ModItems.STONE_TRAP_DOOR), visibility);
                 entries.putAfter(new ItemStack(Items.SMOOTH_STONE_SLAB), new ItemStack(ModItems.SMOOTH_STONE_TRAP_DOOR), visibility);
                 entries.putAfter(new ItemStack(Items.COBBLESTONE_WALL), new ItemStack(ModItems.COBBLESTONE_TRAP_DOOR), visibility);
@@ -833,11 +911,19 @@ public class Main
                 entries.putAfter(new ItemStack(ModItems.WATER_FIR_LEAVES), new ItemStack(ModItems.AUTUMNAL_WATER_FIR_LEAVES), visibility);
                 entries.putAfter(new ItemStack(ModItems.HINOKI_SAPLING), new ItemStack(ModItems.WATER_FIR_SAPLING), visibility);
 
+                // Saxaul blocks
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_LOG), new ItemStack(ModItems.SAXAUL_LOG), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_LEAVES), new ItemStack(ModItems.SAXAUL_LEAVES), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_SAPLING), new ItemStack(ModItems.SAXAUL_SAPLING), visibility);
+
                 // TODO: Maybe this goes under food or something? Should check where it is in vanilla
                 // Mushrooms
                 entries.putAfter(new ItemStack(Items.BROWN_MUSHROOM), new ItemStack(ModItems.ENOKI_MUSHROOM), visibility);
                 entries.putAfter(new ItemStack(ModItems.ENOKI_MUSHROOM), new ItemStack(ModItems.SHIITAKE_MUSHROOM), visibility);
                 entries.putAfter(new ItemStack(Items.BROWN_MUSHROOM_BLOCK), new ItemStack(ModItems.ENOKI_MUSHROOM_BLOCK), visibility);
+
+                // Cacti
+                entries.putAfter(new ItemStack(Items.CACTUS), new ItemStack(ModItems.FLOWERING_CACTUS), visibility);
             } else if (creativeTabBuilderRegistryEvent.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
                 // Lanterns
                 entries.putAfter(new ItemStack(Items.SOUL_LANTERN), new ItemStack(ModItems.ZEN_LANTERN), visibility);
@@ -853,6 +939,8 @@ public class Main
                 entries.putAfter(new ItemStack(ModItems.HINOKI_SIGN), new ItemStack(ModItems.HINOKI_HANGING_SIGN), visibility);
                 entries.putAfter(new ItemStack(ModItems.HINOKI_HANGING_SIGN), new ItemStack(ModItems.WATER_FIR_SIGN), visibility);
                 entries.putAfter(new ItemStack(ModItems.WATER_FIR_SIGN), new ItemStack(ModItems.WATER_FIR_HANGING_SIGN), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_SIGN), new ItemStack(ModItems.SAXAUL_SIGN), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_HANGING_SIGN), new ItemStack(ModItems.SAXAUL_HANGING_SIGN), visibility);
             } else if (creativeTabBuilderRegistryEvent.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
                 // Maple blocks
                 entries.putAfter(new ItemStack(Items.CHERRY_BUTTON), new ItemStack(ModItems.MAPLE_BUTTON), visibility);
@@ -885,6 +973,14 @@ public class Main
                 entries.putAfter(new ItemStack(ModItems.HINOKI_FENCE_GATE), new ItemStack(ModItems.WATER_FIR_FENCE_GATE), visibility);
                 entries.putAfter(new ItemStack(ModItems.HINOKI_DOOR), new ItemStack(ModItems.WATER_FIR_DOOR), visibility);
                 entries.putAfter(new ItemStack(ModItems.HINOKI_TRAPDOOR), new ItemStack(ModItems.WATER_FIR_TRAPDOOR), visibility);
+
+                // Saxaul blocks
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_BUTTON), new ItemStack(ModItems.SAXAUL_BUTTON), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_PRESSURE_PLATE), new ItemStack(ModItems.SAXAUL_PRESSURE_PLATE), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_CHEST_BOAT), new ItemStack(ModItems.SAXAUL_CHEST_BOAT), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_FENCE_GATE), new ItemStack(ModItems.SAXAUL_FENCE_GATE), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_DOOR), new ItemStack(ModItems.SAXAUL_DOOR), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_TRAPDOOR), new ItemStack(ModItems.SAXAUL_TRAPDOOR), visibility);
             } else if (creativeTabBuilderRegistryEvent.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
                 // Buckets
                 entries.putAfter(new ItemStack(Items.TROPICAL_FISH_BUCKET), new ItemStack(ModItems.KOI_BUCKET), visibility);
@@ -898,6 +994,8 @@ public class Main
                 entries.putAfter(new ItemStack(ModItems.HINOKI_BOAT), new ItemStack(ModItems.HINOKI_CHEST_BOAT), visibility);
                 entries.putAfter(new ItemStack(ModItems.HINOKI_CHEST_BOAT), new ItemStack(ModItems.WATER_FIR_BOAT), visibility);
                 entries.putAfter(new ItemStack(ModItems.WATER_FIR_BOAT), new ItemStack(ModItems.WATER_FIR_CHEST_BOAT), visibility);
+                entries.putAfter(new ItemStack(ModItems.WATER_FIR_CHEST_BOAT), new ItemStack(ModItems.SAXAUL_BOAT), visibility);
+                entries.putAfter(new ItemStack(ModItems.SAXAUL_BOAT), new ItemStack(ModItems.SAXAUL_CHEST_BOAT), visibility);
             } else if (creativeTabBuilderRegistryEvent.getTabKey() == CreativeModeTabs.COMBAT) {
                 // Melee weapons
                 entries.putAfter(new ItemStack(Items.NETHERITE_AXE), new ItemStack(ModItems.KATANA), visibility);
@@ -1022,6 +1120,8 @@ public class Main
                     .put(ModBlocks.HINOKI_WOOD, ModBlocks.STRIPPED_HINOKI_WOOD)
                     .put(ModBlocks.WATER_FIR_LOG, ModBlocks.STRIPPED_WATER_FIR_LOG)
                     .put(ModBlocks.WATER_FIR_WOOD, ModBlocks.STRIPPED_WATER_FIR_WOOD)
+                    .put(ModBlocks.SAXAUL_LOG, ModBlocks.STRIPPED_SAXAUL_LOG)
+                    .put(ModBlocks.SAXAUL_WOOD, ModBlocks.STRIPPED_SAXAUL_WOOD)
             ).build();
 
             if (event.getItemStack().getItem() instanceof AxeItem) {

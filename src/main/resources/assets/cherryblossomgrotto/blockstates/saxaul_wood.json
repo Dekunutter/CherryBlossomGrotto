@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y": { "model": "cherryblossomgrotto:block/saxaul_wood" },
+    "axis=z": { "model": "cherryblossomgrotto:block/saxaul_wood", "x":  90 },
+    "axis=x": { "model":  "cherryblossomgrotto:block/saxaul_wood", "x":  90, "y":  90 }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "cherryblossomgrotto:block/saxaul_log_top",
+    "side": "cherryblossomgrotto:block/saxaul_log"
+  }
+}

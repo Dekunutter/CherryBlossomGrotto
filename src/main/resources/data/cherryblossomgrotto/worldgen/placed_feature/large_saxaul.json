@@ -1,0 +1,17 @@
+{
+  "feature": "cherryblossomgrotto:large_saxaul",
+  "placement": [
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:would_survive",
+        "state": {
+          "Name": "cherryblossomgrotto:saxaul_sapling",
+          "Properties": {
+            "stage": "0"
+          }
+        }
+      }
+    }
+  ]
+}

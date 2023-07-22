@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "cherryblossomgrotto:saxaul_logs"
+    }
+  ],
+  "result": {
+    "item": "cherryblossomgrotto:saxaul_planks",
+    "count": 4
+  }
+}

@@ -3,6 +3,7 @@ package com.deku.cherryblossomgrotto.common.features;
 import com.deku.cherryblossomgrotto.common.blocks.ModBlocks;
 import com.deku.cherryblossomgrotto.common.features.decorators.ShiitakeMushroomDecorator;
 import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.BlackPineFoliagePlacer;
+import com.deku.cherryblossomgrotto.common.world.gen.foliagePlacers.SaxaulFoliagePlacer;
 import com.deku.cherryblossomgrotto.common.world.gen.trunkPlacers.BlackPineTrunkPlacer;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.registries.Registries;
@@ -47,6 +48,10 @@ public class ModTreeFeatures {
     public static ResourceKey<ConfiguredFeature<?, ?>> WATER_FIR_BEES = registerTreeFeatureKey("water_fir_bees");
 
     public static ResourceKey<ConfiguredFeature<?, ?>> MEGA_WATER_FIR = registerTreeFeatureKey("mega_water_fir");
+
+    public static ResourceKey<ConfiguredFeature<?, ?>> SAXAUL = registerTreeFeatureKey("saxaul");
+
+    public static ResourceKey<ConfiguredFeature<?, ?>> LARGE_SAXAUL = registerTreeFeatureKey("large_saxaul");
 
     public static ResourceKey<ConfiguredFeature<?, ?>> HUGE_ENOKI_MUSHROOM = registerTreeFeatureKey("huge_enoki_mushroom");
 
@@ -139,6 +144,26 @@ public class ModTreeFeatures {
         ).ignoreVines();
     }
 
+    private static TreeConfiguration.TreeConfigurationBuilder createSaxaulTreeConfiguration() {
+        return new TreeConfiguration.TreeConfigurationBuilder(
+                BlockStateProvider.simple(ModBlocks.SAXAUL_LOG),
+                new ForkingTrunkPlacer(2, 2, 0),
+                BlockStateProvider.simple(ModBlocks.SAXAUL_LEAVES),
+                new SaxaulFoliagePlacer(ConstantInt.of(0), ConstantInt.of(1)),
+                new TwoLayersFeatureSize(1, 0, 2)
+        ).ignoreVines();
+    }
+
+    private static TreeConfiguration.TreeConfigurationBuilder createLargeSaxaulTreeConfiguration() {
+        return new TreeConfiguration.TreeConfigurationBuilder(
+                BlockStateProvider.simple(ModBlocks.SAXAUL_LOG),
+                new ForkingTrunkPlacer(4, 2, 0),
+                BlockStateProvider.simple(ModBlocks.SAXAUL_LEAVES),
+                new SaxaulFoliagePlacer(ConstantInt.of(0), ConstantInt.of(1)),
+                new TwoLayersFeatureSize(1, 0, 2)
+        ).ignoreVines();
+    }
+
     /**
      * Registers tree features using the bootstrap context
      *
@@ -162,5 +187,8 @@ public class ModTreeFeatures {
         context.register(WATER_FIR, new ConfiguredFeature<>(Feature.TREE, createWaterFirTreeConfiguration().build()));
         context.register(WATER_FIR_BEES, new ConfiguredFeature<>(Feature.TREE, createWaterFirTreeConfiguration().decorators(ImmutableList.of(beehiveDecorator02)).build()));
         context.register(MEGA_WATER_FIR, new ConfiguredFeature<>(Feature.TREE, createMegaWaterFirTreeConfiguration().decorators(ImmutableList.of(new ShiitakeMushroomDecorator(0.4F), new AlterGroundDecorator(BlockStateProvider.simple(Blocks.PODZOL)))).build()));
+
+        context.register(SAXAUL, new ConfiguredFeature<>(Feature.TREE, createSaxaulTreeConfiguration().build()));
+        context.register(LARGE_SAXAUL, new ConfiguredFeature<>(Feature.TREE, createLargeSaxaulTreeConfiguration().build()));
     }
 }
