@@ -36,6 +36,8 @@ public class ModBiomeInitializer {
 
     public static ResourceKey<Biome> OLD_GROWTH_FIR_FOREST = registerBiomeKey("old_growth_fir_forest");
 
+    public static ResourceKey<Biome> SHRUBLANDS = registerBiomeKey("shrublands");
+
     /**
      * Registers the biome into the vanilla game by the biome registry
      *
@@ -64,6 +66,7 @@ public class ModBiomeInitializer {
         context.register(STONE_FOREST, OverworldBiomes.theVoid(placementGetter, carverGetter));
         context.register(HINOKI_FOREST, OverworldBiomes.theVoid(placementGetter, carverGetter));
         context.register(OLD_GROWTH_FIR_FOREST, OverworldBiomes.theVoid(placementGetter, carverGetter));
+        context.register(SHRUBLANDS, OverworldBiomes.theVoid(placementGetter, carverGetter));
     }
 
     /**
@@ -80,5 +83,6 @@ public class ModBiomeInitializer {
         BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(HINOKI_FOREST, 1));
         BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(OLD_GROWTH_FIR_FOREST, 1));
         BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(STONE_FOREST, 1));
+        BiomeManager.addBiome(BiomeManager.BiomeType.DESERT, new BiomeManager.BiomeEntry(SHRUBLANDS, 1));
     }
 }

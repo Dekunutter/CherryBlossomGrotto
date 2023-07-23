@@ -69,6 +69,9 @@ public class ModBiomeProvider extends Region {
             if(ModConfiguration.spawnWaterFirBiomes.get()) {
                 builder.replaceBiome(Biomes.OLD_GROWTH_SPRUCE_TAIGA, ModBiomeInitializer.OLD_GROWTH_FIR_FOREST);
             }
+            if(ModConfiguration.spawnShrublands.get()) {
+                builder.replaceBiome(Biomes.DESERT, ModBiomeInitializer.SHRUBLANDS);
+            }
         });
     }
 }

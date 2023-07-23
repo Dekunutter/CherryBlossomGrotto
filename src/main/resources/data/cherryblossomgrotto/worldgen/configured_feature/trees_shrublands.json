@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:random_selector",
+  "config": {
+    "default": "cherryblossomgrotto:saxaul",
+    "features": [
+      {
+        "chance": 1.0,
+        "feature":"cherryblossomgrotto:saxaul"
+      }
+    ]
+  }
+}
