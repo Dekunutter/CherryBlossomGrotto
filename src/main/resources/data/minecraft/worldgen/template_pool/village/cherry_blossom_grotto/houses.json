@@ -175,6 +175,15 @@
     {
       "element": {
         "element_type": "minecraft:legacy_single_pool_element",
+        "location": "minecraft:village/cherry_blossom_grotto/houses/blacksmith",
+        "processors": "cherryblossomgrotto:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
         "location": "minecraft:village/cherry_blossom_grotto/houses/rice_paddies",
         "processors": {
           "processors": []
@@ -231,6 +240,17 @@
       "element": {
         "element_type": "minecraft:legacy_single_pool_element",
         "location": "minecraft:village/cherry_blossom_grotto/houses/pink_petal_box",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 2
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "minecraft:village/cherry_blossom_grotto/houses/bamboo_box",
         "processors": {
           "processors": []
         },

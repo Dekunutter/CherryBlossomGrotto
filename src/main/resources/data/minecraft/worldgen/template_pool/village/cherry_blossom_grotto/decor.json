@@ -9,7 +9,18 @@
         },
         "projection": "rigid"
       },
-      "weight": 2
+      "weight": 3
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "minecraft:village/cherry_blossom_grotto/decor/paper_lantern_pole",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 3
     },
     {
       "element": {
@@ -17,7 +28,7 @@
         "feature": "minecraft:cherry_bees_005",
         "projection": "rigid"
       },
-      "weight": 1
+      "weight": 2
     },
     {
       "element": {
