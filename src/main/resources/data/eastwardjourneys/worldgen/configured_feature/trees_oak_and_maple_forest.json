@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:random_selector",
+  "config": {
+    "default": "minecraft:fancy_oak_bees_002",
+    "features": [
+      {
+        "chance": 0.2,
+        "feature":"eastwardjourneys:fancy_maple_checked"
+      },
+      {
+        "chance": 0.1,
+        "feature":"eastwardjourneys:fancy_maple_bees"
+      },
+      {
+        "chance": 0.1,
+        "feature":"minecraft:oak_bees_002"
+      }
+    ]
+  }
+}

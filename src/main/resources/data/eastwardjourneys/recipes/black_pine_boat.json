@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "boat",
+  "pattern": [
+    "# #",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "eastwardjourneys:black_pine_planks"
+    }
+  },
+  "result": {
+    "item": "eastwardjourneys:black_pine_boat"
+  }
+}

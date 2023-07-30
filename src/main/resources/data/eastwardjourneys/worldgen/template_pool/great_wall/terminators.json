@@ -1,0 +1,23 @@
+{
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:great_wall/terminators/great_wall_terminator_01",
+        "processors": "eastwardjourneys:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:great_wall/terminators/great_wall_terminator_02",
+        "processors": "eastwardjourneys:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 1
+    }
+  ],
+  "fallback": "minecraft:empty"
+}

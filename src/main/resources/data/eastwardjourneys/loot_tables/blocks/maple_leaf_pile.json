@@ -1,0 +1,114 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:alternatives",
+              "conditions": [
+                {
+                  "condition": "minecraft:inverted",
+                  "term": {
+                    "condition": "minecraft:match_tool",
+                    "predicate": {
+                      "enchantments": [
+                        {
+                          "enchantment": "minecraft:silk_touch",
+                          "levels": {
+                            "min": 1
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "condition": "minecraft:block_state_property",
+                      "block": "eastwardjourneys:maple_leaf_pile",
+                      "properties": {
+                        "half_layers": "1"
+                      }
+                    }
+                  ],
+                  "name": "eastwardjourneys:maple_leaf"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "condition": "minecraft:block_state_property",
+                      "block": "eastwardjourneys:maple_leaf_pile",
+                      "properties": {
+                        "half_layers": "2"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "function": "minecraft:set_count",
+                      "count": 2
+                    }
+                  ],
+                  "name": "eastwardjourneys:maple_leaf"
+                }
+              ]
+            },
+            {
+              "type": "minecraft:alternatives",
+              "children": [
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "condition": "minecraft:block_state_property",
+                      "block": "eastwardjourneys:maple_leaf_pile",
+                      "properties": {
+                        "half_layers": "1"
+                      }
+                    }
+                  ],
+                  "name": "eastwardjourneys:maple_leaf_pile"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "condition": "minecraft:block_state_property",
+                      "block": "eastwardjourneys:maple_leaf_pile",
+                      "properties": {
+                        "half_layers": "2"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "function": "minecraft:set_count",
+                      "count": 2
+                    }
+                  ],
+                  "name": "eastwardjourneys:maple_leaf_pile"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:entity_properties",
+          "predicate": {},
+          "entity": "this"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "chest_boat",
+  "ingredients": [
+    {
+      "item": "minecraft:chest"
+    },
+    {
+      "item": "eastwardjourneys:hinoki_boat"
+    }
+  ],
+  "result": {
+    "item": "eastwardjourneys:hinoki_chest_boat"
+  }
+}

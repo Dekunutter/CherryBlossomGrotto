@@ -1,10 +1,10 @@
 {
   "replace": false,
   "values": [
-    "cherryblossomgrotto:potted_maple_sapling",
-    "cherryblossomgrotto:potted_black_pine_sapling",
-    "cherryblossomgrotto:potted_hinoki_sapling",
-    "cherryblossomgrotto:potted_water_fir_sapling",
-    "cherryblossomgrotto:potted_flowering_cactus"
+    "eastwardjourneys:potted_maple_sapling",
+    "eastwardjourneys:potted_black_pine_sapling",
+    "eastwardjourneys:potted_hinoki_sapling",
+    "eastwardjourneys:potted_water_fir_sapling",
+    "eastwardjourneys:potted_flowering_cactus"
   ]
 }

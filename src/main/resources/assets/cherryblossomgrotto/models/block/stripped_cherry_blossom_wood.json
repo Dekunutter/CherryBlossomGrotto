@@ -1,6 +1,0 @@
-{
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "cherryblossomgrotto:block/stripped_cherry_blossom_log"
-  }
-}

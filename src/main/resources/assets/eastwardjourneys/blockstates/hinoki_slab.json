@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "type=bottom": { "model": "eastwardjourneys:block/hinoki_slab" },
+    "type=double": { "model": "eastwardjourneys:block/hinoki_planks" },
+    "type=top": { "model": "eastwardjourneys:block/hinoki_slab_top" }
+  }
+}

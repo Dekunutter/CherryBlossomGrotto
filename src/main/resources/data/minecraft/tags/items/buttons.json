@@ -1,10 +1,10 @@
 {
   "replace": false,
   "values": [
-    "cherryblossomgrotto:maple_button",
-    "cherryblossomgrotto:black_pine_button",
-    "cherryblossomgrotto:hinoki_button",
-    "cherryblossomgrotto:water_fir_button",
-    "cherryblossomgrotto:saxaul_button"
+    "eastwardjourneys:maple_button",
+    "eastwardjourneys:black_pine_button",
+    "eastwardjourneys:hinoki_button",
+    "eastwardjourneys:water_fir_button",
+    "eastwardjourneys:saxaul_button"
   ]
 }

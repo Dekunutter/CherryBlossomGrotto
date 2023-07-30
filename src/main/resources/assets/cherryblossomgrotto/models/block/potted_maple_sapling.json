@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/flower_pot_cross",
-  "textures": {
-    "plant": "cherryblossomgrotto:block/maple_sapling"
-  },
-  "render_type": "cutout_mipped"
-}

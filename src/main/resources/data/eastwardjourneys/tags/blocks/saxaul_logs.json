@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "eastwardjourneys:saxaul_log",
+    "eastwardjourneys:stripped_saxaul_log",
+    "eastwardjourneys:saxaul_wood",
+    "eastwardjourneys:stripped_saxaul_wood"
+  ]
+}

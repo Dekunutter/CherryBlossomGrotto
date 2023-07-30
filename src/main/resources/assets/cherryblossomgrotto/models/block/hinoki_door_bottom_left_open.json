@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/door_bottom_left_open",
-  "textures": {
-    "bottom": "cherryblossomgrotto:block/hinoki_door_bottom",
-    "top": "cherryblossomgrotto:block/hinoki_door_top"
-  },
-  "render_type": "cutout_mipped"
-}

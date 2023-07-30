@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "cherryblossomgrotto:cherry_blossom_bamboo_jungle",
-    "cherryblossomgrotto:stone_forest",
-    "cherryblossomgrotto:shrublands"
+    "eastwardjourneys:cherry_blossom_bamboo_jungle",
+    "eastwardjourneys:stone_forest",
+    "eastwardjourneys:shrublands"
   ]
 }

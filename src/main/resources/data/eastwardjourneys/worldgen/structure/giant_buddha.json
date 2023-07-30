@@ -1,0 +1,12 @@
+{
+  "type": "eastwardjourneys:giant_buddha",
+  "biomes": "#eastwardjourneys:has_structure/giant_buddha",
+  "spawn_overrides": {
+    "monster": {
+      "bounding_box": "piece",
+      "spawns": []
+    }
+  },
+  "step": "surface_structures",
+  "terrain_adaptation": "beard_thin"
+}

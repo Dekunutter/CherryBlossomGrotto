@@ -1,10 +1,10 @@
 {
   "replace": false,
   "values": [
-    "cherryblossomgrotto:maple_slab",
-    "cherryblossomgrotto:black_pine_slab",
-    "cherryblossomgrotto:hinoki_slab",
-    "cherryblossomgrotto:water_fir_slab",
-    "cherryblossomgrotto:saxaul_slab"
+    "eastwardjourneys:maple_slab",
+    "eastwardjourneys:black_pine_slab",
+    "eastwardjourneys:hinoki_slab",
+    "eastwardjourneys:water_fir_slab",
+    "eastwardjourneys:saxaul_slab"
   ]
 }

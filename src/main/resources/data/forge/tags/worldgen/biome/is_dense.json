@@ -1,14 +1,13 @@
 {
   "replace": false,
   "values": [
-    "cherryblossomgrotto:cherry_blossom_grotto",
-    "cherryblossomgrotto:cherry_blossom_slopes",
-    "cherryblossomgrotto:cherry_blossom_bamboo_jungle",
-    "cherryblossomgrotto:maple_woods",
-    "cherryblossomgrotto:oak_and_maple_forest",
-    "cherryblossomgrotto:black_pine_forest",
-    "cherryblossomgrotto:stone_forest",
-    "cherryblossomgrotto:hinoki_forest",
-    "cherryblossomgrotto:old_growth_fir_forest"
+    "eastwardjourneys:cherry_blossom_slopes",
+    "eastwardjourneys:cherry_blossom_bamboo_jungle",
+    "eastwardjourneys:maple_woods",
+    "eastwardjourneys:oak_and_maple_forest",
+    "eastwardjourneys:black_pine_forest",
+    "eastwardjourneys:stone_forest",
+    "eastwardjourneys:hinoki_forest",
+    "eastwardjourneys:old_growth_fir_forest"
   ]
 }

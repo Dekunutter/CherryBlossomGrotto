@@ -1,0 +1,83 @@
+{
+  "processors": [
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "input_predicate": {
+            "block": "minecraft:dirt_path",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "block": "minecraft:water",
+            "predicate_type": "minecraft:block_match"
+          },
+          "output_state": {
+            "Name": "eastwardjourneys:cherry_blossom_planks"
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:dirt_path",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.1
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:grass_block",
+            "Properties": {
+              "snowy": "false"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:grass_block",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "block": "minecraft:water",
+            "predicate_type": "minecraft:block_match"
+          },
+          "output_state": {
+            "Name": "minecraft:water",
+            "Properties": {
+              "level": "0"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:dirt",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "block": "minecraft:water",
+            "predicate_type": "minecraft:block_match"
+          },
+          "output_state": {
+            "Name": "minecraft:water",
+            "Properties": {
+              "level": "0"
+            }
+          }
+        },
+        {
+          "_comment": "This is just to fix an issue I had with dirt spawning where structure blocks forced dirt paths to reset. Vanilla street processors don't do this but I couldn't think of another way around the issue",
+          "input_predicate": {
+            "block": "minecraft:dirt",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:dirt_path"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "eastwardjourneys:block/water_fir_planks",
+    "top": "eastwardjourneys:block/water_fir_planks",
+    "side": "eastwardjourneys:block/water_fir_planks"
+  }
+}

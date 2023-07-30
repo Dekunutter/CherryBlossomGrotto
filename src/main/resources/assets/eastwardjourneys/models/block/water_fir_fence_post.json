@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/fence_post",
+  "textures": {
+    "texture": "eastwardjourneys:block/water_fir_planks"
+  }
+}

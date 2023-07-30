@@ -1,10 +1,10 @@
 {
   "replace": false,
   "values": [
-    "cherryblossomgrotto:maple_sign",
-    "cherryblossomgrotto:black_pine_sign",
-    "cherryblossomgrotto:hinoki_sign",
-    "cherryblossomgrotto:water_fir_sign",
-    "cherryblossomgrotto:saxaul_sign"
+    "eastwardjourneys:maple_sign",
+    "eastwardjourneys:black_pine_sign",
+    "eastwardjourneys:hinoki_sign",
+    "eastwardjourneys:water_fir_sign",
+    "eastwardjourneys:saxaul_sign"
   ]
 }

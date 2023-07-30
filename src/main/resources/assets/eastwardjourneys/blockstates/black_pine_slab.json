@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "type=bottom": { "model": "eastwardjourneys:block/black_pine_slab" },
+    "type=double": { "model": "eastwardjourneys:block/black_pine_planks" },
+    "type=top": { "model": "eastwardjourneys:block/black_pine_slab_top" }
+  }
+}

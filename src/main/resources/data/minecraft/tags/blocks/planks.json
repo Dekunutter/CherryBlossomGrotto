@@ -1,10 +1,10 @@
 {
   "replace": false,
   "values": [
-    "cherryblossomgrotto:maple_planks",
-    "cherryblossomgrotto:black_pine_planks",
-    "cherryblossomgrotto:hinoki_planks",
-    "cherryblossomgrotto:water_fir_planks",
-    "cherryblossomgrotto:saxaul_planks"
+    "eastwardjourneys:maple_planks",
+    "eastwardjourneys:black_pine_planks",
+    "eastwardjourneys:hinoki_planks",
+    "eastwardjourneys:water_fir_planks",
+    "eastwardjourneys:saxaul_planks"
   ]
 }

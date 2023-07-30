@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "eastwardjourneys:block/rice_paddy_stage3"
+  },
+  "render_type": "cutout_mipped"
+}

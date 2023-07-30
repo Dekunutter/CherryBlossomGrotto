@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "eastwardjourneys:maple_log",
+    "eastwardjourneys:stripped_maple_log",
+    "eastwardjourneys:maple_wood",
+    "eastwardjourneys:stripped_maple_wood"
+  ]
+}

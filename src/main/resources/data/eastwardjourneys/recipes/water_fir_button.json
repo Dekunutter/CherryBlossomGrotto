@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "wooden_button",
+  "ingredients": [
+    {
+      "item": "eastwardjourneys:water_fir_planks"
+    }
+  ],
+  "result": {
+    "item": "eastwardjourneys:water_fir_button"
+  }
+}

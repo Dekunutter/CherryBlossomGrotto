@@ -1,0 +1,6 @@
+{
+  "parent": "eastwardjourneys:block/zen_lantern_top",
+  "textures": {
+    "layer0": "eastwardjourneys:item/zen_lantern_top"
+  }
+}

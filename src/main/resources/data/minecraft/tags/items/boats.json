@@ -1,10 +1,10 @@
 {
   "replace": false,
   "values": [
-    "cherryblossomgrotto:maple_boat",
-    "cherryblossomgrotto:black_pine_boat",
-    "cherryblossomgrotto:hinoki_boat",
-    "cherryblossomgrotto:water_fir_boat",
-    "cherryblossomgrotto:saxaul_boat"
+    "eastwardjourneys:maple_boat",
+    "eastwardjourneys:black_pine_boat",
+    "eastwardjourneys:hinoki_boat",
+    "eastwardjourneys:water_fir_boat",
+    "eastwardjourneys:saxaul_boat"
   ]
 }

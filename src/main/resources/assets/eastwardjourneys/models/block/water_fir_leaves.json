@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "eastwardjourneys:block/water_fir_leaves"
+  }
+}

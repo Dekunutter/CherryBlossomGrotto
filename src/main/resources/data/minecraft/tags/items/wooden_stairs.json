@@ -1,10 +1,10 @@
 {
   "replace": false,
   "values": [
-    "cherryblossomgrotto:maple_stairs",
-    "cherryblossomgrotto:black_pine_stairs",
-    "cherryblossomgrotto:hinoki_stairs",
-    "cherryblossomgrotto:water_fir_stairs",
-    "cherryblossomgrotto:saxaul_stairs"
+    "eastwardjourneys:maple_stairs",
+    "eastwardjourneys:black_pine_stairs",
+    "eastwardjourneys:hinoki_stairs",
+    "eastwardjourneys:water_fir_stairs",
+    "eastwardjourneys:saxaul_stairs"
   ]
 }

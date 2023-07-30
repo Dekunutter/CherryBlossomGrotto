@@ -1,10 +1,10 @@
 {
   "replace": false,
   "values": [
-    "cherryblossomgrotto:maple_hanging_sign",
-    "cherryblossomgrotto:black_pine_hanging_sign",
-    "cherryblossomgrotto:hinoki_hanging_sign",
-    "cherryblossomgrotto:water_fir_hanging_sign",
-    "cherryblossomgrotto:saxaul_hanging_sign"
+    "eastwardjourneys:maple_hanging_sign",
+    "eastwardjourneys:black_pine_hanging_sign",
+    "eastwardjourneys:hinoki_hanging_sign",
+    "eastwardjourneys:water_fir_hanging_sign",
+    "eastwardjourneys:saxaul_hanging_sign"
   ]
 }

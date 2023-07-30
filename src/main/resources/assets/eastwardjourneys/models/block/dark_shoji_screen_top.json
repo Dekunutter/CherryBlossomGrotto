@@ -1,0 +1,21 @@
+{
+  "ambientocclusion": false,
+  "textures": {
+    "top": "eastwardjourneys:block/dark_shoji_screen_top",
+    "bottom": "eastwardjourneys:block/dark_shoji_screen_bottom",
+    "particle": "#top"
+  },
+  "elements": [
+    {
+      "from": [ 0, 0, 0 ],
+      "to": [ 3, 16, 16 ],
+      "faces": {
+        "up":    { "uv": [ 15, 0, 16, 16 ], "texture": "#bottom", "cullface": "up" },
+        "north": { "uv": [  1, 0,  0, 16 ], "texture": "#top", "cullface": "north" },
+        "south": { "uv": [  0, 0,  1, 16 ], "texture": "#top", "cullface": "south" },
+        "west":  { "uv": [  0, 0, 16, 16 ], "texture": "#top", "cullface": "west" },
+        "east":  { "uv": [ 16, 0,  0, 16 ], "texture": "#top" }
+      }
+    }
+  ]
+}

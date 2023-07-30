@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "cherryblossomgrotto:smooth_stone_trapdoor",
-    "cherryblossomgrotto:stone_trapdoor",
-    "cherryblossomgrotto:cobblestone_trapdoor"
+    "eastwardjourneys:smooth_stone_trapdoor",
+    "eastwardjourneys:stone_trapdoor",
+    "eastwardjourneys:cobblestone_trapdoor"
   ]
 }

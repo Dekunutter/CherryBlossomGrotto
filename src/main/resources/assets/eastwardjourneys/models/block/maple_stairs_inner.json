@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "eastwardjourneys:block/maple_planks",
+    "top": "eastwardjourneys:block/maple_planks",
+    "side": "eastwardjourneys:block/maple_planks"
+  }
+}

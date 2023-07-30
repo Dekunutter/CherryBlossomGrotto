@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y": { "model": "eastwardjourneys:block/hinoki_log" },
+    "axis=z": { "model": "eastwardjourneys:block/hinoki_log", "x":  90 },
+    "axis=x": { "model":  "eastwardjourneys:block/hinoki_log", "x":  90, "y":  90 }
+  }
+}

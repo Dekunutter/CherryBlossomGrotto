@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "eastwardjourneys:block/black_pine_planks",
+    "top": "eastwardjourneys:block/black_pine_planks",
+    "side": "eastwardjourneys:block/black_pine_planks"
+  }
+}

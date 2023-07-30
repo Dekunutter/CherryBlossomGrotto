@@ -1,7 +1,0 @@
-{
-  "variants": {
-    "axis=y": { "model": "cherryblossomgrotto:block/water_fir_wood" },
-    "axis=z": { "model": "cherryblossomgrotto:block/water_fir_wood", "x":  90 },
-    "axis=x": { "model":  "cherryblossomgrotto:block/water_fir_wood", "x":  90, "y":  90 }
-  }
-}

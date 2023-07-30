@@ -1,7 +1,0 @@
-{
-  "variants": {
-    "type=bottom": { "model": "cherryblossomgrotto:block/saxaul_slab" },
-    "type=double": { "model": "cherryblossomgrotto:block/saxaul_planks" },
-    "type=top": { "model": "cherryblossomgrotto:block/saxaul_slab_top" }
-  }
-}

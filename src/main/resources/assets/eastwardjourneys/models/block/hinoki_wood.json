@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "eastwardjourneys:block/hinoki_log"
+  }
+}

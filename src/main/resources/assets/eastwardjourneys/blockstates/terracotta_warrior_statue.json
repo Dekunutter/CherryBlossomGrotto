@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,half=lower": {
+      "model": "eastwardjourneys:block/terracotta_warrior_statue_lower",
+      "y": 270
+    },
+    "facing=east,half=upper": {
+      "model": "eastwardjourneys:block/terracotta_warrior_statue_upper",
+      "y": 270
+    },
+    "facing=north,half=lower": {
+      "model": "eastwardjourneys:block/terracotta_warrior_statue_lower",
+      "y": 180
+    },
+    "facing=north,half=upper": {
+      "model": "eastwardjourneys:block/terracotta_warrior_statue_upper",
+      "y": 180
+    },
+    "facing=south,half=lower": {
+      "model": "eastwardjourneys:block/terracotta_warrior_statue_lower"
+    },
+    "facing=south,half=upper": {
+      "model": "eastwardjourneys:block/terracotta_warrior_statue_upper"
+    },
+    "facing=west,half=lower": {
+      "model": "eastwardjourneys:block/terracotta_warrior_statue_lower",
+      "y": 90
+    },
+    "facing=west,half=upper": {
+      "model": "eastwardjourneys:block/terracotta_warrior_statue_upper",
+      "y": 90
+    }
+  }
+}

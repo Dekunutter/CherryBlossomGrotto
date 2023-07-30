@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab_top",
-  "textures": {
-    "bottom": "cherryblossomgrotto:block/water_fir_planks",
-    "top": "cherryblossomgrotto:block/water_fir_planks",
-    "side": "cherryblossomgrotto:block/water_fir_planks"
-  }
-}

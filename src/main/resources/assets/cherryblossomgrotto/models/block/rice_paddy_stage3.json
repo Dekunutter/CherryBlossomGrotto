@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/crop",
-  "textures": {
-    "crop": "cherryblossomgrotto:block/rice_paddy_stage3"
-  },
-  "render_type": "cutout_mipped"
-}

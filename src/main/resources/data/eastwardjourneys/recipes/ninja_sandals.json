@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    "# #",
+    "X X"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:black_wool"
+    },
+    "X": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "item": "eastwardjourneys:ninja_sandals"
+  }
+}

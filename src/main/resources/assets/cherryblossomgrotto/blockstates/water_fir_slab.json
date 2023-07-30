@@ -1,7 +1,0 @@
-{
-  "variants": {
-    "type=bottom": { "model": "cherryblossomgrotto:block/water_fir_slab" },
-    "type=double": { "model": "cherryblossomgrotto:block/water_fir_planks" },
-    "type=top": { "model": "cherryblossomgrotto:block/water_fir_slab_top" }
-  }
-}

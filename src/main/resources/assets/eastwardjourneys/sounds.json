@@ -1,0 +1,37 @@
+{
+  "entity.tanooki.ambient": {
+    "sounds": [
+      {
+        "name": "eastwardjourneys:entity/tanooki/ambient"
+      }
+    ]
+  },
+  "entity.tanooki.eat": {
+    "sounds": [
+      {
+        "name": "eastwardjourneys:entity/tanooki/eat"
+      }
+    ]
+  },
+  "entity.tanooki.hurt": {
+    "sounds": [
+      {
+        "name": "eastwardjourneys:entity/tanooki/hurt"
+      }
+    ]
+  },
+  "entity.tanooki.death": {
+    "sounds": [
+      {
+        "name": "eastwardjourneys:entity/tanooki/death"
+      }
+    ]
+  },
+  "entity.tanooki.step": {
+    "sounds": [
+      {
+        "name": "eastwardjourneys:entity/tanooki/step"
+      }
+    ]
+  }
+}

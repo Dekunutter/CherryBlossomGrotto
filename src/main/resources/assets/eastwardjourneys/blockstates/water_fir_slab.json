@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "type=bottom": { "model": "eastwardjourneys:block/water_fir_slab" },
+    "type=double": { "model": "eastwardjourneys:block/water_fir_planks" },
+    "type=top": { "model": "eastwardjourneys:block/water_fir_slab_top" }
+  }
+}

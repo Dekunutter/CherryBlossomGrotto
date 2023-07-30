@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/template_orientable_trapdoor_open",
-  "textures": {
-    "texture": "cherryblossomgrotto:block/water_fir_trapdoor"
-  },
-  "render_type": "cutout_mipped"
-}

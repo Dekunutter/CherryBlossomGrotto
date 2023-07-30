@@ -1,0 +1,158 @@
+{
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:great_wall/walls/great_wall_straight_01",
+        "processors": "eastwardjourneys:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:great_wall/walls/great_wall_straight_02",
+        "processors": "eastwardjourneys:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:great_wall/walls/great_wall_straight_03",
+        "processors": "eastwardjourneys:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:great_wall/walls/great_wall_straight_04",
+        "processors": "eastwardjourneys:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:great_wall/walls/great_wall_straight_05",
+        "processors": "eastwardjourneys:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:great_wall/walls/great_wall_straight_06",
+        "processors": "eastwardjourneys:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:great_wall/walls/great_wall_straight_07",
+        "processors": "eastwardjourneys:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:great_wall/walls/great_wall_straight_08",
+        "processors": "eastwardjourneys:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:great_wall/walls/great_wall_straight_09",
+        "processors": "eastwardjourneys:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:great_wall/walls/great_wall_straight_10",
+        "processors": "eastwardjourneys:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:great_wall/walls/great_wall_tower_01",
+        "processors": "eastwardjourneys:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:great_wall/walls/great_wall_tower_02",
+        "processors": "eastwardjourneys:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:great_wall/walls/great_wall_tower_03",
+        "processors": "eastwardjourneys:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:great_wall/walls/great_wall_tower_04",
+        "processors": "eastwardjourneys:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:great_wall/walls/great_wall_tower_05",
+        "processors": "eastwardjourneys:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:great_wall/walls/great_wall_turn_01",
+        "processors": "eastwardjourneys:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:great_wall/walls/great_wall_turn_02",
+        "processors": "eastwardjourneys:stone_bricks_cracked_20_percent",
+        "projection": "rigid"
+      },
+      "weight": 5
+    }
+  ],
+  "fallback": "eastwardjourneys:great_wall/terminators"
+}

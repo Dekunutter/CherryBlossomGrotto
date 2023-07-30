@@ -1,0 +1,7 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "eastwardjourneys:block/black_pine_sapling"
+  },
+  "render_type": "cutout_mipped"
+}

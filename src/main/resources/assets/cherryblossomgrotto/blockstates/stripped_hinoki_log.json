@@ -1,7 +1,0 @@
-{
-  "variants": {
-    "axis=y": { "model": "cherryblossomgrotto:block/stripped_hinoki_log" },
-    "axis=z": { "model": "cherryblossomgrotto:block/stripped_hinoki_log", "x":  90 },
-    "axis=x": { "model":  "cherryblossomgrotto:block/stripped_hinoki_log", "x":  90, "y":  90 }
-  }
-}

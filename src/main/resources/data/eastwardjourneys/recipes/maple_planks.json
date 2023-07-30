@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "eastwardjourneys:maple_logs"
+    }
+  ],
+  "result": {
+    "item": "eastwardjourneys:maple_planks",
+    "count": 4
+  }
+}
