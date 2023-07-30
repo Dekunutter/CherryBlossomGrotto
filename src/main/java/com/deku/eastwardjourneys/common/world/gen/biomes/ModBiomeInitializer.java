@@ -18,6 +18,8 @@ import static com.deku.eastwardjourneys.Main.MOD_ID;
 public class ModBiomeInitializer {
     public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, MOD_ID);
 
+    public static ResourceKey<Biome> EASTERN_FOREST = registerBiomeKey("eastern_forest");
+
     public static ResourceKey<Biome> CHERRY_BLOSSOM_SLOPES = registerBiomeKey("cherry_blossom_slopes");
 
     public static ResourceKey<Biome> CHERRY_BLOSSOM_BAMBOO_JUNGLE = registerBiomeKey("cherry_blossom_bamboo_jungle");
@@ -55,6 +57,7 @@ public class ModBiomeInitializer {
         HolderGetter<PlacedFeature> placementGetter = context.lookup(Registries.PLACED_FEATURE);
         HolderGetter<ConfiguredWorldCarver<?>> carverGetter = context.lookup(Registries.CONFIGURED_CARVER);
 
+        context.register(EASTERN_FOREST, OverworldBiomes.theVoid(placementGetter, carverGetter));
         context.register(CHERRY_BLOSSOM_SLOPES, OverworldBiomes.theVoid(placementGetter, carverGetter));
         context.register(CHERRY_BLOSSOM_BAMBOO_JUNGLE, OverworldBiomes.theVoid(placementGetter, carverGetter));
         context.register(MAPLE_WOODS, OverworldBiomes.theVoid(placementGetter, carverGetter));
@@ -71,6 +74,7 @@ public class ModBiomeInitializer {
      * The weight determines the commonality of the biome.
      */
     public static void registerBiomes() {
+        BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(EASTERN_FOREST, 1));
         BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(CHERRY_BLOSSOM_SLOPES, 1));
         BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(CHERRY_BLOSSOM_BAMBOO_JUNGLE, 1));
         BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(MAPLE_WOODS, 1));

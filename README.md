@@ -11,6 +11,7 @@ Minecraft's vanilla cherry blossom trees will now show up in some new biomes in 
 The mod itself has a range of new content from biomes, custom villages, new structures, items and building blocks.
 
 ### Biomes
+- Eastern Forest - A variation of the vanilla flower forest that has cherry blossom trees sprinkled in
 - Black Pine Forest - A sparse forest on hilly overgrown plains with black pine trees. These trees come in a variety of shapes.
 - Cherry Blossom Bamboo Jungle - A variation of the bamboo jungle with cherry blossom trees sprinkled in
 - Cherry Blossom Slopes - Snowy mountain slopes peppered with cherry blossom trees and hotsprings

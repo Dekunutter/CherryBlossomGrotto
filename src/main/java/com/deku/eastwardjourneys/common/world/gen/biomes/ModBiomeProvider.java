@@ -49,6 +49,7 @@ public class ModBiomeProvider extends Region {
             if(ModConfiguration.spawnCherryBlossomBiomes.get()) {
                 builder.replaceBiome(Biomes.GROVE, ModBiomeInitializer.CHERRY_BLOSSOM_SLOPES);
                 builder.replaceBiome(Biomes.SPARSE_JUNGLE, ModBiomeInitializer.CHERRY_BLOSSOM_BAMBOO_JUNGLE);
+                builder.replaceBiome(Biomes.FLOWER_FOREST, ModBiomeInitializer.EASTERN_FOREST);
             }
             if(ModConfiguration.spawnMapleBiomes.get()) {
                 builder.replaceBiome(Biomes.DARK_FOREST, ModBiomeInitializer.MAPLE_WOODS);

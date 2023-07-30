@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "eastwardjourneys:eastern_forest",
     "eastwardjourneys:maple_woods",
     "eastwardjourneys:oak_and_maple_forest",
     "eastwardjourneys:black_pine_forest",
