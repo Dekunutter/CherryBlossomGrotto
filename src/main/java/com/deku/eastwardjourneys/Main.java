@@ -434,6 +434,8 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "enoki_mushroom"), new EnokiMushroom());
                 registrar.register(new ResourceLocation(MOD_ID, "shiitake_mushroom"), new ShiitakeMushroom());
                 registrar.register(new ResourceLocation(MOD_ID, "enoki_mushroom_block"), new EnokiMushroomBlock());
+                registrar.register(new ResourceLocation(MOD_ID, "potted_enoki_mushroom"), new PottedEnokiMushroom());
+                registrar.register(new ResourceLocation(MOD_ID, "potted_shiitake_mushroom"), new PottedShiitakeMushroom());
 
                 //Cacti
                 registrar.register(new ResourceLocation(MOD_ID, "flowering_cactus"), new FloweringCactus());

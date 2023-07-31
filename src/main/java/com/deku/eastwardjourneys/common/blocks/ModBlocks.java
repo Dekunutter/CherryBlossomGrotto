@@ -379,6 +379,12 @@ public class ModBlocks {
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":enoki_mushroom_block")
     public static EnokiMushroomBlock ENOKI_MUSHROOM_BLOCK;
 
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":potted_enoki_mushroom")
+    public static PottedEnokiMushroom POTTED_ENOKI_MUSHROOM;
+
+    @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":potted_shiitake_mushroom")
+    public static PottedShiitakeMushroom POTTED_SHIITAKE_MUSHROOM;
+
     @ObjectHolder(registryName = "minecraft:block", value = MOD_ID + ":flowering_cactus")
     public static FloweringCactus FLOWERING_CACTUS;
 
