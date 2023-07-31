@@ -1,5 +1,6 @@
 # Eastward Journeys
 A Forge mod for Minecraft that adds asian-themed content to the game.
+This mod was built off of the original Cherry Blossom Grotto, an experimental mod for Miencraft 1.16.5 -> 1.19.4. Though not backwards compatible with the content in Cherry Blossom Grotto, this mod reuses much of the content from the original, but rebranded to Eastward Journeys.
 
 # Dependencies
 Uses [Terrablender](https://www.curseforge.com/minecraft/mc-mods/terrablender) as a dependency for generating custom biomes.
