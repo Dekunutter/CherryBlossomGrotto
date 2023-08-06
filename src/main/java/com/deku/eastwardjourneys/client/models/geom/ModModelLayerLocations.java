@@ -7,12 +7,6 @@ import static com.deku.eastwardjourneys.Main.MOD_ID;
 
 public class ModModelLayerLocations {
     public static ModelLayerLocation KOI = ModModelLayerLocations.getLayerLocation("koi");
-    public static ModelLayerLocation KABUTO_ARMOUR = ModModelLayerLocations.getLayerLocation("kabuto_armour");
-    public static ModelLayerLocation INNER_KABUTO_ARMOUR = ModModelLayerLocations.getLayerLocation("inner_kabuto_armour");
-
-    public static ModelLayerLocation NINJA_ROBES = ModModelLayerLocations.getLayerLocation("ninja_robes");
-    public static ModelLayerLocation INNER_NINJA_ROBES = ModModelLayerLocations.getLayerLocation("inner_ninja_robes");
-
     /**
      * Gets the model layer location for the given layer name
      *

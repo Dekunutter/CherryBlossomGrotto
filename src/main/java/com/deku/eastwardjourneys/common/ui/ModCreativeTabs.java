@@ -13,7 +13,7 @@ import static com.deku.eastwardjourneys.Main.MOD_ID;
 public class ModCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MOD_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
 
-    public static RegistryObject<CreativeModeTab> MOD_CREATIVE_TAB = CREATIVE_MOD_TABS.register("mod_creative_tab", () -> new CreativeModeTab.Builder(CreativeModeTab.Row.TOP, 0).icon(() -> new ItemStack(ModItems.MAPLE_LEAF)).title(Component.translatable("tab.mod_tab")).displayItems((featureFlags, output) -> {
+    public static RegistryObject<CreativeModeTab> MOD_CREATIVE_TAB = CREATIVE_MOD_TABS.register("mod_creative_tab", () -> new CreativeModeTab.Builder(CreativeModeTab.Row.TOP, 0).icon(() -> new ItemStack(ModItems.MAPLE_LEAF)).title(Component.translatable("Eastward Journeys")).displayItems((featureFlags, output) -> {
         // Maple blocks
         output.accept(ModItems.MAPLE_LOG);
         output.accept(ModItems.MAPLE_WOOD);
@@ -100,6 +100,32 @@ public class ModCreativeTabs {
         output.accept(ModItems.WATER_FIR_SIGN);
         output.accept(ModItems.WATER_FIR_HANGING_SIGN);
 
+        // Saxaul blocks
+        output.accept(ModItems.SAXAUL_LOG);
+        output.accept(ModItems.SAXAUL_WOOD);
+        output.accept(ModItems.STRIPPED_SAXAUL_LOG);
+        output.accept(ModItems.STRIPPED_SAXAUL_WOOD);
+        output.accept(ModItems.SAXAUL_PLANKS);
+        output.accept(ModItems.SAXAUL_STAIRS);
+        output.accept(ModItems.SAXAUL_SLAB);
+        output.accept(ModItems.SAXAUL_FENCE);
+        output.accept(ModItems.SAXAUL_FENCE_GATE);
+        output.accept(ModItems.SAXAUL_DOOR);
+        output.accept(ModItems.SAXAUL_TRAPDOOR);
+        output.accept(ModItems.SAXAUL_PRESSURE_PLATE);
+        output.accept(ModItems.SAXAUL_BUTTON);
+        output.accept(ModItems.SAXAUL_LEAVES);
+        output.accept(ModItems.SAXAUL_SAPLING);
+        output.accept(new ItemStack(ModItems.SAXAUL_BOAT));
+        output.accept(new ItemStack(ModItems.SAXAUL_CHEST_BOAT));
+        output.accept(ModItems.SAXAUL_SIGN);
+        output.accept(ModItems.SAXAUL_HANGING_SIGN);
+
+        // Mushrooms
+        output.accept(new ItemStack(ModItems.ENOKI_MUSHROOM));
+        output.accept(new ItemStack(ModItems.SHIITAKE_MUSHROOM));
+        output.accept(new ItemStack(ModItems.ENOKI_MUSHROOM_BLOCK));
+
         // Crops & Food
         output.accept(new ItemStack(ModItems.RICE));
         output.accept(new ItemStack(ModItems.ONIGIRI));
@@ -126,6 +152,7 @@ public class ModCreativeTabs {
         output.accept(ModItems.SOUL_ZEN_LANTERN);
         output.accept(ModItems.PAPER_LANTERN);
         output.accept(ModItems.TERRACOTTA_WARRIOR_STATUE);
+        output.accept(ModItems.RED_FENCE);
 
         // Weapons & Armour
         output.accept(new ItemStack(ModItems.KATANA));
@@ -145,6 +172,7 @@ public class ModCreativeTabs {
         output.accept(ModItems.BLACK_PINE_PLANKS_TRAP_DOOR);
         output.accept(ModItems.HINOKI_PLANKS_TRAP_DOOR);
         output.accept(ModItems.WATER_FIR_PLANKS_TRAP_DOOR);
+        output.accept(ModItems.SAXAUL_PLANKS_TRAP_DOOR);
         output.accept(ModItems.ACACIA_PLANKS_TRAP_DOOR);
         output.accept(ModItems.BIRCH_PLANKS_TRAP_DOOR);
         output.accept(ModItems.DARK_OAK_PLANKS_TRAP_DOOR);

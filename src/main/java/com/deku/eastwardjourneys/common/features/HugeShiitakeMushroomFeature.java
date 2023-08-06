@@ -39,7 +39,7 @@ public class HugeShiitakeMushroomFeature extends AbstractHugeMushroomFeature {
     private BlockPos placeTrunkBottom(LevelAccessor levelAccessor, RandomSource random, BlockPos position, HugeMushroomFeatureConfiguration configuration, BlockPos.MutableBlockPos mutablePosition, BlockState originState) {
         Direction direction = originState.getValue(ShiitakeMushroom.FACING);
 
-        int length = random.nextInt(2) + 2;
+        int length = random.nextInt(1) + 3;
 
         // Customizing blockstate so that the steam displays the internal texture on the correct side based on direction
         BlockState sidewaysState = Blocks.MUSHROOM_STEM.defaultBlockState();

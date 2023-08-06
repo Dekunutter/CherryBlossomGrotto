@@ -1,21 +1,23 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "sign",
-  "pattern": [
-    "###",
-    "###",
-    " X "
-  ],
+  "category": "misc",
+  "group": "hanging_sign",
   "key": {
     "#": {
-      "item": "eastwardjourneys:hinoki_planks"
+      "item": "eastwardjourneys:stripped_hinoki_log"
     },
     "X": {
-      "item": "minecraft:stick"
+      "item": "minecraft:chain"
     }
   },
+  "pattern": [
+    "X X",
+    "###",
+    "###"
+  ],
   "result": {
-    "item": "eastwardjourneys:hinoki_sign",
-    "count": 3
-  }
+    "count": 6,
+    "item": "eastwardjourneys:hinoki_hanging_sign"
+  },
+  "show_notification": true
 }

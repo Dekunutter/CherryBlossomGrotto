@@ -1,7 +1,10 @@
 package com.deku.eastwardjourneys.common.features;
 
+import com.deku.eastwardjourneys.common.blocks.ModBlockTags;
+import com.deku.eastwardjourneys.common.blocks.ModBlocks;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.HugeMushroomBlock;
@@ -29,6 +32,36 @@ public class HugeEnokiMushroomFeature extends AbstractHugeMushroomFeature {
         }
 
         return i;
+    }
+
+    // NOTE: Only overridden to change the valid blocks that the mushroom can spawn on
+    @Override
+    protected boolean isValidPosition(LevelAccessor p_65099_, BlockPos p_65100_, int p_65101_, BlockPos.MutableBlockPos p_65102_, HugeMushroomFeatureConfiguration p_65103_) {
+        int i = p_65100_.getY();
+        if (i >= p_65099_.getMinBuildHeight() + 1 && i + p_65101_ + 1 < p_65099_.getMaxBuildHeight()) {
+            BlockState blockstate = p_65099_.getBlockState(p_65100_.below());
+
+            if (!isDirt(blockstate) && !blockstate.is(BlockTags.MUSHROOM_GROW_BLOCK)  && !blockstate.is(ModBlockTags.MUSHROOM_GROW_BLOCK_WOOD)) {
+                return false;
+            } else {
+                for(int j = 0; j <= p_65101_; ++j) {
+                    int k = this.getTreeRadiusForHeight(-1, -1, p_65103_.foliageRadius, j);
+
+                    for(int l = -k; l <= k; ++l) {
+                        for(int i1 = -k; i1 <= k; ++i1) {
+                            BlockState blockstate1 = p_65099_.getBlockState(p_65102_.setWithOffset(p_65100_, l, j, i1));
+                            if (!blockstate1.isAir() && !blockstate1.is(BlockTags.LEAVES) && !blockstate1.is(ModBlocks.ENOKI_MUSHROOM)) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+
+                return true;
+            }
+        } else {
+            return false;
+        }
     }
 
     @Override

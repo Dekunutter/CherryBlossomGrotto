@@ -110,12 +110,14 @@ public class RicePaddyFeature extends Feature<RicePaddyFeature.Configuration> {
                                     level.scheduleTick(chunkPosition, AIR.getBlock(), 0);
                                     this.markAboveForPostProcessing(level, chunkPosition);
                                 } else {
-                                    // set block below to dirt
-                                    if (random.nextInt(2) == 0 && this.canReplaceBlock(level.getBlockState(chunkPosition.below()))) {
-                                        level.setBlock(chunkPosition.below(), Blocks.DIRT.defaultBlockState(), 2);
+                                    // set block below to dirt, ignoring situations where the block below where the dirt would be is water (since that would result in dirt spawning floating in rivers sometimes)
+                                    if (level.getBlockState(chunkPosition.below().below()) != Blocks.WATER.defaultBlockState()) {
+                                        if (random.nextInt(2) == 0 && this.canReplaceBlock(level.getBlockState(chunkPosition.below()))) {
+                                            level.setBlock(chunkPosition.below(), Blocks.DIRT.defaultBlockState(), 2);
+                                        }
                                     }
                                     // set rice into water
-                                    if (random.nextInt(3) == 0) {
+                                    if (random.nextInt(2) == 0) {
                                         if (level.getBlockState(chunkPosition.below()) == Blocks.DIRT.defaultBlockState() && level.getBlockState(chunkPosition.above()) == Blocks.AIR.defaultBlockState()) {
                                             level.setBlock(chunkPosition, grownRice, 2);
                                         }

@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "eastwardjourneys:kunai",
-    "eastwardjourneys:shuriken"
+    "eastwardjourneys:kunai_entity",
+    "eastwardjourneys:shuriken_entity"
   ]
 }

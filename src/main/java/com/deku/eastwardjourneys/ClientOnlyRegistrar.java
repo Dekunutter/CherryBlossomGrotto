@@ -3,8 +3,6 @@ package com.deku.eastwardjourneys;
 import com.deku.eastwardjourneys.client.models.geom.ModLayerDefinitions;
 import com.deku.eastwardjourneys.client.models.geom.ModModelLayerLocations;
 import com.deku.eastwardjourneys.client.renderers.*;
-import com.deku.eastwardjourneys.client.renderers.layers.KabutoArmourLayer;
-import com.deku.eastwardjourneys.client.renderers.layers.NinjaRobesLayer;
 import com.deku.eastwardjourneys.common.blocks.ModWoodType;
 import com.deku.eastwardjourneys.common.entity.ModEntityTypeInitializer;
 import com.deku.eastwardjourneys.common.entity.ModBlockEntities;
@@ -13,18 +11,9 @@ import com.deku.eastwardjourneys.common.particles.FallingMapleLeafProvider;
 import com.deku.eastwardjourneys.common.particles.ModParticles;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -32,8 +21,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import software.bernie.geckolib.GeckoLib;
-
-import java.util.Map;
 
 import static com.deku.eastwardjourneys.Main.MOD_ID;
 
@@ -79,55 +66,6 @@ public class ClientOnlyRegistrar {
 
     @Mod.EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ClientRegistryEvents {
-
-        /**
-         * Used to register new layers to existing entity renderers into the game using the mod event bus
-         * The will loop through all skin layers to get player layer renderers and find the biped armour layer to add custom armour layers
-         * NOTE: Layers cannot be added to a renderer while looping through skin layers, else it will cause a concurrency exception. Hence adding them outside of the loop
-         *
-         * @param registerAddedLayerEvent The registry event with which entity layer definitions will have new layers registered
-         */
-        @SubscribeEvent
-        public static <T extends LivingEntity, M extends HumanoidModel<T>> void onEntityRendererRegistry(final EntityRenderersEvent.AddLayers registerAddedLayerEvent) {
-            PlayerRenderer playerSkinRenderer = registerAddedLayerEvent.getSkin("default");
-
-            addLayerToEntityRenderer(playerSkinRenderer, registerAddedLayerEvent.getEntityModels());
-
-            for (Map.Entry<EntityType<?>, EntityRenderer<?>> entry : Minecraft.getInstance().getEntityRenderDispatcher().renderers.entrySet()) {
-                EntityRenderer<?> renderer = entry.getValue();
-                if (renderer instanceof LivingEntityRenderer) {
-                    LivingEntityRenderer<LivingEntity, HumanoidModel<LivingEntity>> livingEntityRenderer = (LivingEntityRenderer<LivingEntity, HumanoidModel<LivingEntity>>) renderer;
-
-                    addLayerToEntityRenderer(livingEntityRenderer, registerAddedLayerEvent.getEntityModels());
-                }
-            }
-        }
-
-        /**
-         * Adds all modded layers to the model set of the given entity
-         *
-         * @param renderer The renderer used to render this entity's layers
-         * @param modelSet The model set for the entity we want to add modded layers to
-         * @param <T>      Generic representing the entity we are adding modded layers to
-         * @param <M>      Generic representing the model of the entity we are adding modded layers to
-         */
-        private static <T extends LivingEntity, M extends HumanoidModel<T>> void addLayerToEntityRenderer(LivingEntityRenderer<T, M> renderer, EntityModelSet modelSet) {
-            RenderLayer<T, M> bipedArmorLayer = null;
-            for (RenderLayer<T, M> layerRenderer : renderer.layers) {
-                if (layerRenderer != null) {
-                    if (layerRenderer.getClass() == HumanoidArmorLayer.class) {
-                        bipedArmorLayer = layerRenderer;
-                        break;
-                    }
-                }
-            }
-
-            if (bipedArmorLayer != null) {
-                KabutoArmourLayer kabutoArmourLayer = new KabutoArmourLayer(renderer, modelSet);
-                NinjaRobesLayer ninjaRobesLayer = new NinjaRobesLayer(renderer, modelSet);
-            }
-        }
-
         /**
          * Used to register entity renderers into the game using the mod event bus
          *
@@ -156,10 +94,6 @@ public class ClientOnlyRegistrar {
         @SubscribeEvent
         public static void onEntityRendererRegistry(final EntityRenderersEvent.RegisterLayerDefinitions registerLayerDefinitionEvent) {
             registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.KOI, () -> ModLayerDefinitions.KOI_LAYER);
-            registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.KABUTO_ARMOUR, () -> ModLayerDefinitions.KABUTO_ARMOUR_LAYER);
-            registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.INNER_KABUTO_ARMOUR, () -> ModLayerDefinitions.INNER_KABUTO_ARMOUR_LAYER);
-            registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.NINJA_ROBES, () -> ModLayerDefinitions.NINJA_ROBES_LAYER);
-            registerLayerDefinitionEvent.registerLayerDefinition(ModModelLayerLocations.INNER_NINJA_ROBES, () -> ModLayerDefinitions.INNER_NINJA_ROBES_LAYER);
         }
 
         /**

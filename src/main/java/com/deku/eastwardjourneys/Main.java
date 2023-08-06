@@ -651,14 +651,14 @@ public class Main
                 registrar.register(new ResourceLocation(MOD_ID, "shuriken"), new Shuriken());
 
                 // All armour items
-                registrar.register(new ResourceLocation(MOD_ID, "ninja_mask"), new NinjaMask());
-                registrar.register(new ResourceLocation(MOD_ID, "ninja_tunic"), new NinjaTunic());
-                registrar.register(new ResourceLocation(MOD_ID, "ninja_leggings"), new NinjaLeggings());
-                registrar.register(new ResourceLocation(MOD_ID, "ninja_sandals"), new NinjaSandals());
-                registrar.register(new ResourceLocation(MOD_ID, "kabuto_helmet"), new KabutoHelmet());
-                registrar.register(new ResourceLocation(MOD_ID, "kabuto_cuirass"), new KabutoCuirass());
-                registrar.register(new ResourceLocation(MOD_ID, "kabuto_greaves"), new KabutoGreaves());
-                registrar.register(new ResourceLocation(MOD_ID, "kabuto_sandals"), new KabutoSandals());
+                registrar.register(new ResourceLocation(MOD_ID, "ninja_mask"), new NinjaRobesItem(ArmorItem.Type.HELMET));
+                registrar.register(new ResourceLocation(MOD_ID, "ninja_tunic"), new NinjaRobesItem(ArmorItem.Type.CHESTPLATE));
+                registrar.register(new ResourceLocation(MOD_ID, "ninja_leggings"), new NinjaRobesItem(ArmorItem.Type.LEGGINGS));
+                registrar.register(new ResourceLocation(MOD_ID, "ninja_sandals"), new NinjaRobesItem(ArmorItem.Type.BOOTS));
+                registrar.register(new ResourceLocation(MOD_ID, "kabuto_helmet"), new KabutoArmourItem(ArmorItem.Type.HELMET));
+                registrar.register(new ResourceLocation(MOD_ID, "kabuto_cuirass"), new KabutoArmourItem(ArmorItem.Type.CHESTPLATE));
+                registrar.register(new ResourceLocation(MOD_ID, "kabuto_greaves"), new KabutoArmourItem(ArmorItem.Type.LEGGINGS));
+                registrar.register(new ResourceLocation(MOD_ID, "kabuto_sandals"), new KabutoArmourItem(ArmorItem.Type.BOOTS));
 
                 // All vanilla block trapdoor items
                 registrar.register(new ResourceLocation(MOD_ID, "acacia_planks_trapdoor"), new BlockItem(ModBlocks.ACACIA_PLANKS_TRAP_DOOR, new Item.Properties()));

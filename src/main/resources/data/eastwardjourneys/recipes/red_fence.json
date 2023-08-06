@@ -11,7 +11,7 @@
       "item": "minecraft:stick"
     },
     "W": {
-      "item": "minecraft:oak_planks"
+      "tag": "minecraft:planks"
     },
     "R": {
       "item": "minecraft:red_dye"

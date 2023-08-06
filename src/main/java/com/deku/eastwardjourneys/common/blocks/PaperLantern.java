@@ -28,8 +28,8 @@ import static com.deku.eastwardjourneys.common.blocks.ModBlockStateProperties.WA
 
 // NOTE: Essentially a copy of the lantern block from vanilla with the voxel shape changed
 public class PaperLantern extends Block {
-    private static final VoxelShape SITTING_AABB = Shapes.or(Block.box(4.0D, 0.0D, 4.0D, 12.0D, 7.0D, 12.0D), Block.box(7.0D, 7.0D, 7.0D, 9.0D, 9.0D, 9.0D));
-    private static final VoxelShape HANGING_AABB = Shapes.or(Block.box(4.0D, 1.0D, 4.0D, 12.0D, 7.0D, 12.0D), Block.box(7.0D, 7.0D, 7.0D, 9.0D, 16.0D, 9.0D));
+    private static final VoxelShape SITTING_AABB = Shapes.or(Block.box(4.0D, 0.0D, 4.0D, 12.0D, 9.0D, 12.0D), Block.box(7.0D, 9.0D, 7.0D, 9.0D, 10.0D, 9.0D));
+    private static final VoxelShape HANGING_AABB = Shapes.or(Block.box(4.0D, 2.0D, 4.0D, 12.0D, 11.0D, 12.0D), Block.box(7.0D, 11.0D, 7.0D, 9.0D, 16.0D, 9.0D));
 
     public PaperLantern() {
         super(BlockBehaviour.Properties.of().strength(0.5F).mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).sound(SoundType.GRASS).lightLevel((level) -> {
