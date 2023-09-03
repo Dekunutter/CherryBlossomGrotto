@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_right",
+  "textures": {
+    "bottom": "eastwardjourneys:block/maple_door_bottom",
+    "top": "eastwardjourneys:block/maple_door_top"
+  }
+}

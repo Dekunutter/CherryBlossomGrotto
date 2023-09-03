@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "eastwardjourneys:block/saxaul_planks",
+    "top": "eastwardjourneys:block/saxaul_planks",
+    "side": "eastwardjourneys:block/saxaul_planks"
+  }
+}

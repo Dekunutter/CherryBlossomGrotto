@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smoking",
-  "ingredient": {
-    "item": "cherryblossomgrotto:koi"
-  },
-  "result": "cherryblossomgrotto:cooked_koi",
-  "experience": 0.35,
-  "cookingtime": 100
-}

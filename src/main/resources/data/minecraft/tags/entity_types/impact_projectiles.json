@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "cherryblossomgrotto:kunai",
-    "cherryblossomgrotto:shuriken"
+    "eastwardjourneys:kunai_entity",
+    "eastwardjourneys:shuriken_entity"
   ]
 }

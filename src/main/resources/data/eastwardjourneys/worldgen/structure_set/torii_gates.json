@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 780292865,
+    "separation": 15,
+    "spacing": 40
+  },
+  "structures": [
+    {
+      "structure": "eastwardjourneys:torii_gate",
+      "weight": 1
+    }
+  ]
+}

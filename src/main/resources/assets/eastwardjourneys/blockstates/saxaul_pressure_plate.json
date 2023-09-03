@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "eastwardjourneys:block/saxaul_pressure_plate"
+    },
+    "powered=true": {
+      "model": "eastwardjourneys:block/saxaul_pressure_plate_down"
+    }
+  }
+}

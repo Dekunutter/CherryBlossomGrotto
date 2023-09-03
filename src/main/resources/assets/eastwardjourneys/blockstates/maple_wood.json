@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y": { "model": "eastwardjourneys:block/maple_wood" },
+    "axis=z": { "model": "eastwardjourneys:block/maple_wood", "x":  90 },
+    "axis=x": { "model":  "eastwardjourneys:block/maple_wood", "x":  90, "y":  90 }
+  }
+}

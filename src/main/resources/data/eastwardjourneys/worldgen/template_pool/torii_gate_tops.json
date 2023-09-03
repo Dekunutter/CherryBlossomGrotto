@@ -1,0 +1,22 @@
+{
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:list_pool_element",
+        "elements": [
+          {
+            "element_type": "minecraft:legacy_single_pool_element",
+            "location": "eastwardjourneys:torii_gate/torii_gate_top",
+            "processors": {
+              "processors": []
+            },
+            "projection": "rigid"
+          }
+        ],
+        "projection": "rigid"
+      },
+      "weight": 1
+    }
+  ],
+  "fallback": "minecraft:empty"
+}

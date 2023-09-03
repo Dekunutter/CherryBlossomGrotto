@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/fence_post",
-  "textures": {
-    "texture": "cherryblossomgrotto:block/black_pine_planks"
-  }
-}

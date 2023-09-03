@@ -1,17 +1,19 @@
 {
   "replace": false,
   "values": [
-    "cherryblossomgrotto:cherry_blossom_trapdoor",
-    "cherryblossomgrotto:maple_trapdoor",
-    "cherryblossomgrotto:acacia_planks_trapdoor",
-    "cherryblossomgrotto:birch_planks_trapdoor",
-    "cherryblossomgrotto:dark_oak_planks_trapdoor",
-    "cherryblossomgrotto:jungle_planks_trapdoor",
-    "cherryblossomgrotto:oak_planks_trapdoor",
-    "cherryblossomgrotto:spruce_planks_trapdoor",
-    "cherryblossomgrotto:mangrove_planks_trapdoor",
-    "cherryblossomgrotto:cherry_blossom_planks_trapdoor",
-    "cherryblossomgrotto:maple_planks_trapdoor",
-    "cherryblossomgrotto:black_pine_planks_trapdoor"
+    "eastwardjourneys:maple_trapdoor",
+    "eastwardjourneys:acacia_planks_trapdoor",
+    "eastwardjourneys:birch_planks_trapdoor",
+    "eastwardjourneys:dark_oak_planks_trapdoor",
+    "eastwardjourneys:jungle_planks_trapdoor",
+    "eastwardjourneys:oak_planks_trapdoor",
+    "eastwardjourneys:spruce_planks_trapdoor",
+    "eastwardjourneys:mangrove_planks_trapdoor",
+    "eastwardjourneys:cherry_planks_trapdoor",
+    "eastwardjourneys:maple_planks_trapdoor",
+    "eastwardjourneys:black_pine_planks_trapdoor",
+    "eastwardjourneys:hinoki_planks_trapdoor",
+    "eastwardjourneys:water_fir_planks_trapdoor",
+    "eastwardjourneys:saxaul_planks_trapdoor"
   ]
 }

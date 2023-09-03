@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "eastwardjourneys:water_fir_logs"
+    }
+  ],
+  "result": {
+    "item": "eastwardjourneys:water_fir_planks",
+    "count": 4
+  }
+}

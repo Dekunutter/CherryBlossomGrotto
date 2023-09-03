@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    " X "
+  ],
+  "key": {
+    "#": {
+      "item": "eastwardjourneys:rice"
+    },
+    "X": {
+      "item": "minecraft:bowl"
+    }
+  },
+  "result": {
+    "item": "eastwardjourneys:congee",
+    "count": 1
+  }
+}

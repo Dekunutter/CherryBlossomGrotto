@@ -1,8 +1,10 @@
 {
   "replace": false,
   "values": [
-    "cherryblossomgrotto:cherry_blossom_leaves",
-    "cherryblossomgrotto:maple_leaves",
-    "cherryblossomgrotto:black_pine_leaves"
+    "eastwardjourneys:maple_leaves",
+    "eastwardjourneys:black_pine_leaves",
+    "eastwardjourneys:hinoki_leaves",
+    "eastwardjourneys:water_fir_leaves",
+    "eastwardjourneys:saxaul_leaves"
   ]
 }

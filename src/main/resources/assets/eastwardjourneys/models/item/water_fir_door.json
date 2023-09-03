@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "eastwardjourneys:item/water_fir_door"
+  }
+}

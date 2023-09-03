@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "eastwardjourneys:block/hinoki_leaves"
+  }
+}

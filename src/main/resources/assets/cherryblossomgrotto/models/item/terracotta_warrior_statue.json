@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "cherryblossomgrotto:item/terracotta_warrior_statue"
-  }
-}

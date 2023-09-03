@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "type=bottom": { "model": "eastwardjourneys:block/saxaul_slab" },
+    "type=double": { "model": "eastwardjourneys:block/saxaul_planks" },
+    "type=top": { "model": "eastwardjourneys:block/saxaul_slab_top" }
+  }
+}

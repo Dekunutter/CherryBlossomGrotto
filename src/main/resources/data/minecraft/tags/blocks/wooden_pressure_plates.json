@@ -1,8 +1,10 @@
 {
   "replace": false,
   "values": [
-    "cherryblossomgrotto:cherry_blossom_pressure_plate",
-    "cherryblossomgrotto:maple_pressure_plate",
-    "cherryblossomgrotto:black_pine_pressure_plate"
+    "eastwardjourneys:maple_pressure_plate",
+    "eastwardjourneys:black_pine_pressure_plate",
+    "eastwardjourneys:hinoki_pressure_plate",
+    "eastwardjourneys:water_fir_pressure_plate",
+    "eastwardjourneys:saxaul_pressure_plate"
   ]
 }

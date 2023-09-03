@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "eastwardjourneys:block/black_pine_pressure_plate"
+    },
+    "powered=true": {
+      "model": "eastwardjourneys:block/black_pine_pressure_plate_down"
+    }
+  }
+}

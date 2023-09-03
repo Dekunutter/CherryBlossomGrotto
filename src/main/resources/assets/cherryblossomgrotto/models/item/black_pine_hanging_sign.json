@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "cherryblossomgrotto:item/black_pine_hanging_sign"
-  }
-}

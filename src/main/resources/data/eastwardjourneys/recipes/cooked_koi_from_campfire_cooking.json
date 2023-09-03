@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "item": "eastwardjourneys:koi"
+  },
+  "result": "eastwardjourneys:cooked_koi",
+  "experience": 0.35,
+  "cookingtime": 600
+}

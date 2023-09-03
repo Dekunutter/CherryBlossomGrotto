@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:random_selector",
+  "config": {
+    "default": "eastwardjourneys:hinoki",
+    "features": [
+      {
+        "chance": 1.0,
+        "feature":"eastwardjourneys:hinoki"
+      }
+    ]
+  }
+}

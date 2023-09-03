@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "eastwardjourneys:water_fir_log",
+    "eastwardjourneys:stripped_water_fir_log",
+    "eastwardjourneys:water_fir_wood",
+    "eastwardjourneys:stripped_water_fir_wood"
+  ]
+}

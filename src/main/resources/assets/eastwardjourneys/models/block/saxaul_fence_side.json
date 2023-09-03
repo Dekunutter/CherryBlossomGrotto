@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/fence_side",
+  "textures": {
+    "texture": "eastwardjourneys:block/saxaul_planks"
+  }
+}

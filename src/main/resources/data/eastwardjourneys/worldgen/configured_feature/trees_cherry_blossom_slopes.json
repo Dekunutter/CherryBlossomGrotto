@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:random_selector",
+  "config": {
+    "default": "eastwardjourneys:cherry_blossom_on_snow",
+    "features": [
+      {
+        "chance": 1.0,
+        "feature":"eastwardjourneys:cherry_blossom_on_snow"
+      }
+    ]
+  }
+}

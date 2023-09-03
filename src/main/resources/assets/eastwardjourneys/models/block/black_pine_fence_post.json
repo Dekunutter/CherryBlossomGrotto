@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/fence_post",
+  "textures": {
+    "texture": "eastwardjourneys:block/black_pine_planks"
+  }
+}

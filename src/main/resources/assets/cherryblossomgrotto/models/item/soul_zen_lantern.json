@@ -1,6 +1,0 @@
-{
-  "parent": "cherryblossomgrotto:block/soul_zen_lantern_top",
-  "textures": {
-    "layer0": "cherryblossomgrotto:item/soul_zen_lantern_top"
-  }
-}

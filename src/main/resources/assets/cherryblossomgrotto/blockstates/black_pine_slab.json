@@ -1,7 +1,0 @@
-{
-  "variants": {
-    "type=bottom": { "model": "cherryblossomgrotto:block/black_pine_slab" },
-    "type=double": { "model": "cherryblossomgrotto:block/black_pine_planks" },
-    "type=top": { "model": "cherryblossomgrotto:block/black_pine_slab_top" }
-  }
-}

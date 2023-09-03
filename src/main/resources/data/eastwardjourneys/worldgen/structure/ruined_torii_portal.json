@@ -1,0 +1,19 @@
+{
+  "type": "eastwardjourneys:ruined_torii_portal",
+  "biomes": "#eastwardjourneys:has_structure/ruined_torii_portal",
+  "setups": [
+    {
+      "air_pocket_probability": 0.5,
+      "can_be_cold": true,
+      "mossiness": 0.0,
+      "overgrown": false,
+      "placement": "on_land_surface",
+      "replace_with_blackstone": false,
+      "vines": false,
+      "weight": 1.0
+    }
+  ],
+  "spawn_overrides": {},
+  "step": "surface_structures",
+  "terrain_adaptation": "none"
+}

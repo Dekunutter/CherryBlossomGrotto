@@ -1,8 +1,10 @@
 {
   "replace": false,
   "values": [
-    "cherryblossomgrotto:cherry_blossom_sapling",
-    "cherryblossomgrotto:maple_sapling",
-    "cherryblossomgrotto:black_pine_sapling"
+    "eastwardjourneys:maple_sapling",
+    "eastwardjourneys:black_pine_sapling",
+    "eastwardjourneys:hinoki_sapling",
+    "eastwardjourneys:water_fir_sapling",
+    "eastwardjourneys:saxaul_sapling"
   ]
 }

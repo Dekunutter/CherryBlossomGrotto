@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "eastwardjourneys:maple_hanging_sign",
+    "eastwardjourneys:black_pine_hanging_sign",
+    "eastwardjourneys:hinoki_hanging_sign",
+    "eastwardjourneys:water_fir_hanging_sign",
+    "eastwardjourneys:saxaul_hanging_sign"
+  ]
+}

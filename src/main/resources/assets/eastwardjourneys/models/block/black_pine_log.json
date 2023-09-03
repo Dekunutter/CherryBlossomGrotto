@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "eastwardjourneys:block/black_pine_log_top",
+    "side": "eastwardjourneys:block/black_pine_log"
+  }
+}

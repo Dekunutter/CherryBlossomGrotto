@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "bottom": "cherryblossomgrotto:block/cherry_blossom_planks",
-    "top": "cherryblossomgrotto:block/cherry_blossom_planks",
-    "side": "cherryblossomgrotto:block/cherry_blossom_planks"
-  }
-}

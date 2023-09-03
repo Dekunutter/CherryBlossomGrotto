@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "eastwardjourneys:block/hinoki_planks",
+    "top": "eastwardjourneys:block/hinoki_planks",
+    "side": "eastwardjourneys:block/hinoki_planks"
+  }
+}

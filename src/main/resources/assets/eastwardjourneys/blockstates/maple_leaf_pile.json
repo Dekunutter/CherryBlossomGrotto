@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "half_layers=1": {
+      "model": "eastwardjourneys:block/maple_leaf_pile_height2"
+    },
+    "half_layers=2": {
+      "model": "eastwardjourneys:block/maple_leaf_pile_height4"
+    },
+    "half_layers=3": {
+      "model": "eastwardjourneys:block/maple_leaf_pile_height4"
+    },
+    "half_layers=4": {
+      "model": "eastwardjourneys:block/maple_leaf_pile_height4"
+    }
+  }
+}

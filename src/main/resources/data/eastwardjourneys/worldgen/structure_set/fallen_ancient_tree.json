@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 794913981,
+    "separation": 15,
+    "spacing": 40
+  },
+  "structures": [
+    {
+      "structure": "eastwardjourneys:fallen_ancient_tree",
+      "weight": 1
+    }
+  ]
+}

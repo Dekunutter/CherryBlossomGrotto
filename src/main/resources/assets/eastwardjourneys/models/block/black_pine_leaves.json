@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "eastwardjourneys:block/black_pine_leaves"
+  }
+}

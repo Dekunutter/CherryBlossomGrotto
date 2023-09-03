@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "eastwardjourneys:eastern_forest",
+    "eastwardjourneys:cherry_blossom_bamboo_jungle",
+    "eastwardjourneys:maple_woods",
+    "eastwardjourneys:oak_and_maple_forest",
+    "eastwardjourneys:black_pine_forest",
+    "eastwardjourneys:stone_forest",
+    "#minecraft:is_taiga",
+    "#minecraft:is_jungle",
+    "minecraft:desert",
+    "minecraft:savanna",
+    "minecraft:plains",
+    "minecraft:mangrove_swamp",
+    "eastwardjourneys:hinoki_forest",
+    "eastwardjourneys:old_growth_fir_forest",
+    "eastwardjourneys:shrublands"
+  ]
+}

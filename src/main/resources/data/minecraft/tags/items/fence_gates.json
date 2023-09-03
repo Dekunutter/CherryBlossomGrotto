@@ -1,8 +1,10 @@
 {
   "replace": false,
   "values": [
-    "cherryblossomgrotto:cherry_blossom_fence_gate",
-    "cherryblossomgrotto:maple_fence_gate",
-    "cherryblossomgrotto:black_pine_fence_gate"
+    "eastwardjourneys:maple_fence_gate",
+    "eastwardjourneys:black_pine_fence_gate",
+    "eastwardjourneys:hinoki_fence_gate",
+    "eastwardjourneys:water_fir_fence_gate",
+    "eastwardjourneys:saxaul_fence_gate"
   ]
 }

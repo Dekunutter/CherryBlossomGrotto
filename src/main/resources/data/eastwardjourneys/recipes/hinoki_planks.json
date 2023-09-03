@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "eastwardjourneys:hinoki_logs"
+    }
+  ],
+  "result": {
+    "item": "eastwardjourneys:hinoki_planks",
+    "count": 4
+  }
+}

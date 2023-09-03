@@ -1,8 +1,10 @@
 {
   "replace": false,
   "values": [
-    "cherryblossomgrotto:cherry_blossom_door",
-    "cherryblossomgrotto:maple_door",
-    "cherryblossomgrotto:black_pine_door"
+    "eastwardjourneys:maple_door",
+    "eastwardjourneys:black_pine_door",
+    "eastwardjourneys:hinoki_door",
+    "eastwardjourneys:water_fir_door",
+    "eastwardjourneys:saxaul_door"
   ]
 }

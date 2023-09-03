@@ -1,8 +1,10 @@
 {
   "replace": false,
   "values": [
-    "cherryblossomgrotto:cherry_blossom_log",
-    "cherryblossomgrotto:maple_log",
-    "cherryblossomgrotto:black_pine_log"
+    "eastwardjourneys:maple_log",
+    "eastwardjourneys:black_pine_log",
+    "eastwardjourneys:hinoki_log",
+    "eastwardjourneys:water_fir_log",
+    "eastwardjourneys:saxaul_log"
   ]
 }

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "eastwardjourneys:block/paper_lantern"
+    },
+    "hanging=true": {
+      "model": "eastwardjourneys:block/paper_lantern_hanging"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:fallen_ancient_tree/trunks/trunk_01",
+        "processors": "eastwardjourneys:fallen_ancient_tree_mushrooms_70_percent",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:fallen_ancient_tree/trunks/trunk_02",
+        "processors": "eastwardjourneys:fallen_ancient_tree_mushrooms_70_percent",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:fallen_ancient_tree/trunks/trunk_03",
+        "processors": "eastwardjourneys:fallen_ancient_tree_mushrooms_70_percent",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "eastwardjourneys:fallen_ancient_tree/trunks/trunk_04",
+        "processors": "eastwardjourneys:fallen_ancient_tree_mushrooms_70_percent",
+        "projection": "rigid"
+      },
+      "weight": 1
+    }
+  ],
+  "fallback": "eastwardjourneys:fallen_ancient_tree/tops"
+}

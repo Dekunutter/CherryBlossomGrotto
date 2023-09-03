@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "eastwardjourneys:block/enoki_mushroom"
+  },
+  "render_type": "cutout_mipped"
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X#X",
+    "###",
+    "X#X"
+  ],
+  "key": {
+    "X": {
+      "item": "eastwardjourneys:water_fir_planks"
+    },
+    "#": {
+      "item": "minecraft:paper"
+    }
+  },
+  "result": {
+    "item": "eastwardjourneys:dark_shoji_screen",
+    "count": 6
+  }
+}

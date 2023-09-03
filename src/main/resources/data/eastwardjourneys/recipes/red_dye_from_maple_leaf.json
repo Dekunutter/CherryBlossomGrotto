@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "pink_dye",
+  "ingredients": [
+    {
+      "item": "eastwardjourneys:maple_leaf",
+      "count": 2
+    }
+  ],
+  "result": {
+    "item": "minecraft:red_dye"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  X",
+    " XY",
+    "#Y "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "X": {
+      "item": "minecraft:iron_ingot"
+    },
+    "Y": {
+      "item": "eastwardjourneys:rice"
+    }
+  },
+  "result": {
+    "item": "eastwardjourneys:katana",
+    "nbt": {
+      "folds": 1
+    }
+  }
+}
